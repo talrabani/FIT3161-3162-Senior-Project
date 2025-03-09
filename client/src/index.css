@@ -1,11 +1,11 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  color: #3a414a;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,7 +15,7 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #3a414a;
   text-decoration: inherit;
 }
 a:hover {
@@ -24,45 +24,167 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
+  display: block;
   place-items: center;
-  min-width: 320px;
+  min-width: 100%;
   min-height: 100vh;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 3em;
+  line-height: 0.5;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
+h2 {
+  font-size: 2em;
+  line-height: 0.5;
+  text-align: center;
+}
+
+label {
+  font-weight: bolder;
+  display: block;
+  color: #3a414a;
+}
+
+div {
+  margin: 1em;
+}
+
+.right {
+  text-align: right;
+}
+
+div.tutorial {
+  box-shadow: 2px 2px 5px grey;
+  background-color: #f2f2ff;
+  border: 2px solid;
+  padding: 1.5em 2em;
+}
+
+::placeholder {
+  color: #979ea8;
+  font-size: 1em;
+}
+
+
+select {
+  border: 2px solid;
+  text-align: left;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+option:hover,option:checked {
+  background-color: #cfe4ff;
+}
+
+input[type='text'],[type='date'],[type='search'] {
+  border: 2px solid;
+  text-align: left;
+  padding: 6px;
+  border-radius: 10px;
+}
+
+input[type='button'],[type='submit'] {
+  border-radius: 20px;
+  color: #fff;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #3a414a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border: 2px solid transparent;
 }
 
-@media (prefers-color-scheme: light) {
+input[type='button']:hover,[type='submit']:hover {
+  color: #3a414a;
+  border: 2px solid;
+  background-color: #fff;
+}
+
+input[type='email'],[type='password'] {
+  display: block;
+  margin: auto;
+  text-align: center;
+  padding: 1em;
+  background-color: transparent;
+  width: 70%;
+}
+
+.login-toggle {
+  position: relative;
+  margin: auto;
+  display: block;
+  width: 70%;
+  height: 50px;
+  border: 2px solid;
+  border-radius: 30px;
+}
+
+.login-toggle input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.login-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: transparent;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.login-slider:before {
+  position: absolute;
+  border-radius: 30px;
+  content: "";
+  height: 42px;
+  width: 55%;
+  left: 1.5%;
+  bottom: 4px;
+  background-color: #3a414a;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.login-slider span {
+  display: inline-block;
+  left: 4px;
+  color: #f44336;
+  z-index: 1;
+}
+
+input:checked + .login-slider:before {
+  -webkit-transform: translateX(76.5%);
+  -ms-transform: translateX(76.5%);
+  transform: translateX(76.5%);
+}
+
+.center {
+  text-align: center;
+  margin: auto;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 2px auto -webkit-focus-ring-color;
+}
+
+/* Dark mode preference
+
+@media (prefers-color-scheme: dark) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #fff;
+    background-color: #3a414a;
   }
   a:hover {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #3a414a;
   }
-}
+} */
