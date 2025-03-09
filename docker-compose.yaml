@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  client: # uses Dockerfile in client directory
+    build: ./client # build from the client directory
+    env_file: ./client/.env
+    ports:
+      - "${VITE_LOCAL_PORT}:${VITE_DOCKER_PORT}"
+    restart: always
+    depends_on:
+      - server
+  server:
+    build: ./server # build from the server directory
+    env_file: ./server/.env
+    ports:
+      - "${NODE_LOCAL_PORT}:${NODE_DOCKER_PORT}"
+    restart: always
+    depends_on:
+      - db
+  db:
+    image: postgres
+    env_file: ./db/.env
+    ports:
+      - "${POSTGRES_LOCAL_PORT}:${POSTGRES_DOCKER_PORT}"
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./db/init-scripts:/docker-entrypoint-initdb.d
+
+volumes:
+  db:
