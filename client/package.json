@@ -10,18 +10,30 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "@tanstack/react-query": "^5.67.2",
+    "axios": "^1.8.2",
+    "bootstrap": "^5.3.3",
+    "clsx": "^2.1.1",
+    "leaflet": "^1.9.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-leaflet": "^5.0.0",
+    "recharts": "^2.15.1",
+    "tailwind-merge": "^3.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.12",
     "vite": "^6.2.0"
   }
 }

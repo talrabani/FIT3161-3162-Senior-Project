@@ -1,12 +1,54 @@
-# React + Vite
+# Australian Weather Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive visualization tool that allows users to compare temperatures and rainfall at selected locations in Australia, at different times of the year, and across multiple years.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Interactive Australian map with selectable locations
+- Temperature comparison charts (daily and monthly views)
+- Rainfall comparison charts (daily and monthly views)
+- Historical data comparison for up to 3 locations
+- Adjustable date ranges for viewing historical trends
+- Responsive design for desktop and mobile
 
-## Expanding the ESLint configuration
+## Data Source
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This application uses weather data from the Australian Bureau of Meteorology (BOM) via the Open-Meteo API.
+
+## Technologies Used
+
+- React 19
+- Recharts for data visualization
+- Leaflet for interactive maps
+- React Query for data fetching
+- Tailwind CSS for styling
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ and pnpm
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```
+   pnpm install
+   ```
+3. Start the development server:
+   ```
+   pnpm run dev
+   ```
+4. Open your browser to `http://localhost:5173`
+
+## Usage
+
+1. Select locations on the map (up to 3)
+2. Adjust the date range using the date picker
+3. Toggle between temperature and rainfall views
+4. Switch between daily and monthly data aggregation
+
+## License
+
+This project is open source and available under the MIT License.
