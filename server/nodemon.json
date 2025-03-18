@@ -1,0 +1,9 @@
+{
+  "watch": ["*.js", "routes/", "models/", "controllers/", "config/"],
+  "ext": "js,json",
+  "ignore": ["node_modules/", "public/"],
+  "verbose": true,
+  "legacyWatch": true,
+  "delay": "500",
+  "colours": true
+} 
