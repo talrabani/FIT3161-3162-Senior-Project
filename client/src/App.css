@@ -89,13 +89,117 @@
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
+/* Mapbox styles */
+.mapboxgl-popup-content {
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mapboxgl-popup-close-button {
+  font-size: 20px;
+  color: #666;
+  right: 8px;
+  top: 8px;
+}
+
+.mapboxgl-popup-close-button:hover {
+  color: #333;
+  background: none;
+}
+
+.mapboxgl-ctrl-attrib-inner {
+  font-size: 10px;
+}
+
+/* Disable map canvas border */
+.mapboxgl-canvas-container {
+  outline: none;
+}
+
+.mapboxgl-canvas {
+  outline: none;
+}
+
+/* Fix for Leaflet marker icons (can be removed since we now use Mapbox) */
+.leaflet-default-icon-path {
+  background-image: url(https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png);
+}
+
+/* Chart tooltip styles */
+.recharts-tooltip-wrapper {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .leaflet-container {
+    height: 400px;
   }
 }
 
-.card {
-  padding: 2em;
+/* Global styles */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.read-the-docs {
-  color: #888;
+/* Ensure navbar is visible */
+.navbar-container {
+  width: 100%;
+  margin-bottom: 20px;
+  display: block !important;
+}
+
+/* Animation for spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Ensure text is visible in navbar */
+.navbar-text {
+  color: #212529 !important;
+}
+
+/* Add some spacing to the main content */
+.main-content {
+  padding-top: 20px;
+}
+
+/* Australia Map styles */
+.australia-map-container {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.australia-map-container::before {
+  content: '';
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, rgba(0,0,0,0.05), rgba(0,0,0,0.1), rgba(0,0,0,0.05));
+  pointer-events: none;
+}
+
+/* Mapbox marker styles */
+.mapboxgl-marker {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  transform-origin: bottom center;
+  transition: transform 0.2s;
+}
+
+.mapboxgl-marker:hover {
+  transform: scale(1.1);
 }
