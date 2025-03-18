@@ -16,4 +16,5 @@ COPY . .
 # expose the port the app runs on
 EXPOSE 5173
 
-CMD ["npm", "run", "dev"]
+# Use --host flag to bind to all interfaces and enable polling for hot reload
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
