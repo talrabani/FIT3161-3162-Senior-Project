@@ -41,9 +41,9 @@ export default function WeatherChart({ weatherData, chartType = 'temperature' })
   
   if (!weatherData?.length) {
     return (
-      <div className="card h-100 d-flex align-items-center justify-content-center p-4">
+      <div className="d-flex align-items-center justify-content-center">
         <div className="card-body text-center">
-          <P>Select locations on the map to see weather data</P>
+          <p>Select locations on the map to see weather data</p>
         </div>
       </div>
     );

@@ -165,7 +165,7 @@ export default function AustraliaMap({ selectedLocations = [], onLocationSelect 
   return (
     <div 
       ref={mapContainer} 
-      className="australia-map-container w-100 h-100"
+      className="australia-map-container"
     ></div>
   );
 } 

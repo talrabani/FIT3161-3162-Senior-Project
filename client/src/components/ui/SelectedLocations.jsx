@@ -6,24 +6,24 @@ import { H4, P } from './typography';
 export default function SelectedLocations({ selectedLocations, onRemoveLocation }) {
   if (!selectedLocations.length) {
     return (
-      <div className="card h-100">
+      <div>
         <div className="card-header">
-          <H4 className="mb-0">Selected Locations</H4>
+          <p className='h5'>Selected Locations</p>
         </div>
-        <div className="card-body text-center">
-          <P className="text-muted fst-italic">No locations selected</P>
-          <P className="small mt-2">Select up to 3 locations on the map to compare weather data</P>
+        <div className="text-center">
+          <p className="text-muted fst-italic">No locations selected</p>
+          <p>Select up to 3 locations on the map to compare weather data</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="card h-100">
+    <div>
       <div className="card-header">
-        <H4 className="mb-0">Selected Locations</H4>
+      <p className='h5'>Selected Locations</p>
       </div>
-      <div className="card-body">
+      <div>
         <div className="list-group">
           {selectedLocations.map((location) => (
             <div 
@@ -48,12 +48,12 @@ export default function SelectedLocations({ selectedLocations, onRemoveLocation 
           ))}
         </div>
       </div>
-      <div className="card-footer">
-        <P className="small mb-0">
+      <div>
+        <p>
           {selectedLocations.length < 3 
             ? `You can select ${3 - selectedLocations.length} more location${3 - selectedLocations.length === 1 ? '' : 's'}`
             : 'Maximum number of locations selected'}
-        </P>
+        </p>
       </div>
     </div>
   );

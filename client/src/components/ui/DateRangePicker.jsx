@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { H4, P } from './typography';
 
 /**
  * Date Range Picker Component
@@ -80,39 +79,27 @@ export default function DateRangePicker({ startDate, endDate, onRangeChange }) {
   };
   
   return (
-    <div className="card h-100">
-      <div className="card-header">
-        <H4 className="mb-0">Date Range</H4>
-      </div>
-      <div className="card-body">
-        <P className="mb-3">Select time period for historical data</P>
-        
-        <div className="row mb-3">
-          <div className="col-md-6 mb-3 mb-md-0">
-            <label className="form-label">Start Date</label>
-            <input
-              type="date"
-              className="form-control"
-              min={minDate}
-              max={maxDate}
-              value={selectedStartDate}
-              onChange={handleStartDateChange}
-            />
-          </div>
-          <div className="col-md-6">
-            <label className="form-label">End Date</label>
-            <input
-              type="date"
-              className="form-control"
-              min={minDate}
-              max={maxDate}
-              value={selectedEndDate}
-              onChange={handleEndDateChange}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="card-footer">
+    <div style={{margin: 'auto'}}>
+      <label>Start Date</label>
+      <input
+        type="date"
+        className="form-control"
+        min={minDate}
+        max={maxDate}
+        value={selectedStartDate}
+        onChange={handleStartDateChange}
+      />
+      <label>End Date</label>
+      <input
+        type="date"
+        className="form-control"
+        min={minDate}
+        max={maxDate}
+        value={selectedEndDate}
+        onChange={handleEndDateChange}
+      />
+      {/* <P className="mb-3">Select time period for historical data</P> */}
+      <div>
         <div className="d-flex justify-content-between align-items-center flex-wrap">
           <div className="btn-group btn-group-sm mb-2 mb-md-0">
             <button
