@@ -25,16 +25,90 @@ function getTotalStationCount() {
                 }
             }
         }
-        // If we can't find the total, return the count from the JSON file
-        return Object.keys(stationJson).length;
+        return "unknown";
     } catch (error) {
         console.error("Error reading station count:", error);
         return "unknown";
     }
 }
 
-// stations.txt from here: http://www.bom.gov.au/climate/data/lists_by_element/stations.txt
-var stationJson = require('./test.json');
+// Function to parse stations.txt file and extract station information
+function loadStationsFromFile() {
+    try {
+        const stationJson = {};
+        if (fs.existsSync(path.join(__dirname, 'stations.txt'))) {
+            const fileContent = fs.readFileSync(path.join(__dirname, 'stations.txt'), 'utf8');
+            const lines = fileContent.split('\n');
+            
+            // Skip header lines (first 4 lines)
+            for (let i = 4; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line || line.match(/^\d+\s+stations$/)) continue; // Skip empty lines or total line
+                
+                // Parse station data using fixed width format
+                // Example: 001000 01    KARUNJIE                                    1940    1983 -16.2919  127.1956 .....          WA       320.0       ..     ..
+                try {
+                    const stationNum = line.substring(0, 7).trim();
+                    const district = line.substring(8, 13).trim();
+                    
+                    // Finding the name is tricky as it's variable width
+                    let nameEnd = 50; // Approximate position where name ends
+                    for (let j = 13; j < 50; j++) {
+                        // Look for the start of year (4 digits)
+                        if (line.substring(j, j+4).match(/^\d{4}$/)) {
+                            nameEnd = j;
+                            break;
+                        }
+                    }
+                    
+                    const stationName = line.substring(13, nameEnd).trim();
+                    
+                    // Continue parsing after name with fixed positions
+                    const startPos = nameEnd;
+                    const startYear = line.substring(startPos, startPos+8).trim();
+                    const endYear = line.substring(startPos+8, startPos+16).trim() === '..' ? null : line.substring(startPos+8, startPos+16).trim();
+                    const lat = line.substring(startPos+16, startPos+25).trim();
+                    const lon = line.substring(startPos+25, startPos+35).trim();
+                    const source = line.substring(startPos+35, startPos+48).trim() === '.....' ? null : line.substring(startPos+35, startPos+48).trim();
+                    const state = line.substring(startPos+48, startPos+52).trim();
+                    const height = line.substring(startPos+52, startPos+62).trim() === '..' ? null : line.substring(startPos+52, startPos+62).trim();
+                    const barHeight = line.substring(startPos+62, startPos+72).trim() === '..' ? null : line.substring(startPos+62, startPos+72).trim();
+                    const wmo = line.substring(startPos+72).trim() === '..' ? null : line.substring(startPos+72).trim();
+                    
+                    stationJson[stationNum] = {
+                        district: district,
+                        stationName: stationName,
+                        startYear: startYear,
+                        endYear: endYear,
+                        latitude: lat,
+                        longitude: lon,
+                        source: source,
+                        state: state,
+                        height: height,
+                        "bar height": barHeight,
+                        wmo: wmo,
+                        "Rainfall": null,
+                        "Temperature": null
+                    };
+                } catch (parseError) {
+                    console.error(`Error parsing line ${i+1}: ${line}`, parseError);
+                    // Continue to next line
+                }
+            }
+            console.log(`Loaded ${Object.keys(stationJson).length} stations from stations.txt`);
+            return stationJson;
+        } else {
+            console.error("stations.txt file not found");
+            return {};
+        }
+    } catch (error) {
+        console.error("Error loading stations from file:", error);
+        return {};
+    }
+}
+
+// Load station data directly from stations.txt
+var stationJson = loadStationsFromFile();
 
 // Create directories for downloaded data
 const DATA_DIR = path.join(__dirname, 'data');
@@ -202,9 +276,9 @@ async function scrapeStations(data, startStation, endStation) {
             errorCount++;
         }
 
-        // Save data every 5 stations or if there's an error
+        // Save progress information every 5 stations or if there's an error
         if (index % 5 === 0 || errorCount > 0) {
-            saveData(data);
+            saveProgressData(data, successCount, errorCount);
             console.log(`  Progress saved: ${successCount} successful, ${errorCount} errors`);
         }
 
@@ -214,8 +288,8 @@ async function scrapeStations(data, startStation, endStation) {
 
     await browser.close();
     
-    // Final save
-    saveData(data);
+    // Final save of progress information
+    saveProgressData(data, successCount, errorCount);
     console.log(`Scraping completed: ${successCount} successful, ${errorCount} errors`);
     
     // Close the readline interface
@@ -250,7 +324,7 @@ async function waitForNewPage(browser) {
         browser.on('targetcreated', async (target) => {
             if (target.type() === 'page') {
                 const newPage = await target.page();
-                await newPage.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => {});
+                await newPage.waitForNavigation({ waitUntil: 'networkidle2', timeout: 10000 }).catch(() => {});
                 resolve(newPage);
             }
         });
@@ -260,7 +334,7 @@ async function waitForNewPage(browser) {
 // Helper function to extract data from the new page
 async function extractData(page) {
     try {
-        await page.waitForNetworkIdle({ timeout: 20000 });
+        await page.waitForNetworkIdle({ timeout: 10000 });
         return await page.evaluate(() => {
             const links = document.querySelectorAll("ul[class='downloads'] > li");
             return links.length > 0 ? links[1].children[0].href : null;
@@ -276,23 +350,24 @@ async function delay() {
     await new Promise((resolve) => setTimeout(resolve, Math.random() * 3000 + 1000));
 }
 
-function saveData(jsonData) {
-    const backupPath = path.join(__dirname, `backup_data_${Date.now()}.json`);
-    const mainPath = path.join(__dirname, 'test.json');
+// Function to save progress data without creating full backups
+function saveProgressData(jsonData, successCount, errorCount) {
+    const progressPath = path.join(__dirname, 'scraper_progress.json');
     
-    // First create a backup
-    if (fs.existsSync(mainPath)) {
-        fs.copyFileSync(mainPath, backupPath);
+    // Save minimal progress information, not the full data
+    const progressData = {
+        timestamp: new Date().toISOString(),
+        successCount: successCount,
+        errorCount: errorCount,
+        completedStations: Object.keys(jsonData).filter(code => jsonData[code].Rainfall || jsonData[code].Temperature)
+    };
+    
+    try {
+        fs.writeFileSync(progressPath, JSON.stringify(progressData, null, 2));
+        console.log(`Progress information saved to ${progressPath}`);
+    } catch (err) {
+        console.error('Error saving progress data:', err);
     }
-    
-    // Then save the new data
-    fs.writeFileSync(mainPath, JSON.stringify(jsonData, null, 2), (err) => {
-        if (err) {
-            console.error('Error saving data:', err);
-        }
-    });
-    
-    console.log(`Data saved to ${mainPath} (backup at ${backupPath})`);
 }
 
 // Function to display available stations for user reference
@@ -319,6 +394,23 @@ async function displayAvailableStations() {
     }
 }
 
+// Function to save the station range to a configuration file
+function saveStationRange(startStation, endStation) {
+    const configPath = path.join(__dirname, 'station_range.json');
+    const configData = {
+        startStation: startStation || '',
+        endStation: endStation || '',
+        timestamp: new Date().toISOString()
+    };
+    
+    try {
+        fs.writeFileSync(configPath, JSON.stringify(configData, null, 2));
+        console.log(`Station range configuration saved to ${configPath}`);
+    } catch (error) {
+        console.error("Error saving station range configuration:", error);
+    }
+}
+
 // Run the scraper with user input
 (async () => {
     try {
@@ -334,10 +426,14 @@ async function displayAvailableStations() {
         const startStation = await prompt("Enter start station number: ");
         const endStation = await prompt("Enter end station number: ");
         
+        // Save the station range for the processor script
+        saveStationRange(startStation, endStation);
+        
         console.log("\nStarting scraper for Australian weather stations...");
         const output = await scrapeStations(stationJson, startStation, endStation);
         console.log("Scraping completed successfully!");
         console.log("Now you can run 'npm run process' to process the downloaded data.");
+        console.log("The processor will automatically use the same station range.");
     } catch (error) {
         console.error("Error scraping stations:", error);
     }

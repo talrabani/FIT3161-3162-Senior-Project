@@ -16,8 +16,8 @@ npm run scrape
 
 echo ""
 echo "Scraping completed! Now processing the data..."
-echo "You will be prompted again for the range of stations to process."
-echo "For consistency, use the same range you entered for scraping."
+echo "The processor will automatically use the same station range without requiring any input."
+echo "You can leave the program running unattended until completion."
 echo ""
 npm run process
 

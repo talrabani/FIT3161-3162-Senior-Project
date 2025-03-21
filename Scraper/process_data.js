@@ -25,11 +25,85 @@ function getTotalStationCount() {
                 }
             }
         }
-        // If we can't find the total, return the count from the JSON file
-        return Object.keys(stationJson).length;
+        return "unknown";
     } catch (error) {
         console.error("Error reading station count:", error);
         return "unknown";
+    }
+}
+
+// Function to parse stations.txt file and extract station information
+function loadStationsFromFile() {
+    try {
+        const stationJson = {};
+        if (fs.existsSync(path.join(__dirname, 'stations.txt'))) {
+            const fileContent = fs.readFileSync(path.join(__dirname, 'stations.txt'), 'utf8');
+            const lines = fileContent.split('\n');
+            
+            // Skip header lines (first 4 lines)
+            for (let i = 4; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line || line.match(/^\d+\s+stations$/)) continue; // Skip empty lines or total line
+                
+                // Parse station data using fixed width format
+                // Example: 001000 01    KARUNJIE                                    1940    1983 -16.2919  127.1956 .....          WA       320.0       ..     ..
+                try {
+                    const stationNum = line.substring(0, 7).trim();
+                    const district = line.substring(8, 13).trim();
+                    
+                    // Finding the name is tricky as it's variable width
+                    let nameEnd = 50; // Approximate position where name ends
+                    for (let j = 13; j < 50; j++) {
+                        // Look for the start of year (4 digits)
+                        if (line.substring(j, j+4).match(/^\d{4}$/)) {
+                            nameEnd = j;
+                            break;
+                        }
+                    }
+                    
+                    const stationName = line.substring(13, nameEnd).trim();
+                    
+                    // Continue parsing after name with fixed positions
+                    const startPos = nameEnd;
+                    const startYear = line.substring(startPos, startPos+8).trim();
+                    const endYear = line.substring(startPos+8, startPos+16).trim() === '..' ? null : line.substring(startPos+8, startPos+16).trim();
+                    const lat = line.substring(startPos+16, startPos+25).trim();
+                    const lon = line.substring(startPos+25, startPos+35).trim();
+                    const source = line.substring(startPos+35, startPos+48).trim() === '.....' ? null : line.substring(startPos+35, startPos+48).trim();
+                    const state = line.substring(startPos+48, startPos+52).trim();
+                    const height = line.substring(startPos+52, startPos+62).trim() === '..' ? null : line.substring(startPos+52, startPos+62).trim();
+                    const barHeight = line.substring(startPos+62, startPos+72).trim() === '..' ? null : line.substring(startPos+62, startPos+72).trim();
+                    const wmo = line.substring(startPos+72).trim() === '..' ? null : line.substring(startPos+72).trim();
+                    
+                    stationJson[stationNum] = {
+                        district: district,
+                        stationName: stationName,
+                        startYear: startYear,
+                        endYear: endYear,
+                        latitude: lat,
+                        longitude: lon,
+                        source: source,
+                        state: state,
+                        height: height,
+                        "bar height": barHeight,
+                        wmo: wmo,
+                        "Rainfall": null,
+                        "Temperature": null
+                    };
+                } catch (parseError) {
+                    console.error(`Error parsing line ${i+1}: ${line}`, parseError);
+                    // Continue to next line
+                }
+            }
+            console.log(`Loaded ${Object.keys(stationJson).length} stations from stations.txt`);
+            return stationJson;
+        } else {
+            console.error("stations.txt file not found");
+            return {};
+        }
+    } catch (error) {
+        console.error("Error loading stations from file:", error);
+        return {};
     }
 }
 
@@ -42,8 +116,8 @@ const OUTPUT_DIR = path.join(DATA_DIR, 'processed');
 // Create output directory if it doesn't exist
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
 
-// Load station data
-const stationJson = require('./test.json');
+// Load station data directly from stations.txt
+const stationJson = loadStationsFromFile();
 
 // Create readline interface for user input
 const rl = readline.createInterface({
@@ -277,6 +351,26 @@ async function displayAvailableStations() {
     }
 }
 
+// Function to load the station range from the configuration file
+function loadStationRange() {
+    const configPath = path.join(__dirname, 'station_range.json');
+    
+    try {
+        if (fs.existsSync(configPath)) {
+            const configData = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+            return {
+                startStation: configData.startStation,
+                endStation: configData.endStation,
+                timestamp: configData.timestamp
+            };
+        }
+    } catch (error) {
+        console.error("Error loading station range configuration:", error);
+    }
+    
+    return { startStation: '', endStation: '', timestamp: null };
+}
+
 // Run the data processor
 (async () => {
     try {
@@ -285,12 +379,34 @@ async function displayAvailableStations() {
         
         await displayAvailableStations();
         
-        console.log("\nYou can specify a range of stations to process.");
-        console.log("Leave blank to process all available stations.");
+        // Load saved station range configuration
+        const savedRange = loadStationRange();
+        let startStation, endStation;
         
-        // Get user input for station range
-        const startStation = await prompt("Enter start station number: ");
-        const endStation = await prompt("Enter end station number: ");
+        if (savedRange.startStation || savedRange.endStation) {
+            console.log("\nFound saved station range configuration:");
+            if (savedRange.timestamp) {
+                console.log(`  Created on: ${new Date(savedRange.timestamp).toLocaleString()}`);
+            }
+            
+            if (savedRange.startStation && savedRange.endStation) {
+                console.log(`  Station range: ${savedRange.startStation} to ${savedRange.endStation}`);
+            } else if (savedRange.startStation) {
+                console.log(`  Starting from station: ${savedRange.startStation}`);
+            } else if (savedRange.endStation) {
+                console.log(`  Up to station: ${savedRange.endStation}`);
+            }
+            
+            // Automatically use the saved range without prompting
+            startStation = savedRange.startStation;
+            endStation = savedRange.endStation;
+            console.log("Automatically using saved station range.");
+        } else {
+            console.log("\nNo saved station range found. Processing all available stations.");
+            // If no saved range, process all stations
+            startStation = '';
+            endStation = '';
+        }
         
         await processAllData(startStation, endStation);
     } catch (error) {
