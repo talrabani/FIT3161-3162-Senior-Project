@@ -6,6 +6,32 @@ const path = require('path');
 const AdmZip = require('adm-zip');
 const csv = require('csv-parser');
 const { Readable } = require('stream');
+const readline = require('readline');
+
+// Function to read total station count from stations.txt file
+function getTotalStationCount() {
+    try {
+        if (fs.existsSync(path.join(__dirname, 'stations.txt'))) {
+            const fileContent = fs.readFileSync(path.join(__dirname, 'stations.txt'), 'utf8');
+            const lines = fileContent.split('\n');
+            
+            // Look for the total count at the bottom of the file
+            // Format is simply a line with e.g. "19479 stations"
+            for (let i = lines.length - 1; i >= 0; i--) {
+                const line = lines[i].trim();
+                const match = line.match(/^(\d+)\s+stations$/);
+                if (match && match[1]) {
+                    return parseInt(match[1]);
+                }
+            }
+        }
+        // If we can't find the total, return the count from the JSON file
+        return Object.keys(stationJson).length;
+    } catch (error) {
+        console.error("Error reading station count:", error);
+        return "unknown";
+    }
+}
 
 // Directories
 const DATA_DIR = path.join(__dirname, 'data');
@@ -19,11 +45,39 @@ if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
 // Load station data
 const stationJson = require('./test.json');
 
+// Create readline interface for user input
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+// Function to prompt user for input
+function prompt(question) {
+    return new Promise((resolve) => {
+        rl.question(question, (answer) => {
+            resolve(answer);
+        });
+    });
+}
+
 // Process all downloaded data
-async function processAllData() {
+async function processAllData(startStation, endStation) {
     console.log("Starting to process weather data...");
     
-    const stations = Object.keys(stationJson);
+    // Get all station codes and filter based on range if provided
+    let allStations = Object.keys(stationJson);
+    let stations;
+    
+    if (startStation && endStation) {
+        stations = allStations.filter(code => {
+            return code >= startStation && code <= endStation;
+        });
+        console.log(`Processing stations from ${startStation} to ${endStation}`);
+    } else {
+        stations = allStations;
+        console.log(`Processing all stations`);
+    }
+    
     console.log(`Found ${stations.length} stations to process`);
     
     // Create a map dataset for each station
@@ -96,13 +150,22 @@ async function processAllData() {
         }
     }
     
+    // Create a range-specific output filename if a range was specified
+    let mapFilename = 'map_data.geojson';
+    if (startStation && endStation) {
+        mapFilename = `map_data_${startStation}_${endStation}.geojson`;
+    }
+    
     // Save the map data
-    const mapOutputPath = path.join(OUTPUT_DIR, 'map_data.geojson');
+    const mapOutputPath = path.join(OUTPUT_DIR, mapFilename);
     fs.writeFileSync(mapOutputPath, JSON.stringify(mapData, null, 2));
     
     console.log(`Processing complete. Processed ${processedCount} stations.`);
     console.log(`Map data saved to ${mapOutputPath}`);
     console.log(`Individual station data saved in ${OUTPUT_DIR}`);
+    
+    // Close the readline interface
+    rl.close();
 }
 
 // Process a zip file containing CSV data
@@ -190,7 +253,48 @@ function summarizeData(data) {
     return summary.sort((a, b) => a.year - b.year);
 }
 
+// Function to display available stations for user reference
+async function displayAvailableStations() {
+    const stationCodes = Object.keys(stationJson).sort();
+    
+    // Get the official total from stations.txt file
+    const totalStationCount = getTotalStationCount();
+    
+    console.log("Available station range:");
+    console.log(`  First station: ${stationCodes[0]} - ${stationJson[stationCodes[0]].stationName}`);
+    console.log(`  Last station: ${stationCodes[stationCodes.length-1]} - ${stationJson[stationCodes[stationCodes.length-1]].stationName}`);
+    console.log(`  Total stations in Australia: ${totalStationCount}`);
+    console.log(`  Stations in current dataset: ${stationCodes.length}`);
+    
+    // Display a few sample stations
+    console.log("\nSample stations:");
+    const sampleIndices = [0, Math.floor(stationCodes.length/4), Math.floor(stationCodes.length/2), 
+                         Math.floor(3*stationCodes.length/4), stationCodes.length-1];
+    
+    for (const idx of sampleIndices) {
+        const code = stationCodes[idx];
+        console.log(`  ${code} - ${stationJson[code].stationName} (${stationJson[code].state})`);
+    }
+}
+
 // Run the data processor
-processAllData().catch(error => {
-    console.error("Error in data processing:", error);
-}); 
+(async () => {
+    try {
+        console.log("Australian Weather Data Processor");
+        console.log("-------------------------------");
+        
+        await displayAvailableStations();
+        
+        console.log("\nYou can specify a range of stations to process.");
+        console.log("Leave blank to process all available stations.");
+        
+        // Get user input for station range
+        const startStation = await prompt("Enter start station number: ");
+        const endStation = await prompt("Enter end station number: ");
+        
+        await processAllData(startStation, endStation);
+    } catch (error) {
+        console.error("Error in data processing:", error);
+        rl.close();
+    }
+})(); 

@@ -6,6 +6,32 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const http = require('http');
+const readline = require('readline');
+
+// Function to read total station count from stations.txt file
+function getTotalStationCount() {
+    try {
+        if (fs.existsSync(path.join(__dirname, 'stations.txt'))) {
+            const fileContent = fs.readFileSync(path.join(__dirname, 'stations.txt'), 'utf8');
+            const lines = fileContent.split('\n');
+            
+            // Look for the total count at the bottom of the file
+            // Format is simply a line with e.g. "19479 stations"
+            for (let i = lines.length - 1; i >= 0; i--) {
+                const line = lines[i].trim();
+                const match = line.match(/^(\d+)\s+stations$/);
+                if (match && match[1]) {
+                    return parseInt(match[1]);
+                }
+            }
+        }
+        // If we can't find the total, return the count from the JSON file
+        return Object.keys(stationJson).length;
+    } catch (error) {
+        console.error("Error reading station count:", error);
+        return "unknown";
+    }
+}
 
 // stations.txt from here: http://www.bom.gov.au/climate/data/lists_by_element/stations.txt
 var stationJson = require('./test.json');
@@ -19,6 +45,21 @@ const TEMPERATURE_DIR = path.join(DATA_DIR, 'temperature');
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR);
 if (!fs.existsSync(RAINFALL_DIR)) fs.mkdirSync(RAINFALL_DIR);
 if (!fs.existsSync(TEMPERATURE_DIR)) fs.mkdirSync(TEMPERATURE_DIR);
+
+// Create readline interface for user input
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+// Function to prompt user for input
+function prompt(question) {
+    return new Promise((resolve) => {
+        rl.question(question, (answer) => {
+            resolve(answer);
+        });
+    });
+}
 
 // Function to download files
 function downloadFile(url, destination) {
@@ -66,14 +107,27 @@ function downloadFile(url, destination) {
     });
 }
 
-async function scrapeStations(data) {
+async function scrapeStations(data, startStation, endStation) {
     //change headless to true, if u dont want chrome pop up
     const browser = await puppeteer.launch({
         args: ['--disable-features=HttpsUpgrades'],
         headless: false
     });
 
-    let stationCodes = Object.keys(data);
+    let allStationCodes = Object.keys(data);
+    
+    // Filter station codes based on the range provided
+    let stationCodes;
+    if (startStation && endStation) {
+        stationCodes = allStationCodes.filter(code => {
+            return code >= startStation && code <= endStation;
+        });
+        console.log(`Processing stations from ${startStation} to ${endStation}`);
+    } else {
+        stationCodes = allStationCodes;
+        console.log(`Processing all stations`);
+    }
+    
     console.log(`Found ${stationCodes.length} stations to process`);
 
     // Main page where we select data type and station number
@@ -164,6 +218,9 @@ async function scrapeStations(data) {
     saveData(data);
     console.log(`Scraping completed: ${successCount} successful, ${errorCount} errors`);
     
+    // Close the readline interface
+    rl.close();
+    
     return data;
 }
 
@@ -238,12 +295,49 @@ function saveData(jsonData) {
     console.log(`Data saved to ${mainPath} (backup at ${backupPath})`);
 }
 
-// Run the scraper
+// Function to display available stations for user reference
+async function displayAvailableStations() {
+    const stationCodes = Object.keys(stationJson).sort();
+    
+    // Get the official total from stations.txt file
+    const totalStationCount = getTotalStationCount();
+    
+    console.log("Available station range:");
+    console.log(`  First station: ${stationCodes[0]} - ${stationJson[stationCodes[0]].stationName}`);
+    console.log(`  Last station: ${stationCodes[stationCodes.length-1]} - ${stationJson[stationCodes[stationCodes.length-1]].stationName}`);
+    console.log(`  Total stations in Australia: ${totalStationCount}`);
+    console.log(`  Stations in current dataset: ${stationCodes.length}`);
+    
+    // Display a few sample stations
+    console.log("\nSample stations:");
+    const sampleIndices = [0, Math.floor(stationCodes.length/4), Math.floor(stationCodes.length/2), 
+                         Math.floor(3*stationCodes.length/4), stationCodes.length-1];
+    
+    for (const idx of sampleIndices) {
+        const code = stationCodes[idx];
+        console.log(`  ${code} - ${stationJson[code].stationName} (${stationJson[code].state})`);
+    }
+}
+
+// Run the scraper with user input
 (async () => {
     try {
-        console.log("Starting scraper for Australian weather stations...");
-        const output = await scrapeStations(stationJson);
+        console.log("Starting Australian Weather Station Data Scraper");
+        console.log("----------------------------------------------");
+        
+        await displayAvailableStations();
+        
+        console.log("\nYou can specify a range of stations to process.");
+        console.log("Leave blank to process all stations.");
+        
+        // Get user input for station range
+        const startStation = await prompt("Enter start station number: ");
+        const endStation = await prompt("Enter end station number: ");
+        
+        console.log("\nStarting scraper for Australian weather stations...");
+        const output = await scrapeStations(stationJson, startStation, endStation);
         console.log("Scraping completed successfully!");
+        console.log("Now you can run 'npm run process' to process the downloaded data.");
     } catch (error) {
         console.error("Error scraping stations:", error);
     }
