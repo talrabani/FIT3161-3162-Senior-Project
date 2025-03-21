@@ -43,12 +43,29 @@ function loadStationsFromFile() {
             // Skip header lines (first 4 lines)
             for (let i = 4; i < lines.length; i++) {
                 const line = lines[i].trim();
-                if (!line || line.match(/^\d+\s+stations$/)) continue; // Skip empty lines or total line
+                
+                // Skip empty lines, footer lines, or total count line
+                if (!line || 
+                    line.match(/^\d+\s+stations$/) || 
+                    line.includes("Copyright") || 
+                    line.includes("copyright") || 
+                    line.includes("Cop") ||
+                    line.includes("Please") ||
+                    line.includes("-----")) {
+                    continue;
+                }
+                
+                // Basic validation: first segment should be 6-7 digit station number
+                const firstSegment = line.substring(0, 7).trim();
+                if (!firstSegment.match(/^\d{6,7}$/)) {
+                    console.warn(`Skipping invalid line: ${line.substring(0, 30)}...`);
+                    continue;
+                }
                 
                 // Parse station data using fixed width format
                 // Example: 001000 01    KARUNJIE                                    1940    1983 -16.2919  127.1956 .....          WA       320.0       ..     ..
                 try {
-                    const stationNum = line.substring(0, 7).trim();
+                    const stationNum = firstSegment;
                     const district = line.substring(8, 13).trim();
                     
                     // Finding the name is tricky as it's variable width
@@ -95,7 +112,15 @@ function loadStationsFromFile() {
                     // Continue to next line
                 }
             }
-            console.log(`Loaded ${Object.keys(stationJson).length} stations from stations.txt`);
+            
+            // Validate the stations - display warning if something seems off
+            const stationCount = Object.keys(stationJson).length;
+            if (stationCount < 1000) {
+                console.warn(`WARNING: Only found ${stationCount} stations, which seems low. There might be a parsing issue.`);
+            } else {
+                console.log(`Loaded ${stationCount} stations from stations.txt`);
+            }
+            
             return stationJson;
         } else {
             console.error("stations.txt file not found");
@@ -378,8 +403,27 @@ async function displayAvailableStations() {
     const totalStationCount = getTotalStationCount();
     
     console.log("Available station range:");
-    console.log(`  First station: ${stationCodes[0]} - ${stationJson[stationCodes[0]].stationName}`);
-    console.log(`  Last station: ${stationCodes[stationCodes.length-1]} - ${stationJson[stationCodes[stationCodes.length-1]].stationName}`);
+    
+    // Check if we have valid stations
+    if (stationCodes.length === 0) {
+        console.error("  ERROR: No valid stations were loaded from stations.txt");
+        console.error("  Please check that stations.txt is correctly formatted and contains station data.");
+        return;
+    }
+    
+    // Verify that first and last stations look like valid station codes
+    const firstStation = stationCodes[0];
+    const lastStation = stationCodes[stationCodes.length-1];
+    
+    if (!firstStation.match(/^\d{6,7}$/) || !lastStation.match(/^\d{6,7}$/)) {
+        console.error("  ERROR: Station data appears to be incorrectly parsed.");
+        console.error("  First entry doesn't look like a station code:", firstStation);
+        console.error("  Please check stations.txt format and parsing logic.");
+        return;
+    }
+    
+    console.log(`  First station: ${firstStation} - ${stationJson[firstStation].stationName}`);
+    console.log(`  Last station: ${lastStation} - ${stationJson[lastStation].stationName}`);
     console.log(`  Total stations in Australia: ${totalStationCount}`);
     console.log(`  Stations in current dataset: ${stationCodes.length}`);
     
