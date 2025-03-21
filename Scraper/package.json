@@ -1,0 +1,18 @@
+{
+  "name": "australia-weather-data-scraper",
+  "version": "1.0.0",
+  "description": "Scraper for Australian historical weather data",
+  "main": "scraper.js",
+  "scripts": {
+    "scrape": "node scraper.js",
+    "process": "node process_data.js",
+    "start": "npm run scrape && npm run process"
+  },
+  "dependencies": {
+    "puppeteer": "^21.3.8",
+    "adm-zip": "^0.5.10",
+    "csv-parser": "^3.0.0"
+  },
+  "author": "",
+  "license": "MIT"
+} 
