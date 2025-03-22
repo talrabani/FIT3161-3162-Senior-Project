@@ -1,0 +1,6051 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          644,
+          995
+        ]
+      },
+      "properties": {
+        "id": "001005",
+        "name": "WYNDHAM PORT",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "886    1",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1887,
+            "average": 1005
+          },
+          {
+            "year": 1888,
+            "average": 1005
+          },
+          {
+            "year": 1889,
+            "average": 1005
+          },
+          {
+            "year": 1890,
+            "average": 1005
+          },
+          {
+            "year": 1891,
+            "average": 1005
+          },
+          {
+            "year": 1892,
+            "average": 1005
+          },
+          {
+            "year": 1893,
+            "average": 1005
+          },
+          {
+            "year": 1894,
+            "average": 1005
+          },
+          {
+            "year": 1895,
+            "average": 1005
+          },
+          {
+            "year": 1896,
+            "average": 1005
+          },
+          {
+            "year": 1897,
+            "average": 1005
+          },
+          {
+            "year": 1898,
+            "average": 1005
+          },
+          {
+            "year": 1899,
+            "average": 1005
+          },
+          {
+            "year": 1900,
+            "average": 1005
+          },
+          {
+            "year": 1901,
+            "average": 1005
+          },
+          {
+            "year": 1902,
+            "average": 1005
+          },
+          {
+            "year": 1903,
+            "average": 1005
+          },
+          {
+            "year": 1904,
+            "average": 1005
+          },
+          {
+            "year": 1905,
+            "average": 1005
+          },
+          {
+            "year": 1906,
+            "average": 1005
+          },
+          {
+            "year": 1907,
+            "average": 1005
+          },
+          {
+            "year": 1908,
+            "average": 1005
+          },
+          {
+            "year": 1909,
+            "average": 1005
+          },
+          {
+            "year": 1910,
+            "average": 1005
+          },
+          {
+            "year": 1911,
+            "average": 1005
+          },
+          {
+            "year": 1912,
+            "average": 1005
+          },
+          {
+            "year": 1913,
+            "average": 1005
+          },
+          {
+            "year": 1914,
+            "average": 1005
+          },
+          {
+            "year": 1915,
+            "average": 1005
+          },
+          {
+            "year": 1916,
+            "average": 1005
+          },
+          {
+            "year": 1917,
+            "average": 1005
+          },
+          {
+            "year": 1918,
+            "average": 1005
+          },
+          {
+            "year": 1919,
+            "average": 1005
+          },
+          {
+            "year": 1920,
+            "average": 1005
+          },
+          {
+            "year": 1921,
+            "average": 1005
+          },
+          {
+            "year": 1922,
+            "average": 1005
+          },
+          {
+            "year": 1923,
+            "average": 1005
+          },
+          {
+            "year": 1924,
+            "average": 1005
+          },
+          {
+            "year": 1925,
+            "average": 1005
+          },
+          {
+            "year": 1926,
+            "average": 1005
+          },
+          {
+            "year": 1927,
+            "average": 1005
+          },
+          {
+            "year": 1928,
+            "average": 1005
+          },
+          {
+            "year": 1929,
+            "average": 1005
+          },
+          {
+            "year": 1930,
+            "average": 1005
+          },
+          {
+            "year": 1931,
+            "average": 1005
+          },
+          {
+            "year": 1932,
+            "average": 1005
+          },
+          {
+            "year": 1933,
+            "average": 1005
+          },
+          {
+            "year": 1934,
+            "average": 1005
+          },
+          {
+            "year": 1935,
+            "average": 1005
+          },
+          {
+            "year": 1936,
+            "average": 1005
+          },
+          {
+            "year": 1937,
+            "average": 1005
+          },
+          {
+            "year": 1938,
+            "average": 1005
+          },
+          {
+            "year": 1939,
+            "average": 1005
+          },
+          {
+            "year": 1940,
+            "average": 1005
+          },
+          {
+            "year": 1941,
+            "average": 1005
+          },
+          {
+            "year": 1942,
+            "average": 1005
+          },
+          {
+            "year": 1943,
+            "average": 1005
+          },
+          {
+            "year": 1944,
+            "average": 1005
+          },
+          {
+            "year": 1945,
+            "average": 1005
+          },
+          {
+            "year": 1946,
+            "average": 1005
+          },
+          {
+            "year": 1947,
+            "average": 1005
+          },
+          {
+            "year": 1948,
+            "average": 1005
+          },
+          {
+            "year": 1949,
+            "average": 1005
+          },
+          {
+            "year": 1950,
+            "average": 1005
+          },
+          {
+            "year": 1951,
+            "average": 1005
+          },
+          {
+            "year": 1952,
+            "average": 1005
+          },
+          {
+            "year": 1953,
+            "average": 1005
+          },
+          {
+            "year": 1954,
+            "average": 1005
+          },
+          {
+            "year": 1955,
+            "average": 1005
+          },
+          {
+            "year": 1956,
+            "average": 1005
+          },
+          {
+            "year": 1957,
+            "average": 1005
+          },
+          {
+            "year": 1958,
+            "average": 1005
+          },
+          {
+            "year": 1959,
+            "average": 1005
+          },
+          {
+            "year": 1960,
+            "average": 1005
+          },
+          {
+            "year": 1961,
+            "average": 1005
+          },
+          {
+            "year": 1962,
+            "average": 1005
+          },
+          {
+            "year": 1963,
+            "average": 1005
+          },
+          {
+            "year": 1964,
+            "average": 1005
+          },
+          {
+            "year": 1965,
+            "average": 1005
+          },
+          {
+            "year": 1966,
+            "average": 1005
+          },
+          {
+            "year": 1967,
+            "average": 1005
+          },
+          {
+            "year": 1968,
+            "average": 1005
+          },
+          {
+            "year": 1969,
+            "average": 1005
+          },
+          {
+            "year": 1970,
+            "average": 1005
+          },
+          {
+            "year": 1971,
+            "average": 1005
+          },
+          {
+            "year": 1972,
+            "average": 1005
+          },
+          {
+            "year": 1973,
+            "average": 1005
+          },
+          {
+            "year": 1974,
+            "average": 1005
+          },
+          {
+            "year": 1975,
+            "average": 1005
+          },
+          {
+            "year": 1976,
+            "average": 1005
+          },
+          {
+            "year": 1977,
+            "average": 1005
+          },
+          {
+            "year": 1978,
+            "average": 1005
+          },
+          {
+            "year": 1979,
+            "average": 1005
+          },
+          {
+            "year": 1980,
+            "average": 1005
+          },
+          {
+            "year": 1981,
+            "average": 1005
+          },
+          {
+            "year": 1982,
+            "average": 1005
+          },
+          {
+            "year": 1983,
+            "average": 1005
+          },
+          {
+            "year": 1984,
+            "average": 1005
+          },
+          {
+            "year": 1985,
+            "average": 1005
+          },
+          {
+            "year": 1986,
+            "average": 1005
+          },
+          {
+            "year": 1987,
+            "average": 1005
+          },
+          {
+            "year": 1988,
+            "average": 1005
+          },
+          {
+            "year": 1989,
+            "average": 1005
+          },
+          {
+            "year": 1990,
+            "average": 1005
+          },
+          {
+            "year": 1991,
+            "average": 1005
+          },
+          {
+            "year": 1992,
+            "average": 1005
+          },
+          {
+            "year": 1993,
+            "average": 1005
+          },
+          {
+            "year": 1994,
+            "average": 1005
+          },
+          {
+            "year": 1995,
+            "average": 1005
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1957,
+            "average": 1005
+          },
+          {
+            "year": 1958,
+            "average": 1005
+          },
+          {
+            "year": 1959,
+            "average": 1005
+          },
+          {
+            "year": 1960,
+            "average": 1005
+          },
+          {
+            "year": 1961,
+            "average": 1005
+          },
+          {
+            "year": 1962,
+            "average": 1005
+          },
+          {
+            "year": 1963,
+            "average": 1005
+          },
+          {
+            "year": 1964,
+            "average": 1005
+          },
+          {
+            "year": 1965,
+            "average": 1005
+          },
+          {
+            "year": 1966,
+            "average": 1005
+          },
+          {
+            "year": 1967,
+            "average": 1005
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100,
+          null
+        ]
+      },
+      "properties": {
+        "id": "001006",
+        "name": "WYNDHAM AERO",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "951",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1951,
+            "average": 1006
+          },
+          {
+            "year": 1952,
+            "average": 1006
+          },
+          {
+            "year": 1953,
+            "average": 1006
+          },
+          {
+            "year": 1954,
+            "average": 1006
+          },
+          {
+            "year": 1955,
+            "average": 1006
+          },
+          {
+            "year": 1956,
+            "average": 1006
+          },
+          {
+            "year": 1957,
+            "average": 1006
+          },
+          {
+            "year": 1958,
+            "average": 1006
+          },
+          {
+            "year": 1959,
+            "average": 1006
+          },
+          {
+            "year": 1960,
+            "average": 1006
+          },
+          {
+            "year": 1961,
+            "average": 1006
+          },
+          {
+            "year": 1962,
+            "average": 1006
+          },
+          {
+            "year": 1963,
+            "average": 1006
+          },
+          {
+            "year": 1964,
+            "average": 1006
+          },
+          {
+            "year": 1965,
+            "average": 1006
+          },
+          {
+            "year": 1966,
+            "average": 1006
+          },
+          {
+            "year": 1967,
+            "average": 1006
+          },
+          {
+            "year": 1968,
+            "average": 1006
+          },
+          {
+            "year": 1969,
+            "average": 1006
+          },
+          {
+            "year": 1970,
+            "average": 1006
+          },
+          {
+            "year": 1971,
+            "average": 1006
+          },
+          {
+            "year": 1972,
+            "average": 1006
+          },
+          {
+            "year": 1973,
+            "average": 1006
+          },
+          {
+            "year": 1974,
+            "average": 1006
+          },
+          {
+            "year": 1975,
+            "average": 1006
+          },
+          {
+            "year": 1976,
+            "average": 1006
+          },
+          {
+            "year": 1977,
+            "average": 1006
+          },
+          {
+            "year": 1978,
+            "average": 1006
+          },
+          {
+            "year": 1979,
+            "average": 1006
+          },
+          {
+            "year": 1980,
+            "average": 1006
+          },
+          {
+            "year": 1981,
+            "average": 1006
+          },
+          {
+            "year": 1982,
+            "average": 1006
+          },
+          {
+            "year": 1983,
+            "average": 1006
+          },
+          {
+            "year": 1984,
+            "average": 1006
+          },
+          {
+            "year": 1985,
+            "average": 1006
+          },
+          {
+            "year": 1986,
+            "average": 1006
+          },
+          {
+            "year": 1987,
+            "average": 1006
+          },
+          {
+            "year": 1988,
+            "average": 1006
+          },
+          {
+            "year": 1989,
+            "average": 1006
+          },
+          {
+            "year": 1990,
+            "average": 1006
+          },
+          {
+            "year": 1991,
+            "average": 1006
+          },
+          {
+            "year": 1992,
+            "average": 1006
+          },
+          {
+            "year": 1993,
+            "average": 1006
+          },
+          {
+            "year": 1994,
+            "average": 1006
+          },
+          {
+            "year": 1995,
+            "average": 1006
+          },
+          {
+            "year": 1996,
+            "average": 1006
+          },
+          {
+            "year": 1997,
+            "average": 1006
+          },
+          {
+            "year": 1998,
+            "average": 1006
+          },
+          {
+            "year": 1999,
+            "average": 1006
+          },
+          {
+            "year": 2000,
+            "average": 1006
+          },
+          {
+            "year": 2001,
+            "average": 1006
+          },
+          {
+            "year": 2002,
+            "average": 1006
+          },
+          {
+            "year": 2003,
+            "average": 1006
+          },
+          {
+            "year": 2004,
+            "average": 1006
+          },
+          {
+            "year": 2005,
+            "average": 1006
+          },
+          {
+            "year": 2006,
+            "average": 1006
+          },
+          {
+            "year": 2007,
+            "average": 1006
+          },
+          {
+            "year": 2008,
+            "average": 1006
+          },
+          {
+            "year": 2009,
+            "average": 1006
+          },
+          {
+            "year": 2010,
+            "average": 1006
+          },
+          {
+            "year": 2011,
+            "average": 1006
+          },
+          {
+            "year": 2012,
+            "average": 1006
+          },
+          {
+            "year": 2013,
+            "average": 1006
+          },
+          {
+            "year": 2014,
+            "average": 1006
+          },
+          {
+            "year": 2015,
+            "average": 1006
+          },
+          {
+            "year": 2016,
+            "average": 1006
+          },
+          {
+            "year": 2017,
+            "average": 1006
+          },
+          {
+            "year": 2018,
+            "average": 1006
+          },
+          {
+            "year": 2019,
+            "average": 1006
+          },
+          {
+            "year": 2020,
+            "average": 1006
+          },
+          {
+            "year": 2021,
+            "average": 1006
+          },
+          {
+            "year": 2022,
+            "average": 1006
+          },
+          {
+            "year": 2023,
+            "average": 1006
+          },
+          {
+            "year": 2024,
+            "average": 1006
+          },
+          {
+            "year": 2025,
+            "average": 1006
+          }
+        ],
+        "temperature": [
+          {
+            "year": 2000,
+            "average": 1006
+          },
+          {
+            "year": 2001,
+            "average": 1006
+          },
+          {
+            "year": 2002,
+            "average": 1006
+          },
+          {
+            "year": 2003,
+            "average": 1006
+          },
+          {
+            "year": 2004,
+            "average": 1006
+          },
+          {
+            "year": 2005,
+            "average": 1006
+          },
+          {
+            "year": 2006,
+            "average": 1006
+          },
+          {
+            "year": 2007,
+            "average": 1006
+          },
+          {
+            "year": 2008,
+            "average": 1006
+          },
+          {
+            "year": 2009,
+            "average": 1006
+          },
+          {
+            "year": 2010,
+            "average": 1006
+          },
+          {
+            "year": 2011,
+            "average": 1006
+          },
+          {
+            "year": 2012,
+            "average": 1006
+          },
+          {
+            "year": 2013,
+            "average": 1006
+          },
+          {
+            "year": 2014,
+            "average": 1006
+          },
+          {
+            "year": 2015,
+            "average": 1006
+          },
+          {
+            "year": 2016,
+            "average": 1006
+          },
+          {
+            "year": 2017,
+            "average": 1006
+          },
+          {
+            "year": 2018,
+            "average": 1006
+          },
+          {
+            "year": 2019,
+            "average": 1006
+          },
+          {
+            "year": 2020,
+            "average": 1006
+          },
+          {
+            "year": 2021,
+            "average": 1006
+          },
+          {
+            "year": 2022,
+            "average": 1006
+          },
+          {
+            "year": 2023,
+            "average": 1006
+          },
+          {
+            "year": 2024,
+            "average": 1006
+          },
+          {
+            "year": 2025,
+            "average": 1006
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          542,
+          null
+        ]
+      },
+      "properties": {
+        "id": "001007",
+        "name": "TROUGHTON ISLAND",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "956",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1956,
+            "average": 1007
+          },
+          {
+            "year": 1957,
+            "average": 1007
+          },
+          {
+            "year": 1958,
+            "average": 1007
+          },
+          {
+            "year": 1959,
+            "average": 1007
+          },
+          {
+            "year": 1960,
+            "average": 1007
+          },
+          {
+            "year": 1961,
+            "average": 1007
+          },
+          {
+            "year": 1962,
+            "average": 1007
+          },
+          {
+            "year": 1963,
+            "average": 1007
+          },
+          {
+            "year": 1964,
+            "average": 1007
+          },
+          {
+            "year": 1965,
+            "average": 1007
+          },
+          {
+            "year": 1966,
+            "average": 1007
+          },
+          {
+            "year": 1967,
+            "average": 1007
+          },
+          {
+            "year": 1968,
+            "average": 1007
+          },
+          {
+            "year": 1969,
+            "average": 1007
+          },
+          {
+            "year": 1970,
+            "average": 1007
+          },
+          {
+            "year": 1971,
+            "average": 1007
+          },
+          {
+            "year": 1972,
+            "average": 1007
+          },
+          {
+            "year": 1973,
+            "average": 1007
+          },
+          {
+            "year": 1974,
+            "average": 1007
+          },
+          {
+            "year": 1975,
+            "average": 1007
+          },
+          {
+            "year": 1976,
+            "average": 1007
+          },
+          {
+            "year": 1977,
+            "average": 1007
+          },
+          {
+            "year": 1978,
+            "average": 1007
+          },
+          {
+            "year": 1979,
+            "average": 1007
+          },
+          {
+            "year": 1980,
+            "average": 1007
+          },
+          {
+            "year": 1981,
+            "average": 1007
+          },
+          {
+            "year": 1982,
+            "average": 1007
+          },
+          {
+            "year": 1983,
+            "average": 1007
+          },
+          {
+            "year": 1984,
+            "average": 1007
+          },
+          {
+            "year": 1985,
+            "average": 1007
+          },
+          {
+            "year": 1986,
+            "average": 1007
+          },
+          {
+            "year": 1987,
+            "average": 1007
+          },
+          {
+            "year": 1988,
+            "average": 1007
+          },
+          {
+            "year": 1989,
+            "average": 1007
+          },
+          {
+            "year": 1990,
+            "average": 1007
+          },
+          {
+            "year": 1991,
+            "average": 1007
+          },
+          {
+            "year": 1992,
+            "average": 1007
+          },
+          {
+            "year": 1993,
+            "average": 1007
+          },
+          {
+            "year": 1994,
+            "average": 1007
+          },
+          {
+            "year": 1995,
+            "average": 1007
+          },
+          {
+            "year": 1996,
+            "average": 1007
+          },
+          {
+            "year": 1997,
+            "average": 1007
+          },
+          {
+            "year": 1998,
+            "average": 1007
+          },
+          {
+            "year": 1999,
+            "average": 1007
+          },
+          {
+            "year": 2000,
+            "average": 1007
+          },
+          {
+            "year": 2001,
+            "average": 1007
+          },
+          {
+            "year": 2002,
+            "average": 1007
+          },
+          {
+            "year": 2003,
+            "average": 1007
+          },
+          {
+            "year": 2004,
+            "average": 1007
+          },
+          {
+            "year": 2005,
+            "average": 1007
+          },
+          {
+            "year": 2006,
+            "average": 1007
+          },
+          {
+            "year": 2007,
+            "average": 1007
+          },
+          {
+            "year": 2008,
+            "average": 1007
+          },
+          {
+            "year": 2009,
+            "average": 1007
+          },
+          {
+            "year": 2010,
+            "average": 1007
+          },
+          {
+            "year": 2011,
+            "average": 1007
+          },
+          {
+            "year": 2012,
+            "average": 1007
+          },
+          {
+            "year": 2013,
+            "average": 1007
+          },
+          {
+            "year": 2014,
+            "average": 1007
+          },
+          {
+            "year": 2015,
+            "average": 1007
+          },
+          {
+            "year": 2016,
+            "average": 1007
+          },
+          {
+            "year": 2017,
+            "average": 1007
+          },
+          {
+            "year": 2018,
+            "average": 1007
+          },
+          {
+            "year": 2019,
+            "average": 1007
+          },
+          {
+            "year": 2020,
+            "average": 1007
+          },
+          {
+            "year": 2021,
+            "average": 1007
+          },
+          {
+            "year": 2022,
+            "average": 1007
+          },
+          {
+            "year": 2023,
+            "average": 1007
+          },
+          {
+            "year": 2024,
+            "average": 1007
+          },
+          {
+            "year": 2025,
+            "average": 1007
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1957,
+            "average": 1007
+          },
+          {
+            "year": 1958,
+            "average": 1007
+          },
+          {
+            "year": 1959,
+            "average": 1007
+          },
+          {
+            "year": 1960,
+            "average": 1007
+          },
+          {
+            "year": 1961,
+            "average": 1007
+          },
+          {
+            "year": 1962,
+            "average": 1007
+          },
+          {
+            "year": 1963,
+            "average": 1007
+          },
+          {
+            "year": 1964,
+            "average": 1007
+          },
+          {
+            "year": 1965,
+            "average": 1007
+          },
+          {
+            "year": 1966,
+            "average": 1007
+          },
+          {
+            "year": 1967,
+            "average": 1007
+          },
+          {
+            "year": 1968,
+            "average": 1007
+          },
+          {
+            "year": 1969,
+            "average": 1007
+          },
+          {
+            "year": 1970,
+            "average": 1007
+          },
+          {
+            "year": 1971,
+            "average": 1007
+          },
+          {
+            "year": 1972,
+            "average": 1007
+          },
+          {
+            "year": 1973,
+            "average": 1007
+          },
+          {
+            "year": 1974,
+            "average": 1007
+          },
+          {
+            "year": 1975,
+            "average": 1007
+          },
+          {
+            "year": 1976,
+            "average": 1007
+          },
+          {
+            "year": 1977,
+            "average": 1007
+          },
+          {
+            "year": 1978,
+            "average": 1007
+          },
+          {
+            "year": 1979,
+            "average": 1007
+          },
+          {
+            "year": 1980,
+            "average": 1007
+          },
+          {
+            "year": 1981,
+            "average": 1007
+          },
+          {
+            "year": 1982,
+            "average": 1007
+          },
+          {
+            "year": 1983,
+            "average": 1007
+          },
+          {
+            "year": 1984,
+            "average": 1007
+          },
+          {
+            "year": 1985,
+            "average": 1007
+          },
+          {
+            "year": 1986,
+            "average": 1007
+          },
+          {
+            "year": 1987,
+            "average": 1007
+          },
+          {
+            "year": 1988,
+            "average": 1007
+          },
+          {
+            "year": 1989,
+            "average": 1007
+          },
+          {
+            "year": 1990,
+            "average": 1007
+          },
+          {
+            "year": 1991,
+            "average": 1007
+          },
+          {
+            "year": 1992,
+            "average": 1007
+          },
+          {
+            "year": 1993,
+            "average": 1007
+          },
+          {
+            "year": 1994,
+            "average": 1007
+          },
+          {
+            "year": 1995,
+            "average": 1007
+          },
+          {
+            "year": 1996,
+            "average": 1007
+          },
+          {
+            "year": 1997,
+            "average": 1007
+          },
+          {
+            "year": 1998,
+            "average": 1007
+          },
+          {
+            "year": 1999,
+            "average": 1007
+          },
+          {
+            "year": 2000,
+            "average": 1007
+          },
+          {
+            "year": 2001,
+            "average": 1007
+          },
+          {
+            "year": 2002,
+            "average": 1007
+          },
+          {
+            "year": 2003,
+            "average": 1007
+          },
+          {
+            "year": 2004,
+            "average": 1007
+          },
+          {
+            "year": 2005,
+            "average": 1007
+          },
+          {
+            "year": 2006,
+            "average": 1007
+          },
+          {
+            "year": 2007,
+            "average": 1007
+          },
+          {
+            "year": 2008,
+            "average": 1007
+          },
+          {
+            "year": 2009,
+            "average": 1007
+          },
+          {
+            "year": 2010,
+            "average": 1007
+          },
+          {
+            "year": 2011,
+            "average": 1007
+          },
+          {
+            "year": 2012,
+            "average": 1007
+          },
+          {
+            "year": 2013,
+            "average": 1007
+          },
+          {
+            "year": 2014,
+            "average": 1007
+          },
+          {
+            "year": 2015,
+            "average": 1007
+          },
+          {
+            "year": 2016,
+            "average": 1007
+          },
+          {
+            "year": 2017,
+            "average": 1007
+          },
+          {
+            "year": 2018,
+            "average": 1007
+          },
+          {
+            "year": 2019,
+            "average": 1007
+          },
+          {
+            "year": 2020,
+            "average": 1007
+          },
+          {
+            "year": 2021,
+            "average": 1007
+          },
+          {
+            "year": 2022,
+            "average": 1007
+          },
+          {
+            "year": 2023,
+            "average": 1007
+          },
+          {
+            "year": 2024,
+            "average": 1007
+          },
+          {
+            "year": 2025,
+            "average": 1007
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          875,
+          12
+        ]
+      },
+      "properties": {
+        "id": "001009",
+        "name": "KURI BAY",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "961    2",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1961,
+            "average": 1009
+          },
+          {
+            "year": 1962,
+            "average": 1009
+          },
+          {
+            "year": 1963,
+            "average": 1009
+          },
+          {
+            "year": 1964,
+            "average": 1009
+          },
+          {
+            "year": 1965,
+            "average": 1009
+          },
+          {
+            "year": 1966,
+            "average": 1009
+          },
+          {
+            "year": 1967,
+            "average": 1009
+          },
+          {
+            "year": 1968,
+            "average": 1009
+          },
+          {
+            "year": 1969,
+            "average": 1009
+          },
+          {
+            "year": 1970,
+            "average": 1009
+          },
+          {
+            "year": 1971,
+            "average": 1009
+          },
+          {
+            "year": 1972,
+            "average": 1009
+          },
+          {
+            "year": 1973,
+            "average": 1009
+          },
+          {
+            "year": 1974,
+            "average": 1009
+          },
+          {
+            "year": 1975,
+            "average": 1009
+          },
+          {
+            "year": 1976,
+            "average": 1009
+          },
+          {
+            "year": 1977,
+            "average": 1009
+          },
+          {
+            "year": 1978,
+            "average": 1009
+          },
+          {
+            "year": 1979,
+            "average": 1009
+          },
+          {
+            "year": 1980,
+            "average": 1009
+          },
+          {
+            "year": 1981,
+            "average": 1009
+          },
+          {
+            "year": 1982,
+            "average": 1009
+          },
+          {
+            "year": 1983,
+            "average": 1009
+          },
+          {
+            "year": 1984,
+            "average": 1009
+          },
+          {
+            "year": 1985,
+            "average": 1009
+          },
+          {
+            "year": 1986,
+            "average": 1009
+          },
+          {
+            "year": 1987,
+            "average": 1009
+          },
+          {
+            "year": 1988,
+            "average": 1009
+          },
+          {
+            "year": 1989,
+            "average": 1009
+          },
+          {
+            "year": 1990,
+            "average": 1009
+          },
+          {
+            "year": 1991,
+            "average": 1009
+          },
+          {
+            "year": 1992,
+            "average": 1009
+          },
+          {
+            "year": 1993,
+            "average": 1009
+          },
+          {
+            "year": 1994,
+            "average": 1009
+          },
+          {
+            "year": 1995,
+            "average": 1009
+          },
+          {
+            "year": 1996,
+            "average": 1009
+          },
+          {
+            "year": 1997,
+            "average": 1009
+          },
+          {
+            "year": 1998,
+            "average": 1009
+          },
+          {
+            "year": 1999,
+            "average": 1009
+          },
+          {
+            "year": 2000,
+            "average": 1009
+          },
+          {
+            "year": 2001,
+            "average": 1009
+          },
+          {
+            "year": 2002,
+            "average": 1009
+          },
+          {
+            "year": 2003,
+            "average": 1009
+          },
+          {
+            "year": 2004,
+            "average": 1009
+          },
+          {
+            "year": 2005,
+            "average": 1009
+          },
+          {
+            "year": 2006,
+            "average": 1009
+          },
+          {
+            "year": 2007,
+            "average": 1009
+          },
+          {
+            "year": 2008,
+            "average": 1009
+          },
+          {
+            "year": 2009,
+            "average": 1009
+          },
+          {
+            "year": 2010,
+            "average": 1009
+          },
+          {
+            "year": 2011,
+            "average": 1009
+          },
+          {
+            "year": 2012,
+            "average": 1009
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1965,
+            "average": 1009
+          },
+          {
+            "year": 1966,
+            "average": 1009
+          },
+          {
+            "year": 1967,
+            "average": 1009
+          },
+          {
+            "year": 1968,
+            "average": 1009
+          },
+          {
+            "year": 1969,
+            "average": 1009
+          },
+          {
+            "year": 1970,
+            "average": 1009
+          },
+          {
+            "year": 1971,
+            "average": 1009
+          },
+          {
+            "year": 1972,
+            "average": 1009
+          },
+          {
+            "year": 1973,
+            "average": 1009
+          },
+          {
+            "year": 1974,
+            "average": 1009
+          },
+          {
+            "year": 1975,
+            "average": 1009
+          },
+          {
+            "year": 1976,
+            "average": 1009
+          },
+          {
+            "year": 1977,
+            "average": 1009
+          },
+          {
+            "year": 1978,
+            "average": 1009
+          },
+          {
+            "year": 1979,
+            "average": 1009
+          },
+          {
+            "year": 1980,
+            "average": 1009
+          },
+          {
+            "year": 1981,
+            "average": 1009
+          },
+          {
+            "year": 1982,
+            "average": 1009
+          },
+          {
+            "year": 1983,
+            "average": 1009
+          },
+          {
+            "year": 1984,
+            "average": 1009
+          },
+          {
+            "year": 1985,
+            "average": 1009
+          },
+          {
+            "year": 1986,
+            "average": 1009
+          },
+          {
+            "year": 1987,
+            "average": 1009
+          },
+          {
+            "year": 1988,
+            "average": 1009
+          },
+          {
+            "year": 1989,
+            "average": 1009
+          },
+          {
+            "year": 1990,
+            "average": 1009
+          },
+          {
+            "year": 1991,
+            "average": 1009
+          },
+          {
+            "year": 1992,
+            "average": 1009
+          },
+          {
+            "year": 1993,
+            "average": 1009
+          },
+          {
+            "year": 1994,
+            "average": 1009
+          },
+          {
+            "year": 1995,
+            "average": 1009
+          },
+          {
+            "year": 1996,
+            "average": 1009
+          },
+          {
+            "year": 1997,
+            "average": 1009
+          },
+          {
+            "year": 1998,
+            "average": 1009
+          },
+          {
+            "year": 1999,
+            "average": 1009
+          },
+          {
+            "year": 2000,
+            "average": 1009
+          },
+          {
+            "year": 2001,
+            "average": 1009
+          },
+          {
+            "year": 2002,
+            "average": 1009
+          },
+          {
+            "year": 2003,
+            "average": 1009
+          },
+          {
+            "year": 2004,
+            "average": 1009
+          },
+          {
+            "year": 2005,
+            "average": 1009
+          },
+          {
+            "year": 2006,
+            "average": 1009
+          },
+          {
+            "year": 2007,
+            "average": 1009
+          },
+          {
+            "year": 2008,
+            "average": 1009
+          },
+          {
+            "year": 2009,
+            "average": 1009
+          },
+          {
+            "year": 2010,
+            "average": 1009
+          },
+          {
+            "year": 2011,
+            "average": 1009
+          },
+          {
+            "year": 2012,
+            "average": 1009
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          925,
+          2
+        ]
+      },
+      "properties": {
+        "id": "001012",
+        "name": "MITCHELL PLATEAU",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "968    2",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1968,
+            "average": 1012
+          },
+          {
+            "year": 1969,
+            "average": 1012
+          },
+          {
+            "year": 1970,
+            "average": 1012
+          },
+          {
+            "year": 1971,
+            "average": 1012
+          },
+          {
+            "year": 1972,
+            "average": 1012
+          },
+          {
+            "year": 1973,
+            "average": 1012
+          },
+          {
+            "year": 1974,
+            "average": 1012
+          },
+          {
+            "year": 1975,
+            "average": 1012
+          },
+          {
+            "year": 1976,
+            "average": 1012
+          },
+          {
+            "year": 1977,
+            "average": 1012
+          },
+          {
+            "year": 1978,
+            "average": 1012
+          },
+          {
+            "year": 1979,
+            "average": 1012
+          },
+          {
+            "year": 1980,
+            "average": 1012
+          },
+          {
+            "year": 1981,
+            "average": 1012
+          },
+          {
+            "year": 1982,
+            "average": 1012
+          },
+          {
+            "year": 1983,
+            "average": 1012
+          },
+          {
+            "year": 1984,
+            "average": 1012
+          },
+          {
+            "year": 1985,
+            "average": 1012
+          },
+          {
+            "year": 1986,
+            "average": 1012
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1970,
+            "average": 1012
+          },
+          {
+            "year": 1971,
+            "average": 1012
+          },
+          {
+            "year": 1972,
+            "average": 1012
+          },
+          {
+            "year": 1973,
+            "average": 1012
+          },
+          {
+            "year": 1974,
+            "average": 1012
+          },
+          {
+            "year": 1975,
+            "average": 1012
+          },
+          {
+            "year": 1976,
+            "average": 1012
+          },
+          {
+            "year": 1977,
+            "average": 1012
+          },
+          {
+            "year": 1978,
+            "average": 1012
+          },
+          {
+            "year": 1979,
+            "average": 1012
+          },
+          {
+            "year": 1980,
+            "average": 1012
+          },
+          {
+            "year": 1981,
+            "average": 1012
+          },
+          {
+            "year": 1982,
+            "average": 1012
+          },
+          {
+            "year": 1983,
+            "average": 1012
+          },
+          {
+            "year": 1984,
+            "average": 1012
+          },
+          {
+            "year": 1985,
+            "average": 1012
+          },
+          {
+            "year": 1986,
+            "average": 1012
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          869,
+          null
+        ]
+      },
+      "properties": {
+        "id": "001013",
+        "name": "WYNDHAM",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "968",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1968,
+            "average": 1013
+          },
+          {
+            "year": 1969,
+            "average": 1013
+          },
+          {
+            "year": 1970,
+            "average": 1013
+          },
+          {
+            "year": 1971,
+            "average": 1013
+          },
+          {
+            "year": 1972,
+            "average": 1013
+          },
+          {
+            "year": 1973,
+            "average": 1013
+          },
+          {
+            "year": 1974,
+            "average": 1013
+          },
+          {
+            "year": 1975,
+            "average": 1013
+          },
+          {
+            "year": 1976,
+            "average": 1013
+          },
+          {
+            "year": 1977,
+            "average": 1013
+          },
+          {
+            "year": 1978,
+            "average": 1013
+          },
+          {
+            "year": 1979,
+            "average": 1013
+          },
+          {
+            "year": 1980,
+            "average": 1013
+          },
+          {
+            "year": 1981,
+            "average": 1013
+          },
+          {
+            "year": 1982,
+            "average": 1013
+          },
+          {
+            "year": 1983,
+            "average": 1013
+          },
+          {
+            "year": 1984,
+            "average": 1013
+          },
+          {
+            "year": 1985,
+            "average": 1013
+          },
+          {
+            "year": 1986,
+            "average": 1013
+          },
+          {
+            "year": 1987,
+            "average": 1013
+          },
+          {
+            "year": 1988,
+            "average": 1013
+          },
+          {
+            "year": 1989,
+            "average": 1013
+          },
+          {
+            "year": 1990,
+            "average": 1013
+          },
+          {
+            "year": 1991,
+            "average": 1013
+          },
+          {
+            "year": 1992,
+            "average": 1013
+          },
+          {
+            "year": 1993,
+            "average": 1013
+          },
+          {
+            "year": 1994,
+            "average": 1013
+          },
+          {
+            "year": 1995,
+            "average": 1013
+          },
+          {
+            "year": 1996,
+            "average": 1013
+          },
+          {
+            "year": 1997,
+            "average": 1013
+          },
+          {
+            "year": 1998,
+            "average": 1013
+          },
+          {
+            "year": 1999,
+            "average": 1013
+          },
+          {
+            "year": 2000,
+            "average": 1013
+          },
+          {
+            "year": 2001,
+            "average": 1013
+          },
+          {
+            "year": 2002,
+            "average": 1013
+          },
+          {
+            "year": 2003,
+            "average": 1013
+          },
+          {
+            "year": 2004,
+            "average": 1013
+          },
+          {
+            "year": 2005,
+            "average": 1013
+          },
+          {
+            "year": 2006,
+            "average": 1013
+          },
+          {
+            "year": 2007,
+            "average": 1013
+          },
+          {
+            "year": 2008,
+            "average": 1013
+          },
+          {
+            "year": 2009,
+            "average": 1013
+          },
+          {
+            "year": 2010,
+            "average": 1013
+          },
+          {
+            "year": 2011,
+            "average": 1013
+          },
+          {
+            "year": 2012,
+            "average": 1013
+          },
+          {
+            "year": 2013,
+            "average": 1013
+          },
+          {
+            "year": 2014,
+            "average": 1013
+          },
+          {
+            "year": 2015,
+            "average": 1013
+          },
+          {
+            "year": 2016,
+            "average": 1013
+          },
+          {
+            "year": 2017,
+            "average": 1013
+          },
+          {
+            "year": 2018,
+            "average": 1013
+          },
+          {
+            "year": 2019,
+            "average": 1013
+          },
+          {
+            "year": 2020,
+            "average": 1013
+          },
+          {
+            "year": 2021,
+            "average": 1013
+          },
+          {
+            "year": 2022,
+            "average": 1013
+          },
+          {
+            "year": 2023,
+            "average": 1013
+          },
+          {
+            "year": 2024,
+            "average": 1013
+          },
+          {
+            "year": 2025,
+            "average": 1013
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1968,
+            "average": 1013
+          },
+          {
+            "year": 1969,
+            "average": 1013
+          },
+          {
+            "year": 1970,
+            "average": 1013
+          },
+          {
+            "year": 1971,
+            "average": 1013
+          },
+          {
+            "year": 1972,
+            "average": 1013
+          },
+          {
+            "year": 1973,
+            "average": 1013
+          },
+          {
+            "year": 1974,
+            "average": 1013
+          },
+          {
+            "year": 1975,
+            "average": 1013
+          },
+          {
+            "year": 1976,
+            "average": 1013
+          },
+          {
+            "year": 1977,
+            "average": 1013
+          },
+          {
+            "year": 1978,
+            "average": 1013
+          },
+          {
+            "year": 1979,
+            "average": 1013
+          },
+          {
+            "year": 1980,
+            "average": 1013
+          },
+          {
+            "year": 1981,
+            "average": 1013
+          },
+          {
+            "year": 1982,
+            "average": 1013
+          },
+          {
+            "year": 1983,
+            "average": 1013
+          },
+          {
+            "year": 1984,
+            "average": 1013
+          },
+          {
+            "year": 1985,
+            "average": 1013
+          },
+          {
+            "year": 1986,
+            "average": 1013
+          },
+          {
+            "year": 1987,
+            "average": 1013
+          },
+          {
+            "year": 1988,
+            "average": 1013
+          },
+          {
+            "year": 1989,
+            "average": 1013
+          },
+          {
+            "year": 1990,
+            "average": 1013
+          },
+          {
+            "year": 1991,
+            "average": 1013
+          },
+          {
+            "year": 1992,
+            "average": 1013
+          },
+          {
+            "year": 1993,
+            "average": 1013
+          },
+          {
+            "year": 1994,
+            "average": 1013
+          },
+          {
+            "year": 1995,
+            "average": 1013
+          },
+          {
+            "year": 1996,
+            "average": 1013
+          },
+          {
+            "year": 1997,
+            "average": 1013
+          },
+          {
+            "year": 1998,
+            "average": 1013
+          },
+          {
+            "year": 1999,
+            "average": 1013
+          },
+          {
+            "year": 2000,
+            "average": 1013
+          },
+          {
+            "year": 2001,
+            "average": 1013
+          },
+          {
+            "year": 2002,
+            "average": 1013
+          },
+          {
+            "year": 2003,
+            "average": 1013
+          },
+          {
+            "year": 2004,
+            "average": 1013
+          },
+          {
+            "year": 2005,
+            "average": 1013
+          },
+          {
+            "year": 2006,
+            "average": 1013
+          },
+          {
+            "year": 2007,
+            "average": 1013
+          },
+          {
+            "year": 2008,
+            "average": 1013
+          },
+          {
+            "year": 2009,
+            "average": 1013
+          },
+          {
+            "year": 2010,
+            "average": 1013
+          },
+          {
+            "year": 2011,
+            "average": 1013
+          },
+          {
+            "year": 2012,
+            "average": 1013
+          },
+          {
+            "year": 2013,
+            "average": 1013
+          },
+          {
+            "year": 2014,
+            "average": 1013
+          },
+          {
+            "year": 2015,
+            "average": 1013
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          181,
+          null
+        ]
+      },
+      "properties": {
+        "id": "001018",
+        "name": "MOUNT ELIZABETH",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "973",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1973,
+            "average": 1018
+          },
+          {
+            "year": 1974,
+            "average": 1018
+          },
+          {
+            "year": 1975,
+            "average": 1018
+          },
+          {
+            "year": 1976,
+            "average": 1018
+          },
+          {
+            "year": 1977,
+            "average": 1018
+          },
+          {
+            "year": 1978,
+            "average": 1018
+          },
+          {
+            "year": 1979,
+            "average": 1018
+          },
+          {
+            "year": 1980,
+            "average": 1018
+          },
+          {
+            "year": 1981,
+            "average": 1018
+          },
+          {
+            "year": 1982,
+            "average": 1018
+          },
+          {
+            "year": 1983,
+            "average": 1018
+          },
+          {
+            "year": 1984,
+            "average": 1018
+          },
+          {
+            "year": 1985,
+            "average": 1018
+          },
+          {
+            "year": 1986,
+            "average": 1018
+          },
+          {
+            "year": 1987,
+            "average": 1018
+          },
+          {
+            "year": 1988,
+            "average": 1018
+          },
+          {
+            "year": 1989,
+            "average": 1018
+          },
+          {
+            "year": 1990,
+            "average": 1018
+          },
+          {
+            "year": 1991,
+            "average": 1018
+          },
+          {
+            "year": 1992,
+            "average": 1018
+          },
+          {
+            "year": 1993,
+            "average": 1018
+          },
+          {
+            "year": 1994,
+            "average": 1018
+          },
+          {
+            "year": 1995,
+            "average": 1018
+          },
+          {
+            "year": 1996,
+            "average": 1018
+          },
+          {
+            "year": 1997,
+            "average": 1018
+          },
+          {
+            "year": 1998,
+            "average": 1018
+          },
+          {
+            "year": 1999,
+            "average": 1018
+          },
+          {
+            "year": 2000,
+            "average": 1018
+          },
+          {
+            "year": 2001,
+            "average": 1018
+          },
+          {
+            "year": 2002,
+            "average": 1018
+          },
+          {
+            "year": 2003,
+            "average": 1018
+          },
+          {
+            "year": 2004,
+            "average": 1018
+          },
+          {
+            "year": 2005,
+            "average": 1018
+          },
+          {
+            "year": 2006,
+            "average": 1018
+          },
+          {
+            "year": 2007,
+            "average": 1018
+          },
+          {
+            "year": 2008,
+            "average": 1018
+          },
+          {
+            "year": 2009,
+            "average": 1018
+          },
+          {
+            "year": 2010,
+            "average": 1018
+          },
+          {
+            "year": 2011,
+            "average": 1018
+          },
+          {
+            "year": 2012,
+            "average": 1018
+          },
+          {
+            "year": 2013,
+            "average": 1018
+          },
+          {
+            "year": 2014,
+            "average": 1018
+          },
+          {
+            "year": 2015,
+            "average": 1018
+          },
+          {
+            "year": 2016,
+            "average": 1018
+          },
+          {
+            "year": 2017,
+            "average": 1018
+          },
+          {
+            "year": 2018,
+            "average": 1018
+          },
+          {
+            "year": 2019,
+            "average": 1018
+          },
+          {
+            "year": 2020,
+            "average": 1018
+          },
+          {
+            "year": 2021,
+            "average": 1018
+          },
+          {
+            "year": 2022,
+            "average": 1018
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1993,
+            "average": 1018
+          },
+          {
+            "year": 1994,
+            "average": 1018
+          },
+          {
+            "year": 1995,
+            "average": 1018
+          },
+          {
+            "year": 1996,
+            "average": 1018
+          },
+          {
+            "year": 1997,
+            "average": 1018
+          },
+          {
+            "year": 1998,
+            "average": 1018
+          },
+          {
+            "year": 1999,
+            "average": 1018
+          },
+          {
+            "year": 2000,
+            "average": 1018
+          },
+          {
+            "year": 2001,
+            "average": 1018
+          },
+          {
+            "year": 2002,
+            "average": 1018
+          },
+          {
+            "year": 2003,
+            "average": 1018
+          },
+          {
+            "year": 2004,
+            "average": 1018
+          },
+          {
+            "year": 2005,
+            "average": 1018
+          },
+          {
+            "year": 2006,
+            "average": 1018
+          },
+          {
+            "year": 2007,
+            "average": 1018
+          },
+          {
+            "year": 2008,
+            "average": 1018
+          },
+          {
+            "year": 2009,
+            "average": 1018
+          },
+          {
+            "year": 2010,
+            "average": 1018
+          },
+          {
+            "year": 2011,
+            "average": 1018
+          },
+          {
+            "year": 2012,
+            "average": 1018
+          },
+          {
+            "year": 2013,
+            "average": 1018
+          },
+          {
+            "year": 2014,
+            "average": 1018
+          },
+          {
+            "year": 2015,
+            "average": 1018
+          },
+          {
+            "year": 2016,
+            "average": 1018
+          },
+          {
+            "year": 2017,
+            "average": 1018
+          },
+          {
+            "year": 2018,
+            "average": 1018
+          },
+          {
+            "year": 2019,
+            "average": 1018
+          },
+          {
+            "year": 2020,
+            "average": 1018
+          },
+          {
+            "year": 2021,
+            "average": 1018
+          },
+          {
+            "year": 2022,
+            "average": 1018
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          964,
+          null
+        ]
+      },
+      "properties": {
+        "id": "001019",
+        "name": "KALUMBURU",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "997",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1998,
+            "average": 1019
+          },
+          {
+            "year": 1999,
+            "average": 1019
+          },
+          {
+            "year": 2000,
+            "average": 1019
+          },
+          {
+            "year": 2001,
+            "average": 1019
+          },
+          {
+            "year": 2002,
+            "average": 1019
+          },
+          {
+            "year": 2003,
+            "average": 1019
+          },
+          {
+            "year": 2004,
+            "average": 1019
+          },
+          {
+            "year": 2005,
+            "average": 1019
+          },
+          {
+            "year": 2006,
+            "average": 1019
+          },
+          {
+            "year": 2007,
+            "average": 1019
+          },
+          {
+            "year": 2008,
+            "average": 1019
+          },
+          {
+            "year": 2009,
+            "average": 1019
+          },
+          {
+            "year": 2010,
+            "average": 1019
+          },
+          {
+            "year": 2011,
+            "average": 1019
+          },
+          {
+            "year": 2012,
+            "average": 1019
+          },
+          {
+            "year": 2013,
+            "average": 1019
+          },
+          {
+            "year": 2014,
+            "average": 1019
+          },
+          {
+            "year": 2015,
+            "average": 1019
+          },
+          {
+            "year": 2016,
+            "average": 1019
+          },
+          {
+            "year": 2017,
+            "average": 1019
+          },
+          {
+            "year": 2018,
+            "average": 1019
+          },
+          {
+            "year": 2019,
+            "average": 1019
+          },
+          {
+            "year": 2020,
+            "average": 1019
+          },
+          {
+            "year": 2021,
+            "average": 1019
+          },
+          {
+            "year": 2022,
+            "average": 1019
+          },
+          {
+            "year": 2023,
+            "average": 1019
+          },
+          {
+            "year": 2024,
+            "average": 1019
+          },
+          {
+            "year": 2025,
+            "average": 1019
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1998,
+            "average": 1019
+          },
+          {
+            "year": 1999,
+            "average": 1019
+          },
+          {
+            "year": 2000,
+            "average": 1019
+          },
+          {
+            "year": 2001,
+            "average": 1019
+          },
+          {
+            "year": 2002,
+            "average": 1019
+          },
+          {
+            "year": 2003,
+            "average": 1019
+          },
+          {
+            "year": 2004,
+            "average": 1019
+          },
+          {
+            "year": 2005,
+            "average": 1019
+          },
+          {
+            "year": 2006,
+            "average": 1019
+          },
+          {
+            "year": 2007,
+            "average": 1019
+          },
+          {
+            "year": 2008,
+            "average": 1019
+          },
+          {
+            "year": 2009,
+            "average": 1019
+          },
+          {
+            "year": 2010,
+            "average": 1019
+          },
+          {
+            "year": 2011,
+            "average": 1019
+          },
+          {
+            "year": 2012,
+            "average": 1019
+          },
+          {
+            "year": 2013,
+            "average": 1019
+          },
+          {
+            "year": 2014,
+            "average": 1019
+          },
+          {
+            "year": 2015,
+            "average": 1019
+          },
+          {
+            "year": 2016,
+            "average": 1019
+          },
+          {
+            "year": 2017,
+            "average": 1019
+          },
+          {
+            "year": 2018,
+            "average": 1019
+          },
+          {
+            "year": 2019,
+            "average": 1019
+          },
+          {
+            "year": 2020,
+            "average": 1019
+          },
+          {
+            "year": 2021,
+            "average": 1019
+          },
+          {
+            "year": 2022,
+            "average": 1019
+          },
+          {
+            "year": 2023,
+            "average": 1019
+          },
+          {
+            "year": 2024,
+            "average": 1019
+          },
+          {
+            "year": 2025,
+            "average": 1019
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          900,
+          null
+        ]
+      },
+      "properties": {
+        "id": "001020",
+        "name": "TRUSCOTT",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "944",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 2004,
+            "average": 1020
+          },
+          {
+            "year": 2005,
+            "average": 1020
+          },
+          {
+            "year": 2006,
+            "average": 1020
+          },
+          {
+            "year": 2007,
+            "average": 1020
+          },
+          {
+            "year": 2008,
+            "average": 1020
+          },
+          {
+            "year": 2009,
+            "average": 1020
+          },
+          {
+            "year": 2010,
+            "average": 1020
+          },
+          {
+            "year": 2011,
+            "average": 1020
+          },
+          {
+            "year": 2012,
+            "average": 1020
+          },
+          {
+            "year": 2013,
+            "average": 1020
+          },
+          {
+            "year": 2014,
+            "average": 1020
+          },
+          {
+            "year": 2015,
+            "average": 1020
+          },
+          {
+            "year": 2016,
+            "average": 1020
+          },
+          {
+            "year": 2017,
+            "average": 1020
+          },
+          {
+            "year": 2018,
+            "average": 1020
+          },
+          {
+            "year": 2019,
+            "average": 1020
+          },
+          {
+            "year": 2020,
+            "average": 1020
+          },
+          {
+            "year": 2021,
+            "average": 1020
+          },
+          {
+            "year": 2022,
+            "average": 1020
+          },
+          {
+            "year": 2023,
+            "average": 1020
+          },
+          {
+            "year": 2024,
+            "average": 1020
+          },
+          {
+            "year": 2025,
+            "average": 1020
+          }
+        ],
+        "temperature": [
+          {
+            "year": 2004,
+            "average": 1020
+          },
+          {
+            "year": 2005,
+            "average": 1020
+          },
+          {
+            "year": 2006,
+            "average": 1020
+          },
+          {
+            "year": 2007,
+            "average": 1020
+          },
+          {
+            "year": 2008,
+            "average": 1020
+          },
+          {
+            "year": 2009,
+            "average": 1020
+          },
+          {
+            "year": 2010,
+            "average": 1020
+          },
+          {
+            "year": 2011,
+            "average": 1020
+          },
+          {
+            "year": 2012,
+            "average": 1020
+          },
+          {
+            "year": 2013,
+            "average": 1020
+          },
+          {
+            "year": 2014,
+            "average": 1020
+          },
+          {
+            "year": 2015,
+            "average": 1020
+          },
+          {
+            "year": 2016,
+            "average": 1020
+          },
+          {
+            "year": 2017,
+            "average": 1020
+          },
+          {
+            "year": 2018,
+            "average": 1020
+          },
+          {
+            "year": 2019,
+            "average": 1020
+          },
+          {
+            "year": 2020,
+            "average": 1020
+          },
+          {
+            "year": 2021,
+            "average": 1020
+          },
+          {
+            "year": 2022,
+            "average": 1020
+          },
+          {
+            "year": 2023,
+            "average": 1020
+          },
+          {
+            "year": 2024,
+            "average": 1020
+          },
+          {
+            "year": 2025,
+            "average": 1020
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          961,
+          5
+        ]
+      },
+      "properties": {
+        "id": "001021",
+        "name": "KALUMBURU MISSION",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "941    2",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1941,
+            "average": 1021
+          },
+          {
+            "year": 1942,
+            "average": 1021
+          },
+          {
+            "year": 1943,
+            "average": 1021
+          },
+          {
+            "year": 1944,
+            "average": 1021
+          },
+          {
+            "year": 1945,
+            "average": 1021
+          },
+          {
+            "year": 1946,
+            "average": 1021
+          },
+          {
+            "year": 1947,
+            "average": 1021
+          },
+          {
+            "year": 1948,
+            "average": 1021
+          },
+          {
+            "year": 1949,
+            "average": 1021
+          },
+          {
+            "year": 1950,
+            "average": 1021
+          },
+          {
+            "year": 1951,
+            "average": 1021
+          },
+          {
+            "year": 1952,
+            "average": 1021
+          },
+          {
+            "year": 1953,
+            "average": 1021
+          },
+          {
+            "year": 1954,
+            "average": 1021
+          },
+          {
+            "year": 1955,
+            "average": 1021
+          },
+          {
+            "year": 1956,
+            "average": 1021
+          },
+          {
+            "year": 1957,
+            "average": 1021
+          },
+          {
+            "year": 1958,
+            "average": 1021
+          },
+          {
+            "year": 1959,
+            "average": 1021
+          },
+          {
+            "year": 1960,
+            "average": 1021
+          },
+          {
+            "year": 1961,
+            "average": 1021
+          },
+          {
+            "year": 1962,
+            "average": 1021
+          },
+          {
+            "year": 1963,
+            "average": 1021
+          },
+          {
+            "year": 1964,
+            "average": 1021
+          },
+          {
+            "year": 1965,
+            "average": 1021
+          },
+          {
+            "year": 1966,
+            "average": 1021
+          },
+          {
+            "year": 1967,
+            "average": 1021
+          },
+          {
+            "year": 1968,
+            "average": 1021
+          },
+          {
+            "year": 1969,
+            "average": 1021
+          },
+          {
+            "year": 1970,
+            "average": 1021
+          },
+          {
+            "year": 1971,
+            "average": 1021
+          },
+          {
+            "year": 1972,
+            "average": 1021
+          },
+          {
+            "year": 1973,
+            "average": 1021
+          },
+          {
+            "year": 1974,
+            "average": 1021
+          },
+          {
+            "year": 1975,
+            "average": 1021
+          },
+          {
+            "year": 1976,
+            "average": 1021
+          },
+          {
+            "year": 1977,
+            "average": 1021
+          },
+          {
+            "year": 1978,
+            "average": 1021
+          },
+          {
+            "year": 1979,
+            "average": 1021
+          },
+          {
+            "year": 1980,
+            "average": 1021
+          },
+          {
+            "year": 1981,
+            "average": 1021
+          },
+          {
+            "year": 1982,
+            "average": 1021
+          },
+          {
+            "year": 1983,
+            "average": 1021
+          },
+          {
+            "year": 1984,
+            "average": 1021
+          },
+          {
+            "year": 1985,
+            "average": 1021
+          },
+          {
+            "year": 1986,
+            "average": 1021
+          },
+          {
+            "year": 1987,
+            "average": 1021
+          },
+          {
+            "year": 1988,
+            "average": 1021
+          },
+          {
+            "year": 1989,
+            "average": 1021
+          },
+          {
+            "year": 1990,
+            "average": 1021
+          },
+          {
+            "year": 1991,
+            "average": 1021
+          },
+          {
+            "year": 1992,
+            "average": 1021
+          },
+          {
+            "year": 1993,
+            "average": 1021
+          },
+          {
+            "year": 1994,
+            "average": 1021
+          },
+          {
+            "year": 1995,
+            "average": 1021
+          },
+          {
+            "year": 1996,
+            "average": 1021
+          },
+          {
+            "year": 1997,
+            "average": 1021
+          },
+          {
+            "year": 1998,
+            "average": 1021
+          },
+          {
+            "year": 1999,
+            "average": 1021
+          },
+          {
+            "year": 2000,
+            "average": 1021
+          },
+          {
+            "year": 2001,
+            "average": 1021
+          },
+          {
+            "year": 2002,
+            "average": 1021
+          },
+          {
+            "year": 2003,
+            "average": 1021
+          },
+          {
+            "year": 2004,
+            "average": 1021
+          },
+          {
+            "year": 2005,
+            "average": 1021
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1941,
+            "average": 1021
+          },
+          {
+            "year": 1942,
+            "average": 1021
+          },
+          {
+            "year": 1943,
+            "average": 1021
+          },
+          {
+            "year": 1944,
+            "average": 1021
+          },
+          {
+            "year": 1945,
+            "average": 1021
+          },
+          {
+            "year": 1946,
+            "average": 1021
+          },
+          {
+            "year": 1947,
+            "average": 1021
+          },
+          {
+            "year": 1948,
+            "average": 1021
+          },
+          {
+            "year": 1949,
+            "average": 1021
+          },
+          {
+            "year": 1950,
+            "average": 1021
+          },
+          {
+            "year": 1951,
+            "average": 1021
+          },
+          {
+            "year": 1952,
+            "average": 1021
+          },
+          {
+            "year": 1953,
+            "average": 1021
+          },
+          {
+            "year": 1954,
+            "average": 1021
+          },
+          {
+            "year": 1955,
+            "average": 1021
+          },
+          {
+            "year": 1956,
+            "average": 1021
+          },
+          {
+            "year": 1957,
+            "average": 1021
+          },
+          {
+            "year": 1958,
+            "average": 1021
+          },
+          {
+            "year": 1959,
+            "average": 1021
+          },
+          {
+            "year": 1960,
+            "average": 1021
+          },
+          {
+            "year": 1961,
+            "average": 1021
+          },
+          {
+            "year": 1962,
+            "average": 1021
+          },
+          {
+            "year": 1963,
+            "average": 1021
+          },
+          {
+            "year": 1964,
+            "average": 1021
+          },
+          {
+            "year": 1965,
+            "average": 1021
+          },
+          {
+            "year": 1966,
+            "average": 1021
+          },
+          {
+            "year": 1967,
+            "average": 1021
+          },
+          {
+            "year": 1968,
+            "average": 1021
+          },
+          {
+            "year": 1969,
+            "average": 1021
+          },
+          {
+            "year": 1970,
+            "average": 1021
+          },
+          {
+            "year": 1971,
+            "average": 1021
+          },
+          {
+            "year": 1972,
+            "average": 1021
+          },
+          {
+            "year": 1973,
+            "average": 1021
+          },
+          {
+            "year": 1974,
+            "average": 1021
+          },
+          {
+            "year": 1975,
+            "average": 1021
+          },
+          {
+            "year": 1976,
+            "average": 1021
+          },
+          {
+            "year": 1977,
+            "average": 1021
+          },
+          {
+            "year": 1978,
+            "average": 1021
+          },
+          {
+            "year": 1979,
+            "average": 1021
+          },
+          {
+            "year": 1980,
+            "average": 1021
+          },
+          {
+            "year": 1981,
+            "average": 1021
+          },
+          {
+            "year": 1982,
+            "average": 1021
+          },
+          {
+            "year": 1983,
+            "average": 1021
+          },
+          {
+            "year": 1984,
+            "average": 1021
+          },
+          {
+            "year": 1985,
+            "average": 1021
+          },
+          {
+            "year": 1986,
+            "average": 1021
+          },
+          {
+            "year": 1987,
+            "average": 1021
+          },
+          {
+            "year": 1988,
+            "average": 1021
+          },
+          {
+            "year": 1989,
+            "average": 1021
+          },
+          {
+            "year": 1990,
+            "average": 1021
+          },
+          {
+            "year": 1991,
+            "average": 1021
+          },
+          {
+            "year": 1992,
+            "average": 1021
+          },
+          {
+            "year": 1993,
+            "average": 1021
+          },
+          {
+            "year": 1994,
+            "average": 1021
+          },
+          {
+            "year": 1995,
+            "average": 1021
+          },
+          {
+            "year": 1996,
+            "average": 1021
+          },
+          {
+            "year": 1997,
+            "average": 1021
+          },
+          {
+            "year": 1998,
+            "average": 1021
+          },
+          {
+            "year": 1999,
+            "average": 1021
+          },
+          {
+            "year": 2000,
+            "average": 1021
+          },
+          {
+            "year": 2001,
+            "average": 1021
+          },
+          {
+            "year": 2002,
+            "average": 1021
+          },
+          {
+            "year": 2003,
+            "average": 1021
+          },
+          {
+            "year": 2004,
+            "average": 1021
+          },
+          {
+            "year": 2005,
+            "average": 1021
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          797,
+          null
+        ]
+      },
+      "properties": {
+        "id": "001025",
+        "name": "DOONGAN",
+        "state": "",
+        "district": "1",
+        "startYear": "1",
+        "endYear": "988",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1988,
+            "average": 1025
+          },
+          {
+            "year": 1989,
+            "average": 1025
+          },
+          {
+            "year": 1990,
+            "average": 1025
+          },
+          {
+            "year": 1991,
+            "average": 1025
+          },
+          {
+            "year": 1992,
+            "average": 1025
+          },
+          {
+            "year": 1993,
+            "average": 1025
+          },
+          {
+            "year": 1994,
+            "average": 1025
+          },
+          {
+            "year": 1995,
+            "average": 1025
+          },
+          {
+            "year": 1996,
+            "average": 1025
+          },
+          {
+            "year": 1997,
+            "average": 1025
+          },
+          {
+            "year": 1998,
+            "average": 1025
+          },
+          {
+            "year": 1999,
+            "average": 1025
+          },
+          {
+            "year": 2000,
+            "average": 1025
+          },
+          {
+            "year": 2001,
+            "average": 1025
+          },
+          {
+            "year": 2002,
+            "average": 1025
+          },
+          {
+            "year": 2003,
+            "average": 1025
+          },
+          {
+            "year": 2004,
+            "average": 1025
+          },
+          {
+            "year": 2005,
+            "average": 1025
+          },
+          {
+            "year": 2006,
+            "average": 1025
+          },
+          {
+            "year": 2007,
+            "average": 1025
+          },
+          {
+            "year": 2008,
+            "average": 1025
+          },
+          {
+            "year": 2009,
+            "average": 1025
+          },
+          {
+            "year": 2010,
+            "average": 1025
+          },
+          {
+            "year": 2011,
+            "average": 1025
+          },
+          {
+            "year": 2012,
+            "average": 1025
+          },
+          {
+            "year": 2013,
+            "average": 1025
+          },
+          {
+            "year": 2014,
+            "average": 1025
+          },
+          {
+            "year": 2015,
+            "average": 1025
+          },
+          {
+            "year": 2016,
+            "average": 1025
+          },
+          {
+            "year": 2017,
+            "average": 1025
+          },
+          {
+            "year": 2018,
+            "average": 1025
+          },
+          {
+            "year": 2019,
+            "average": 1025
+          },
+          {
+            "year": 2020,
+            "average": 1025
+          },
+          {
+            "year": 2021,
+            "average": 1025
+          },
+          {
+            "year": 2022,
+            "average": 1025
+          },
+          {
+            "year": 2023,
+            "average": 1025
+          },
+          {
+            "year": 2024,
+            "average": 1025
+          },
+          {
+            "year": 2025,
+            "average": 1025
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1988,
+            "average": 1025
+          },
+          {
+            "year": 1989,
+            "average": 1025
+          },
+          {
+            "year": 1990,
+            "average": 1025
+          },
+          {
+            "year": 1991,
+            "average": 1025
+          },
+          {
+            "year": 1992,
+            "average": 1025
+          },
+          {
+            "year": 1993,
+            "average": 1025
+          },
+          {
+            "year": 1994,
+            "average": 1025
+          },
+          {
+            "year": 1995,
+            "average": 1025
+          },
+          {
+            "year": 1996,
+            "average": 1025
+          },
+          {
+            "year": 1997,
+            "average": 1025
+          },
+          {
+            "year": 1998,
+            "average": 1025
+          },
+          {
+            "year": 1999,
+            "average": 1025
+          },
+          {
+            "year": 2000,
+            "average": 1025
+          },
+          {
+            "year": 2001,
+            "average": 1025
+          },
+          {
+            "year": 2002,
+            "average": 1025
+          },
+          {
+            "year": 2003,
+            "average": 1025
+          },
+          {
+            "year": 2004,
+            "average": 1025
+          },
+          {
+            "year": 2005,
+            "average": 1025
+          },
+          {
+            "year": 2006,
+            "average": 1025
+          },
+          {
+            "year": 2007,
+            "average": 1025
+          },
+          {
+            "year": 2008,
+            "average": 1025
+          },
+          {
+            "year": 2009,
+            "average": 1025
+          },
+          {
+            "year": 2010,
+            "average": 1025
+          },
+          {
+            "year": 2011,
+            "average": 1025
+          },
+          {
+            "year": 2012,
+            "average": 1025
+          },
+          {
+            "year": 2013,
+            "average": 1025
+          },
+          {
+            "year": 2014,
+            "average": 1025
+          },
+          {
+            "year": 2015,
+            "average": 1025
+          },
+          {
+            "year": 2016,
+            "average": 1025
+          },
+          {
+            "year": 2017,
+            "average": 1025
+          },
+          {
+            "year": 2018,
+            "average": 1025
+          },
+          {
+            "year": 2019,
+            "average": 1025
+          },
+          {
+            "year": 2020,
+            "average": 1025
+          },
+          {
+            "year": 2021,
+            "average": 1025
+          },
+          {
+            "year": 2022,
+            "average": 1025
+          },
+          {
+            "year": 2023,
+            "average": 1025
+          },
+          {
+            "year": 2024,
+            "average": 1025
+          },
+          {
+            "year": 2025,
+            "average": 1025
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          519,
+          999
+        ]
+      },
+      "properties": {
+        "id": "002011",
+        "name": "OLD HALLS CREEK",
+        "state": "",
+        "district": "2",
+        "startYear": "1",
+        "endYear": "890    1",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1891,
+            "average": 2011
+          },
+          {
+            "year": 1892,
+            "average": 2011
+          },
+          {
+            "year": 1893,
+            "average": 2011
+          },
+          {
+            "year": 1894,
+            "average": 2011
+          },
+          {
+            "year": 1895,
+            "average": 2011
+          },
+          {
+            "year": 1896,
+            "average": 2011
+          },
+          {
+            "year": 1897,
+            "average": 2011
+          },
+          {
+            "year": 1898,
+            "average": 2011
+          },
+          {
+            "year": 1899,
+            "average": 2011
+          },
+          {
+            "year": 1900,
+            "average": 2011
+          },
+          {
+            "year": 1901,
+            "average": 2011
+          },
+          {
+            "year": 1902,
+            "average": 2011
+          },
+          {
+            "year": 1903,
+            "average": 2011
+          },
+          {
+            "year": 1904,
+            "average": 2011
+          },
+          {
+            "year": 1905,
+            "average": 2011
+          },
+          {
+            "year": 1906,
+            "average": 2011
+          },
+          {
+            "year": 1907,
+            "average": 2011
+          },
+          {
+            "year": 1908,
+            "average": 2011
+          },
+          {
+            "year": 1909,
+            "average": 2011
+          },
+          {
+            "year": 1910,
+            "average": 2011
+          },
+          {
+            "year": 1911,
+            "average": 2011
+          },
+          {
+            "year": 1912,
+            "average": 2011
+          },
+          {
+            "year": 1913,
+            "average": 2011
+          },
+          {
+            "year": 1914,
+            "average": 2011
+          },
+          {
+            "year": 1915,
+            "average": 2011
+          },
+          {
+            "year": 1916,
+            "average": 2011
+          },
+          {
+            "year": 1917,
+            "average": 2011
+          },
+          {
+            "year": 1918,
+            "average": 2011
+          },
+          {
+            "year": 1919,
+            "average": 2011
+          },
+          {
+            "year": 1920,
+            "average": 2011
+          },
+          {
+            "year": 1921,
+            "average": 2011
+          },
+          {
+            "year": 1922,
+            "average": 2011
+          },
+          {
+            "year": 1923,
+            "average": 2011
+          },
+          {
+            "year": 1924,
+            "average": 2011
+          },
+          {
+            "year": 1925,
+            "average": 2011
+          },
+          {
+            "year": 1926,
+            "average": 2011
+          },
+          {
+            "year": 1927,
+            "average": 2011
+          },
+          {
+            "year": 1928,
+            "average": 2011
+          },
+          {
+            "year": 1929,
+            "average": 2011
+          },
+          {
+            "year": 1930,
+            "average": 2011
+          },
+          {
+            "year": 1931,
+            "average": 2011
+          },
+          {
+            "year": 1932,
+            "average": 2011
+          },
+          {
+            "year": 1933,
+            "average": 2011
+          },
+          {
+            "year": 1934,
+            "average": 2011
+          },
+          {
+            "year": 1935,
+            "average": 2011
+          },
+          {
+            "year": 1936,
+            "average": 2011
+          },
+          {
+            "year": 1937,
+            "average": 2011
+          },
+          {
+            "year": 1938,
+            "average": 2011
+          },
+          {
+            "year": 1939,
+            "average": 2011
+          },
+          {
+            "year": 1940,
+            "average": 2011
+          },
+          {
+            "year": 1941,
+            "average": 2011
+          },
+          {
+            "year": 1942,
+            "average": 2011
+          },
+          {
+            "year": 1943,
+            "average": 2011
+          },
+          {
+            "year": 1944,
+            "average": 2011
+          },
+          {
+            "year": 1945,
+            "average": 2011
+          },
+          {
+            "year": 1946,
+            "average": 2011
+          },
+          {
+            "year": 1947,
+            "average": 2011
+          },
+          {
+            "year": 1948,
+            "average": 2011
+          },
+          {
+            "year": 1949,
+            "average": 2011
+          },
+          {
+            "year": 1950,
+            "average": 2011
+          },
+          {
+            "year": 1951,
+            "average": 2011
+          },
+          {
+            "year": 1952,
+            "average": 2011
+          },
+          {
+            "year": 1953,
+            "average": 2011
+          },
+          {
+            "year": 1954,
+            "average": 2011
+          },
+          {
+            "year": 1955,
+            "average": 2011
+          },
+          {
+            "year": 1956,
+            "average": 2011
+          },
+          {
+            "year": 1957,
+            "average": 2011
+          },
+          {
+            "year": 1958,
+            "average": 2011
+          },
+          {
+            "year": 1959,
+            "average": 2011
+          },
+          {
+            "year": 1960,
+            "average": 2011
+          },
+          {
+            "year": 1961,
+            "average": 2011
+          },
+          {
+            "year": 1962,
+            "average": 2011
+          },
+          {
+            "year": 1963,
+            "average": 2011
+          },
+          {
+            "year": 1964,
+            "average": 2011
+          },
+          {
+            "year": 1965,
+            "average": 2011
+          },
+          {
+            "year": 1966,
+            "average": 2011
+          },
+          {
+            "year": 1967,
+            "average": 2011
+          },
+          {
+            "year": 1968,
+            "average": 2011
+          },
+          {
+            "year": 1969,
+            "average": 2011
+          },
+          {
+            "year": 1970,
+            "average": 2011
+          },
+          {
+            "year": 1971,
+            "average": 2011
+          },
+          {
+            "year": 1972,
+            "average": 2011
+          },
+          {
+            "year": 1973,
+            "average": 2011
+          },
+          {
+            "year": 1974,
+            "average": 2011
+          },
+          {
+            "year": 1975,
+            "average": 2011
+          },
+          {
+            "year": 1976,
+            "average": 2011
+          },
+          {
+            "year": 1977,
+            "average": 2011
+          },
+          {
+            "year": 1978,
+            "average": 2011
+          },
+          {
+            "year": 1979,
+            "average": 2011
+          },
+          {
+            "year": 1980,
+            "average": 2011
+          },
+          {
+            "year": 1981,
+            "average": 2011
+          },
+          {
+            "year": 1982,
+            "average": 2011
+          },
+          {
+            "year": 1983,
+            "average": 2011
+          },
+          {
+            "year": 1984,
+            "average": 2011
+          },
+          {
+            "year": 1985,
+            "average": 2011
+          },
+          {
+            "year": 1986,
+            "average": 2011
+          },
+          {
+            "year": 1987,
+            "average": 2011
+          },
+          {
+            "year": 1988,
+            "average": 2011
+          },
+          {
+            "year": 1989,
+            "average": 2011
+          },
+          {
+            "year": 1990,
+            "average": 2011
+          },
+          {
+            "year": 1991,
+            "average": 2011
+          },
+          {
+            "year": 1992,
+            "average": 2011
+          },
+          {
+            "year": 1993,
+            "average": 2011
+          },
+          {
+            "year": 1994,
+            "average": 2011
+          },
+          {
+            "year": 1995,
+            "average": 2011
+          },
+          {
+            "year": 1996,
+            "average": 2011
+          },
+          {
+            "year": 1997,
+            "average": 2011
+          },
+          {
+            "year": 1998,
+            "average": 2011
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1898,
+            "average": 2011
+          },
+          {
+            "year": 1899,
+            "average": 2011
+          },
+          {
+            "year": 1900,
+            "average": 2011
+          },
+          {
+            "year": 1901,
+            "average": 2011
+          },
+          {
+            "year": 1902,
+            "average": 2011
+          },
+          {
+            "year": 1903,
+            "average": 2011
+          },
+          {
+            "year": 1904,
+            "average": 2011
+          },
+          {
+            "year": 1905,
+            "average": 2011
+          },
+          {
+            "year": 1906,
+            "average": 2011
+          },
+          {
+            "year": 1907,
+            "average": 2011
+          },
+          {
+            "year": 1908,
+            "average": 2011
+          },
+          {
+            "year": 1909,
+            "average": 2011
+          },
+          {
+            "year": 1910,
+            "average": 2011
+          },
+          {
+            "year": 1911,
+            "average": 2011
+          },
+          {
+            "year": 1912,
+            "average": 2011
+          },
+          {
+            "year": 1913,
+            "average": 2011
+          },
+          {
+            "year": 1914,
+            "average": 2011
+          },
+          {
+            "year": 1915,
+            "average": 2011
+          },
+          {
+            "year": 1916,
+            "average": 2011
+          },
+          {
+            "year": 1917,
+            "average": 2011
+          },
+          {
+            "year": 1918,
+            "average": 2011
+          },
+          {
+            "year": 1919,
+            "average": 2011
+          },
+          {
+            "year": 1920,
+            "average": 2011
+          },
+          {
+            "year": 1921,
+            "average": 2011
+          },
+          {
+            "year": 1922,
+            "average": 2011
+          },
+          {
+            "year": 1923,
+            "average": 2011
+          },
+          {
+            "year": 1924,
+            "average": 2011
+          },
+          {
+            "year": 1925,
+            "average": 2011
+          },
+          {
+            "year": 1926,
+            "average": 2011
+          },
+          {
+            "year": 1927,
+            "average": 2011
+          },
+          {
+            "year": 1928,
+            "average": 2011
+          },
+          {
+            "year": 1929,
+            "average": 2011
+          },
+          {
+            "year": 1930,
+            "average": 2011
+          },
+          {
+            "year": 1931,
+            "average": 2011
+          },
+          {
+            "year": 1932,
+            "average": 2011
+          },
+          {
+            "year": 1933,
+            "average": 2011
+          },
+          {
+            "year": 1934,
+            "average": 2011
+          },
+          {
+            "year": 1935,
+            "average": 2011
+          },
+          {
+            "year": 1936,
+            "average": 2011
+          },
+          {
+            "year": 1937,
+            "average": 2011
+          },
+          {
+            "year": 1938,
+            "average": 2011
+          },
+          {
+            "year": 1939,
+            "average": 2011
+          },
+          {
+            "year": 1940,
+            "average": 2011
+          },
+          {
+            "year": 1941,
+            "average": 2011
+          },
+          {
+            "year": 1942,
+            "average": 2011
+          },
+          {
+            "year": 1943,
+            "average": 2011
+          },
+          {
+            "year": 1944,
+            "average": 2011
+          },
+          {
+            "year": 1945,
+            "average": 2011
+          },
+          {
+            "year": 1946,
+            "average": 2011
+          },
+          {
+            "year": 1947,
+            "average": 2011
+          },
+          {
+            "year": 1948,
+            "average": 2011
+          },
+          {
+            "year": 1949,
+            "average": 2011
+          },
+          {
+            "year": 1950,
+            "average": 2011
+          },
+          {
+            "year": 1951,
+            "average": 2011
+          },
+          {
+            "year": 1952,
+            "average": 2011
+          },
+          {
+            "year": 1953,
+            "average": 2011
+          },
+          {
+            "year": 1954,
+            "average": 2011
+          },
+          {
+            "year": 1955,
+            "average": 2011
+          },
+          {
+            "year": 1956,
+            "average": 2011
+          },
+          {
+            "year": 1957,
+            "average": 2011
+          },
+          {
+            "year": 1958,
+            "average": 2011
+          },
+          {
+            "year": 1959,
+            "average": 2011
+          },
+          {
+            "year": 1960,
+            "average": 2011
+          },
+          {
+            "year": 1961,
+            "average": 2011
+          },
+          {
+            "year": 1962,
+            "average": 2011
+          },
+          {
+            "year": 1963,
+            "average": 2011
+          },
+          {
+            "year": 1964,
+            "average": 2011
+          },
+          {
+            "year": 1965,
+            "average": 2011
+          },
+          {
+            "year": 1966,
+            "average": 2011
+          },
+          {
+            "year": 1967,
+            "average": 2011
+          },
+          {
+            "year": 1968,
+            "average": 2011
+          },
+          {
+            "year": 1969,
+            "average": 2011
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          291,
+          null
+        ]
+      },
+      "properties": {
+        "id": "002012",
+        "name": "HALLS CREEK METEOROLOGICAL OFFICE",
+        "state": "",
+        "district": "2",
+        "startYear": "1",
+        "endYear": "944",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1944,
+            "average": 2012
+          },
+          {
+            "year": 1945,
+            "average": 2012
+          },
+          {
+            "year": 1946,
+            "average": 2012
+          },
+          {
+            "year": 1947,
+            "average": 2012
+          },
+          {
+            "year": 1948,
+            "average": 2012
+          },
+          {
+            "year": 1949,
+            "average": 2012
+          },
+          {
+            "year": 1950,
+            "average": 2012
+          },
+          {
+            "year": 1951,
+            "average": 2012
+          },
+          {
+            "year": 1952,
+            "average": 2012
+          },
+          {
+            "year": 1953,
+            "average": 2012
+          },
+          {
+            "year": 1954,
+            "average": 2012
+          },
+          {
+            "year": 1955,
+            "average": 2012
+          },
+          {
+            "year": 1956,
+            "average": 2012
+          },
+          {
+            "year": 1957,
+            "average": 2012
+          },
+          {
+            "year": 1958,
+            "average": 2012
+          },
+          {
+            "year": 1959,
+            "average": 2012
+          },
+          {
+            "year": 1960,
+            "average": 2012
+          },
+          {
+            "year": 1961,
+            "average": 2012
+          },
+          {
+            "year": 1962,
+            "average": 2012
+          },
+          {
+            "year": 1963,
+            "average": 2012
+          },
+          {
+            "year": 1964,
+            "average": 2012
+          },
+          {
+            "year": 1965,
+            "average": 2012
+          },
+          {
+            "year": 1966,
+            "average": 2012
+          },
+          {
+            "year": 1967,
+            "average": 2012
+          },
+          {
+            "year": 1968,
+            "average": 2012
+          },
+          {
+            "year": 1969,
+            "average": 2012
+          },
+          {
+            "year": 1970,
+            "average": 2012
+          },
+          {
+            "year": 1971,
+            "average": 2012
+          },
+          {
+            "year": 1972,
+            "average": 2012
+          },
+          {
+            "year": 1973,
+            "average": 2012
+          },
+          {
+            "year": 1974,
+            "average": 2012
+          },
+          {
+            "year": 1975,
+            "average": 2012
+          },
+          {
+            "year": 1976,
+            "average": 2012
+          },
+          {
+            "year": 1977,
+            "average": 2012
+          },
+          {
+            "year": 1978,
+            "average": 2012
+          },
+          {
+            "year": 1979,
+            "average": 2012
+          },
+          {
+            "year": 1980,
+            "average": 2012
+          },
+          {
+            "year": 1981,
+            "average": 2012
+          },
+          {
+            "year": 1982,
+            "average": 2012
+          },
+          {
+            "year": 1983,
+            "average": 2012
+          },
+          {
+            "year": 1984,
+            "average": 2012
+          },
+          {
+            "year": 1985,
+            "average": 2012
+          },
+          {
+            "year": 1986,
+            "average": 2012
+          },
+          {
+            "year": 1987,
+            "average": 2012
+          },
+          {
+            "year": 1988,
+            "average": 2012
+          },
+          {
+            "year": 1989,
+            "average": 2012
+          },
+          {
+            "year": 1990,
+            "average": 2012
+          },
+          {
+            "year": 1991,
+            "average": 2012
+          },
+          {
+            "year": 1992,
+            "average": 2012
+          },
+          {
+            "year": 1993,
+            "average": 2012
+          },
+          {
+            "year": 1994,
+            "average": 2012
+          },
+          {
+            "year": 1995,
+            "average": 2012
+          },
+          {
+            "year": 1996,
+            "average": 2012
+          },
+          {
+            "year": 1997,
+            "average": 2012
+          },
+          {
+            "year": 1998,
+            "average": 2012
+          },
+          {
+            "year": 1999,
+            "average": 2012
+          },
+          {
+            "year": 2000,
+            "average": 2012
+          },
+          {
+            "year": 2001,
+            "average": 2012
+          },
+          {
+            "year": 2002,
+            "average": 2012
+          },
+          {
+            "year": 2003,
+            "average": 2012
+          },
+          {
+            "year": 2004,
+            "average": 2012
+          },
+          {
+            "year": 2005,
+            "average": 2012
+          },
+          {
+            "year": 2006,
+            "average": 2012
+          },
+          {
+            "year": 2007,
+            "average": 2012
+          },
+          {
+            "year": 2008,
+            "average": 2012
+          },
+          {
+            "year": 2009,
+            "average": 2012
+          },
+          {
+            "year": 2010,
+            "average": 2012
+          },
+          {
+            "year": 2011,
+            "average": 2012
+          },
+          {
+            "year": 2012,
+            "average": 2012
+          },
+          {
+            "year": 2013,
+            "average": 2012
+          },
+          {
+            "year": 2014,
+            "average": 2012
+          },
+          {
+            "year": 2015,
+            "average": 2012
+          },
+          {
+            "year": 2016,
+            "average": 2012
+          },
+          {
+            "year": 2017,
+            "average": 2012
+          },
+          {
+            "year": 2018,
+            "average": 2012
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1944,
+            "average": 2012
+          },
+          {
+            "year": 1945,
+            "average": 2012
+          },
+          {
+            "year": 1946,
+            "average": 2012
+          },
+          {
+            "year": 1947,
+            "average": 2012
+          },
+          {
+            "year": 1948,
+            "average": 2012
+          },
+          {
+            "year": 1949,
+            "average": 2012
+          },
+          {
+            "year": 1950,
+            "average": 2012
+          },
+          {
+            "year": 1951,
+            "average": 2012
+          },
+          {
+            "year": 1952,
+            "average": 2012
+          },
+          {
+            "year": 1953,
+            "average": 2012
+          },
+          {
+            "year": 1954,
+            "average": 2012
+          },
+          {
+            "year": 1955,
+            "average": 2012
+          },
+          {
+            "year": 1956,
+            "average": 2012
+          },
+          {
+            "year": 1957,
+            "average": 2012
+          },
+          {
+            "year": 1958,
+            "average": 2012
+          },
+          {
+            "year": 1959,
+            "average": 2012
+          },
+          {
+            "year": 1960,
+            "average": 2012
+          },
+          {
+            "year": 1961,
+            "average": 2012
+          },
+          {
+            "year": 1962,
+            "average": 2012
+          },
+          {
+            "year": 1963,
+            "average": 2012
+          },
+          {
+            "year": 1964,
+            "average": 2012
+          },
+          {
+            "year": 1965,
+            "average": 2012
+          },
+          {
+            "year": 1966,
+            "average": 2012
+          },
+          {
+            "year": 1967,
+            "average": 2012
+          },
+          {
+            "year": 1968,
+            "average": 2012
+          },
+          {
+            "year": 1969,
+            "average": 2012
+          },
+          {
+            "year": 1970,
+            "average": 2012
+          },
+          {
+            "year": 1971,
+            "average": 2012
+          },
+          {
+            "year": 1972,
+            "average": 2012
+          },
+          {
+            "year": 1973,
+            "average": 2012
+          },
+          {
+            "year": 1974,
+            "average": 2012
+          },
+          {
+            "year": 1975,
+            "average": 2012
+          },
+          {
+            "year": 1976,
+            "average": 2012
+          },
+          {
+            "year": 1977,
+            "average": 2012
+          },
+          {
+            "year": 1978,
+            "average": 2012
+          },
+          {
+            "year": 1979,
+            "average": 2012
+          },
+          {
+            "year": 1980,
+            "average": 2012
+          },
+          {
+            "year": 1981,
+            "average": 2012
+          },
+          {
+            "year": 1982,
+            "average": 2012
+          },
+          {
+            "year": 1983,
+            "average": 2012
+          },
+          {
+            "year": 1984,
+            "average": 2012
+          },
+          {
+            "year": 1985,
+            "average": 2012
+          },
+          {
+            "year": 1986,
+            "average": 2012
+          },
+          {
+            "year": 1987,
+            "average": 2012
+          },
+          {
+            "year": 1988,
+            "average": 2012
+          },
+          {
+            "year": 1989,
+            "average": 2012
+          },
+          {
+            "year": 1990,
+            "average": 2012
+          },
+          {
+            "year": 1991,
+            "average": 2012
+          },
+          {
+            "year": 1992,
+            "average": 2012
+          },
+          {
+            "year": 1993,
+            "average": 2012
+          },
+          {
+            "year": 1994,
+            "average": 2012
+          },
+          {
+            "year": 1995,
+            "average": 2012
+          },
+          {
+            "year": 1996,
+            "average": 2012
+          },
+          {
+            "year": 1997,
+            "average": 2012
+          },
+          {
+            "year": 1998,
+            "average": 2012
+          },
+          {
+            "year": 1999,
+            "average": 2012
+          },
+          {
+            "year": 2000,
+            "average": 2012
+          },
+          {
+            "year": 2001,
+            "average": 2012
+          },
+          {
+            "year": 2002,
+            "average": 2012
+          },
+          {
+            "year": 2003,
+            "average": 2012
+          },
+          {
+            "year": 2004,
+            "average": 2012
+          },
+          {
+            "year": 2005,
+            "average": 2012
+          },
+          {
+            "year": 2006,
+            "average": 2012
+          },
+          {
+            "year": 2007,
+            "average": 2012
+          },
+          {
+            "year": 2008,
+            "average": 2012
+          },
+          {
+            "year": 2009,
+            "average": 2012
+          },
+          {
+            "year": 2010,
+            "average": 2012
+          },
+          {
+            "year": 2011,
+            "average": 2012
+          },
+          {
+            "year": 2012,
+            "average": 2012
+          },
+          {
+            "year": 2013,
+            "average": 2012
+          },
+          {
+            "year": 2014,
+            "average": 2012
+          },
+          {
+            "year": 2015,
+            "average": 2012
+          },
+          {
+            "year": 2016,
+            "average": 2012
+          },
+          {
+            "year": 2017,
+            "average": 2012
+          },
+          {
+            "year": 2018,
+            "average": 2012
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          545,
+          null
+        ]
+      },
+      "properties": {
+        "id": "002014",
+        "name": "KIMBERLEY RES.STATION",
+        "state": "",
+        "district": "2",
+        "startYear": "1",
+        "endYear": "944",
+        "elevation": "WA",
+        "rainfall": [
+          {
+            "year": 1944,
+            "average": 2014
+          },
+          {
+            "year": 1945,
+            "average": 2014
+          },
+          {
+            "year": 1946,
+            "average": 2014
+          },
+          {
+            "year": 1947,
+            "average": 2014
+          },
+          {
+            "year": 1948,
+            "average": 2014
+          },
+          {
+            "year": 1949,
+            "average": 2014
+          },
+          {
+            "year": 1950,
+            "average": 2014
+          },
+          {
+            "year": 1951,
+            "average": 2014
+          },
+          {
+            "year": 1952,
+            "average": 2014
+          },
+          {
+            "year": 1953,
+            "average": 2014
+          },
+          {
+            "year": 1954,
+            "average": 2014
+          },
+          {
+            "year": 1955,
+            "average": 2014
+          },
+          {
+            "year": 1956,
+            "average": 2014
+          },
+          {
+            "year": 1957,
+            "average": 2014
+          },
+          {
+            "year": 1958,
+            "average": 2014
+          },
+          {
+            "year": 1959,
+            "average": 2014
+          },
+          {
+            "year": 1960,
+            "average": 2014
+          },
+          {
+            "year": 1961,
+            "average": 2014
+          },
+          {
+            "year": 1962,
+            "average": 2014
+          },
+          {
+            "year": 1963,
+            "average": 2014
+          },
+          {
+            "year": 1964,
+            "average": 2014
+          },
+          {
+            "year": 1965,
+            "average": 2014
+          },
+          {
+            "year": 1966,
+            "average": 2014
+          },
+          {
+            "year": 1967,
+            "average": 2014
+          },
+          {
+            "year": 1968,
+            "average": 2014
+          },
+          {
+            "year": 1969,
+            "average": 2014
+          },
+          {
+            "year": 1970,
+            "average": 2014
+          },
+          {
+            "year": 1971,
+            "average": 2014
+          },
+          {
+            "year": 1972,
+            "average": 2014
+          },
+          {
+            "year": 1973,
+            "average": 2014
+          },
+          {
+            "year": 1974,
+            "average": 2014
+          },
+          {
+            "year": 1975,
+            "average": 2014
+          },
+          {
+            "year": 1976,
+            "average": 2014
+          },
+          {
+            "year": 1977,
+            "average": 2014
+          },
+          {
+            "year": 1978,
+            "average": 2014
+          },
+          {
+            "year": 1979,
+            "average": 2014
+          },
+          {
+            "year": 1980,
+            "average": 2014
+          },
+          {
+            "year": 1981,
+            "average": 2014
+          },
+          {
+            "year": 1982,
+            "average": 2014
+          },
+          {
+            "year": 1983,
+            "average": 2014
+          },
+          {
+            "year": 1984,
+            "average": 2014
+          },
+          {
+            "year": 1985,
+            "average": 2014
+          },
+          {
+            "year": 1986,
+            "average": 2014
+          },
+          {
+            "year": 1987,
+            "average": 2014
+          },
+          {
+            "year": 1988,
+            "average": 2014
+          },
+          {
+            "year": 1989,
+            "average": 2014
+          },
+          {
+            "year": 1990,
+            "average": 2014
+          },
+          {
+            "year": 1991,
+            "average": 2014
+          },
+          {
+            "year": 1992,
+            "average": 2014
+          },
+          {
+            "year": 1993,
+            "average": 2014
+          },
+          {
+            "year": 1994,
+            "average": 2014
+          },
+          {
+            "year": 1995,
+            "average": 2014
+          },
+          {
+            "year": 1996,
+            "average": 2014
+          },
+          {
+            "year": 1997,
+            "average": 2014
+          },
+          {
+            "year": 1998,
+            "average": 2014
+          },
+          {
+            "year": 1999,
+            "average": 2014
+          },
+          {
+            "year": 2000,
+            "average": 2014
+          },
+          {
+            "year": 2001,
+            "average": 2014
+          },
+          {
+            "year": 2002,
+            "average": 2014
+          },
+          {
+            "year": 2003,
+            "average": 2014
+          },
+          {
+            "year": 2004,
+            "average": 2014
+          },
+          {
+            "year": 2005,
+            "average": 2014
+          },
+          {
+            "year": 2006,
+            "average": 2014
+          },
+          {
+            "year": 2007,
+            "average": 2014
+          },
+          {
+            "year": 2008,
+            "average": 2014
+          },
+          {
+            "year": 2009,
+            "average": 2014
+          },
+          {
+            "year": 2010,
+            "average": 2014
+          }
+        ],
+        "temperature": [
+          {
+            "year": 1965,
+            "average": 2014
+          },
+          {
+            "year": 1966,
+            "average": 2014
+          },
+          {
+            "year": 1967,
+            "average": 2014
+          },
+          {
+            "year": 1968,
+            "average": 2014
+          },
+          {
+            "year": 1969,
+            "average": 2014
+          },
+          {
+            "year": 1970,
+            "average": 2014
+          },
+          {
+            "year": 1971,
+            "average": 2014
+          },
+          {
+            "year": 1972,
+            "average": 2014
+          },
+          {
+            "year": 1973,
+            "average": 2014
+          },
+          {
+            "year": 1974,
+            "average": 2014
+          },
+          {
+            "year": 1975,
+            "average": 2014
+          },
+          {
+            "year": 1976,
+            "average": 2014
+          },
+          {
+            "year": 1977,
+            "average": 2014
+          },
+          {
+            "year": 1978,
+            "average": 2014
+          },
+          {
+            "year": 1979,
+            "average": 2014
+          },
+          {
+            "year": 1980,
+            "average": 2014
+          },
+          {
+            "year": 1981,
+            "average": 2014
+          },
+          {
+            "year": 1982,
+            "average": 2014
+          },
+          {
+            "year": 1983,
+            "average": 2014
+          },
+          {
+            "year": 1984,
+            "average": 2014
+          },
+          {
+            "year": 1985,
+            "average": 2014
+          },
+          {
+            "year": 1986,
+            "average": 2014
+          },
+          {
+            "year": 1987,
+            "average": 2014
+          },
+          {
+            "year": 1988,
+            "average": 2014
+          },
+          {
+            "year": 1989,
+            "average": 2014
+          },
+          {
+            "year": 1990,
+            "average": 2014
+          },
+          {
+            "year": 1991,
+            "average": 2014
+          },
+          {
+            "year": 1992,
+            "average": 2014
+          },
+          {
+            "year": 1993,
+            "average": 2014
+          },
+          {
+            "year": 1994,
+            "average": 2014
+          },
+          {
+            "year": 1995,
+            "average": 2014
+          },
+          {
+            "year": 1996,
+            "average": 2014
+          },
+          {
+            "year": 1997,
+            "average": 2014
+          },
+          {
+            "year": 1998,
+            "average": 2014
+          },
+          {
+            "year": 1999,
+            "average": 2014
+          },
+          {
+            "year": 2000,
+            "average": 2014
+          },
+          {
+            "year": 2001,
+            "average": 2014
+          },
+          {
+            "year": 2002,
+            "average": 2014
+          },
+          {
+            "year": 2003,
+            "average": 2014
+          },
+          {
+            "year": 2004,
+            "average": 2014
+          },
+          {
+            "year": 2005,
+            "average": 2014
+          },
+          {
+            "year": 2006,
+            "average": 2014
+          },
+          {
+            "year": 2007,
+            "average": 2014
+          },
+          {
+            "year": 2008,
+            "average": 2014
+          },
+          {
+            "year": 2009,
+            "average": 2014
+          },
+          {
+            "year": 2010,
+            "average": 2014
+          }
+        ]
+      }
+    }
+  ]
+}
