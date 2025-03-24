@@ -274,7 +274,7 @@ async function scrapeStations(data, startStation, endStation) {
                 }
             }
 
-            await delay(); // pause for 1-4s
+            // await delay(); // pause for 1-4s
 
             // Get Temperature data for a station
             if (!fs.existsSync(tempDestination)) {
@@ -308,7 +308,7 @@ async function scrapeStations(data, startStation, endStation) {
         }
 
         index++;
-        await delay();
+        // await delay();
     }
 
     await browser.close();
@@ -371,9 +371,9 @@ async function extractData(page) {
 }
 
 // Helper function to introduce a random delay
-async function delay() {
-    await new Promise((resolve) => setTimeout(resolve, Math.random() * 3000 + 1000));
-}
+// async function delay() {
+//     await new Promise((resolve) => setTimeout(resolve, Math.random() * 3000 + 1000));
+// }
 
 // Function to save progress data without creating full backups
 function saveProgressData(jsonData, successCount, errorCount) {
@@ -463,6 +463,7 @@ function saveStationRange(startStation, endStation) {
         
         await displayAvailableStations();
         
+        await downloadFile("http://www.bom.gov.au/jsp/ncc/cdio/weatherData/av?p_display_type=dailyZippedDataFile&p_stn_num=2066&p_c=-862062&p_nccObsCode=136&p_startYear=1993",path.join(RAINFALL_DIR, '002066_rainfall.zip'))
         console.log("\nYou can specify a range of stations to process.");
         console.log("Leave blank to process all stations.");
         
@@ -472,7 +473,6 @@ function saveStationRange(startStation, endStation) {
         
         // Save the station range for the processor script
         saveStationRange(startStation, endStation);
-        
         console.log("\nStarting scraper for Australian weather stations...");
         const output = await scrapeStations(stationJson, startStation, endStation);
         console.log("Scraping completed successfully!");
