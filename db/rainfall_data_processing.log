@@ -1,0 +1,27 @@
+2025-03-25 16:44:29,794 - ERROR - Database connection error: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2025-03-25 16:47:07,538 - ERROR - Database connection error: connection to server at "localhost" (::1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2025-03-25 16:47:39,337 - ERROR - Database connection error: connection to server at "localhost" (::1), port 5555 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+2025-03-25 17:02:40,282 - INFO - Loaded .env file from C:\Users\talra\OneDrive\Desktop\senior project\FIT3161-3162-Senior-Project\db\.env
+2025-03-25 17:02:40,282 - INFO - Environment variables after loading:
+2025-03-25 17:02:40,282 - INFO - POSTGRES_DB: weather_db
+2025-03-25 17:02:40,282 - INFO - POSTGRES_USER: postgres
+2025-03-25 17:02:40,282 - INFO - POSTGRES_HOST: localhost
+2025-03-25 17:02:40,282 - INFO - POSTGRES_PORT: 5555
+2025-03-25 17:02:40,282 - INFO - Database connection parameters:
+2025-03-25 17:02:40,282 - INFO - {'dbname': 'weather_db', 'user': 'postgres', 'host': 'localhost', 'port': '5555'}
+2025-03-25 17:02:40,282 - INFO - Attempting to connect to database...
+2025-03-25 17:02:40,302 - ERROR - Database connection error: connection to server at "localhost" (::1), port 5555 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
