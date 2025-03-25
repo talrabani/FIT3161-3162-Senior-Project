@@ -52,3 +52,84 @@ CREATE TABLE IF NOT EXISTS SAVED_MAP (
 
 -- Add comments to explain the time period values
 COMMENT ON COLUMN SAVED_MAP.map_time_period IS 'A=Daily, B=Monthly, C=Yearly';
+
+CREATE TABLE IF NOT EXISTS STATION (
+    station_id VARCHAR(50) PRIMARY KEY,
+    station_name VARCHAR(100) NOT NULL,
+    station_latitude DECIMAL(10, 8) NOT NULL,
+    station_longitude DECIMAL(10, 8) NOT NULL,
+    station_state CHAR(3) NOT NULL
+);
+
+-- TEMPERATURE_DATA_DAILY table
+CREATE TABLE IF NOT EXISTS TEMPERATURE_DATA_DAILY (
+    station_id VARCHAR(50),
+    date DATE,
+    max_temp DECIMAL(5,2),
+    min_temp DECIMAL(5,2),
+    average_temp DECIMAL(5,2),
+    PRIMARY KEY (station_id, date),
+    FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE
+);
+
+-- TEMPERATURE_DATA_MONTHLY table
+CREATE TABLE IF NOT EXISTS TEMPERATURE_DATA_MONTHLY (
+    station_id VARCHAR(50),
+    month INTEGER,
+    year INTEGER,
+    max_temp DECIMAL(5,2),
+    min_temp DECIMAL(5,2),
+    average_temp DECIMAL(5,2),
+    PRIMARY KEY (station_id, month, year),
+    FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE,
+    CONSTRAINT valid_month CHECK (month BETWEEN 1 AND 12)
+);
+
+-- TEMPERATURE_DATA_YEARLY table
+CREATE TABLE IF NOT EXISTS TEMPERATURE_DATA_YEARLY (
+    station_id VARCHAR(50),
+    year INTEGER,
+    max_temp DECIMAL(5,2),
+    min_temp DECIMAL(5,2),
+    average_temp DECIMAL(5,2),
+    PRIMARY KEY (station_id, year),
+    FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE
+);
+
+-- RAINFALL_DATA_DAILY table
+CREATE TABLE IF NOT EXISTS RAINFALL_DATA_DAILY (
+    station_id VARCHAR(50),
+    date DATE,
+    rainfall DECIMAL(6,2),
+    PRIMARY KEY (station_id, date),
+    FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE
+);
+
+-- RAINFALL_DATA_MONTHLY table
+CREATE TABLE IF NOT EXISTS RAINFALL_DATA_MONTHLY (
+    station_id VARCHAR(50),
+    month INTEGER,
+    year INTEGER,
+    rainfall DECIMAL(6,2),
+    PRIMARY KEY (station_id, month, year),
+    FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE,
+    CONSTRAINT valid_month CHECK (month BETWEEN 1 AND 12)
+);
+
+-- RAINFALL_DATA_YEARLY table
+CREATE TABLE IF NOT EXISTS RAINFALL_DATA_YEARLY (
+    station_id VARCHAR(50),
+    year INTEGER,
+    rainfall DECIMAL(6,2),
+    PRIMARY KEY (station_id, year),
+    FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE
+);
+
+-- Add comments to explain the data tables
+COMMENT ON TABLE TEMPERATURE_DATA_DAILY IS 'Daily temperature records for each station';
+COMMENT ON TABLE TEMPERATURE_DATA_MONTHLY IS 'Monthly temperature records for each station';
+COMMENT ON TABLE TEMPERATURE_DATA_YEARLY IS 'Yearly temperature records for each station';
+COMMENT ON TABLE RAINFALL_DATA_DAILY IS 'Daily rainfall records for each station';
+COMMENT ON TABLE RAINFALL_DATA_MONTHLY IS 'Monthly rainfall records for each station';
+COMMENT ON TABLE RAINFALL_DATA_YEARLY IS 'Yearly rainfall records for each station';
+
