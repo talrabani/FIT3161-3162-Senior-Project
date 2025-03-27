@@ -28,26 +28,13 @@ def extract_zip_files():
     # Process each zip file
     for zip_file in tqdm(zip_files, desc="Extracting zip files"):
         zip_path = os.path.join(zip_dir, zip_file)
-        station_id = zip_file.split('_')[0]
-        
-        # Create station-specific directory
-        station_dir = os.path.join(extract_dir, station_id)
-        os.makedirs(station_dir, exist_ok=True)
         
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                # Extract all files to the station directory
-                zip_ref.extractall(station_dir)
-                logging.info(f"Successfully extracted {zip_file} to {station_dir}")
+                # Extract all files directly to the extraction directory
+                zip_ref.extractall(extract_dir)
+                logging.info(f"Successfully extracted {zip_file} to {extract_dir}")
                 
-                # Print the first few lines of the CSV file
-                csv_files = [f for f in zip_ref.namelist() if f.endswith('.csv')]
-                if csv_files:
-                    with zip_ref.open(csv_files[0]) as f:
-                        content = f.read().decode()
-                        print(f"\nFirst few lines of {zip_file}:")
-                        print(content[:500])
-                        print("-" * 80)
                 
         except Exception as e:
             logging.error(f"Error extracting {zip_file}: {e}")
