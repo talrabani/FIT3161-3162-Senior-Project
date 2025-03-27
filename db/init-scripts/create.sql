@@ -54,10 +54,11 @@ CREATE TABLE IF NOT EXISTS SAVED_MAP (
 COMMENT ON COLUMN SAVED_MAP.map_time_period IS 'A=Daily, B=Monthly, C=Yearly';
 
 CREATE TABLE IF NOT EXISTS STATION (
-    station_id VARCHAR(50) PRIMARY KEY,
+    station_id INTEGER(6) PRIMARY KEY,
     station_name VARCHAR(100) NOT NULL,
-    station_latitude DECIMAL(10, 8) NOT NULL,
-    station_longitude DECIMAL(10, 8) NOT NULL,
+    station_latitude DECIMAL(3, 4) NOT NULL,
+    station_longitude DECIMAL(3, 4) NOT NULL,
+    station_height DECIMAL(4,1) NOT NULL,
     station_state CHAR(3) NOT NULL
 );
 
