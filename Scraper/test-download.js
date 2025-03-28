@@ -9,8 +9,8 @@ const readline = require('readline');
 function loadStationsFromFile() {
     try {
         const stationJson = {};
-        if (fs.existsSync(path.join(__dirname, 'rainfall-stations.txt'))) {
-            const fileContent = fs.readFileSync(path.join(__dirname, 'rainfall-stations.txt'), 'utf8');
+        if (fs.existsSync(path.join(__dirname, 'temp-stations.txt'))) {
+            const fileContent = fs.readFileSync(path.join(__dirname, 'temp-stations.txt'), 'utf8');
             const lines = fileContent.split('\n');
             
             // Skip header lines (first 4 lines)
@@ -104,7 +104,40 @@ function loadStationsFromFile() {
         return {};
     }
 }
-function loadcValues(numOfStations) {
+function loadRainfallcValues(numOfStations) {
+    const stationIndex = {};
+    for (i = 0; i < numOfStations; i++) {
+        const ind = `${1000 + i}`;
+        stationIndex[ind] = null;
+    }
+    let intialC = 207991 + 297;
+    for (const stIn of Object.keys(stationIndex)){
+        let cdif;
+        const stInLast = stIn.slice(-1);
+        const stInNum = +(stIn);
+        if (stInLast == '0' || stInLast == '5') {
+            cdif = parseInt(stInNum*0.4 - 1);
+        }
+        if (stInLast == '1' || stInLast == '6') {
+            cdif = parseInt(stInNum*0.4 + 0.6);
+            // console.log(cdif + parseInt(stationNum));
+        }
+        if (stInLast == '2' || stInLast == '7') {
+            cdif = parseInt(stInNum*0.4 - 0.8);
+        }
+        if (stInLast == '3' || stInLast == '8') {
+            cdif = parseInt(stInNum*0.4 - 0.2);
+        }
+        if (stInLast == '4' || stInLast == '9') {
+            cdif = parseInt(stInNum*0.4 + 0.4);
+        }
+        intialC += cdif;
+        stationIndex[stIn] = intialC;
+        // console.log(stationIndex);
+    }
+    return stationIndex;
+}
+function loadRainfallcValues(numOfStations) {
     const stationIndex = {};
     for (i = 0; i < numOfStations; i++) {
         const ind = `${1000 + i}`;
@@ -197,7 +230,7 @@ function downloadFile(url, destination) {
 async function autoDownload(data) {
     let allStationCodes = Object.keys(data);
     // console.log(allStationCodes.at(1));
-    const stInd = loadcValues(300018-1000);
+    const stInd = loadRainfallcValues(300018-1000);
     let stationsDownloaded = 0;
     for (const stationCode of allStationCodes) {
         // if (stationCode == allStationCodes.at(300)) {

@@ -1,0 +1,1824 @@
+Bureau of Meteorology product IDCJMC0014.                                       Produced: 24 Mar 2025
+Australian stations measuring maximum air temperature
+Site    Name                                     Lat       Lon      Start    End       Years   %  AWS
+-----------------------------------------------------------------------------------------------------
+   1005 WYNDHAM PORT                             -15.4644  128.1000 Jan 1957 Oct 1967   10.8   98   N
+   1006 WYNDHAM AERO                             -15.5100  128.1503 Sep 2000 Mar 2025   24.6   98   Y
+   1007 TROUGHTON ISLAND                         -13.7542  126.1485 Jan 1957 Mar 2025   45.5   65   Y
+   1009 KURI BAY                                 -15.4875  124.5222 Jan 1965 Jan 2012   42.2   84   N
+   1012 MITCHELL PLATEAU                         -14.7925  125.8258 Jul 1970 Oct 1986   15.6   90   N
+   1013 WYNDHAM                                  -15.4869  128.1236 Apr 1968 Jan 2015   46.6   98   N
+   1018 MOUNT ELIZABETH                          -16.4181  126.1025 Nov 1993 May 2022   27.3   83   N
+   1019 KALUMBURU                                -14.2964  126.6453 Sep 1998 Mar 2025   26.5   95   Y
+   1020 TRUSCOTT                                 -14.0900  126.3867 May 2004 Mar 2025   20.9   96   Y
+   1021 KALUMBURU MISSION                        -14.2961  126.6431 Sep 1941 Mar 2005   62.6   97   N
+   1025 DOONGAN                                  -15.3797  126.3114 Aug 1988 Mar 2025   36.3   88   N
+   2011 OLD HALLS CREEK                          -18.2519  127.7817 Jan 1898 Mar 1969   56.3   77   N
+   2012 HALLS CREEK METEOROLOGICAL OFFICE        -18.2291  127.6636 Jan 1944 Dec 2018   72.1   95   Y
+   2014 KIMBERLEY RES.STATION                    -15.6545  128.7091 Jan 1965 Aug 2010   45.7   95   N
+   2032 WARMUN                                   -17.0154  128.2174 Jan 1962 Mar 2025   62.2   94   N
+   2038 KUNUNURRA                                -15.7828  128.7353 Jan 1965 Mar 1986   21.3   98   N
+   2056 KUNUNURRA AERO                           -15.7814  128.7100 Mar 1986 Mar 2025   38.9   96   Y
+   2064 ARGYLE AERODROME                         -16.6380  128.4516 Jun 1994 Mar 2025   30.8   97   Y
+   2071 HALLS CREEK COMPARISON (OLD)             -18.2303  127.6625 Aug 1996 Feb 2001    4.6   94   N
+   3002 BROOME POST OFFICE                       -17.9500  122.2500 Jan 1897 Oct 1953   54.8   96   N
+   3003 BROOME AIRPORT                           -17.9475  122.2352 Aug 1939 Mar 2025   85.7  100   Y
+   3004 CAPE LEVEQUE                             -16.3961  122.9278 Jan 1965 Aug 1985   20.7   99   N
+   3006 FITZROY CROSSING COMP.                   -18.1919  125.5644 Jan 1957 Apr 1987   27.2   87   N
+   3007 DERBY POST OFFICE                        -17.3044  123.6292 Jan 1964 Jun 1997   24.1   70   N
+   3025 COCKATOO ISLAND                          -16.0992  123.6161 Jan 1965 Jun 1982   17.5   88   N
+   3030 BIDYADANGA                               -18.6844  121.7803 Jan 1957 Mar 2025   66.2   91   N
+   3032 DERBY AERO                               -17.3706  123.6611 Apr 1972 Mar 2025   39.9   74   Y
+   3040 CAMBALLIN                                -17.9903  124.1922 Jan 1965 Jun 1977   10.3   73   N
+   3042 TALGARNO                                 -19.2833  121.5000 Sep 1959 Dec 1963    4.3   95   N
+   3051 MOUNT BARNETT                            -16.7372  125.9086 Sep 1983 May 1993    9.6   87   N
+   3057 CYGNET BAY                               -16.4513  123.0087 Aug 1985 Aug 2024   38.7   89   N
+   3059 NITA DOWNS                               -19.0861  121.6764 Sep 1965 May 1975    9.7   96   N
+   3069 KOOLAN ISLAND                            -16.1306  123.7764 Jul 1982 Sep 1992   10.3   99   N
+   3076 WESTERN FIELD                            -19.3283  125.3886 Sep 1983 Jul 1985    1.9   93   N
+   3078 CADJEBUT                                 -18.7267  125.9875 May 1993 Oct 2003   10.3   90   N
+   3080 CURTIN AERO                              -17.5768  123.8297 Jul 1990 Mar 2025   34.8   96   Y
+   3089 BROOME COMPARISON                        -17.9492  122.2339 Aug 1995 Jul 2000    5.0  100   N
+   3092 SOUTH EAST WATERBANK                     -17.8578  122.2725 Sep 1996 Aug 1999    3.0   86   Y
+   3093 FITZROY CROSSING AERO                    -18.1814  125.5619 Aug 1997 Mar 2025   27.7   98   Y
+   3102 BROOME WHARF NTC AWS                     -18.0019  122.2162 May 2013 Mar 2025   11.6   90   Y
+   3108 YAMPI SOUND (DEFENCE)                    -16.7671  123.9810 Apr 2019 Mar 2025    5.9   94   Y
+   4000 ABYDOS                                   -21.4167  118.9333 Jan 1965 Jan 1968    2.0   61   N
+   4002 PORT HEDLAND POST OFFICE                 -20.3139  118.5742 Oct 1912 Jun 1948   35.7   99   N
+   4019 MANDORA                                  -19.7419  120.8433 Jan 1962 Mar 2025   62.3   89   Y
+   4020 MARBLE BAR COMPARISON                    -21.1756  119.7497 Feb 1901 Aug 2006  105.5   99   N
+   4027 NULLAGINE                                -21.8861  120.1103 Feb 1965 Feb 1984   18.9   90   N
+   4028 PARDOO STATION                           -20.1078  119.5811 Nov 1993 Mar 2025   27.7   79   N
+   4032 PORT HEDLAND AIRPORT                     -20.3725  118.6317 Jul 1948 Mar 2025   76.8   99   Y
+   4035 ROEBOURNE                                -20.7767  117.1456 Jan 1957 Jan 2015   57.2   97   N
+   4043 REDMONT                                  -21.9931  119.0131 May 1971 Oct 1993   22.3   88   N
+   4045 ABYDOS WOODSTOCK                         -21.6200  118.9550 Dec 1969 May 1976    6.3   92   N
+   4074 GOLDSWORTHY                              -20.3422  119.5206 Oct 1966 May 1992   25.5   97   N
+   4079 YANDEE                                   -21.3625  118.8783 May 1971 Aug 1982   10.5   80   N
+   4082 CAPE LAMBERT                             -20.6150  117.1633 Nov 1971 Dec 1974    2.8   79   N
+   4083 KARRATHA AERO                            -20.7097  116.7742 Aug 1993 Mar 2025   31.7   97   Y
+   4084 SHAY GAP                                 -20.4958  120.1672 Sep 1973 Oct 1993    9.4   46   N
+   4090 ROEBOURNE AERO                           -20.7594  117.1583 Jun 2001 Mar 2025   23.6   96   Y
+   4095 LEGENDRE ISLAND                          -20.3583  116.8431 Oct 2009 Mar 2025   15.3   92   Y
+   4097 DAMPIER PORT                             -20.6175  116.7517 Jul 1991 Aug 2001   10.2   98   N
+   4099 KARRATHA TOWN                            -20.7381  116.8489 May 1992 Apr 1994    1.1   42   N
+   4100 BEDOUT ISLAND                            -19.5894  119.1000 Sep 2005 Feb 2025   15.8   75   Y
+   4104 PORT HEDLAND MILOS AWS COMPARISON        -20.3736  118.6297 Dec 1998 Sep 2001    2.8   98   Y
+   4106 MARBLE BAR                               -21.1756  119.7497 Sep 2000 Mar 2025   24.5   96   Y
+   5007 LEARMONTH AIRPORT                        -22.2406  114.0967 Mar 1975 Mar 2025   50.1   99   Y
+   5008 MARDIE                                   -21.1906  115.9797 Jan 1957 Mar 2025   68.1   97   Y
+   5016 ONSLOW                                   -21.6364  115.1117 Jan 1957 Jul 2012   51.6   90   N
+   5017 ONSLOW AIRPORT                           -21.6689  115.1092 Aug 1940 Mar 2025   59.0   69   Y
+   5024 VLAMINGH HEAD                            -21.8067  114.1072 Jan 1965 Mar 1967    2.3  100   N
+   5026 WITTENOOM                                -22.2425  118.3358 Oct 1951 Aug 2019   67.9   98   N
+   5051 EXMOUTH TOWN                             -21.9303  114.1260 Jun 1967 Feb 1975    7.8   97   N
+   5053 EAST INTERCOURSE ISLAND                  -20.6553  116.6789 Oct 1966 Jan 1970    3.3   97   N
+   5058 BARROW ISLAND                            -20.8206  115.3931 Nov 1967 Jan 2000   28.4   82   Y
+   5060 NAVY CHARLIE                             -22.3333  114.0500 Mar 1968 Nov 1971    3.8   99   N
+   5061 DAMPIER SALT                             -20.7278  116.7483 Nov 1969 Nov 1993   24.1   88   N
+   5064 SAND HILL                                -22.7825  119.6172 May 1971 Jul 1984   13.2   93   N
+   5069 PANNAWONICA                              -21.6392  116.3308 Nov 1971 Sep 2005   33.2   80   N
+   5072 TOM PRICE                                -22.6967  117.7703 Oct 1997 Apr 2011   13.6   95   N
+   5075 NAVY ALPHA                               -21.8222  114.1714 Dec 1971 Jun 1976    4.6  100   N
+   5092 LEARMONTH MILOS AWS COMPARISON           -22.2367  114.0869 Dec 1998 Oct 2001    2.9   94   N
+   5094 BARROW ISLAND AIRPORT                    -20.8740  115.4066 Feb 1999 Mar 2025   26.1   97   Y
+   5098 KARIJINI NORTH                           -22.2999  118.4498 Aug 2018 Mar 2025    6.7   97   Y
+   6011 CARNARVON AIRPORT                        -24.8878  113.6700 Jan 1945 Mar 2025   78.7   97   Y
+   6022 GASCOYNE JUNCTION                        -25.0544  115.2100 Jan 1962 Mar 2025   47.9   64   N
+   6025 HAMELIN POOL                             -26.3994  114.1658 Jan 1957 Apr 1980   23.3   96   N
+   6044 DENHAM                                   -25.9265  113.5325 Apr 1988 Nov 2023   35.6   98   N
+   6062 CARNARVON POST OFFICE                    -24.8858  113.6565 Jan 1907 Aug 1950   43.7  100   N
+   6072 EMU CREEK STATION                        -23.0314  115.0414 Jun 1972 Dec 2024   50.6   90   Y
+   6080 NANGA                                    -26.2564  113.8064 Apr 1980 Apr 1988    8.1   98   N
+   6087 BRICKHOUSE WOOLSHED                      -24.8167  113.8333 Jun 1966 Mar 1977   10.8   98   N
+   6094 CAPE CUVIER                              -24.2167  113.3833 Jun 1972 Jul 1975    3.1   79   N
+   6099 MURCHISON                                -26.8956  115.9567 Jan 1989 Mar 2025   35.5   89   N
+   6105 SHARK BAY AIRPORT                        -25.8925  113.5772 Jul 2000 Mar 2025   24.8   99   Y
+   7017 CUE                                      -27.4250  117.8936 Jan 1957 Jan 1985   28.0   93   N
+   7045 MEEKATHARRA AIRPORT                      -26.6136  118.5372 Apr 1950 Mar 2025   74.9   99   Y
+   7046 MEEKATHARRA POST OFFICE                  -26.5933  118.4883 Oct 1926 Apr 1950   23.6   99   N
+   7057 MOUNT MAGNET                             -28.0617  117.8506 Jan 1957 Mar 1997   30.2   72   N
+   7058 MOUNT PHILLIP                            -24.4000  116.3078 Aug 1986 Jan 2000   13.4   91   N
+   7062 MUNDIWINDI                               -23.7942  120.2442 Jan 1957 Nov 1981   24.8   94   N
+   7064 MURGOO                                   -27.3636  116.4261 Jan 1962 Apr 1986   22.3   85   N
+   7067 NARNDEE                                  -28.9467  118.1857 Apr 1976 Sep 1980    4.5   90   N
+   7080 THREE RIVERS                             -25.1256  119.1514 Jul 1967 Jun 2004   35.6   78   N
+   7091 YALGOO                                   -28.3386  116.6825 Jan 1957 Nov 1975   18.5   91   N
+   7139 PAYNES FIND                              -29.2708  117.6836 Jun 1975 Mar 2025   45.3   83   N
+   7151 NEWMAN                                   -23.3683  119.7314 Dec 1965 Aug 1998   32.3   96   N
+   7161 ERRABIDDY                                -25.4628  117.1364 Sep 1970 Jan 1985   14.3   87   N
+   7168 OUDABUNNA                                -29.0675  117.7572 Oct 1972 Jun 1974    1.8   88   N
+   7176 NEWMAN AERO                              -23.4213  119.8023 Dec 1996 Mar 2025   28.3   98   Y
+   7178 PARABURDOO                               -23.2028  117.6692 Jun 1980 Mar 1997   16.8   99   N
+   7185 PARABURDOO AERO                          -23.1726  117.7493 Mar 1996 Mar 2025   29.1   98   Y
+   7204 MEEKATHARRA MILOS AWS COMPARISON         -26.6131  118.5367 Dec 1998 Jul 2001    2.7   94   Y
+   7205 MOUNT AUGUSTUS RESORT                    -24.3075  116.9094 Aug 2000 Sep 2003    3.2   74   N
+   7600 MOUNT MAGNET AERO                        -28.1156  117.8425 Jun 1995 Mar 2025   29.8   96   Y
+   8025 CARNAMAH                                 -29.6883  115.8857 Jan 1940 Mar 2025   83.6   89   N
+   8028 NABAWA                                   -28.5008  114.7897 May 1912 Oct 1973   60.9   95   N
+   8039 DALWALLINU COMPARISON                    -30.2772  116.6619 Jan 1957 Aug 2012   55.2   98   N
+   8050 GERALDTON TOWN                           -28.7769  114.6050 Jan 1907 Oct 1953   46.4   97   N
+   8051 GERALDTON AIRPORT COMPARISON             -28.7953  114.6975 Aug 1941 Jun 2014   71.8   98   Y
+   8088 MINGENEW                                 -29.1906  115.4414 Jan 1965 Nov 1975   10.2   77   N
+   8091 MOORA                                    -30.6417  116.0072 Mar 1965 Feb 2004   31.3   72   N
+   8093 MORAWA                                   -29.2103  116.0089 Mar 1925 Mar 2005   78.6   94   N
+   8095 MULLEWA                                  -28.5367  115.5142 Mar 1925 Mar 2025   81.9   77   N
+   8137 WONGAN HILLS                             -30.8917  116.7186 Jan 1966 Mar 2025   58.5   97   N
+   8138 WONGAN HILLS RES.STATION                 -30.8408  116.7267 Jul 1949 Sep 2013   61.1   82   N
+   8151 WALEBING                                 -30.6646  116.1383 Jan 1907 Dec 1965   59.0  100   N
+   8181 ENEABBA POST OFFICE OLD SITE             -29.8000  115.3500 Oct 1966 Dec 1971    5.3   96   N
+   8225 ENEABBA                                  -29.8183  115.2722 Jan 1972 Mar 2017   45.3   83   N
+   8249 PERENJORI AMBULANCE                      -29.4500  116.2667 May 1970 Dec 1975    5.1   85   N
+   8251 KALBARRI                                 -27.7119  114.1650 Nov 1970 Mar 2025   54.3   98   N
+   8267 NOKANENA                                 -28.3517  114.5778 Feb 1974 Dec 1989   15.8   93   N
+   8290 NORTH ISLAND                             -28.3009  113.5937 Sep 2000 Mar 2025   24.6   95   Y
+   8296 MORAWA AIRPORT                           -29.2039  116.0247 Mar 1997 Mar 2025   28.1   96   Y
+   8297 DALWALLINU                               -30.2761  116.6714 May 1997 Mar 2025   27.9   97   Y
+   8315 GERALDTON AIRPORT                        -28.8047  114.6989 Jul 2011 Mar 2025   13.8   99   Y
+   9017 FREMANTLE                                -32.0550  115.7500 Jan 1965 Jun 1978   13.2   96   N
+   9021 PERTH AIRPORT                            -31.9275  115.9764 Jun 1944 Mar 2025   80.8  100   Y
+   9034 PERTH REGIONAL OFFICE                    -31.9556  115.8697 Jan 1897 Apr 1992   95.3  100   N
+   9035 NEDLANDS UWA                             -31.9861  115.8192 Jan 1965 Mar 1974    7.6   61   N
+   9037 BADGINGARRA RESEARCH STN                 -30.3381  115.5394 Jan 1965 Mar 2025   57.2   82   Y
+   9038 ROTTNEST ISLAND LIGHTHOUSE               -32.0089  115.5022 Jan 1965 Dec 1995   31.0   99   N
+   9053 PEARCE RAAF                              -31.6669  116.0189 Dec 1940 Mar 2025   64.0   67   Y
+   9058 KALAMUNDA                                -31.9822  116.0594 Feb 1991 Dec 1993    2.3   78   N
+   9064 KWINANA BP REFINERY                      -32.2258  115.7611 Apr 1955 Oct 2012   55.8   90   N
+   9067 UPPER SWAN RESEARCH STATION              -31.7564  116.0222 Jan 1965 Apr 1991   26.3   60   N
+   9106 GOSNELLS CITY                            -32.0481  115.9844 Jul 1991 Mar 2023   31.3   87   N
+   9109 STONEVILLE RESEARCH STN                  -31.8531  116.1783 Oct 1989 Dec 1996    7.3   65   N
+   9111 KARNET                                   -32.4389  116.0789 Jan 1965 Mar 2025   60.0   95   N
+   9114 LANCELIN                                 -31.0160  115.3322 Oct 1965 May 2021   55.6   99   N
+   9126 WEST PERTH                               -31.9508  115.8453 Jun 1967 Feb 1971    3.8   99   N
+   9131 JURIEN BAY                               -30.3081  115.0311 Oct 1969 Mar 2025   55.4   95   N
+   9135 WALLISTON                                -31.9942  116.0692 Jan 1965 Dec 1985    8.7   40   N
+   9151 SUBIACO TREATMENT PLANT                  -31.9556  115.7928 May 1986 Aug 2000   12.8   78   N
+   9159 PERTH WEST                               -31.9500  115.8500 Apr 1971 Dec 1973    2.8   95   N
+   9160 POINT PERON                              -32.2667  115.7000 Aug 1971 Oct 1974    3.3   68   N
+   9161 BENTLEY (CURTIN)                         -32.0022  115.8861 Aug 1971 Feb 1987   15.6   75   N
+   9172 JANDAKOT AERO                            -32.1011  115.8794 Feb 1989 Mar 2025   34.8   95   Y
+   9178 GINGIN AERO                              -31.4628  115.8642 May 1996 Mar 2025   28.9   96   Y
+   9186 BEENYUP                                  -31.7858  115.7772 Apr 1979 May 1992    7.2   53   N
+   9192 FREMANTLE                                -32.0533  115.7647 Mar 1983 May 1999    9.3   38   N
+   9193 ROTTNEST ISLAND                          -32.0069  115.5022 Jul 1983 Mar 2025   36.2   85   Y
+   9194 MEDINA RESEARCH CENTRE                   -32.2208  115.8075 Apr 1983 Jan 2018   34.8   98   N
+   9197 GARDEN ISLAND                            -32.2300  115.6844 Jan 1984 Mar 1993    7.4   37   N
+   9215 SWANBOURNE                               -31.9560  115.7619 Sep 1993 Mar 2025   31.6   99   Y
+   9225 PERTH METRO                              -31.9192  115.8728 Nov 1993 Mar 2025   31.4   99   Y
+   9240 BICKLEY                                  -32.0072  116.1369 Jan 1994 Mar 2025   31.3   98   Y
+   9250 PERTH AIRPORT COMPARISON                 -31.9356  115.9639 Nov 1997 Jan 2001    3.3   85   Y
+   9256 GARDEN ISLAND HSF                        -32.2433  115.6839 Nov 2001 Mar 2025   23.4   99   Y
+   9265 HILLARYS BOAT HARBOUR NTC AWS            -31.8256  115.7386 May 2013 Mar 2025   11.3   90   Y
+   9280 LANCELIN (DEFENCE)                       -30.8392  115.2283 Jun 2018 Mar 2025    6.8   98   Y
+   9281 MILLENDON (SWAN VALLEY)                  -31.8112  116.0227 May 2017 Mar 2025    7.9   99   Y
+   9500 ALBANY                                   -35.0289  117.8808 Jan 1907 Mar 2025   81.5   68   N
+   9504 BOYUP BROOK                              -33.8325  116.3894 Dec 1968 Nov 1975    7.0   94   N
+   9510 BRIDGETOWN COMPARISON                    -33.9575  116.1375 Jan 1907 Aug 2012  105.7   99   N
+   9514 BUNBURY POST OFFICE                      -33.3267  115.6300 Jan 1908 Jun 1985   21.1   26   N
+   9515 BUSSELTON SHIRE                          -33.6611  115.3456 Jan 1957 Nov 1975   18.8   98   N
+   9518 CAPE LEEUWIN                             -34.3728  115.1358 Jan 1907 Mar 2025  118.3  100   Y
+   9519 CAPE NATURALISTE                         -33.5372  115.0189 Jan 1957 Mar 2025   68.3   99   Y
+   9534 DONNYBROOK                               -33.5719  115.8247 Jan 1907 Mar 2025  117.8   97   N
+   9538 DWELLINGUP                               -32.7103  116.0594 Jan 1957 Mar 2025   68.2   99   Y
+   9541 ESPERANCE POST OFFICE                    -33.8500  121.8833 Jan 1907 Jun 1969   62.5  100   N
+   9542 ESPERANCE AERO                           -33.6825  121.8275 Apr 1991 Mar 2025   34.0   96   Y
+   9569 BUSSELTON                                -33.6550  115.3194 Jul 1998 Nov 2011   13.4   99   Y
+   9572 HALLS HEAD                               -32.5385  115.7002 Jan 1965 Dec 1985   20.9   99   N
+   9573 MANJIMUP                                 -34.2508  116.1450 Jan 1957 Mar 2025   67.8   97   Y
+   9574 MARGARET RIVER                           -33.9583  115.0636 Jan 1970 Nov 1975    5.9   91   N
+   9581 MOUNT BARKER                             -34.6250  117.6361 Jan 1907 Mar 2025  105.4   81   N
+   9592 PEMBERTON                                -34.4478  116.0433 Jan 1957 Oct 2024   67.8   93   N
+   9603 BUSSELTON AERO                           -33.6818  115.4026 Oct 1997 Mar 2025   27.5   98   Y
+   9617 BRIDGETOWN                               -33.9486  116.1311 Mar 1998 Mar 2025   27.1   96   Y
+   9628 COLLIE                                   -33.3603  116.1473 Jan 1957 Nov 1975   18.8   98   N
+   9631 ESPERANCE DOWNS RESEARCH STN             -33.6031  121.7828 Oct 1951 Oct 1987   34.6   89   N
+   9637 DENMARK RES.STN.                         -34.9511  117.3700 Jan 1965 Jan 1984   18.4   85   N
+   9642 WOKALUP                                  -33.1328  115.8794 Jan 1965 Oct 2000   35.7   94   N
+   9741 ALBANY AIRPORT COMPARISON                -34.9414  117.8022 Apr 1965 Feb 2014   48.9  100   Y
+   9746 WITCHCLIFFE                              -34.0281  115.1042 Apr 1999 Oct 2021   22.6   97   Y
+   9754 METTLER                                  -34.5961  118.5519 Nov 1966 Feb 1997   30.2   91   N
+   9764 BEDFORD HARBOUR 1                        -33.7500  120.6000 Aug 1967 Feb 1970    2.3   83   N
+   9778 MARGARET RIVER CALM                      -33.9350  115.0831 Jun 1995 Nov 2001    6.5   63   N
+   9787 ECLIPSE ISLAND                           -35.1833  117.8833 Jan 1957 Mar 1973   16.1   98   N
+   9789 ESPERANCE                                -33.8300  121.8925 Jun 1969 Mar 2025   55.8   99   Y
+   9812 HARVEY                                   -33.0789  115.8806 Nov 2000 May 2014   13.6   99   N
+   9842 JARRAHWOOD                               -33.7964  115.6658 Aug 1975 Mar 2025   49.7   98   N
+   9843 FRANKLAND VINEYARDS                      -34.4417  116.9944 Dec 1975 Jan 1987   10.4   77   N
+   9844 HAY PARK                                 -33.3694  115.6378 Jul 1985 Oct 1985    0.3   63   N
+   9868 MUNGLINUP                                -33.7078  120.8653 May 1970 Dec 1973    3.7   92   N
+   9871 WINDY HARBOUR                            -34.8373  116.0260 Jan 1984 Mar 2025   38.1   77   N
+   9875 MOUNT BARKER NORTH                       -34.5702  117.6230 Apr 1985 Aug 1985    0.4   59   N
+   9877 LUDLOW                                   -33.6033  115.4983 Apr 1985 Oct 1992    7.6   97   N
+   9885 BUNBURY POWER STATION                    -33.3158  115.6600 Nov 1985 Nov 1995   10.1   92   N
+   9887 MANDURAH                                 -32.5211  115.7500 Feb 1988 Jul 2001   11.2   79   Y
+   9961 HOPETOUN NORTH                           -33.9306  120.1283 Jan 1996 Mar 2025   28.9   95   Y
+   9964 ROCKY GULLY                              -34.5714  117.0106 Jan 1996 Mar 2025   29.1   97   Y
+   9965 BUNBURY                                  -33.3567  115.6447 Nov 1995 Mar 2025   29.4   99   Y
+   9968 SHANNON                                  -34.5683  116.3367 Dec 1996 Mar 2025   26.8   90   Y
+   9977 MANDURAH                                 -32.5219  115.7119 Oct 2001 Mar 2025   23.5   99   Y
+   9994 COLLIE EAST                              -33.3608  116.1717 Dec 2002 Mar 2025   22.3   99   Y
+   9998 NORTH WALPOLE                            -34.9469  116.7222 Jan 2004 Mar 2025   21.3   98   Y
+   9999 ALBANY AIRPORT                           -34.9411  117.8158 Jan 2012 Mar 2025   13.3   98   Y
+  10007 BENCUBBIN                                -30.8081  117.8603 Jan 1957 Mar 2025   66.3   94   N
+  10035 CUNDERDIN                                -31.6494  117.2331 Jul 1950 Feb 2007   56.7   99   N
+  10058 GOOMALLING                               -31.2994  116.8269 Jun 1967 Mar 2025   46.9   59   N
+  10073 KELLERBERRIN                             -31.6183  117.7217 Feb 1910 Mar 2025  115.1   91   N
+  10092 MERREDIN                                 -31.4756  118.2789 Jan 1966 Mar 2025   59.3   98   N
+  10093 MERREDIN RESEARCH STATION                -31.4994  118.2242 Dec 1912 Apr 1985   72.1   98   N
+  10111 NORTHAM                                  -31.6508  116.6586 Jan 1907 Mar 2025  117.3   97   N
+  10140 WYALKATCHEM                              -31.1806  117.3797 Jan 1965 Nov 1975   10.9   97   N
+  10144 YORK POST OFFICE                         -31.8836  116.7581 Jan 1934 May 1996   61.1   97   N
+  10152 MURESK INSTITUTE                         -31.7500  116.6833 Jan 1957 Dec 1981   24.7   88   N
+  10244 BAKERS HILL                              -31.7469  116.4561 Jan 1965 Jun 1985   20.5   99   N
+  10270 MOUNT GIBSON                             -29.5833  117.1500 May 1970 Sep 1972    2.4   82   N
+  10286 CUNDERDIN AIRFIELD                       -31.6219  117.2217 Oct 1996 Mar 2025   28.5   98   Y
+  10311 YORK                                     -31.8997  116.7650 May 1996 Mar 2025   28.7   97   N
+  10515 BEVERLEY                                 -32.1083  116.9247 Oct 1968 Mar 2025   56.0   98   N
+  10524 BROOKTON                                 -32.3728  117.0086 Nov 1966 Mar 2025   58.3   91   N
+  10536 CORRIGIN                                 -32.3292  117.8733 Jul 1948 Mar 2025   76.3   96   N
+  10554 GLEN LOSSIE                              -33.8167  117.1667 Jan 1965 Jun 1965    0.5  100   N
+  10568 HYDEN                                    -32.4419  118.8983 May 1970 Mar 2025   53.7   95   N
+  10579 KATANNING COMPARISON                     -33.6886  117.5553 Jan 1907 Aug 2012  105.5   99   N
+  10582 KOJONUP                                  -33.8300  117.1590 Jun 1967 Feb 1997   29.3   92   N
+  10583 KONDININ                                 -32.4947  118.2675 Aug 1969 Nov 1975    6.0   90   N
+  10592 LAKE GRACE COMPARISON                    -33.1006  118.4625 Mar 1956 Aug 2012   56.5   97   N
+  10612 NAREMBEEN                                -32.0656  118.3956 Jan 1965 Sep 2022   55.9   85   N
+  10614 NARROGIN                                 -32.9342  117.1797 Jan 1913 Mar 2025  109.8   95   N
+  10622 ONGERUP                                  -33.9634  118.4788 Aug 1966 Mar 2025   58.5   94   N
+  10626 PINGELLY                                 -32.5336  117.0831 Apr 1970 Mar 2025   55.0   97   N
+  10633 RAVENSTHORPE                             -33.5803  120.0458 Jan 1962 Mar 2025   62.9   94   N
+  10647 WAGIN                                    -33.3075  117.3403 Nov 1970 Mar 2025   54.2   98   N
+  10648 WANDERING COMPARISON                     -32.6814  116.6756 Nov 1901 Jan 2003  101.2   99   N
+  10692 NEWDEGATE RESEARCH STATION               -33.1129  118.8400 Jun 1996 Mar 2025   28.8   95   Y
+  10905 JACUP                                    -33.8878  119.1092 Aug 1993 Mar 2025   31.6   96   Y
+  10911 LAKE GRACE                               -33.1006  118.4647 Jun 1997 Mar 2025   27.8   98   Y
+  10916 KATANNING                                -33.6856  117.6064 Jan 1999 Mar 2025   26.3   98   Y
+  10917 WANDERING                                -32.6722  116.6706 Dec 1998 Mar 2025   26.3   98   Y
+  11003 EUCLA                                    -31.6797  128.8958 Jan 1910 Mar 2025  107.8   90   Y
+  11004 FORREST AERO                             -30.8389  128.1139 Feb 1946 Mar 1995   49.2  100   N
+  11008 MUNDRABILLA STATION                      -31.8433  127.8572 Apr 1967 Nov 1983   16.2   84   N
+  11013 RAWLINNA                                 -31.0119  125.3294 Jan 1957 Apr 1983   26.1   97   N
+  11016 MADURA STATION                           -31.9269  126.9733 Apr 1967 Nov 1971    3.5   67   N
+  11017 BALLADONIA                               -32.4569  123.8653 May 1965 Mar 2022   56.2   85   N
+  11019 EYRE                                     -32.2464  126.3008 Nov 1983 Mar 2025   41.3   97   N
+  11023 CAIGUNA ASA                              -32.2653  125.4894 Mar 1966 Dec 1969    3.7   92   Y
+  11025 MOONERA                                  -31.7219  126.5889 Jan 1972 Sep 1975    3.3   83   N
+  11045 BALGAIR                                  -31.0900  125.6589 Apr 1983 Apr 2012   28.4   89   N
+  11052 FORREST                                  -30.8453  128.1092 Mar 1993 Mar 2025   32.0   97   Y
+  11053 RED ROCKS POINT                          -32.2028  127.5297 Dec 1999 Mar 2025   21.0   79   Y
+  12008 BOOYLGOO SPRING                          -27.7228  119.9067 Jan 1965 Nov 1975   10.8   97   N
+  12009 NORSEMAN AERO                            -32.2147  121.7547 Dec 1999 Mar 2025   25.3   99   Y
+  12022 CASHMERE DOWNS                           -28.9700  119.5686 Mar 1972 Dec 2002   30.8   98   N
+  12038 KALGOORLIE-BOULDER AIRPORT               -30.7847  121.4533 Apr 1939 Mar 2025   83.8   97   Y
+  12039 KALGOORLIE POST OFFICE                   -30.7500  121.4667 Jan 1907 Oct 1953   46.8  100   N
+  12044 MUNGLINUP WEST                           -33.5547  120.6997 May 2002 Mar 2025   22.9   98   Y
+  12045 LAVERTON                                 -28.6303  122.4072 Jan 1957 Sep 1971   12.3   82   N
+  12046 LEONORA                                  -28.8879  121.3302 Jan 1957 Apr 2014   57.1   99   N
+  12052 MENZIES                                  -29.6939  121.0297 Jan 1957 Dec 1996   39.7   97   N
+  12065 NORSEMAN                                 -32.1981  121.7794 Jan 1957 Aug 2012   55.5   95   N
+  12071 SALMON GUMS RES.STN.                     -32.9869  121.6239 Sep 1932 Mar 2025   87.4   90   Y
+  12074 SOUTHERN CROSS                           -31.2319  119.3281 Jan 1907 Nov 2007  100.9   99   N
+  12090 YEELIRRIE                                -27.2842  120.0931 Jun 1973 Nov 2017   44.4   95   N
+  12219 YAMARNA                                  -28.1664  123.6556 Apr 1968 May 1997   26.1   85   N
+  12239 BULGA DOWNS                              -28.4967  119.7436 Dec 2002 Mar 2025   22.3   98   N
+  12241 LEONORA AERO                             -28.8789  121.3186 Feb 2007 Mar 2025   18.2   98   Y
+  12242 DIEMALS                                  -29.6694  119.3031 May 1970 Nov 1993   23.3   93   N
+  12263 WINDARRA                                 -28.4900  122.2375 Oct 1971 Nov 1979    8.1   92   N
+  12281 MUNGLINUP MELALEUCA                      -33.5969  120.7578 Apr 1975 Mar 2001   25.8   92   N
+  12300 LEINSTER                                 -27.9172  120.7000 May 1985 Sep 1987    2.4   87   N
+  12305 LAVERTON AERO                            -28.6133  122.4236 Aug 1991 Mar 2025   33.7   96   Y
+  12314 LEINSTER AERO                            -27.8386  120.7031 Jul 1994 Mar 2025   30.8   96   Y
+  12320 SOUTHERN CROSS AIRFIELD                  -31.2353  119.3564 Oct 1996 Mar 2025   28.5   98   Y
+  12322 MOUNT WALTON EAST IWDF                   -30.3803  120.1481 Aug 1996 Mar 2001    1.4   15   Y
+  13001 EARAHEEDY                                -25.5908  121.5853 Jan 1965 Nov 1989   22.8   77   N
+  13007 BALGO HILLS                              -20.1417  127.9867 Sep 1986 Feb 2016   29.3   91   N
+  13011 WARBURTON AIRFIELD                       -26.1317  126.5839 Jan 1969 Mar 2025   35.3   60   Y
+  13012 WILUNA                                   -26.5914  120.2258 Jan 1957 Oct 2019   62.0   94   N
+  13015 CARNEGIE                                 -25.7964  122.9753 Oct 1988 Mar 2025   36.3   94   N
+  13017 GILES METEOROLOGICAL OFFICE              -25.0341  128.3010 Aug 1956 Mar 2025   68.7  100   Y
+  13030 TELFER AERO                              -21.7125  122.2281 Jun 1974 Mar 2025   50.5   92   Y
+  13033 YOWALGA                                  -26.5283  125.6144 Mar 1983 Jun 1983    0.3   94   N
+  13044 WILUNA AERO                              -26.6273  120.2195 Nov 2017 Mar 2025    7.4   99   Y
+  14008 CAPE DON                                 -11.3167  131.7667 Jan 1957 Mar 1990   33.2   98   N
+  14011 MINJILANG                                -11.1456  132.5688 May 1968 Jan 1991   22.3   84   N
+  14015 DARWIN AIRPORT                           -12.4239  130.8925 Feb 1941 Mar 2025   83.9   99   Y
+  14016 DARWIN POST OFFICE                       -12.4600  130.8400 Jan 1885 Jan 1942   57.0  100   N
+  14031 CHARLES POINT                            -12.3895  130.6306 Jul 2014 Mar 2025   10.8   97   Y
+  14035 MANTON DAM                               -12.8381  131.1306 Jan 1965 Dec 1965    0.9   87   N
+  14040 DARWIN AIRPORT COMPARISON                -12.4227  130.8844 Aug 2001 Jun 2007    5.9   93   Y
+  14041 MIDDLE POINT                             -12.6050  131.2988 Aug 2001 Mar 2025   23.7   98   Y
+  14042 OENPELLI                                 -12.3236  133.0579 Nov 1963 Apr 2013   49.0   90   N
+  14046 NOONAMAH AWS                             -12.6365  131.0714 Nov 2008 Jun 2013    4.7   96   Y
+  14072 DARWIN NTC AWS                           -12.4719  130.8458 Aug 2012 May 2024   10.1   78   Y
+  14080 NOONAMAH                                 -12.6367  131.0733 Jan 1965 Dec 1965    1.0   90   N
+  14087 PICKERTARAMOOR                           -11.7653  130.8881 Dec 1977 Feb 1987    8.9   66   N
+  14090 MIDDLE POINT RANGERS                     -12.5782  131.3145 Jan 1965 Jan 1998   31.5   92   N
+  14103 MILIKAPITI                               -11.4258  130.6758 Jan 1965 Oct 1979   12.6   78   N
+  14109 TORTILLA FLATS                           -13.1000  131.2333 Jan 1965 Feb 1967    2.1   81   N
+  14116 BERRIMAH RESEARCH FARM                   -12.4429  130.9325 Jan 1965 Feb 1966    1.2   65   N
+  14142 PIRLANGIMPI AIRPORT                      -11.4021  130.4217 Nov 1979 Mar 2025   43.3   91   Y
+  14151 MILTON SPRINGS                           -13.2167  131.0000 Jan 1971 May 1974    3.3   90   N
+  14153 BLACK POINT                              -11.1538  132.1430 Sep 1990 Apr 2022   30.1   87   N
+  14161 DARWIN REGIONAL OFFICE                   -12.4667  130.8333 Jan 1967 Dec 1973    7.0   97   N
+  14180 MURGANELLA                               -11.5472  132.9255 Nov 1977 Mar 1985    6.4   60   N
+  14187 GROSE ISLAND                             -12.6500  130.3667 Oct 1969 Dec 1971    2.3   83   N
+  14198 JABIRU AIRPORT                           -12.6592  132.8940 Jun 1971 Mar 2025   49.4   86   Y
+  14213 GUNN POINT PRISON FARM                   -12.2522  131.0428 Dec 1985 Mar 1996   10.3   98   N
+  14245 CAPE DON                                 -11.3081  131.7651 Dec 2005 Sep 2014    8.5   92   Y
+  14253 CHANNEL POINT                            -13.1672  130.1226 Aug 1994 Mar 2025   29.9   82   N
+  14254 POINT STUART                             -12.2403  131.8785 Dec 2003 Mar 2025   13.3   59   Y
+  14272 BATCHELOR AIRPORT                        -13.0544  131.0252 Aug 1992 Mar 2025   28.3   84   Y
+  14274 MCCLUER ISLAND                           -11.0468  132.9791 Oct 1998 Mar 2025   25.2   90   Y
+  14276 WILDMAN RIVER PLANTATIONS                -12.6415  131.8851 May 1993 Sep 1995    2.2   71   N
+  14277 DUM IN MIRRIE AIRSTRIP                   -12.6350  130.3725 Oct 1998 Mar 2025   26.0   94   Y
+  14299 NGUKURR AIRPORT                          -14.7236  134.7456 Jul 2012 Mar 2025   12.8   98   Y
+  14305 KATHERINE COUNTRY CLUB                   -14.4728  132.2612 Jan 2012 Mar 2019    7.0   89   N
+  14308 CROKER ISLAND AIRPORT                    -11.1629  132.4813 Sep 2012 Jan 2025   12.3   95   Y
+  14309 MURGANELLA AIRSTRIP                      -11.5485  132.9266 Oct 2012 Mar 2025   12.1   95   Y
+  14310 OENPELLI AIRPORT                         -12.3272  133.0069 Sep 2012 Mar 2025   12.3   95   Y
+  14314 NOONAMAH AIRSTRIP                        -12.6099  131.0474 Jun 2013 Mar 2025   11.8   99   Y
+  14317 DARWIN AIRPORT SCREEN COMPARISON         -12.4239  130.8925 Aug 2003 Apr 2008    4.8   95    
+  14318 EAST POINT                               -12.4108  130.8273 Aug 2023 Mar 2025    1.7   95   Y
+  14400 MANINGRIDA                               -12.0482  134.2263 Mar 1965 Aug 2007   40.4   87   N
+  14401 WARRUWI AIRPORT                          -11.6500  133.3797 Jan 1966 Mar 2025   58.9   93   Y
+  14402 MILINGIMBI                               -12.1239  134.9078 Jan 1963 Feb 2003   29.2   62   Y
+  14404 MILINGIMBI AIRPORT                       -12.0932  134.8919 Mar 2003 Mar 2025   21.9   94   Y
+  14405 MANINGRIDA AIRPORT                       -12.0569  134.2339 Oct 2003 Mar 2025   21.4   97   Y
+  14412 GOVE AIRPORT                             -12.2684  136.8188 Apr 2023 Mar 2025    2.0   96   Y
+  14502 YIRRKALA MISSION                         -12.2500  136.8833 Jan 1962 Apr 1975   13.2   97   N
+  14504 GALIWINKU                                -12.0280  135.5648 Jan 1966 Feb 2005   37.8   93   N
+  14506 ANGURUGU                                 -13.9833  136.4333 Jan 1962 Jul 1989   27.4   93   N
+  14507 ALYANGULA POLICE                         -13.8483  136.4198 Dec 1982 Jun 2012   29.6   90   N
+  14508 GOVE AIRPORT MET OFFICE                  -12.2741  136.8201 Sep 1966 Apr 2023   44.1   77   Y
+  14512 NHULUNBUY                                -12.1939  136.7637 Jul 1975 Nov 1985   10.4   99   N
+  14513 WALLABY BEACH                            -12.1933  136.7100 Jan 1979 Aug 1987    8.6   95   N
+  14517 NGAYAWILI                                -11.9971  135.5726 Oct 1999 Mar 2025   25.0   94   Y
+  14518 GROOTE EYLANDT AIRPORT                   -13.9746  136.4630 May 1999 Mar 2025   25.9   97   Y
+  14608 SAINT VIDGEON                            -16.2553  133.3686 Nov 1972 May 1976    3.6   93   N
+  14609 NGUKURR                                  -14.7295  134.7274 Jan 1962 Jul 2012   18.6   34   N
+  14612 LARRIMAH                                 -15.5748  133.2137 Jan 1965 Jun 2012   47.3   96   N
+  14617 ROPER VALLEY                             -14.9289  134.0078 Jun 1995 Jan 1997    1.7   77   N
+  14618 DALY WATERS                              -16.2529  133.3700 May 1970 Aug 1986   13.8   81   N
+  14626 DALY WATERS AIRSTRIP                     -16.2637  133.3782 May 1939 Mar 2025   55.3   63   Y
+  14627 BULMAN                                   -13.6715  134.3415 Oct 2002 Mar 2025   20.8   88   Y
+  14628 TANUMBIRINI                              -16.4550  134.6504 Jun 1970 Mar 1971    0.8   91   N
+  14629 BULMAN                                   -13.6667  134.3333 Nov 1970 Sep 1971    0.9   86   N
+  14630 PORT ROPER                               -14.7500  135.3333 Nov 1971 Sep 1972    0.9   84   N
+  14633 ROPER BAR STORE                          -14.7356  134.5291 May 1976 Jan 1995   18.7   96   N
+  14635 DALY WATERS HI-WAY INN                   -16.3167  133.3833 May 1982 Jan 1985    2.2   73   N
+  14646 FLYING FOX                               -14.8529  134.0361 Nov 1996 Oct 2002    5.9   72   N
+  14703 CENTRE ISLAND                            -15.7426  136.8192 Oct 1974 Mar 2025   50.3   95   Y
+  14704 MCARTHUR RIVER MINE AIRPORT              -16.4423  136.0760 Jan 1969 Mar 2025   46.9   76   Y
+  14706 ROBINSON RIVER                           -16.7622  136.9789 Sep 1980 Nov 1980    0.3   92   N
+  14707 WOLLOGORANG                              -17.2122  137.9462 Jan 1974 Jul 2015   33.8   77   N
+  14710 BORROLOOLA                               -16.0667  136.3000 Jan 1957 Aug 1978   17.4   71   N
+  14711 VANDERLIN ISLAND MIMETS                  -15.8333  137.0500 Jan 1965 Mar 1973    8.0   83   N
+  14721 PUNGALINA                                -16.7167  137.4167 Apr 1981 Jul 1982    1.3   77   N
+  14723 BORROLOOLA AIRPORT                       -16.0755  136.3041 Jan 1987 Mar 2025   31.0   76   Y
+  14808 BRADSHAW - ANGALLARI VALLEY (DEFENCE)    -15.4397  130.5731 Dec 2017 Mar 2025    7.3   97   Y
+  14814 AUVERGNE                                 -15.6844  130.0098 Nov 1974 Jan 1981    6.3   96   N
+  14825 VICTORIA RIVER DOWNS                     -16.4030  131.0145 Jan 1965 Mar 2025   59.5   93   Y
+  14829 LAJAMANU AIRPORT                         -18.3324  130.6361 Oct 1967 Mar 2025   31.9   53   Y
+  14830 CATTLE CREEK                             -17.5967  131.5445 Feb 1965 Jun 1969    4.3   85   N
+  14835 KIRKIMBIE                                -17.7333  129.2400 Sep 1967 Nov 1968    1.3   69   N
+  14836 INVERWAY                                 -17.8483  129.6360 Sep 1969 Jul 1987   13.7   61   N
+  14837 KEEP RIVER NTA                           -15.4167  129.1667 Dec 1970 Jun 1974    3.6   89   N
+  14840 WAVE HILL                                -17.3869  131.1166 Nov 1973 Jan 2022   48.2   95   N
+  14847 KIDMAN SPRINGS                           -16.1177  130.9558 Feb 1996 Aug 2012   16.5   95   N
+  14850 TIMBER CREEK                             -15.6614  130.4808 Jan 1981 Sep 2014   33.8   98   N
+  14901 DOUGLAS RIVER RESEARCH FARM              -13.8345  131.1872 Jan 1968 Mar 2025   34.4   56   Y
+  14902 KATHERINE COUNCIL                        -14.4589  132.2572 Jan 1957 Jan 1985   28.0   99   N
+  14903 KATHERINE AVIATION MUSEUM                -14.4437  132.2737 May 1946 Sep 2011   26.5   40   N
+  14904 KATHERINE EXP. FARM                      -14.4833  132.2500 Jan 1965 Nov 1967    2.9   96   N
+  14905 PORT KEATS POLICE                        -14.2403  129.5215 Jan 1965 Jul 1971    6.3   82   N
+  14908 WOOLIANA                                 -13.6817  130.6367 Oct 1966 Feb 1980   13.3   93   N
+  14909 CENTRAL ARNHEM PLATEAU                   -13.3275  133.0861 Aug 2003 Mar 2025   20.7   93   Y
+  14924 INJUN BEACH                              -14.2350  129.4242 Jul 1990 Oct 1999    5.9   43   Y
+  14925 TIPPERARY                                -13.7352  131.0437 May 1969 Jul 1971    1.8   70   N
+  14932 TINDAL RAAF                              -14.5229  132.3826 Jan 1985 Mar 2025   38.5   93   Y
+  14933 PINE CREEK                               -13.8238  131.8373 Jul 1968 May 1969    0.6   49   N
+  14938 MANGO FARM                               -13.7379  130.6834 May 1980 Dec 2015   35.6   97   N
+  14948 PORT KEATS AIRPORT                       -14.2494  129.5282 Aug 1997 Mar 2025   24.5   82   Y
+  14949 DELAMERE WEAPONS RANGE                   -15.7441  131.9181 Apr 1997 Mar 2025   27.8   95   Y
+  14960 PINE CREEK COUNCIL                       -13.8243  131.8320 Feb 2000 Jun 2011   11.4   98   N
+  14981 BRADSHAW - KOOLENDONG VALLEY (DEFENCE)   -15.1853  130.1169 Jul 2019 Mar 2025    5.8   97   Y
+  14982 KANGAROO FLATS (DEFENCE)                 -12.7934  130.8542 Sep 2017 Mar 2025    7.4   94   Y
+  14983 MOUNT BUNDEY NORTH (DEFENCE)             -12.9141  131.8663 Sep 2017 Mar 2025    7.6   97   Y
+  14984 MOUNT BUNDEY SOUTH (DEFENCE)             -13.0889  131.8478 Sep 2017 Mar 2025    7.6   98   Y
+  14988 KNUCKEY LAGOON                           -12.4422  130.9556 Jul 2021 Mar 2025    3.8   98   Y
+  15005 AVON DOWNS                               -20.0297  137.4907 May 1970 Sep 1978    7.8   72   N
+  15034 WONARAH                                  -19.8983  136.3358 Jan 1957 Aug 1974   17.3   85   N
+  15085 BRUNETTE DOWNS                           -18.6370  135.9450 Jan 1957 Mar 2022   56.8   80   N
+  15087 TENNANT CREEK POST OFFICE                -19.6475  134.1896 Feb 1910 Oct 1970   60.7   99   N
+  15089 NEWCASTLE WATERS POST OFFICE             -17.3833  133.4000 Mar 1963 Mar 1980   17.0   97   N
+  15131 ELLIOTT                                  -17.5552  133.5439 Mar 1980 Mar 2025   43.8   89   N
+  15135 TENNANT CREEK AIRPORT                    -19.6423  134.1833 Jul 1969 Mar 2025   55.8   99   Y
+  15502 ALI CURUNG                               -21.0025  134.4029 Jun 1988 Jan 2014   21.9   78   N
+  15511 CURTIN SPRINGS                           -25.3139  131.7571 Jan 1965 Mar 2025   59.7   95   N
+  15525 BARROW CREEK                             -21.5317  133.8901 Jan 1964 Apr 1988   24.3   92   N
+  15526 FINKE POST OFFICE                        -25.5833  134.5667 Jan 1957 Sep 1980   23.5   97   N
+  15527 AYERS ROCK                               -25.3400  131.0583 Aug 1967 Jun 1983   15.8   93   N
+  15528 YUENDUMU                                 -22.2565  131.8011 Jan 1965 Nov 2019   51.7   83   N
+  15540 ALICE SPRINGS POST OFFICE                -23.7100  133.8683 Mar 1878 Dec 1953   75.8   99   N
+  15546 RINGWOOD                                 -23.8287  134.9556 Jan 1965 Aug 1981   16.1   90   N
+  15548 RABBIT FLAT                              -20.1883  130.0161 Aug 1969 Nov 1998   29.1   98   N
+  15557 TEMPE DOWNS                              -24.3996  132.4525 Aug 1969 May 1980   10.0   83   N
+  15569 WILLOWRA                                 -21.2759  132.6230 May 1970 Mar 1973    1.0   24   N
+  15590 ALICE SPRINGS AIRPORT                    -23.7951  133.8890 Nov 1941 Mar 2025   83.4  100   Y
+  15594 ARLTUNGA                                 -23.4564  134.6849 Nov 2000 Dec 2024   23.0   86   N
+  15602 JERVOIS                                  -22.9494  136.1442 Dec 1967 Mar 2025   56.8   95   Y
+  15603 KULGERA                                  -25.8428  133.3027 Sep 1980 Feb 2023   40.3   85   N
+  15612 PAPUNYA                                  -23.2044  131.9156 Oct 2001 Oct 2014   11.5   74   N
+  15633 PALM VALLEY                              -24.0637  132.7448 May 1981 Mar 1990    8.9   93   N
+  15634 ALICE SPRINGS CONNELLANS                 -23.6833  133.8500 Dec 1940 Oct 1941    0.9   98    
+  15635 YULARA AIRPORT                           -25.1896  130.9737 Jun 1983 Mar 2025   38.6   88   Y
+  15643 TERRITORY GRAPE FARM                     -22.4518  133.6377 Jun 1987 Mar 2025   32.6   79   Y
+  15652 WATARRKA                                 -24.2918  131.5490 May 1990 Mar 2025   32.4   80   N
+  15660 ULURU RANGERS                            -25.3602  131.0196 Oct 1991 Feb 2003    8.8   64   N
+  15664 WALUNGURRU AIRPORT                       -23.2656  129.3844 Oct 2001 Mar 2025   22.8   91   Y
+  15666 RABBIT FLAT                              -20.1823  130.0148 Nov 1996 Mar 2025   28.4   98   Y
+  16001 WOOMERA AERODROME                        -31.1558  136.8054 Apr 1949 Mar 2025   76.0  100   Y
+  16007 COOBER PEDY                              -29.0040  134.7564 Jan 1965 Sep 1994   29.7   95   N
+  16013 ERNABELLA                                -26.2925  132.1283 Jan 1962 Aug 1983   21.1   83   N
+  16032 NONNING                                  -32.5226  136.4926 May 1969 Nov 2012   43.3   96   N
+  16044 TARCOOLA                                 -30.7111  134.5694 Nov 1921 Aug 1999   72.3   91   N
+  16056 YUDNAPINNA                               -32.1232  137.1505 Jan 1965 Feb 1980   14.3   90   N
+  16065 ANDAMOOKA                                -30.4490  137.1692 Nov 1969 Mar 2025   55.3   99   N
+  16066 MIRIKATA                                 -29.8767  135.2464 Jan 1966 Jun 1970    4.3   82   N
+  16067 MOUNT IVE                                -32.4398  136.0671 Mar 2014 Mar 2025   11.1   91   N
+  16081 LAKE TORRENS                             -31.8953  137.7144 Jun 1973 Feb 1980    3.3   48   N
+  16085 MARLA POLICE STATION                     -27.3002  133.6201 Aug 1985 Jul 2015   29.2   87   N
+  16089 ROXBY DOWNS (OLYMPIC DAM)                -30.4494  136.8703 Jun 1992 Jun 1997    5.1   92   N
+  16090 COOBER PEDY AIRPORT                      -29.0347  134.7222 Jul 1994 Mar 2025   30.8   99   Y
+  16092 PORT AUGUSTA ARID LANDS                  -32.4783  137.7386 Dec 1994 Jul 2001    6.7   94   Y
+  16096 ROXBY DOWNS (OLYMPIC DAM AERODROME)      -30.4869  136.8739 Dec 1997 Mar 2025   27.3   98   Y
+  16097 ERNABELLA (PUKATJA)                      -26.2635  132.1771 Jul 1997 Mar 2025   27.2   89   Y
+  16098 TARCOOLA AERO                            -30.7051  134.5786 Oct 1997 Mar 2025   27.4   97   Y
+  17005 LEIGH CREEK AERO                         -30.4667  138.4075 Feb 1952 Apr 1982   30.1   97   N
+  17024 MARREE (FARINA)                          -30.0660  138.2739 Jan 1908 Feb 1939   31.2  100   N
+  17031 MARREE                                   -29.6451  138.0639 Apr 1939 Jan 2015   75.5   99   N
+  17043 OODNADATTA AIRPORT                       -27.5553  135.4456 Feb 1940 Mar 2025   75.8   87   Y
+  17070 MOUNT DARE                               -26.0702  135.2471 May 1996 Apr 2000    4.0   95   N
+  17096 MOOMBA                                   -28.1125  140.2102 Nov 1972 Jun 1999   26.7   99   N
+  17099 ARKAROOLA                                -30.3110  139.3357 Dec 1977 Mar 2025   47.3   92   N
+  17110 LEIGH CREEK AIRPORT                      -30.5963  138.4219 May 1982 Mar 2025   42.8   97   Y
+  17114 OODNADATTA                               -27.5498  135.4484 Aug 1985 May 1991    5.7   86   N
+  17123 MOOMBA AIRPORT                           -28.0997  140.1956 Jun 1995 Mar 2025   29.8   97   Y
+  17126 MARREE AERO                              -29.6587  138.0684 Jul 1998 Mar 2025   26.8   97   Y
+  18011 CEDUNA POST OFFICE                       -32.1267  133.6725 Apr 1939 May 1951   11.1   91   N
+  18012 CEDUNA AMO                               -32.1297  133.6976 Jul 1939 Mar 2025   83.7   97   Y
+  18014 CLEVE                                    -33.7011  136.4937 Jan 1957 Mar 2025   67.8   91   N
+  18030 FOWLERS BAY                              -31.9900  132.4372 Jan 1957 May 1967   10.3   97   N
+  18040 KIMBA                                    -33.1416  136.4126 Nov 1967 Mar 2025   57.3   92   N
+  18044 KYANCUTTA                                -33.1337  135.5521 Feb 1930 Mar 2025   95.0   99   N
+  18052 MINNIPA AGRICULTURAL CENTRE              -32.8361  135.1500 Jan 1965 Jun 2001   36.3   95   N
+  18069 ELLISTON                                 -33.6501  134.8880 Jan 1962 Mar 2025   63.1   97   N
+  18070 PORT LINCOLN                             -34.7225  135.8558 Jan 1892 Mar 2002  110.2  100   N
+  18079 STREAKY BAY                              -32.8084  134.1979 Jan 1957 Mar 2025   67.8   97   N
+  18083 WUDINNA AERO                             -33.0430  135.4519 Apr 1999 Mar 2025   26.0   97   Y
+  18103 WHYALLA (NORRIE)                         -33.0303  137.5328 Jan 1957 Jul 2001   44.4   98   N
+  18106 NULLARBOR                                -31.4492  130.8976 Nov 1986 Mar 2025   38.4   98   Y
+  18110 COOK                                     -30.6143  130.4136 Jan 1957 Feb 1998   41.0   98   N
+  18114 MARALINGA                                -30.1591  131.5790 May 1955 Dec 1967   12.2   89   N
+  18115 NEPTUNE ISLAND                           -35.3365  136.1174 Jan 1962 Mar 2025   62.9   96   Y
+  18116 CLEVE AERODROME                          -33.7081  136.5026 Jul 1996 Mar 2025   28.7   98   Y
+  18120 WHYALLA AERO                             -33.0539  137.5206 Jun 1982 Mar 2025   41.4   95   Y
+  18139 POLDA (GUM VIEW)                         -33.5085  135.2928 Nov 1967 Feb 2005   37.3   95   N
+  18161 YALATA COMMUNITY                         -31.4813  131.8387 Oct 1968 Feb 1970    1.4   69   N
+  18181 PORT LINCOLN (TOD RIVER)                 -34.4906  135.8511 Apr 1973 Mar 1994   21.0   97   N
+  18191 COULTA (COLES POINT)                     -34.3749  135.3741 Mar 1991 May 2017   26.3   92   Y
+  18192 NORTH SHIELDS (PORT LINCOLN AWS)         -34.5993  135.8784 Apr 1992 Mar 2025   33.0   97   Y
+  18195 MINNIPA PIRSA                            -32.8427  135.1515 Jul 1996 Mar 2025   28.7   95   Y
+  18201 PORT AUGUSTA AERO                        -32.5073  137.7169 Jul 2001 Mar 2025   23.8   98   Y
+  18207 CEDUNA (THEVENARD NTC AWS)               -32.1490  133.6416 Dec 2020 Mar 2025    4.3   98   Y
+  18217 CUMMINS AERO                             -34.2524  135.7135 Jun 2007 Mar 2025   17.8   99   Y
+  18229 CULTANA (DEFENCE)                        -32.6845  137.3689 Dec 2017 Mar 2025    7.3   99   Y
+  18230 COFFIN BAY (POINT AVOID)                 -34.6750  135.3362 Jun 2017 Mar 2025    7.8   97   Y
+  19017 HAWKER                                   -31.9043  138.4388 Nov 1966 Mar 2025   57.8   91   N
+  19036 PORT AUGUSTA POST OFFICE                 -32.5000  137.7667 Jan 1957 Jun 1962    5.5   99   N
+  19053 WIRRABARA FOREST                         -33.0856  138.2119 Nov 2010 Mar 2011    0.4   48   N
+  19062 YONGALA                                  -33.0276  138.7560 Jan 1957 Mar 2025   67.8   97   N
+  19066 PORT AUGUSTA POWER STATION               -32.5280  137.7900 Jul 1962 Jun 1997   35.0   97   N
+  19070 WILPENA POUND                            -31.5286  138.6093 Jan 1965 Jun 1982    7.3   40   N
+  20026 YUNTA                                    -32.5819  139.5611 Jan 1962 Jun 1994   32.3   95   N
+  20028 GLUEPOT RESERVE (GLUEPOT)                -33.7622  140.1251 Apr 1999 Mar 2025   26.0   99   N
+  20062 YUNTA AIRSTRIP                           -32.5707  139.5645 Jul 1998 Mar 2025   26.8   97   Y
+  21008 BUNDALEER FOREST RESERVE                 -33.2758  138.5750 Nov 1968 Aug 1988   19.1   73   N
+  21014 CLARE POST OFFICE                        -33.8364  138.6125 Jan 1957 Aug 1994   37.4   86   N
+  21020 GEORGETOWN                               -33.3590  138.3930 Jan 1957 Oct 1976   19.8   98   N
+  21043 PORT PIRIE NYRSTAR COMPARISON            -33.1708  138.0104 Jan 1957 Aug 2012   54.6   97   N
+  21046 SNOWTOWN                                 -33.7844  138.2133 Aug 1908 Jun 2001   92.8   98   N
+  21118 PORT PIRIE AERODROME                     -33.2341  138.0010 Aug 2006 Jan 2015    8.5   99   N
+  21131 CLARE HIGH SCHOOL                        -33.8226  138.5933 Apr 1994 Mar 2025   31.0   98   Y
+  21133 SNOWTOWN (RAYVILLE PARK)                 -33.7675  138.2182 Jul 1998 Mar 2025   26.8   98   Y
+  21139 PORT PIRIE AERODROME AWS                 -33.2371  137.9971 Jan 2015 Mar 2025   10.3   99   Y
+  22006 KADINA                                   -33.9551  137.6953 Jan 1957 Jul 2005   48.6   99   N
+  22008 MAITLAND                                 -34.3745  137.6733 Jan 1957 Mar 2025   67.9   95   N
+  22015 PRICE                                    -34.2971  138.0014 Jan 1965 Mar 2025   56.8   56   N
+  22018 WAROOKA                                  -34.9906  137.3995 Jan 1965 Jan 2025   59.5   93   N
+  22029 ALTHORPE ISLAND                          -35.3725  136.8594 May 1968 Oct 1981   13.5   99   N
+  22030 TROUBRIDGE SHOAL LIGHTHOUSE              -35.1167  137.8333 Feb 1969 Jan 1981   12.0   99   N
+  22031 MINLATON AERO                            -34.7480  137.5276 Apr 2001 Mar 2025   24.0   99   Y
+  22046 EDITHBURGH                               -35.1121  137.7395 Jul 1984 Mar 2025   32.7   78   Y
+  22049 STENHOUSE BAY                            -35.2795  136.9392 Feb 1996 Mar 2025   29.2   98   Y
+  22050 KADINA AWS                               -33.9703  137.6628 Jul 2005 Mar 2025   19.8   99   Y
+  22801 CAPE BORDA COMPARISON                    -35.7529  136.5938 Sep 1957 Jul 2007   45.8   91   N
+  22802 CAPE DE COUEDIC                          -36.0667  136.7000 Aug 1967 Jul 1973    5.3   81   N
+  22803 CAPE WILLOUGHBY                          -35.8426  138.1327 Sep 1967 Mar 2025   57.6   99   Y
+  22807 KINGSCOTE                                -35.6560  137.6377 Jan 1957 Jun 2002   45.4   94   N
+  22814 PARNDANA EAST RESEARCH STATION           -35.8000  137.3333 Jan 1962 Nov 1984   22.9   99   N
+  22816 PARNDANA (ALLANDALE)                     -35.7734  137.0330 Jan 1992 Apr 2001    4.8   43   N
+  22823 CAPE BORDA                               -35.7549  136.5959 Sep 2002 Mar 2025   22.6   97   Y
+  22841 KINGSCOTE AERO                           -35.7114  137.5231 May 1994 Mar 2025   30.9   98   Y
+  22843 PARNDANA CFS AWS                         -35.7916  137.2496 Sep 2011 Mar 2025   13.6   98   Y
+  23000 ADELAIDE (WEST TERRACE / NGAYIRDAPIRA)   -34.9257  138.5832 Jan 1887 Mar 2025  100.0   72   Y
+  23013 PARAFIELD AIRPORT                        -34.7977  138.6281 Apr 1939 Mar 2025   68.3   79   Y
+  23015 PENFIELD WEAPONS RESEARCH                -34.7333  138.6500 Feb 1957 Apr 1979   22.3   97   N
+  23020 ROSEWORTHY AGRIC COLLEGE                 -34.5267  138.6883 Jan 1957 Jul 1997   37.1   85   Y
+  23031 ADELAIDE (WAITE INSTITUTE)               -34.9697  138.6331 Sep 1965 Aug 1986   20.5   97   N
+  23034 ADELAIDE AIRPORT                         -34.9524  138.5196 Feb 1955 Mar 2025   70.2  100   Y
+  23037 ADELAIDE (PARAFIELD PLANT INTRODUCTION C -34.7833  138.6242 Jan 1957 Dec 1988   32.0  100   N
+  23046 ADELAIDE AIRPORT OLD SITE                -34.9566  138.5356 Aug 2002 Jan 2005    2.5   90   Y
+  23057 ADELAIDE (NORTHFIELD RESEARCH CENTRE)    -34.8533  138.6517 Jul 1966 Dec 1994   28.3   94   N
+  23073 MALLALA AERO                             -34.4167  138.5000 Jul 1953 Dec 1953    0.5   56   N
+  23083 EDINBURGH RAAF                           -34.7111  138.6223 Nov 1972 Mar 2025   52.4   98   Y
+  23090 ADELAIDE (KENT TOWN)                     -34.9211  138.6216 Feb 1977 Jul 2020   43.5  100   Y
+  23092 VIRGINIA 2                               -34.6500  138.5667 Aug 1970 Nov 1987    9.3   44   N
+  23097 ADELAIDE (BLACK HILL CONSERVATION PARK)  -34.8833  138.7167 May 1979 Feb 1989    8.9   88   N
+  23103 VIRGINIA                                 -34.6453  138.5306 May 1988 Nov 2002    8.6   53   N
+  23122 ROSEWORTHY AWS                           -34.5106  138.6763 Aug 1997 Mar 2025   27.7   96   Y
+  23307 KAPUNDA                                  -34.3412  138.9155 Jan 1957 Jan 1965    8.1   99   N
+  23321 NURIOOTPA COMPARISON                     -34.4767  139.0047 Jan 1957 Feb 1999   42.2  100   N
+  23343 ROSEDALE (TURRETFIELD RESEARCH CENTRE)   -34.5519  138.8342 Jan 1962 Jan 2020   57.9   98   N
+  23373 NURIOOTPA PIRSA                          -34.4761  139.0056 Aug 1996 Mar 2025   28.7   98   Y
+  23703 BELAIR (KALYRA)                          -35.0042  138.6147 Jan 1962 Jan 1996   34.1   78   N
+  23733 MOUNT BARKER                             -35.0732  138.8466 Jan 1957 Mar 2025   68.1   98   N
+  23738 MYPONGA                                  -35.3912  138.4642 Jan 1957 Oct 1967   10.7   82   N
+  23745 STIRLING                                 -35.0333  138.7167 Jan 1957 Jun 1964    7.5   99   N
+  23747 STRATHALBYN                              -35.2560  138.8901 Jan 1957 Jun 2001   44.5   97   N
+  23751 VICTOR HARBOR COMPARISON                 -35.5550  138.6217 Jan 1965 Mar 2002   37.2   98   N
+  23763 MOUNT CRAWFORD FOREST HEADQUARTERS       -34.7122  138.9469 Jan 1967 Apr 1995   28.3   91   N
+  23785 STIRLING POST OFFICE                     -35.0000  138.7167 Jul 1964 May 1985   20.9   97   N
+  23801 LENSWOOD                                 -34.9482  138.8071 Oct 1967 Oct 1999   32.1   97   N
+  23804 VICTOR HARBOR (ENCOUNTER BAY)            -35.5544  138.5997 Mar 2001 Mar 2025   24.1   98   N
+  23816 SECOND VALLEY FOREST                     -35.5718  138.2440 Dec 1984 Mar 1993    8.3   76   N
+  23818 KUITPO FOREST HQ                         -35.2158  138.7014 Dec 1975 Jul 1995   19.6   81   N
+  23826 KERSBROOK FOREST RSVE                    -34.8167  138.8500 Nov 1973 Apr 1983    8.7   72   N
+  23842 MOUNT LOFTY                              -34.9784  138.7088 Jul 1990 Mar 2025   34.6   97   Y
+  23849 GOOLWA (HINDMARSH ISLAND MARINA)         -35.5147  138.7989 Jun 1989 Jan 2003   13.7   98   N
+  23872 MCLAREN VALE CHALK HILL ROAD             -35.2111  138.5325 Nov 1992 Jun 1993    0.7   95   N
+  23875 PARAWA (SECOND VALLEY FOREST AWS)        -35.5695  138.2864 Jun 1994 Mar 2025   30.8   97   Y
+  23878 MOUNT CRAWFORD AWS                       -34.7253  138.9278 May 1994 Mar 2025   30.8   95   Y
+  23883 PICCADILLY (PETALUMA)                    -34.9833  138.7317 Oct 1994 Dec 1995    1.3   55   N
+  23885 NOARLUNGA                                -35.1586  138.5057 Sep 2000 Mar 2025   24.6   99   Y
+  23887 KUITPO FOREST RESERVE                    -35.1712  138.6783 Apr 1998 Mar 2025   26.8   97   Y
+  23894 HINDMARSH ISLAND AWS                     -35.5194  138.8177 Jan 2003 Mar 2025   22.3   97   Y
+  24002 BERRI IRRIGATION                         -34.2833  140.6000 Jan 1962 Dec 1963    1.9   96   N
+  24016 RENMARK                                  -34.1711  140.7494 May 1957 Jun 2002   45.2   99   N
+  24018 WAIKERIE                                 -34.1778  139.9806 Jan 1957 Jun 1984   24.8   57   N
+  24023 LOXTON RESEARCH CENTRE                   -34.4333  140.6000 Jan 1965 Jun 1985   20.3   99   N
+  24024 LOXTON RESEARCH CENTRE                   -34.4390  140.5978 Jun 1984 Mar 2025   40.8   99   Y
+  24025 BERRI                                    -34.2717  140.5964 Jan 1962 Jun 1972    9.4   89   N
+  24033 WAIKERIE AERO                            -34.1847  140.0242 Sep 1969 Nov 1971    2.3   88   N
+  24039 BERRI CARAVAN PARK                       -34.2833  140.6167 Sep 1973 Jul 1974    0.9   69   N
+  24041 WAIKERIE (GOLDEN HEIGHTS)                -34.1944  139.9378 Aug 1968 Jan 1991   22.5   82   N
+  24045 WAIKERIE (CADELL)                        -34.0569  139.7583 May 1986 Feb 1996    9.2   87   N
+  24048 RENMARK AERO                             -34.1983  140.6766 Aug 1995 Mar 2025   29.7   99   Y
+  24511 EUDUNDA                                  -34.1773  139.0903 Jan 1965 Mar 2025   60.3   99   N
+  24518 MENINGIE                                 -35.6902  139.3375 Sep 1966 Mar 2025   58.6   92   N
+  24521 MURRAY BRIDGE                            -35.1234  139.2592 May 1966 Mar 2025   58.8   98   N
+  24536 TAILEM BEND                              -35.2546  139.4542 Jan 1957 Dec 1975   18.7   74   N
+  24545 MILANG DEPT OF AGRIC.                    -35.4167  138.9667 Jan 1965 Jan 1969    3.8   91   N
+  24547 NILDOTTIE                                -34.6762  139.6513 Jan 1965 May 1973    7.8   85   N
+  24580 STRATHALBYN RACECOURSE                   -35.2836  138.8934 Jul 1996 Mar 2025   28.8   98   Y
+  24584 MURRAY BRIDGE (PALLAMANA AERODROME)      -35.0650  139.2273 Mar 2006 Mar 2025   19.1   99   Y
+  25006 KAROONDA                                 -35.0900  139.8972 Jul 2002 Mar 2025   22.7   91   N
+  25034 LOXTON (WANBI RESEARCH CENTRE)           -34.7797  140.2733 Dec 1967 Apr 1993   25.3   76   N
+  25050 CALIPH                                   -34.6345  140.2432 Aug 1974 May 2003   28.2   98   N
+  25507 KEITH                                    -36.0980  140.3556 Jan 1962 Mar 2025   63.2   98   N
+  25509 LAMEROO                                  -35.3288  140.5175 Jan 1957 Jan 2015   57.9   99   N
+  25523 MENINGIE (NARANGA)                       -35.8597  139.5599 Sep 1965 May 1966    0.8   62   N
+  25536 BORDERTOWN                               -36.3000  140.7667 Dec 1967 Jan 1976    7.8   85   N
+  25554 KIRRA                                    -35.7681  140.8911 Nov 1989 Nov 1991    2.1   74   N
+  25557 KEITH (MUNKORA)                          -36.1058  140.3273 Jul 2001 Mar 2025   23.8   98   Y
+  25562 LAMEROO (AUSTIN PLAINS)                  -35.3778  140.5378 Jun 2004 Mar 2025   20.8   98   Y
+  26005 CAPE NORTHUMBERLAND                      -38.0573  140.6725 Jan 1957 Mar 2005   48.3   97   N
+  26013 KYBYBOLITE RESEARCH CENTRE               -36.8803  140.9286 Jan 1965 May 1995   30.4   99   N
+  26016 LUCINDALE POST OFFICE                    -36.9731  140.3664 Jan 1962 Oct 1986   24.4   96   N
+  26019 MOUNT BURR FOREST RESERVE                -37.5575  140.4197 Jan 1957 Dec 1994   36.7   84   N
+  26020 MOUNT GAMBIER POST OFFICE                -37.8333  140.7833 Jan 1908 Mar 1952   44.1   99   N
+  26021 MOUNT GAMBIER AERO                       -37.7473  140.7739 Feb 1942 Mar 2025   83.2  100   Y
+  26023 NARACOORTE                               -36.9564  140.7402 Mar 1962 Jun 2001   39.3   97   N
+  26026 ROBE                                     -37.1628  139.7560 Sep 1884 Mar 2025  140.5   98   N
+  26036 PENOLA STATE FOREST RESERVE              -37.4886  140.8269 Jan 1971 Jun 1994   21.3   76   N
+  26045 COONAWARRA                               -37.3000  140.8333 Nov 1966 Sep 1983   16.1   93   N
+  26049 POLICEMAN POINT                          -36.0582  139.5913 Dec 1968 Aug 1972    3.6   91   N
+  26070 KONETTA E&WS                             -37.2667  140.1167 Dec 1970 Jun 1981   10.6   99   N
+  26082 STRUAN                                   -37.0951  140.7911 Apr 1974 Sep 1999   25.4   68   N
+  26089 PADTHAWAY                                -36.5958  140.4864 Oct 1977 Oct 2000   23.0   98   N
+  26091 COONAWARRA                               -37.2906  140.8254 Oct 1985 Mar 2025   39.5   99   Y
+  26095 CAPE JAFFA (THE LIMESTONE)               -36.9655  139.7164 Mar 1991 Mar 2025   34.1   97   Y
+  26099 NARACOORTE AERODROME                     -36.9813  140.7270 Jul 1998 Mar 2025   26.8   98   Y
+  26100 PADTHAWAY SOUTH                          -36.6539  140.5212 May 2000 Mar 2025   24.9   99   Y
+  26105 ROBE AIRFIELD                            -37.1776  139.8054 Jul 2003 Mar 2025   21.8   99   Y
+  27005 COEN POST OFFICE                         -13.9447  143.2006 Jan 1957 Mar 1996   15.3   38   N
+  27006 COEN AIRPORT EVAP                        -13.7642  143.1178 Nov 1967 Dec 2002   35.1   95   N
+  27015 MORETON TELEGRAPH STATION                -12.4536  142.6389 Jun 1968 Nov 1987   18.9   86   N
+  27021 THURSDAY ISLAND TOWNSHIP                 -10.5831  142.2203 Jun 1939 Jan 1996   10.8   18   N
+  27022 THURSDAY ISLAND MO                       -10.5853  142.2100 Sep 1950 Feb 1993   42.5   99   N
+  27042 WEIPA EASTERN AVE                        -12.6267  141.8836 Jan 1959 Feb 1994   31.0   84   N
+  27045 WEIPA AERO                               -12.6778  141.9208 Nov 1992 Mar 2025   32.4  100   Y
+  27048 INJINOO AIRPORT                          -10.9428  142.4508 Sep 1998 Sep 2000    1.7   40   N
+  27054 COCONUT ISLAND                           -10.0511  143.0686 Jan 1993 Mar 2025   27.8   82   Y
+  27058 HORN ISLAND                              -10.5844  142.2900 Mar 1995 Mar 2025   30.0   96   Y
+  27073 COEN AIRPORT                             -13.7606  143.1183 Jun 2002 Mar 2025   22.8   97   Y
+  27075 SCHERGER RAAF                            -12.6167  142.0869 Dec 2005 Mar 2025   19.3   96   Y
+  28004 PALMERVILLE                              -15.9999  144.0754 Dec 1895 Mar 2025  122.7   93   Y
+  28007 MUSGRAVE                                 -14.7803  143.5036 Oct 1991 Aug 2012   20.9   96   N
+  28008 LOCKHART RIVER AIRPORT                   -12.7850  143.3047 Jan 1965 Mar 2025   59.4   96   Y
+  29004 BURKETOWN POST OFFICE                    -17.7425  139.5475 Nov 1890 Jun 2009  112.6   92   N
+  29008 CLONCURRY MCILLWRAITH ST                 -20.7087  140.5182 Sep 1991 Feb 1992    0.5   69   N
+  29009 CLONCURRY AERO                           -20.6717  140.5083 Jul 1939 May 1975   34.3   95   N
+  29012 CROYDON TOWNSHIP                         -18.2044  142.2447 Jan 1962 Mar 2014   51.9   96   N
+  29025 JULIA CREEK POST OFFICE                  -20.6569  141.7458 Jan 1965 Sep 2001   36.0   92   N
+  29028 KARUMBA AIRPORT                          -17.4553  140.8314 Jan 1939 Jun 1951   12.3   97   N
+  29038 KOWANYAMA AIRPORT                        -15.4818  141.7483 Nov 1965 Mar 2025   57.7   88   Y
+  29039 MORNINGTON ISLAND                        -16.6640  139.1837 Sep 1972 Oct 2013   40.1   88   Y
+  29041 NORMANTON POST OFFICE                    -17.6706  141.0672 Jan 1910 Jul 2001   90.8   96   N
+  29058 JULIA CREEK AIRPORT                      -20.6672  141.7214 Sep 2001 Mar 2025   23.3   97   Y
+  29063 NORMANTON AIRPORT                        -17.6872  141.0733 Apr 2001 Mar 2025   24.0   98   Y
+  29077 BURKETOWN AIRPORT                        -17.7483  139.5356 Oct 2001 Mar 2025   23.5   97   Y
+  29090 TOORAK RESEARCH STATION                  -21.0344  141.8008 Jul 1968 Sep 2008   32.3   67   N
+  29125 MOUNT ISA POST OFFICE                    -20.7333  139.4833 Jan 1957 Mar 1971   14.2   96   N
+  29126 MOUNT ISA MINE                           -20.7361  139.4817 Jan 1965 Jul 1992   27.6  100   N
+  29127 MOUNT ISA AERO                           -20.6778  139.4875 Dec 1966 Mar 2025   58.3   98   Y
+  29139 SWEERS ISLAND                            -17.1142  139.5981 Aug 2001 Mar 2025   23.7   98   N
+  29141 CLONCURRY AIRPORT                        -20.6664  140.5050 May 1978 Mar 2025   31.4   65   Y
+  29162 MOUNT ISA COMPARISON                     -20.6786  139.4831 Sep 1996 Aug 1998    2.0   98   N
+  29167 CENTURY MINE                             -18.7569  138.7056 Apr 2003 Mar 2025   21.9   96   Y
+  29181 LAKE JULIUS AWS                          -20.1167  139.7256 Aug 2013 Mar 2025   11.6   96   Y
+  29182 MORNINGTON ISLAND AIRPORT                -16.6620  139.1655 Oct 2013 Mar 2025   11.5   98   Y
+  30018 GEORGETOWN POST OFFICE                   -18.2922  143.5483 Jan 1894 Oct 2007  113.6   99   N
+  30022 HUGHENDEN AIRPORT                        -20.8192  144.2333 Feb 2001 Mar 2025   24.2   98   Y
+  30024 HUGHENDEN POST OFFICE                    -20.8447  144.1986 Jan 1965 Feb 2001   36.0   98   N
+  30036 MOUNT SURPRISE TOWNSHIP                  -18.1472  144.3183 Jan 1957 Sep 1978   20.6   88   N
+  30045 RICHMOND POST OFFICE                     -20.7289  143.1425 Jan 1893 Mar 2020  126.1   98   N
+  30124 GEORGETOWN AIRPORT                       -18.3039  143.5306 Jun 2004 Mar 2025   20.8   99   Y
+  30161 RICHMOND AIRPORT                         -20.7001  143.1137 Mar 1998 Mar 2025   27.1   97   Y
+  31010 CAIRNS POST OFFICE                       -16.9333  145.7833 Dec 1889 Sep 1953   63.7   99   N
+  31011 CAIRNS AERO                              -16.8736  145.7458 Oct 1942 Mar 2025   82.5  100   Y
+  31016 COOKTOWN POST OFFICE                     -15.4633  145.2500 Jan 1953 Jul 1987   30.7   87   N
+  31017 COOKTOWN MISSION STRIP                   -15.4486  145.1861 Nov 1942 Sep 2002   18.6   31   N
+  31029 HERBERTON MOWBRAY RD                     -17.3803  145.3884 Nov 1952 Sep 1991   34.7   87   N
+  31034 KAIRI RESEARCH STATION                   -17.2186  145.5650 Jan 1965 Oct 2011   46.8   98   N
+  31037 LOW ISLES LIGHTHOUSE                     -16.3842  145.5592 Oct 1967 Mar 2025   57.4   98   Y
+  31052 PORT DOUGLAS - WARNER ST                 -16.4833  145.4639 Jan 1965 Dec 1968    3.4   85   N
+  31066 MAREEBA QWRC                             -16.9950  145.4253 Jan 1957 Nov 1992   29.0   56   N
+  31076 PARADA RESEARCH STATION                  -17.1467  145.2400 Mar 1965 Jun 1976   11.1   83   N
+  31083 KOOMBOOLOOMBA DAM                        -17.8400  145.5956 Jan 1973 Jun 1997   24.5   99   N
+  31084 FITZROY ISLAND LIGHTHOUSE                -16.9267  146.0033 Jul 1968 Mar 1991   22.7   98   N
+  31108 WALKAMIN RESEARCH STATION                -17.1347  145.4281 Aug 1968 Mar 2025   56.7   96   N
+  31110 LAKELAND DOWNS STATION                   -15.8333  144.8500 Feb 1970 Nov 1974    3.6   57   N
+  31190 MAREEBA AIRPORT                          -17.0706  145.4294 Oct 1991 Jun 2002   10.7   98   N
+  31192 GREEN ISLAND                             -16.7614  145.9719 Jan 1993 Jun 2010   17.4   93   Y
+  31193 ATHERTON                                 -17.2550  145.4803 Oct 1994 Oct 2008   14.1   93   N
+  31209 COOKTOWN AIRPORT                         -15.4461  145.1861 Jun 2000 Mar 2025   24.8   98   Y
+  31210 MAREEBA AIRPORT                          -17.0704  145.4293 Jun 2000 Mar 2025   24.8   98   Y
+  31213 CAPE FLATTERY                            -14.9672  145.3106 Jun 2003 Mar 2025   21.8   97   Y
+  31222 CAIRNS RACECOURSE                        -16.9463  145.7474 Aug 2013 Mar 2025   11.7   99   Y
+  32004 CARDWELL MARINE PDE                      -18.2544  146.0192 Jan 1957 Feb 2025   67.2   95   N
+  32005 CAPE CLEVELAND LIGHTHOUSE                -19.1833  147.0167 Jan 1957 Nov 1987   30.8   98   N
+  32025 INNISFAIL                                -17.5249  146.0345 Jan 1957 Jun 2020   63.4   99   N
+  32037 SOUTH JOHNSTONE EXP STN                  -17.6053  145.9972 Jan 1965 Mar 2025   59.5   97   Y
+  32040 TOWNSVILLE AERO                          -19.2483  146.7661 Oct 1940 Mar 2025   84.5  100   Y
+  32061 BOTTOM OF PIN GIN HILL                   -17.5333  145.9667 Jan 1965 Aug 1982   17.5   97   N
+  32078 INGHAM COMPOSITE                         -18.6494  146.1769 Feb 1968 Mar 2025   55.3   87   N
+  32135 COWLEY JTTRE                             -17.6833  146.1167 Dec 1978 Aug 1982    3.4   87   N
+  32136 EARLS COURT JTTRE                        -17.7667  145.8000 Aug 1978 Feb 1979    0.6   93   N
+  32137 LIVERPOOL CREEK JTTRE                    -17.7167  145.8500 Nov 1979 Aug 1982    1.9   62   N
+  32141 LUCINDA POINT                            -18.5203  146.3861 Aug 1980 Feb 2021   33.4   76   Y
+  32178 TOWNSVILLE AERO COMPARISON               -19.2492  146.7647 Dec 1994 Dec 2000    6.1   99   N
+  32182 CAPE FERGUSON NTC AWS                    -19.2774  147.0586 May 2013 Feb 2025   11.8   93   Y
+  32189 CARDWELL STONEY CREEK RD                 -18.2978  146.0375 Apr 2005 Sep 2005    0.5   91   N
+  32194 COWLEY BEACH (DEFENCE)                   -17.6905  146.1126 Apr 2017 Mar 2025    8.0   99   Y
+  32195 MOUNT STUART (DEFENCE)                   -19.4082  146.7620 Sep 2017 Mar 2025    7.6   98   Y
+  32196 TOWNSVILLE- AIR WEAPONS RANGE (DEFENCE)  -19.3048  146.2438 Sep 2017 Mar 2025    7.6   95   Y
+  32197 INNISFAIL AERODROME                      -17.5581  146.0119 Jun 2016 Mar 2025    8.8   98   Y
+  32200 INGHAM AERO                              -18.6651  146.1467 Feb 2024 Mar 2025    1.2   95   Y
+  33001 BURDEKIN SHIRE COUNCIL                   -19.5778  147.4063 Aug 1892 Mar 1986   90.5   82   N
+  33002 AYR DPI RESEARCH STN                     -19.6169  147.3758 Dec 1951 Mar 2025   71.1   89   Y
+  33007 BOWEN POST OFFICE                        -20.0167  148.2500 Jan 1969 Aug 1987   18.7   96   N
+  33013 COLLINSVILLE POST OFFICE                 -20.5533  147.8464 Jan 1957 Mar 2025   67.2   88   N
+  33031 HAYMAN ISLAND RESORT                     -20.0564  148.8881 Jul 1969 Jun 1985   14.9   74   N
+  33045 MACKAY AERO                              -21.1706  149.1794 May 1950 Mar 2025   39.0   51   Y
+  33046 MACKAY POST OFFICE                       -21.1500  149.1833 Nov 1889 Apr 1950   59.9   98   N
+  33047 TE KOWAI EXP STN                         -21.1642  149.1192 Jan 1908 Jun 2012  104.2   88   N
+  33058 PINE ISLET LIGHTHOUSE                    -21.6667  150.2167 Jan 1957 Apr 1987   30.3   97   N
+  33061 PROSERPINE POST OFFICE                   -20.4000  148.5833 Dec 1969 Dec 1989   19.7   87   N
+  33065 ST LAWRENCE POST OFFICE                  -22.3458  149.5356 Jan 1957 Aug 2012   55.7   94   N
+  33077 PACIFIC HEIGHTS                          -23.0965  150.7343 Jan 1967 Aug 1987   20.7   84   N
+  33090 MILLAROO DPI                             -20.0464  147.2739 Jan 1965 Jun 1993   28.3   94   N
+  33106 HAMILTON ISLAND AIRPORT                  -20.3658  148.9536 Mar 2002 Mar 2025   23.1   96   Y
+  33119 MACKAY M.O                               -21.1172  149.2169 Sep 1959 Mar 2025   65.6   99   Y
+  33195 WILLIAMSON                               -22.4703  150.1786 Jun 2005 Mar 2025   19.8   98   Y
+  33208 ROSSLYN BAY NTC AWS                      -23.1610  150.7901 Jul 2012 Mar 2025   12.7   95   Y
+  33210 ST LAWRENCE                              -22.3472  149.5242 Aug 2004 Mar 2025   20.7   99   Y
+  33247 PROSERPINE AIRPORT                       -20.4925  148.5550 Dec 1988 Mar 2025   36.3   97   Y
+  33255 HAMILTON ISLAND                          -20.3528  148.9511 Aug 1985 Mar 2002   16.7   96   N
+  33257 BOWEN AIRPORT                            -20.0151  148.2152 Aug 1987 Jun 2015   27.8   96   N
+  33294 YEPPOON THE ESPLANADE                    -23.1364  150.7506 Nov 1993 Mar 2025   31.4   97   Y
+  33295 ALVA BEACH                               -19.4569  147.4833 Mar 1997 Mar 2025   28.0   97   Y
+  33297 MACKAY COMPARISON                        -21.1183  149.2150 Oct 1995 Sep 2001    6.0   99   N
+  33298 DOTSWOOD                                 -19.6264  146.2939 Feb 1996 May 2005    8.5   78   Y
+  33307 WOOLSHED                                 -19.4168  146.5362 Jul 1998 Mar 2025   26.3   91   Y
+  33308 SAMUEL HILL AERO                         -22.7433  150.6578 Mar 1997 Mar 2025   24.5   85   Y
+  33327 BOWEN AIRPORT AWS                        -20.0153  148.2138 Mar 2015 Mar 2025   10.1   98   Y
+  33328 TOWNSVILLE- FANNING RIVER (DEFENCE)      -19.7830  146.5000 Sep 2017 Mar 2025    7.6   98   Y
+  33329 OORALEA RACECOURSE (MACKAY TURF CLUB)    -21.1700  149.1515 Jun 2016 Mar 2025    8.8   98   Y
+  34002 CHARTERS TOWERS POST OFFICE              -20.0781  146.2614 Feb 1893 Dec 1992   99.3   97   N
+  34035 MORANBAH AIRPORT                         -22.0644  148.0758 Feb 2012 Mar 2025   13.2   98   Y
+  34038 MORANBAH WATER TREATMENT PLANT           -21.9947  148.0308 Jan 1986 Mar 2012   26.3   95   N
+  34084 CHARTERS TOWERS AIRPORT                  -20.0427  146.2716 Dec 1992 Mar 2025   32.2   98   N
+  35019 CLERMONT POST OFFICE                     -22.8250  147.6408 Jan 1962 Sep 2011   49.8   99   N
+  35027 EMERALD POST OFFICE                      -23.5267  148.1617 Oct 1889 Jun 1992  100.3   96    
+  35059 ROLLESTON                                -24.4619  148.6261 Aug 1987 May 2010   22.8   91   N
+  35065 SPRINGSURE COMET ST                      -24.1230  148.0856 Jan 1965 Mar 2025   60.2   84   N
+  35069 TAMBO POST OFFICE                        -24.8819  146.2564 Jan 1957 Mar 2025   68.0   96   N
+  35070 TAROOM POST OFFICE                       -25.6408  149.7958 Jan 1957 Mar 2025   68.2   97   N
+  35124 CLERMONT AIRPORT                         -22.7756  147.6217 Apr 2010 Mar 2025   15.0   99   Y
+  35129 ROLLESTON AIRPORT                        -24.4617  148.6264 Jul 2010 Mar 2025   14.7   97   Y
+  35134 BLACKWATER AIRPORT                       -23.6015  148.8074 May 2013 Mar 2025   11.9   98   Y
+  35139 LOCHINGTON                               -23.9424  147.5250 Oct 2010 Mar 2025   14.5   97   Y
+  35149 BRIGALOW RESEARCH STN                    -24.8353  149.8003 Jul 1968 Apr 2011   41.8   94   N
+  35264 EMERALD AIRPORT                          -23.5694  148.1756 Jul 1992 Mar 2025   32.8   99   Y
+  35290 BLACKWATER WATER TREATMENT PLANT         -23.5953  148.8746 Jul 1995 Jul 2008   13.1   92   N
+  36007 BARCALDINE POST OFFICE                   -23.5544  145.2883 Jan 1950 Mar 2025   69.5   91   N
+  36026 ISISFORD POST OFFICE                     -24.2591  144.4406 Jan 1957 Mar 2025   67.8   86   N
+  36030 LONGREACH POST OFFICE                    -23.4500  144.2500 Sep 1896 May 1973   75.7   98   N
+  36031 LONGREACH AERO                           -23.4397  144.2828 Mar 1966 Mar 2025   58.8   99   Y
+  36034 BLACKALL AIRPORT                         -24.4303  145.4306 Mar 2001 Mar 2025   24.1   99   Y
+  36047 TWIN HILLS POST OFFICE                   -21.9500  146.9517 Sep 1965 Oct 1985   19.8   93   N
+  36143 BLACKALL TOWNSHIP                        -24.4214  145.4672 Jan 1957 Mar 2001   44.3   99   N
+  36167 LONGREACH COMPARISON                     -23.4372  144.2769 Jun 1996 May 1997    1.0  100   N
+  37010 CAMOOWEAL TOWNSHIP                       -19.9225  138.1214 Jun 1939 Mar 2025   85.1   97   Y
+  37034 THE MONUMENT AIRPORT                     -21.8125  139.9267 Dec 2000 Mar 2025   24.3   97   Y
+  37036 TREPELL AIRPORT                          -21.8400  140.8925 Aug 2001 Mar 2025   23.7   95   Y
+  37039 WINTON AIRPORT                           -22.3617  143.0836 Oct 2002 Mar 2025   22.5   98   Y
+  37043 URANDANGI                                -21.6119  138.3136 Jan 1957 Sep 2012   55.7   98   N
+  37051 WINTON POST OFFICE                       -22.3908  143.0386 Jan 1957 May 2012   55.4  100   N
+  37053 CARTERS BORE                             -20.9358  139.2964 Jul 2014 Mar 2025   10.8   97   Y
+  37058 URANDANGI AERODROME                      -21.5979  138.3665 Sep 2012 Mar 2025   12.6   96   Y
+  37059 NEW MAY DOWNS                            -20.5900  139.3411 Aug 2013 Mar 2025   11.7   99   Y
+  38000 BEDOURIE                                 -24.3597  139.4714 May 1998 Mar 2025   26.5   89   N
+  38002 BIRDSVILLE POLICE STATION                -25.9003  139.3492 May 1954 Mar 2005   50.8   97   N
+  38003 BOULIA AIRPORT                           -22.9117  139.9039 Jan 1888 Mar 2025  132.8   93   N
+  38024 WINDORAH EVAP                            -25.4197  142.6594 Jan 1963 Sep 2014   47.6   91   N
+  38026 BIRDSVILLE AIRPORT                       -25.8975  139.3472 Jun 2000 Mar 2025   24.8   98   Y
+  38076 WINDORAH AIRPORT                         -25.4117  142.6647 Aug 2016 Mar 2025    8.7   98   Y
+  39004 BARALABA POST OFFICE                     -24.1819  149.8117 Sep 1966 Aug 2012   45.8   99   N
+  39006 BILOELA DPI                              -24.3789  150.5164 Jan 1965 May 1996   31.4   98   N
+  39014 BULBURIN FORESTRY                        -24.5333  151.4667 Jan 1957 Nov 1979   22.4   83   N
+  39015 BUNDABERG POST OFFICE                    -24.8667  152.3467 May 1892 Jun 1990   98.2  100   N
+  39018 BUSTARD HEAD LIGHTHOUSE                  -24.0222  151.7642 Jan 1965 Jul 1986   21.4   98   N
+  39023 CAPE CAPRICORN LIGHTHOUSE                -23.4833  151.2333 Jan 1957 Nov 1987   25.9   83   N
+  39025 CHILDERS POST OFFICE                     -25.2361  152.2781 Jan 1965 Jan 1976   11.1   71   N
+  39039 GAYNDAH POST OFFICE                      -25.6258  151.6094 Sep 1893 Jun 2009  115.8   99   N
+  39057 KALPOWAR FORESTRY                        -24.6925  151.3047 Jan 1962 Jun 1989   25.3   67   N
+  39059 LADY ELLIOT ISLAND                       -24.1116  152.7161 Jan 1957 Mar 2025   68.2   97   Y
+  39066 GAYNDAH AIRPORT                          -25.6167  151.6156 Jan 2003 Mar 2025   22.3   98   Y
+  39069 WALTERHALL                               -23.6286  150.3867 Jan 1965 Feb 1992   25.2   59   N
+  39083 ROCKHAMPTON AERO                         -23.3753  150.4775 Aug 1939 Mar 2025   85.7  100   Y
+  39085 SANDY CAPE LIGHTHOUSE                    -24.7297  153.2083 Jan 1957 Jan 2024   66.3   92   N
+  39089 THANGOOL AIRPORT                         -24.4935  150.5709 Jun 1992 Mar 2025   32.8   99   Y
+  39090 THEODORE DPI                             -24.9503  150.0725 Jan 1965 Jul 1990   24.7   62   N
+  39104 MONTO TOWNSHIP                           -24.8642  151.1247 Jan 1962 Mar 2025   51.3   78   N
+  39122 HERON ISLAND RES STN                     -23.4417  151.9125 Jan 1962 Mar 2007   26.8   56   Y
+  39123 GLADSTONE RADAR                          -23.8553  151.2628 Dec 1957 Mar 2025   67.0   98   Y
+  39128 BUNDABERG AERO                           -24.9069  152.3230 Jun 1959 Mar 2025   46.4   70   Y
+  39130 NORTH REEF LIGHTHOUSE                    -23.1833  151.9000 Jan 1965 Dec 1977   12.9   98   N
+  39171 NARAYEN RES STN                          -25.6875  150.8689 Apr 1970 Oct 1997   27.6   98   N
+  39304 HERON ISLAND                             -23.4483  151.9178 Aug 1980 Oct 1998   11.1   51   Y
+  39314 SEVENTEEN SEVENTY                        -24.1568  151.8889 Jul 1986 Mar 2025   37.6   94   N
+  39322 RUNDLE ISLAND                            -23.5322  151.2771 Jun 1995 Mar 2025   27.2   86   Y
+  39326 GLADSTONE AIRPORT                        -23.8697  151.2214 Oct 1993 Mar 2025   31.5   97   Y
+  39330 MONTO AIRPORT                            -24.8931  151.0997 Jul 1993 Mar 2005   11.8   97   N
+  40004 AMBERLEY AMO                             -27.6297  152.7111 Aug 1941 Mar 2025   83.7   99   Y
+  40014 BEAUDESERT CRYNA                         -28.0206  153.0131 Oct 1967 Dec 1979   12.1   89   N
+  40040 CALOUNDRA SIGNAL STATION                 -26.8017  153.1500 Sep 1970 Nov 1992   22.2   99   N
+  40043 CAPE MORETON LIGHTHOUSE                  -27.0314  153.4661 Jan 1910 Mar 2025  115.0   99   Y
+  40052 COOLANGATTA BOWLS COMP                   -28.1783  153.5383 Dec 1972 Oct 1981    8.9   98   N
+  40057 COMO                                     -26.1842  152.9136 Jan 1965 Dec 1969    3.3   36   N
+  40062 CROHAMHURST                              -26.8094  152.8700 Jan 1965 Dec 2000   31.1   59   N
+  40068 DOUBLE ISLAND POINT LIGHTHOUSE           -25.9319  153.1906 Jan 1957 Mar 2025   64.6   92   Y
+  40082 UNIVERSITY OF QUEENSLAND GATTON          -27.5436  152.3375 Jan 1965 Mar 2025   60.0   98   Y
+  40093 GYMPIE                                   -26.1831  152.6414 Jan 1965 Mar 2025   59.4   87   Y
+  40100 IMBIL FORESTRY                           -26.4619  152.6644 Jan 1965 Apr 2001   36.3   65   N
+  40101 IPSWICH                                  -27.6117  152.7608 Jan 1965 Jan 1994   28.8   72   N
+  40112 KINGAROY PRINCE STREET                   -26.5544  151.8456 Jan 1957 Jan 2001   44.1   99   N
+  40121 MALENY TAMARIND ST                       -26.7528  152.8519 Apr 2001 Jun 2016   15.1   97   N
+  40126 MARYBOROUGH                              -25.5132  152.7152 Jan 1957 Mar 2025   67.7   99   Y
+  40158 NANANGO WILLS ST                         -26.6756  151.9939 Jan 1965 Feb 1992   27.1   70   N
+  40189 SOMERSET DAM                             -27.1147  152.5550 Jan 1957 Jun 1970   13.3   89   N
+  40190 SOUTHPORT RIDGEWAY AVE                   -27.9829  153.4056 Jan 1957 Jan 1992   35.1  100   N
+  40197 MT TAMBORINE FERN ST                     -27.9695  153.1954 Jan 1957 Sep 1978   21.8  100   N
+  40209 POINT LOOKOUT                            -27.4361  153.5456 Feb 1997 Mar 2025   27.9   88   N
+  40211 ARCHERFIELD AIRPORT                      -27.5716  153.0071 Apr 1939 Mar 2025   49.9   57   Y
+  40214 BRISBANE REGIONAL OFFICE                 -27.4660  153.0270 Jan 1887 Mar 1986   99.3  100   N
+  40223 BRISBANE AERO                            -27.4178  153.1142 Jun 1949 Feb 2000   50.8  100   Y
+  40241 SAMFORD CSIRO                            -27.3617  152.8861 May 1971 Jan 1998   26.8   97   N
+  40242 SANDGATE POST OFFICE                     -27.3233  153.0700 Jan 1965 Mar 1976   10.1   50   N
+  40264 TEWANTIN POST OFFICE                     -26.3919  153.0408 Mar 1895 Mar 1996   92.8   85   N
+  40265 REDLANDS HRS                             -27.5278  153.2500 Jan 1965 Mar 2013   48.1   65   N
+  40282 NAMBOUR DPI                              -26.6431  152.9392 Jan 1965 Dec 2007   43.0   84   Y
+  40284 BEERBURRUM FOREST STATION                -26.9586  152.9619 Mar 1999 Mar 2025   26.1   98   Y
+  40288 COOLANGATTA AERO                         -28.1661  153.5036 Jan 1962 Dec 1971    9.9   98   N
+  40308 MT GLORIOUS FAHEY RD                     -27.3342  152.7717 Apr 1970 Feb 1992   21.6   97   N
+  40318 KIRKLEAGH                                -27.0258  152.5642 Jan 1970 Jun 1990   20.3   73   N
+  40405 HERVEY BAY AIRPORT                       -25.3220  152.8817 Mar 1999 Mar 2025   26.1   98   Y
+  40418 MOGGILL VET RES FARM                     -27.5275  152.9222 Oct 1968 Jan 1976    6.6   63   N
+  40420 COOLUM BOWLS CLUB                        -26.5300  153.0897 Jun 1969 Dec 1981   12.5   81   N
+  40428 BRIAN PASTURES                           -25.6550  151.7450 Jul 1968 Jan 2008   39.2   98   N
+  40436 GATTON DAFF RESEARCH STN                 -27.5456  152.3289 Jul 1968 Oct 2007   39.3   98   N
+  40451 TOOLARA FORESTRY                         -25.9963  152.8335 Apr 1972 Dec 2002   29.9   70   N
+  40454 GLENLOGAN FIELD STATION                  -27.8333  153.0000 May 1971 Jul 1986   15.3   99   N
+  40457 WACOL DPI                                -27.5767  152.9042 Oct 1976 Feb 1980    3.4   91   N
+  40478 K'GARI EURONG                            -25.5048  153.1289 Mar 1989 Apr 1999    9.3   68   N
+  40555 TOOLARA (KELLY)                          -25.9713  152.8609 Nov 1997 Jan 2015   17.3   98   Y
+  40584 HINZE DAM                                -28.0481  153.2875 Mar 1994 Aug 2011   17.5   78   N
+  40651 JIMNA FORESTRY                           -26.6644  152.4606 Nov 1999 Apr 2017   17.4   95   Y
+  40697 REDCLIFFE COUNCIL                        -27.2450  153.1006 Feb 1981 Jan 2004   22.8   96   N
+  40717 COOLANGATTA                              -28.1681  153.5053 Dec 1982 Mar 2025   38.3   87   Y
+  40764 GOLD COAST SEAWAY                        -27.9390  153.4283 Feb 1992 Mar 2025   32.8   97   Y
+  40765 HERVEY BAY WILDLIFE PARK                 -25.2903  152.8153 Apr 1988 Mar 1999    9.5   85   N
+  40842 BRISBANE AERO                            -27.3917  153.1292 Apr 1994 Mar 2025   30.8   98   Y
+  40850 BAROON POCKET DAM                        -26.7150  152.8719 Mar 1998 Mar 2007    9.1   82   N
+  40852 CANUNGRA LAND WARFARE CENTRE             -28.0272  153.1794 Apr 1992 Jan 1999    6.5   89   N
+  40854 LOGAN CITY WATER TREATMENT PLANT         -27.6841  153.1981 Oct 1992 Mar 2025   32.5   97   N
+  40856 RAINBOW BEACH                            -25.9007  153.0891 Jun 1992 Mar 2025   32.8   99   N
+  40861 SUNSHINE COAST AIRPORT                   -26.5990  153.0912 Jul 1994 Mar 2025   30.8   97   Y
+  40908 TEWANTIN RSL PARK                        -26.3911  153.0403 Jan 1996 Mar 2025   29.3   98   Y
+  40910 AMBERLEY AERO COMPARISON                 -27.6294  152.7114 Jul 1997 Oct 1998    1.3   91   N
+  40913 BRISBANE                                 -27.4808  153.0389 Dec 1999 Mar 2025   25.3   99   Y
+  40922 KINGAROY AIRPORT                         -26.5737  151.8398 Jan 2001 Mar 2025   24.3   99   Y
+  40958 REDCLIFFE                                -27.2169  153.0922 Feb 2004 Mar 2025   21.2   98   Y
+  40983 BEAUDESERT DRUMLEY STREET                -27.9707  152.9898 Aug 2007 Mar 2025   17.7   98   Y
+  40988 NAMBOUR DAFF - HILLSIDE                  -26.6442  152.9383 Dec 2007 Mar 2025   17.3   97   Y
+  41011 CAMBOOYA POST OFFICE                     -27.7072  151.8650 Jan 1965 Feb 1992   26.8   84   N
+  41023 DALBY POST OFFICE                        -27.1839  151.2639 Jan 1893 Jan 1992   98.7   98   N
+  41038 GOONDIWINDI POST OFFICE                  -28.5481  150.3075 Mar 1891 Jun 1991   98.5   96   N
+  41044 HERMITAGE                                -28.2061  152.1003 Jan 1965 Jan 1999   33.9   99   N
+  41056 KILLARNEY POST OFFICE                    -28.3344  152.2953 Jan 1965 Feb 1992   27.1   69   N
+  41082 PITTSWORTH                               -27.7228  151.6361 Jan 1965 Jan 1976   11.1   72   N
+  41095 STANTHORPE LESLIE PARADE                 -28.6617  151.9339 Jan 1957 Mar 2025   62.4   90   N
+  41097 INGLEWOOD FOREST                         -28.3661  150.9539 Feb 2000 Feb 2013   13.1   94   Y
+  41100 TEXAS POST OFFICE                        -28.8544  151.1681 May 1969 Mar 2025   55.6   86   N
+  41103 TOOWOOMBA                                -27.5836  151.9317 Jan 1957 Jul 1998   41.3   99   N
+  41116 WALLANGARRA POST OFFICE                  -28.9236  151.9311 Nov 1968 Jun 1992   22.5   67   N
+  41175 APPLETHORPE                              -28.6217  151.9533 Jul 1966 Mar 2025   55.8   93   Y
+  41176 WARWICK DRAGON ST                        -28.2247  152.0258 Mar 1967 Jan 1994   26.7   99   N
+  41341 INGLEWOOD TOBACCO RES                    -28.5000  150.9333 Aug 1972 Jun 1985   12.8   98   N
+  41359 OAKEY AERO                               -27.4034  151.7413 May 1973 Mar 2025   51.9   92   Y
+  41521 GOONDIWINDI AIRPORT                      -28.5211  150.3256 Jun 1991 Jul 2015   24.2   99   Y
+  41522 DALBY AIRPORT                            -27.1605  151.2633 Jan 1992 Mar 2025   33.3   99   Y
+  41525 WARWICK                                  -28.2061  152.1003 Mar 1994 Mar 2025   30.8   96   Y
+  41529 TOOWOOMBA AIRPORT                        -27.5425  151.9134 Jul 1996 Mar 2025   28.8   98   Y
+  41560 GOONDIWINDI AIRPORT                      -28.5226  150.3223 Dec 2020 Mar 2025    4.3   98   Y
+  42023 MILES POST OFFICE                        -26.6581  150.1844 Jan 1910 Mar 2005   93.7   94   N
+  42112 MILES CONSTANCE STREET                   -26.6569  150.1819 Jul 1997 Mar 2025   27.8   98   Y
+  43015 INJUNE POST OFFICE                       -25.8428  148.5669 Feb 1967 Mar 2025   57.8   87   N
+  43020 MITCHELL POST OFFICE                     -26.4888  147.9777 Oct 1968 Mar 2025   55.6   94   N
+  43030 ROMA POST OFFICE                         -26.5719  148.7897 Jan 1957 Jul 1992   35.4   99   N
+  43034 ST GEORGE POST OFFICE                    -28.0361  148.5814 Feb 1913 Jul 1997   81.1   92   N
+  43035 SURAT                                    -27.1591  149.0702 Jan 1962 Mar 2025   63.0   94   N
+  43044 YULEBA STATE FOREST                      -26.6383  149.4261 Feb 1990 May 1993    3.3   56   N
+  43091 ROMA AIRPORT                             -26.5477  148.7710 Jul 1992 Mar 2025   32.8   98   Y
+  43109 ST GEORGE AIRPORT                        -28.0478  148.5957 May 1997 Mar 2025   27.9   99   Y
+  44010 BOLLON MARY ST                           -28.0316  147.4815 Jan 1957 Mar 2025   68.0   95   N
+  44021 CHARLEVILLE AERO                         -26.4139  146.2558 Apr 1942 Mar 2025   83.0   99   Y
+  44022 CHARLEVILLE POST OFFICE                  -26.4025  146.2381 May 1889 Sep 1953   64.3   98   N
+  44026 CUNNAMULLA POST OFFICE                   -28.0689  145.6822 Jan 1957 Mar 2025   67.5   98   N
+  44036 GILRUTH PLAINS                           -28.1000  145.9833 Jan 1963 Apr 1967    4.3   98   N
+  44221 CHARLEVILLE AERO COMPARISON              -26.4147  146.2608 Nov 2003 Feb 2006    2.3   98   Y
+  45000 ADAVALE POST OFFICE                      -25.9167  144.6000 Jan 1962 Sep 1978   16.6   95   N
+  45009 BALLERA GAS FIELD                        -27.4008  141.8114 Aug 2002 Mar 2025   22.7   96   Y
+  45015 QUILPIE AIRPORT                          -26.6125  144.2578 Jan 1957 Mar 2014   57.1   98   N
+  45017 THARGOMINDAH POST OFFICE                 -27.9978  143.8197 Jan 1957 Mar 2005   47.3   96   N
+  45025 THARGOMINDAH AIRPORT                     -27.9867  143.8150 Jul 1999 Mar 2025   25.8   96   Y
+  46012 WILCANNIA AERODROME AWS                  -31.5194  143.3850 Jan 2000 Mar 2025   25.3   99   Y
+  46037 TIBOOBURRA POST OFFICE                   -29.4362  142.0097 Jan 1910 Jan 2015  104.7   96   N
+  46042 WHITE CLIFFS POST OFFICE                 -30.8506  143.0893 Jan 1962 Dec 2011   48.4   96   N
+  46043 WILCANNIA (REID ST)                      -31.5631  143.3747 Oct 1879 Jan 2015  130.5   95   N
+  46091 FOWLERS GAP  RESEARCH  STATION           -31.0869  141.7017 Dec 1968 Dec 1973    4.3   70   N
+  46126 TIBOOBURRA AIRPORT                       -29.4448  142.0567 Sep 1997 Mar 2025   27.6   97   Y
+  46128 FOWLERS GAP AWS                          -31.0863  141.7008 Oct 2004 Mar 2025   20.5   99   Y
+  46129 WHITE CLIFFS AWS                         -30.8522  143.0743 Jul 2005 Mar 2025   19.8   98   Y
+  46136 WANAARING (BORRONA DOWNS AWS)            -29.7614  143.1135 Jul 2017 Mar 2025    6.7   82   Y
+  46142 SMITHVILLE AWS                           -30.0692  141.0067 Jul 2017 Mar 2025    7.8   98   Y
+  47007 BROKEN HILL (PATTON STREET)              -31.9759  141.4676 Mar 1957 Aug 2015   51.8   88   N
+  47016 LAKE VICTORIA STORAGE                    -34.0438  141.2676 Nov 1966 Mar 2025   57.9   95   N
+  47019 MENINDEE POST OFFICE                     -32.3937  142.4173 Jan 1959 Mar 2025   65.3   81   N
+  47029 POONCARIE MAIL AGENCY                    -33.3856  142.5696 Jul 2002 Mar 2025   22.8   98   N
+  47031 BROKEN HILL (STEPHENS CREEK RESERVOIR)   -31.8803  141.5930 Oct 1968 Jan 1970    1.3  100   N
+  47048 BROKEN HILL AIRPORT AWS                  -32.0012  141.4694 Sep 1957 Mar 2025   37.1   54   Y
+  47053 WENTWORTH POST OFFICE                    -34.1065  141.9189 Jan 1957 Sep 1967   10.7   95   N
+  47102 BROKEN HILL RFDS                         -31.9333  141.5333 Nov 1979 Nov 1985    6.1   94   N
+  47113 MULURULU AWS                             -33.3392  143.4000 Jul 2017 Oct 2024    7.3   97   Y
+  48013 BOURKE POST OFFICE                       -30.0917  145.9358 Apr 1871 Aug 1996  124.3   98   N
+  48015 BREWARRINA HOSPITAL                      -29.9614  146.8651 Jan 1965 Mar 2025   58.7   87   N
+  48027 COBAR MO                                 -31.4840  145.8294 May 1962 Mar 2025   62.9  100   Y
+  48030 COBAR POST OFFICE                        -31.5000  145.8000 Feb 1881 Dec 1965   78.2   91   N
+  48031 COLLARENEBRI (ALBERT ST)                 -29.5406  148.5817 Jan 1965 Nov 2024   56.8   80   N
+  48046 GOODOOGA POST OFFICE                     -29.1142  147.4543 Jul 1969 Jan 1982   12.2   93   N
+  48079 WANAARING POST OFFICE                    -29.7029  144.1484 Oct 1991 Mar 2025   33.1   90   N
+  48237 COBAR AIRPORT AWS                        -31.5388  145.7964 Jul 1993 Mar 2025   31.8   97   Y
+  48239 BOURKE AIRPORT                           -30.0423  145.9520 Nov 1994 Jan 1999    4.3   97   N
+  48243 LIGHTNING RIDGE VISITOR INFORMATION CENT -29.4310  147.9722 Jun 1997 Mar 2025   27.2   92   N
+  48244 COBAR COMPARISON                         -31.4861  145.8281 Nov 1997 Nov 2000    3.1   95   Y
+  48245 BOURKE AIRPORT AWS                       -30.0362  145.9521 Dec 1998 Mar 2025   26.3   96   Y
+  48247 WANAARING (DELTA AWS)                    -30.1006  145.3338 Aug 2017 Dec 2024    7.4   97   Y
+  48250 NOONA AWS                                -31.7267  144.9313 Jul 2017 Mar 2025    7.8   98   Y
+  49000 IVANHOE AERODROME AWS                    -32.8833  144.3092 Feb 2000 Mar 2025   25.2   98   Y
+  49002 BALRANALD (RSL)                          -34.6398  143.5610 Jan 1965 Mar 2025   59.5   82   N
+  49013 EUSTON POST OFFICE                       -34.5833  142.7333 Jan 1965 Nov 1970    5.0   81   N
+  49019 IVANHOE POST OFFICE                      -32.8999  144.2995 Jan 1959 Mar 2013   52.6   91   N
+  49032 MOUNT HOPE (CYPRESS GROVE)               -32.8345  145.8772 Jan 1965 Mar 1971    3.8   38   N
+  49136 EUABALONG (MOUNT HOPE AWS)               -32.8261  145.8801 Sep 2017 Mar 2025    7.6   99   Y
+  50014 CONDOBOLIN RETIREMENT VILLAGE            -33.0818  147.1524 Mar 1965 Jul 1995   29.8   93   N
+  50017 WEST WYALONG AIRPORT AWS                 -33.9382  147.1962 Apr 1999 Mar 2025   26.0   99   Y
+  50031 PEAK HILL POST OFFICE                    -32.7235  148.1902 Jul 1965 Mar 2025   59.6   96   N
+  50037 TULLAMORE (KITCHENER ST)                 -32.6345  147.5666 Mar 1970 Jul 1988   18.3   95   N
+  50052 CONDOBOLIN AG RESEARCH STN               -33.0664  147.2283 Jan 1965 Dec 2023   58.3   89   N
+  50102 CONDOBOLIN SOIL CONSERVATION             -33.0833  147.1500 Dec 1965 Dec 1985   20.1   99   N
+  50137 CONDOBOLIN AIRPORT AWS                   -33.0682  147.2133 Jul 1993 Mar 2025   31.8   98   Y
+  51010 COONAMBLE COMPARISON                     -30.9753  148.3806 Jan 1965 Oct 2010   45.5   91   N
+  51018 GILGANDRA (CHELMSFORD AVE)               -31.7049  148.6629 Jan 1965 Dec 1975   10.8   80   N
+  51039 NYNGAN AIRPORT                           -31.5495  147.1961 Jan 1959 Mar 2025   61.8   91   N
+  51042 QUAMBONE STATION                         -30.9252  147.8690 Jan 1965 Jan 1975    9.4   65   N
+  51048 TRANGIE POST OFFICE                      -32.0322  147.9826 Jan 1965 Dec 1975    9.8   74   N
+  51049 TRANGIE RESEARCH STATION AWS             -31.9861  147.9489 Dec 1968 Mar 2025   56.3   98   Y
+  51115 NARROMINE AIRPORT                        -32.2230  148.2292 Jul 1966 Jun 1974    7.5   91   N
+  51124 WARREN (AUSCOTT)                         -31.7833  147.7667 Dec 1968 Oct 1982   12.8   74   N
+  51161 COONAMBLE AIRPORT AWS                    -30.9776  148.3798 Sep 1997 Mar 2025   27.6   98   Y
+  51162 WALGETT (BREWON AWS)                     -30.2411  147.5327 May 2017 Mar 2025    7.9   99   Y
+  51164 GIRILAMBONE (OKEH) AWS                   -31.0824  146.9296 May 2017 Mar 2025    7.9   98   Y
+  52020 MUNGINDI POST OFFICE                     -28.9786  148.9899 Jan 1965 Mar 2025   59.5   83   N
+  52026 WALGETT COUNCIL DEPOT                    -30.0236  148.1218 Aug 1878 Jun 1993  113.7   97   N
+  52088 WALGETT AIRPORT AWS                      -30.0372  148.1223 Jun 1993 Mar 2025   31.6   98   Y
+  53000 MOREE AUTOSONDE                          -29.4917  149.8461 Jul 2000 Oct 2001    1.3   87    
+  53002 BARADINE FORESTRY                        -30.9469  149.0654 Jan 1965 Jul 2012   47.4   66   N
+  53027 MOREE POST OFFICE                        -29.5000  149.9000 Jan 1910 Dec 1965   56.0   88   N
+  53030 NARRABRI WEST POST OFFICE                -30.3401  149.7552 Jan 1962 Jul 2002   39.6   97   N
+  53048 MOREE COMPARISON                         -29.4819  149.8383 Mar 1964 Aug 1998   34.5   99   N
+  53115 MOREE AERO                               -29.4898  149.8471 May 1995 Mar 2025   29.9  100   Y
+  54003 BARRABA (CLIFTON LANE)                   -30.3833  150.6083 Mar 1966 Mar 2025   58.8   97   N
+  54004 BINGARA POST OFFICE                      -29.8673  150.5715 Jan 1965 Dec 1975   10.8   69   N
+  54029 WARIALDA POST OFFICE                     -29.5416  150.5754 Jan 1965 Dec 1975    9.9   74   N
+  54036 WALLANGRA (WALLANGRA STATION)            -29.2443  150.8923 Jan 1965 Oct 1969    4.4   84   N
+  54038 NARRABRI AIRPORT AWS                     -30.3154  149.8302 Jul 2001 Mar 2025   23.8   98   Y
+  54104 PINDARI DAM                              -29.3899  151.2448 Aug 1971 Mar 2025   53.7   90   N
+  55023 GUNNEDAH POOL                            -30.9841  150.2540 Dec 1876 Dec 2011  128.8   87   N
+  55024 GUNNEDAH RESOURCE CENTRE                 -31.0261  150.2687 Jan 1948 Mar 2025   73.4   94   Y
+  55049 QUIRINDI POST OFFICE                     -31.5086  150.6793 Jan 1965 Mar 2025   59.3   91   N
+  55054 TAMWORTH AIRPORT                         -31.0867  150.8467 Jan 1957 Dec 1992   36.0   99   N
+  55136 WOOLBROOK (WOOLBROOK ROAD)               -30.9651  151.3505 Jan 1970 Mar 2025   55.3  100   N
+  55202 GUNNEDAH AIRPORT AWS                     -30.9537  150.2494 Sep 2001 Mar 2025   23.6   98   Y
+  55325 TAMWORTH AIRPORT AWS                     -31.0742  150.8362 Feb 1992 Mar 2025   33.2   98   Y
+  56002 ARMIDALE (RADIO STATION 2AD)             -30.5167  151.6681 Jan 1957 Jun 1997   40.5  100   N
+  56006 BUNDARRA POST OFFICE                     -30.1711  151.0757 Jan 1965 Dec 1970    5.3   56   N
+  56008 DEEPWATER POST OFFICE                    -29.4421  151.8483 Aug 1967 Dec 1975    8.3   95   N
+  56011 GLEN INNES POST OFFICE                   -29.7368  151.7366 Jan 1962 Aug 2012   50.7   99   N
+  56013 GLEN INNES AG RESEARCH STN               -29.6952  151.6935 Jun 1970 Mar 2025   54.6   96   N
+  56016 GUYRA POST OFFICE                        -30.2204  151.6714 Jan 1965 Nov 1972    7.8   74   N
+  56017 INVERELL COMPARISON                      -29.7783  151.1114 Feb 1874 Nov 1997  122.6   98   N
+  56018 INVERELL RESEARCH CENTRE                 -29.7752  151.0820 Jan 1965 Mar 2025   59.6   94   Y
+  56021 MOUNT TOPPER STATE FOREST                -29.9167  151.2167 Jan 1965 Feb 1972    6.3   87   N
+  56032 TENTERFIELD (FEDERATION PARK)            -29.0479  152.0172 Jan 1965 Mar 2025   59.8   96   N
+  56034 URALLA (DUMARESQ ST)                     -30.6437  151.4906 Jan 1965 Jan 1967    2.1   57   N
+  56035 WALCHA POST OFFICE                       -30.9853  151.5942 Jan 1965 Dec 1975   10.8   86   N
+  56037 ARMIDALE (TREE GROUP NURSERY)            -30.5243  151.6716 Jun 1997 Mar 2025   27.8   99   N
+  56041 BONSHAW (MONKSTADT)                      -29.1333  151.4500 Jan 1965 Sep 1969    4.8   75   N
+  56229 GUYRA HOSPITAL                           -30.2122  151.6794 Sep 1981 Mar 2025   43.6   99   N
+  56238 ARMIDALE AIRPORT AWS                     -30.5273  151.6158 Jun 1994 Mar 2025   30.7   94   Y
+  56242 INVERELL (RAGLAN ST)                     -29.7796  151.1121 Mar 1995 Mar 2025   30.1   99   N
+  56243 GLEN INNES AIRPORT AWS                   -29.6780  151.6940 Oct 1996 Mar 2025   28.5   98   Y
+  57009 GIRARD STATE FOREST                      -28.9000  152.3000 Jan 1965 Jun 1968    3.5  100   N
+  57017 JEOGLA (JEOLGA OLD.SF.SITE)              -30.6167  152.1833 Nov 1968 Dec 1969    1.2  100   N
+  57021 URBENVILLE STATE FOREST                  -28.4667  152.5500 Jan 1957 Sep 1968   11.8   74   N
+  57082 GLEN INNES (MT MITCHELL FOREST)          -29.6460  152.0936 Jul 1965 Jul 1974    8.0   86   N
+  57095 TABULAM (MUIRNE)                         -28.7551  152.4507 Aug 1970 Mar 2025   54.6   99   N
+  58009 BYRON BAY (CAPE BYRON LIGHTHOUSE)        -28.6388  153.6361 Jul 1974 Aug 2007   33.0   95   N
+  58012 YAMBA PILOT STATION                      -29.4325  153.3632 Jan 1910 Mar 2025  114.2   98   Y
+  58013 CONDONG SUGAR MILL                       -28.3167  153.4333 Nov 1968 Sep 1972    2.5   58   N
+  58027 HARWOOD ISLAND (HARWOOD SUGAR MILL)      -29.4227  153.2533 Jan 1965 Nov 1972    7.2   71   N
+  58037 LISMORE (CENTRE STREET)                  -28.8070  153.2628 Jan 1957 Dec 2003   47.0   99   N
+  58050 ROSEBERRY STATE FOREST NURSERY           -28.4833  152.9167 Jan 1964 Jun 1968    4.5  100   N
+  58052 TABBIMOBILE STATE FOREST                 -29.2000  153.2667 Jan 1965 Dec 1966    1.9   96   N
+  58057 TYALGUM (WANUNGARA VIEW)                 -28.3364  153.2236 Aug 1970 Aug 1992   22.1   99   N
+  58060 WHIAN WHIAN (RUMMERY PARK)               -28.5988  153.3783 Jan 1965 Jan 1969    4.0   94   N
+  58063 CASINO AIRPORT                           -28.8752  153.0490 Jan 1965 Jul 2012   46.8   89   N
+  58065 BROADWATER SUGAR MILL                    -29.0167  153.4333 Jan 1965 Aug 1975    9.9   93   N
+  58077 GRAFTON RESEARCH STN                     -29.6224  152.9605 Sep 2002 Mar 2025   22.6   97   Y
+  58130 GRAFTON OLYMPIC POOL                     -29.6823  152.9278 Sep 1966 Jan 2015   48.3   99   N
+  58131 ALSTONVILLE TROPICAL FRUIT RESEARCH STAT -28.8521  153.4556 Jan 1968 Jun 2011   37.8   86   N
+  58158 MURWILLUMBAH (BRAY PARK)                 -28.3395  153.3809 Oct 1972 Mar 2025   52.5   98   N
+  58161 GRAFTON AIRPORT AWS                      -29.7583  153.0297 Apr 2006 Mar 2025   19.0   99   Y
+  58198 BALLINA AIRPORT AWS                      -28.8353  153.5585 Nov 1992 Mar 2025   32.4   98   Y
+  58208 CASINO AIRPORT AWS                       -28.8824  153.0618 Jan 1995 Mar 2025   30.3   98   Y
+  58212 EVANS HEAD RAAF BOMBING RANGE AWS        -29.1830  153.3964 Feb 1998 Mar 2025   27.2   97   Y
+  58214 LISMORE AIRPORT AWS                      -28.8305  153.2601 Mar 2002 Mar 2025   22.8   96   Y
+  58216 BYRON BAY (CAPE BYRON AWS)               -28.6399  153.6358 Nov 2002 Mar 2025   22.4   97   Y
+  58221 LISMORE (RICHMOND HILL)                  -28.7853  153.3409 Dec 2003 Jan 2015   11.2   98   N
+  59001 BELLINGEN POST OFFICE                    -30.4519  152.8979 Jan 1957 Jun 1986   29.5   99   N
+  59004 BROOKLANA (BOBO NURSERY)                 -30.2500  152.8500 Jan 1965 Mar 1965    0.3   73   N
+  59007 KEMPSEY AIRPORT AWS                      -31.0711  152.7717 Feb 2001 Mar 2025   24.2   99   Y
+  59008 CLOUDS CREEK STATE FOREST                -30.0903  152.6333 Jan 1965 Dec 1969    4.8   66   N
+  59017 KEMPSEY (WIDE STREET)                    -31.0770  152.8235 Jan 1965 Jan 2015   46.5   91   N
+  59030 SOUTH WEST ROCKS (SMOKY CAPE LIGHTHOUSE) -30.9225  153.0871 Jan 1957 Jan 2024   66.8   96   N
+  59040 COFFS HARBOUR MO                         -30.3107  153.1187 Feb 1943 Aug 2015   64.7   89   Y
+  59051 WOOLGOOLGA STATE FOREST                  -30.1167  153.1833 Jan 1965 Feb 1969    4.0   61   N
+  59074 SOUTH SOLITARY ISLAND                    -30.2000  153.2667 Mar 1969 Nov 1975    6.8   99   N
+  59094 BELLINGEN (THE OBSERVATORY)              -30.4167  152.8667 Jun 1986 Feb 1989    2.8   95   N
+  59140 DORRIGO (OLD CORAMBA RD)                 -30.3444  152.7187 Jan 1997 Mar 2025   28.2   96   N
+  59151 COFFS HARBOUR AIRPORT                    -30.3189  153.1162 Aug 2013 Mar 2025   11.7   98   Y
+  60000 BELLANGRY STATE FOREST 524               -31.3167  151.5833 Jan 1965 Aug 1968    3.7   64   N
+  60006 MOORLAND (COOPERNOOK STATE FOREST)       -31.7900  152.6092 Jan 1965 Dec 1969    4.0   45   N
+  60009 COOLONGALOOK STATE FOREST                -32.2000  152.3167 Jan 1965 Jun 1968    3.1   78   N
+  60013 FORSTER - TUNCURRY MARINE RESCUE         -32.1756  152.5089 Mar 1999 Jan 2020   20.9   97   N
+  60023 HARRINGTON (OXLEY ANCHORAGE CARAVAN PARK -31.8714  152.6827 Jan 1965 Dec 1975   10.8   96   N
+  60026 PORT MACQUARIE (HILL ST)                 -31.4399  152.9110 Jan 1910 Oct 2003   57.6   61   N
+  60030 TAREE (PATANGA CL)                       -31.8908  152.4709 Jan 1965 Mar 2005   40.2   98   N
+  60034 WAUCHOPE STATE FOREST                    -31.4667  152.7333 Jan 1965 Aug 1970    5.1   61   N
+  60039 KENDALL FORESTRY                         -31.6367  152.7061 Jan 1965 Jul 1967    2.6   66   N
+  60085 YARRAS (MOUNT SEAVIEW)                   -31.3865  152.2482 Jan 1969 Mar 2025   56.3  100   N
+  60139 PORT MACQUARIE AIRPORT AWS (COMPARISON)  -31.4335  152.8655 Jul 1995 Mar 2022   26.8   98   Y
+  60141 TAREE AIRPORT AWS                        -31.8895  152.5120 Jul 1997 Mar 2025   27.8   99   Y
+  60168 PORT MACQUARIE AIRPORT AWS               -31.4343  152.8662 Oct 2020 Mar 2025    4.5   98   Y
+  61008 CAMPBELLS HILL                           -32.7000  151.5000 Jan 1965 Nov 1965    0.8   78   N
+  61009 CESSNOCK POST OFFICE                     -32.8272  151.3661 Jan 1964 May 1968    4.4  100   N
+  61017 DUNGOG POST OFFICE                       -32.4022  151.7581 Jan 1966 Dec 1975    9.1   84   N
+  61029 KULNURA (WILLIAM ROAD)                   -33.2333  151.2000 Dec 1968 Aug 1981   12.8  100   N
+  61034 EAST MAITLAND BOWLING CLUB               -32.7483  151.5833 Jan 1965 Jul 1968    3.3   75   N
+  61051 MURRURUNDI POST OFFICE                   -31.7651  150.8363 Jan 1965 Oct 2019   54.3   95   N
+  61053 MUSWELLBROOK (LOWER HILL ST)             -32.2611  150.8847 Dec 1968 Jun 1972    3.3   93   N
+  61054 NELSON BAY (NELSON HEAD)                 -32.7103  152.1612 Jul 1968 Nov 2023   26.1   46   N
+  61055 NEWCASTLE NOBBYS SIGNAL STATION AWS      -32.9184  151.7985 Jan 1957 Mar 2025   67.8   99   Y
+  61057 OLNEY STATE FOREST                       -33.1000  151.2500 Jan 1965 Sep 1967    2.5   47   N
+  61063 RATHMINES AMO                            -33.0500  151.6000 Nov 1940 Jul 1950    9.3   93   N
+  61069 SCONE (PHILIP STREET)                    -32.0458  150.8708 Jan 1965 Dec 1991   26.9   99   N
+  61076 RAYMOND TERRACE (WALLAROO STATE FOREST)  -32.6180  151.8877 Jan 1965 Feb 1969    4.1   92   N
+  61078 WILLIAMTOWN RAAF                         -32.7939  151.8364 Sep 1942 Mar 2025   75.0   91   Y
+  61086 JERRYS PLAINS POST OFFICE                -32.4963  150.9106 Jan 1957 Apr 2014   56.3   96   N
+  61087 GOSFORD (NARARA RESEARCH STATION) AWS    -33.3949  151.3289 Jan 1965 May 2013   29.8   60   Y
+  61089 SCONE SCS                                -32.0632  150.9271 Jan 1965 Dec 2018   54.0   89   N
+  61223 MARYVILLE                                -32.9131  151.7500 Jan 1969 Jan 1993   24.1   98   N
+  61242 CESSNOCK (NULKABA)                       -32.8093  151.3490 Jun 1973 Aug 2012   39.0   98   N
+  61250 PATERSON (TOCAL AWS)                     -32.6296  151.5919 Nov 1967 Mar 2025   54.3   93   Y
+  61259 MAITLAND WEST AERO                       -32.7000  151.4667 Jun 1968 Jun 1974    5.8   82   N
+  61260 CESSNOCK AIRPORT AWS                     -32.7914  151.3369 Oct 1968 Mar 2025   34.3   59   Y
+  61273 NORAH HEAD LIGHTHOUSE                    -33.2814  151.5760 Jul 1969 Oct 2004   34.9   96   N
+  61275 SINGLETON ARMY                           -32.6133  151.1717 Aug 1969 Sep 1990   20.3   90   N
+  61287 MERRIWA (ROSCOMMON)                      -32.1852  150.1737 Aug 2007 Mar 2025   17.7   99   Y
+  61288 LOSTOCK DAM                              -32.3322  151.4595 Nov 1969 Mar 2025   55.3   88   N
+  61317 SANDY HOLLOW (MT DANGER VINEYARDS)       -32.3333  150.5667 Feb 1972 Nov 1974    2.6   85   N
+  61351 PEATS RIDGE (WARATAH ROAD)               -33.3102  151.2445 Oct 1981 Aug 2012   30.9   98   N
+  61363 SCONE AIRPORT AWS                        -32.0335  150.8264 Jul 1990 Mar 2025   34.8   97   Y
+  61366 NORAH HEAD AWS                           -33.2814  151.5766 Feb 1995 Mar 2025   30.2   98   Y
+  61371 SINGLETON WATER BOARD                    -32.5687  151.1589 Aug 1991 Nov 2002   11.3   89   N
+  61375 MANGROVE MOUNTAIN AWS                    -33.2894  151.2107 Jul 1994 Mar 2025   30.8   97   Y
+  61379 WILLIAMTOWN COMPARISON AWS               -32.8081  151.8419 Jul 1995 Aug 1999    4.0   87   Y
+  61388 MAITLAND VISITORS CENTRE                 -32.7422  151.5668 Jun 1997 Jul 2016   19.2   95   N
+  61390 NEWCASTLE UNIVERSITY                     -32.8906  151.7068 Jul 1998 Apr 2021   21.8   88   N
+  61392 MURRURUNDI GAP AWS                       -31.7416  150.7937 Jun 2003 Mar 2025   21.8   99   Y
+  61397 SINGLETON STP                            -32.5902  151.1743 Nov 2002 Jan 2019   16.3   94   N
+  61407 WILLIAMTOWN COMPARISON                   -32.7939  151.8386 Feb 2005 Dec 2005    0.4   28   Y
+  61412 COORANBONG (LAKE MACQUARIE AWS)          -33.0887  151.4636 Jul 2008 Mar 2025   16.8   99   Y
+  61425 GOSFORD AWS                              -33.4351  151.3614 Jun 2013 Mar 2025   11.8  100   Y
+  61428 MAITLAND AIRPORT AWS                     -32.7023  151.4881 Jul 2016 Mar 2025    8.8   99   Y
+  61430 SINGLETON DEFENCE AWS                    -32.6976  151.1564 Apr 2017 Mar 2025    8.0   99   Y
+  61431 MURRURUNDI (HAYDON STREET)               -31.7678  150.8418 Sep 2019 Mar 2025    5.5   90   N
+  62005 CASSILIS POST OFFICE                     -32.0051  149.9815 May 1967 Dec 1975    6.8   69   N
+  62009 CASSILIS (DALKEITH)                      -31.9963  149.9856 Jan 1965 Dec 1966    2.0  100   N
+  62013 GULGONG POST OFFICE                      -32.3634  149.5329 Mar 1970 Mar 2025   55.0   94   N
+  62021 MUDGEE (GEORGE STREET)                   -32.5956  149.5956 Jan 1962 Dec 1995   33.8   98   N
+  62100 NULLO MOUNTAIN AWS                       -32.7244  150.2290 Aug 1990 Mar 2025   34.7   96   Y
+  62101 MUDGEE AIRPORT AWS                       -32.5628  149.6149 Jul 1990 Mar 2025   34.7   97   Y
+  63004 BATHURST GAOL                            -33.4167  149.5500 Jan 1858 May 1983  118.1   89   N
+  63005 BATHURST AGRICULTURAL STATION            -33.4288  149.5559 Jul 1908 Mar 2025  113.2   94   N
+  63010 BLAYNEY POST OFFICE                      -33.5350  149.2600 Jan 1965 Dec 1975   10.1   87   N
+  63018 ORANGE (CANOBOLAS STATE FOREST)          -33.3934  149.0231 Jan 1965 Sep 1969    4.5   87   N
+  63019 CARCOAR                                  -33.6167  149.1333 Jan 1965 Sep 1969    4.7   80   N
+  63021 COWRA POST OFFICE                        -33.9000  148.7000 Jan 1957 Dec 1966    9.9   98   N
+  63023 COWRA RESEARCH CENTRE (EVANS ST)         -33.8087  148.7071 Jan 1965 Jan 2011   45.5   97   N
+  63033 GURNANG STATE FOREST (OBERON (YOUNG ADUL -34.0111  149.8369 Jan 1964 Feb 1975   10.8   96   N
+  63036 OBERON (JENOLAN CAVES)                   -33.8195  150.0217 Jan 1965 Apr 1973    7.8   91   N
+  63039 KATOOMBA (FARNELLS RD)                   -33.7139  150.2953 Jan 1957 Mar 2025   61.5   88   N
+  63046 LIDSDALE STATE FOREST                    -33.4500  150.0500 Jan 1965 Feb 1975    9.3   90   N
+  63053 MILLTHORPE (INALA)                       -33.4455  149.1847 Jan 1965 Dec 1993   28.9   78   N
+  63056 MOUNT VICTORIA (MT VICTORIA (SELSDON STR -33.5917  150.2544 Jan 1962 Nov 1987   25.8   99   N
+  63058 MULLION CREEK (MULLION RANGE FOREST)     -33.0934  149.1280 Jan 1965 Jun 1968    3.4   97   N
+  63062 LITHGOW (NEWNES FOREST CENTRE)           -33.3675  150.2383 Jan 1965 Dec 1975    9.8   74   N
+  63063 OBERON (ALBION ST)                       -33.6993  149.8670 Jan 1965 Apr 2022   41.2   60   N
+  63065 ORANGE POST OFFICE                       -33.2833  149.1000 Jan 1957 Jul 1968   11.6  100   N
+  63077 SPRINGWOOD (VALLEY HEIGHTS)              -33.7065  150.5848 Feb 2006 Jun 2021   15.4   99   N
+  63087 BLACK SPRINGS FORESTRY                   -33.8462  149.7396 Jan 1965 Jun 1968    3.4   65   N
+  63111 KIRKCONNELL PRISON CAMP                  -33.4167  149.8500 Feb 1968 Dec 1975    6.7   81   N
+  63216 CARCOAR (ICELY STREET)                   -33.6167  149.1333 Nov 1969 Dec 1975    5.8   83   N
+  63224 LITHGOW (BIRDWOOD ST)                    -33.4901  150.1498 Aug 1965 Jun 2006   40.5   94   N
+  63226 LITHGOW (COOERWULL)                      -33.4769  150.1303 Jun 2006 Mar 2025   18.8   98   N
+  63227 WENTWORTH FALLS COUNTRY CLUB             -33.6976  150.3665 May 1967 Jul 1973    6.2   97   N
+  63231 ORANGE AIRPORT COMPARISON                -33.3815  149.1229 Aug 1968 Jul 2011   43.0   99   N
+  63237 ORANGE TV CHANNEL CNB8                   -33.3000  149.1167 Aug 1968 Apr 1969    0.4   52   N
+  63244 ORANGE (WOLAROI)                         -33.3000  149.1167 Feb 1969 May 1975    5.0   78   N
+  63254 ORANGE AGRICULTURAL INSTITUTE            -33.3211  149.0828 Jan 1976 Mar 2025   49.2   92   N
+  63281 BLACKHEATH M.C.A.                        -33.6333  150.2833 Sep 1981 Oct 1983    1.9   65   N
+  63291 BATHURST AIRPORT AWS                     -33.4119  149.6540 Jul 1990 Mar 2025   34.8   98   Y
+  63292 MOUNT BOYCE AWS                          -33.6185  150.2741 Jul 1990 Mar 2025   34.8   98   Y
+  63293 OBERON (JENOLAN CAVES ROAD)              -33.7400  149.8822 Sep 1989 Aug 2005   16.0   86   N
+  63303 ORANGE AIRPORT AWS                       -33.3768  149.1263 Apr 1996 Mar 2025   29.0   98   Y
+  63305 BATHURST AG COMPARISON                   -33.4300  149.5550 Apr 1996 May 1998    2.1   94   N
+  63308 MARRANGAROO (DEFENCE)                    -33.4346  150.1350 Dec 2017 Mar 2025    7.3   99   Y
+  64008 COONABARABRAN (SHOWGROUNDS)              -31.2786  149.2786 Jan 1957 Mar 2025   66.8   97   N
+  64009 DUNEDOO POST OFFICE                      -32.0165  149.3956 Jan 1965 Mar 2025   59.9   90   N
+  64017 COONABARABRAN AIRPORT AWS                -31.3330  149.2699 Jul 2001 Mar 2025   23.8   99   Y
+  64025 COOLAH (BINNIA ST)                       -31.8231  149.7200 May 1966 Aug 1975    8.3   77   N
+  65006 CANOWINDRA (CANOWINDRA STREET)           -33.5720  148.6619 Jan 1965 Jan 1982   16.3   71   N
+  65012 DUBBO (DARLING STREET)                   -32.2385  148.6089 Jan 1921 Dec 1999   79.0   99   N
+  65016 FORBES (CAMP STREET)                     -33.3892  148.0081 Apr 1873 May 1998  122.1   96   N
+  65023 MOLONG (HILL ST)                         -33.0881  148.8584 Jan 1957 Jul 1975   18.6   97   N
+  65026 PARKES (MACARTHUR STREET)                -33.1419  148.1639 Jan 1957 Jul 2012   55.6  100   N
+  65034 WELLINGTON (D&J RURAL)                   -32.5635  148.9503 Jan 1965 Mar 2025   59.3   95   N
+  65035 WELLINGTON RESEARCH CENTRE               -32.5059  148.9708 Jan 1965 Feb 2005   40.0   99   N
+  65037 DUBBO STATE FOREST                       -32.2667  148.6167 Jan 1965 Mar 1967    2.1   71   N
+  65068 PARKES AIRPORT AWS                       -33.1281  148.2428 Oct 1997 Mar 2025   27.5   98   Y
+  65070 DUBBO AIRPORT AWS                        -32.2206  148.5753 Jan 1993 Mar 2025   32.3   98   Y
+  65091 COWRA AIRPORT COMPARISON                 -33.8451  148.6534 Oct 1966 Jul 2011   44.7   99   N
+  65103 FORBES AIRPORT AWS                       -33.3627  147.9205 Dec 1995 Mar 2025   29.3   98   Y
+  65111 COWRA AIRPORT AWS                        -33.8382  148.6540 Jul 2004 Mar 2025   20.7   98   Y
+  66009 CENTENNIAL PARK ROUND HOUSE              -33.8975  151.2328 Jun 1966 Dec 1967    1.3   82    
+  66037 SYDNEY AIRPORT AMO                       -33.9465  151.1731 Apr 1939 Mar 2025   86.0  100   Y
+  66059 TERREY HILLS AWS                         -33.6908  151.2253 Sep 2004 Mar 2025   20.6   98   Y
+  66062 SYDNEY (OBSERVATORY HILL)                -33.8607  151.2050 Jan 1859 Aug 2020  161.7  100   Y
+  66078 LUCAS HEIGHTS (ANSTO)                    -34.0517  150.9800 Jan 1962 Dec 1982   20.7   98   N
+  66124 PARRAMATTA NORTH (MASONS DRIVE)          -33.7917  151.0181 Jun 1967 Mar 2025   57.6   98   N
+  66131 RIVERVIEW OBSERVATORY                    -33.8258  151.1556 Apr 1962 Jan 2015   30.2   54   N
+  66134 GRANVILLE SHELL REFINERY                 -33.8322  151.0340 Jan 1965 Sep 1967    2.8   99   N
+  66137 BANKSTOWN AIRPORT AWS                    -33.9176  150.9837 Jul 1968 Mar 2025   56.7   99   Y
+  66154 HOLDSWORTHY AIR CAVALRY                  -33.9500  150.9500 Feb 1970 Nov 1974    4.8   94   N
+  66156 MACQUARIE PARK (WILLANDRA VILLAGE)       -33.7791  151.1121 Feb 1971 Oct 1995   24.1   84   N
+  66160 CENTENNIAL PARK                          -33.8959  151.2341 May 1968 Jun 1975    6.5   80   N
+  66161 HOLSWORTHY AERODROME AWS                 -33.9925  150.9489 Aug 2012 Mar 2025   12.7   98   Y
+  66169 VILLAWOOD ARCHIVES                       -33.8333  151.0000 Nov 1975 Jun 1977    1.7   91   N
+  66193 MARSFIELD (MACQUARIE UNIVERSITY NO:2)    -33.7654  151.1176 Mar 1994 Oct 1995    1.7   89   Y
+  66194 CANTERBURY RACECOURSE AWS                -33.9057  151.1134 Oct 1995 Mar 2025   29.4   98   Y
+  66195 SYDNEY OLYMPIC PARK (SYDNEY OLYMPIC PK ( -33.8521  151.0646 Dec 1995 Aug 2011   15.8   98   Y
+  66196 SYDNEY HARBOUR (WEDDING CAKE WEST)       -33.8405  151.2643 Sep 1997 Mar 2025   22.9   77   Y
+  66212 SYDNEY OLYMPIC PARK AWS (ARCHERY CENTRE) -33.8338  151.0718 Aug 2011 Mar 2025   13.7   99   Y
+  66214 SYDNEY (OBSERVATORY HILL)                -33.8593  151.2048 Oct 2017 Mar 2025    7.5   98   Y
+  67009 GLENFIELD (MACQUARIE)                    -33.9667  150.9000 Jan 1965 Dec 1975   10.7   92   N
+  67010 GLENORIE (OLD NORTHERN RD)               -33.5908  151.0094 Jan 1965 Dec 1975   10.3   89   N
+  67019 PROSPECT RESERVOIR                       -33.8193  150.9127 Jan 1965 May 2018   53.3   99   N
+  67020 LIVERPOOL (MICHAEL WENDEN CENTRE)        -33.9214  150.8861 Sep 2001 Feb 2013   11.5   93   N
+  67021 RICHMOND - UWS HAWKESBURY                -33.6165  150.7477 Jan 1965 Jun 1975   10.3   98   N
+  67026 SEVEN HILLS (COLLINS ST)                 -33.7704  150.9318 Jan 1965 Dec 1975   10.8   95   N
+  67033 RICHMOND RAAF                            -33.6022  150.7794 Dec 1939 Oct 1994   45.6   82   N
+  67035 LIVERPOOL(WHITLAM CENTRE)                -33.9272  150.9128 Jun 1962 Sep 2001   39.3   98   N
+  67068 BADGERYS CREEK MCMASTERS F.STN           -33.8683  150.7278 Mar 1967 Dec 1984   13.8   74   N
+  67084 ORCHARD HILLS TREATMENT WORKS            -33.8020  150.7069 Dec 1970 Jun 1989   18.1   94   N
+  67089 WEST PENNANT HILLS (CUMBERLAND STATE FOR -33.7459  151.0402 Jan 1964 Feb 1967    3.2   58   N
+  67105 RICHMOND RAAF                            -33.6004  150.7761 Oct 1993 Mar 2025   31.5   99   Y
+  67108 BADGERYS CREEK AWS                       -33.8969  150.7281 Nov 1995 Mar 2025   29.4   96   Y
+  67113 PENRITH LAKES AWS                        -33.7195  150.6783 Sep 1995 Mar 2025   29.6   98   Y
+  67117 HOLSWORTHY CONTROL RANGE                 -33.9795  150.9254 Jun 1998 Sep 2014   16.3   96   Y
+  67119 HORSLEY PARK EQUESTRIAN CENTRE AWS       -33.8510  150.8567 Sep 1997 Mar 2025   27.6   98   Y
+  68005 BOWRAL POST OFFICE                       -34.5000  150.4000 Jan 1965 Nov 1965    0.9   82   N
+  68034 JERVIS BAY (POINT PERPENDICULAR LIGHTHOU -35.0936  150.8048 Jan 1946 Jun 2004   58.3   99   N
+  68038 KIAMA BOWLING CLUB                       -34.6750  150.8519 Jul 1981 Jul 2002   21.1   85   N
+  68045 MOSS VALE (HOSKINS STREET)               -34.5444  150.3768 Jan 1962 Dec 1975   13.5   93   N
+  68052 PICTON COUNCIL DEPOT                     -34.1685  150.6145 Jan 1965 Dec 1975   10.9   97   N
+  68053 PORT KEMBLA SIGNAL STATION               -34.4772  150.9131 Jan 1957 Mar 1976   19.3   99   N
+  68072 NOWRA RAN AIR STATION AWS                -34.9469  150.5353 Nov 2000 Mar 2025   24.4   98   Y
+  68076 NOWRA RAN AIR STATION                    -34.9449  150.5450 Dec 1955 Nov 2000   45.0   98   Y
+  68081 CAMPBELLTOWN SWIMMING CENTRE             -34.0833  150.8167 Jan 1962 Apr 1984   22.2   94   N
+  68102 BOWRAL (PARRY DRIVE)                     -34.4869  150.4019 Dec 1965 Jan 2015   47.8   95   N
+  68151 JERVIS BAY (POINT PERPENDICULAR AWS)     -35.0936  150.8049 May 2001 Mar 2025   23.9   98   Y
+  68161 WATTAMOLLA                               -34.7333  150.6167 Sep 1970 Sep 1975    4.9   84   N
+  68188 WOLLONGONG UNIVERSITY                    -34.4030  150.8795 Nov 1970 Jun 2008   37.7   99   N
+  68192 CAMDEN AIRPORT AWS                       -34.0390  150.6890 Dec 1971 Mar 2025   49.8   92   Y
+  68220 MINTO (ALDERNEY STREET)                  -34.0411  150.8458 Apr 1984 Nov 1995    9.5   68   N
+  68228 BELLAMBI AWS                             -34.3692  150.9291 Apr 1997 Mar 2025   28.0   98   Y
+  68239 MOSS VALE AWS                            -34.5253  150.4217 Feb 2001 Mar 2025   24.2   98   Y
+  68241 ALBION PARK (SHELLHARBOUR AIRPORT)       -34.5639  150.7924 Jun 1999 Mar 2025   25.8   99   Y
+  68242 KIAMA (BOMBO HEADLAND)                   -34.6532  150.8609 Dec 2001 Mar 2025   19.5   81   Y
+  68253 PORT KEMBLA NTC AWS                      -34.4734  150.9118 Jul 2012 Mar 2025   12.8   99   Y
+  68257 CAMPBELLTOWN (MOUNT ANNAN)               -34.0615  150.7735 Nov 2006 Mar 2025   18.4   99   Y
+  68262 HIGH RANGE AWS (WANGANDERRY)             -34.3335  150.2670 Jul 2014 Mar 2025   10.8   99   Y
+  68263 HOLSWORTHY DEFENCE AWS                   -34.0810  150.9009 Dec 2017 Mar 2025    7.3   97   Y
+  68264 JERVIS BAY NSW (JERVIS BAY AIRFIELD AWS) -35.1439  150.6973 Oct 2018 Mar 2025    6.5   99   Y
+  69002 BEGA (NEWTOWN ROAD)                      -36.6883  149.8380 Jan 1965 Dec 1994   30.0   99   N
+  69010 BRAIDWOOD (MONKITTEE STREET)             -35.4489  149.7990 Jan 1965 Jan 1975    9.5   81   N
+  69017 MONTAGUE ISLAND LIGHTHOUSE               -36.2519  150.2275 Nov 1968 Mar 2025   55.7   94   Y
+  69018 MORUYA HEADS PILOT STATION               -35.9093  150.1532 Jan 1910 Mar 2025  114.7   99   N
+  69021 NALBAUGH STATE FOREST                    -37.0667  149.3500 Jan 1965 Apr 1977   12.1   96   N
+  69022 NAROOMA (MARINE RESCUE)                  -36.2144  150.1358 Jan 1965 Mar 2025   41.8   66   N
+  69031 ULLADULLA                                -35.3667  150.4833 Aug 1968 Jul 1972    4.0   88   N
+  69049 NERRIGA COMPOSITE                        -35.1165  150.0847 Mar 1971 Oct 2011   40.7   97   N
+  69055 GREEN CAPE LIGHTHOUSE                    -37.2614  150.0497 Oct 1966 May 1992   25.6   99   N
+  69093 MERIMBULA AIRPORT COMPARISON             -36.9106  149.9017 Aug 1969 Dec 1998   29.1   96   N
+  69106 WOODBURN STATE FOREST                    -35.4000  150.4333 Jan 1965 Dec 1969    4.8   95   N
+  69126 KIOLOA (LONDON FOUNDATION)               -35.5467  150.3767 Jun 1980 Oct 1986    5.2   69   N
+  69128 NERRIGA AWS                              -35.1103  150.0826 Jun 2013 Mar 2025   11.8   99   Y
+  69132 BRAIDWOOD RACECOURSE AWS                 -35.4253  149.7835 Aug 1985 Mar 2025   35.2   85   Y
+  69134 BATEMANS BAY (CATALINA COUNTRY CLUB)     -35.7234  150.1872 Nov 1991 Mar 2025   31.7   81   N
+  69137 GREEN CAPE AWS                           -37.2622  150.0504 Jul 2000 Mar 2025   23.9   91   Y
+  69138 ULLADULLA AWS                            -35.3635  150.4828 Aug 1990 Mar 2025   34.7   97   Y
+  69139 BEGA AWS                                 -36.6722  149.8191 Mar 1992 Mar 2025   33.0   96   Y
+  69147 MERIMBULA AIRPORT AWS                    -36.9077  149.8989 Feb 1998 Mar 2025   27.2   98   Y
+  69148 MORUYA AIRPORT AWS                       -35.9004  150.1437 Oct 1999 Mar 2025   25.5   98   Y
+  70005 BOMBALA (THERRY STREET)                  -36.9113  149.2379 Jan 1965 Mar 2025   60.2   93   N
+  70014 CANBERRA AIRPORT COMPARISON              -35.3049  149.2014 Mar 1939 Nov 2010   71.8  100   Y
+  70015 CANBERRA FORESTRY                        -35.3000  149.1000 Jan 1957 Apr 1980   23.3  100   N
+  70025 CROOKWELL POST OFFICE                    -34.4578  149.4693 Jan 1965 Dec 1975   10.4   75   N
+  70034 FROGMORE                                 -34.2739  148.8400 Jun 1969 Dec 1990   21.4   92   N
+  70037 GOULBURN                                 -34.7500  149.8667 Jan 1962 May 1967    5.3   96   N
+  70067 NIMMITABEL WASTEWATER TREATMENT FACILITY -36.5112  149.2794 Jan 1965 Dec 1975    9.9   86   N
+  70080 TARALGA (COMMUNITY GARDEN)               -34.4002  149.8174 Jan 1957 Aug 2024   67.3   93   N
+  70090 BELCONNEN (HOLT (PINE RIDGE))            -35.2389  148.9958 Oct 1999 Feb 2003    3.4   69   N
+  70091 YASS (LINTON HOSTEL)                     -34.8313  148.9113 Dec 1965 May 2011   45.3   96   N
+  70094 COOMA NORTH SMHEC                        -36.2167  149.1333 Jan 1959 Dec 1970   11.8   96   N
+  70099 CANBERRA (ACTON)                         -35.3000  149.1000 Jan 1921 Nov 1939   17.2   88   N
+  70172 GUDGENBY                                 -35.7500  148.9833 Apr 1967 Oct 1988   20.3   90   N
+  70206 ORRORAL VALLEY (STADAN)                  -35.6333  148.9500 Jan 1968 Aug 1985   17.6   99   N
+  70210 GOULBURN AERO CLUB                       -34.8167  149.7333 May 1967 Jul 1971    4.3   94   N
+  70217 COOMA AIRPORT AWS                        -36.2939  148.9725 Jul 1990 Mar 2025   34.8   98   Y
+  70220 BOOROWA POST OFFICE                      -34.4382  148.7158 Jan 1965 Apr 1969    4.3   79   N
+  70241 HONEYSUCKLE CREEK                        -35.5833  148.9833 Aug 1967 Nov 1981   14.3   99   N
+  70258 COOMA NORTH GERINGA AVENUE               -36.2167  149.1333 Jan 1959 Jun 1973   13.9   93   N
+  70260 URIARRA FOREST 2                         -35.3000  148.9167 Jul 1971 May 1973    1.6   82   N
+  70263 GOULBURN TAFE                            -34.7495  149.7034 Sep 1971 Mar 2025   49.7   91   N
+  70278 COOMA VISITORS CENTRE                    -36.2318  149.1243 Oct 1973 Mar 2025   51.1   95   N
+  70282 CANBERRA CITY                            -35.2667  149.1167 Dec 1974 Nov 1988   14.0  100   N
+  70285 GOULBURN ST JOHNS                        -34.7667  149.7000 Jan 1975 May 1978    3.3   92   N
+  70310 TIDBINBILLA NATURE RESERVE               -35.4408  148.9422 Apr 1982 Aug 2012   30.3   90   N
+  70312 NAMADGI NATIONAL PARK (GLENDALE CROSSING -35.6920  149.0052 Oct 1983 Sep 1992    6.8   62   N
+  70313 TARAGO (WOODLAWN MINES)                  -35.0667  149.5833 Jan 1984 Jun 1988    4.4   83   N
+  70316 BENDORA DAM                              -35.4424  148.8296 Aug 1984 Apr 1990    3.8   54   N
+  70317 CORIN DAM                                -35.5368  148.8383 Feb 1986 May 1993    6.9   69   N
+  70322 CORIN FOREST REC FACILITY                -35.5155  148.9216 Jun 1987 Dec 1987    0.5   57   N
+  70326 CRAIGIE (BONDI FOREST LODGE)             -37.1473  149.1496 Jan 1965 Dec 1969    3.8   50   N
+  70328 BOMBALA AWS                              -37.0015  149.2336 Jul 1990 Mar 2025   34.8   94   Y
+  70330 GOULBURN AIRPORT AWS                     -34.8085  149.7311 Jul 1990 Mar 2025   34.8   97   Y
+  70338 CANBERRA AERO COMPARISON                 -35.3083  149.1936 Dec 1995 Dec 1997    2.1   98   N
+  70339 TUGGERANONG (ISABELLA PLAINS) AWS        -35.4184  149.0937 May 1996 Mar 2025   28.9   98   Y
+  70349 MOUNT GININI AWS                         -35.5293  148.7721 Jun 2004 Mar 2025   20.8   93   Y
+  70351 CANBERRA AIRPORT                         -35.3106  149.1970 Sep 2008 Mar 2025   16.6   99   Y
+  70358 YASS (RURAL FIRE SERVICE)                -34.8225  148.9080 May 2011 Jun 2018    7.2   61   N
+  71003 CHARLOTTE PASS (KOSCIUSKO CHALET)        -36.4335  148.3327 Dec 1967 Feb 2015   27.3   48   N
+  71010 KIANDRA CHALET                           -35.8833  148.5000 Jan 1957 Aug 1974   14.9   81   N
+  71029 SPENCERS CREEK                           -36.4333  148.3500 Jan 1962 Mar 1967    5.3   99   N
+  71030 CABRAMURRA SMHEA                         -35.9333  148.3833 Jan 1965 Jul 1969    4.6  100    
+  71031 ISLAND BEND                              -36.3333  148.4833 Jan 1965 Oct 1967    2.8   99   N
+  71032 THREDBO AWS                              -36.4917  148.2859 Nov 1966 Mar 2025   48.7   77   Y
+  71041 THREDBO VILLAGE                          -36.5031  148.3038 Nov 1969 Mar 2025   52.3   89   N
+  71072 PERISHER VALLEY SKI CENTRE               -36.4033  148.4104 Jun 1976 Jul 2010   33.7   78   N
+  71075 PERISHER VALLEY AWS                      -36.4069  148.4055 May 2010 Mar 2025   14.9   99   Y
+  72000 ADELONG (TUMUT ST)                       -35.3085  148.0641 Jan 1965 Feb 1994   28.7   93   N
+  72009 BROOKFIELD FOREST STATION                -35.8000  147.9333 Jan 1965 Mar 1968    3.3  100   N
+  72013 CARABOST FOREST HEADQUARTERS             -35.6500  147.8022 Jan 1965 Dec 1969    5.0   93   N
+  72014 CARABOST STATE FOREST 2                  -35.6500  147.7167 Jan 1965 Jun 1968    3.5   99   N
+  72023 HUME RESERVOIR                           -36.1039  147.0329 Jan 1965 Mar 2025   59.8   98   N
+  72035 MURRAGULDRIE STATE FOREST 1              -35.5000  147.6167 Jan 1965 Dec 1969    5.0   95   N
+  72043 TUMBARUMBA POST OFFICE                   -35.7780  148.0122 Apr 1965 Mar 2025   59.6   86   N
+  72046 TUMUT PLAINS (HOMESDALE)                 -35.3333  148.2667 Jan 1965 Dec 1975   10.3   93   N
+  72052 RED HILL STATE FOREST                    -35.1667  148.3667 Jan 1965 Jan 1970    5.1   99   N
+  72059 ALBURY GRAMMAR SCHOOL                    -36.0667  146.9333 Mar 1962 Nov 1969    7.1   88   N
+  72060 KHANCOBAN SMHEA                          -36.2254  148.1431 Jan 1962 Sep 1994   32.8   99   N
+  72090 LAUREL HILL PRISON CAMP                  -35.6500  148.0667 Jun 1969 Jun 1975    5.9   91   N
+  72091 CABRAMURRA SMHEA                         -35.9383  148.3842 Jan 1962 Apr 1999   37.3   99   N
+  72097 ALBURY PUMPING STATION                   -36.0817  146.9550 Jun 1970 Aug 1986   16.3   99   N
+  72146 ALBURY AIRPORT                           -36.0694  146.9531 Jun 1983 Nov 2007   24.4   98   N
+  72150 WAGGA WAGGA AMO                          -35.1583  147.4575 Jan 1942 Mar 2025   83.3  100   Y
+  72151 WAGGA WAGGA (KOORINGAL)                  -35.1333  147.3667 Nov 1871 Dec 1950   77.7   93   N
+  72160 ALBURY AIRPORT AWS                       -36.0690  146.9509 May 1993 Mar 2025   31.9   98   Y
+  72161 CABRAMURRA SMHEA AWS                     -35.9371  148.3779 Dec 1996 Mar 2025   28.3   97   Y
+  72162 KHANCOBAN AWS                            -36.2304  148.1405 Jan 1997 Mar 2025   28.2   97   Y
+  73007 BURRINJUCK DAM                           -34.9997  148.5984 Jan 1965 Mar 2025   59.3   95   N
+  73009 COOTAMUNDRA POST OFFICE                  -34.6411  148.0236 Jan 1957 Oct 1995   38.7   99   N
+  73014 GRENFELL (MANGANESE RD)                  -33.8934  148.1523 Jan 1965 Mar 2025   58.2   89   N
+  73016 HARDEN (EAST ST)                         -34.5607  148.3653 Sep 1967 Mar 1980   12.4   92   N
+  73019 JUNEE TREATMENT WORKS                    -34.8456  147.5714 Jan 1965 Dec 1975   10.6   81   N
+  73032 QUANDIALLA POST OFFICE                   -34.0112  147.7937 Jan 1965 Dec 2014   48.0   94   N
+  73038 TEMORA RESEARCH STATION                  -34.4061  147.5248 Jan 1965 Jan 2005   40.0   96   N
+  73054 WYALONG POST OFFICE                      -33.9262  147.2418 Jan 1965 Jan 2015   50.1   98   N
+  73056 YOUNG POST OFFICE                        -34.3167  148.2967 Jan 1965 Oct 1991   26.8   78   N
+  73108 GUNDAGAI SHIRE OFFICE                    -35.0667  148.1000 Dec 1967 Feb 1971    3.3   97   N
+  73118 COOTAMUNDRA AERO                         -34.6333  148.0500 Nov 1940 Apr 1941    0.5   59   N
+  73125 GUNDAGAI OTWAY ST                        -35.0667  148.1000 Mar 1971 Jul 1976    5.3   96   N
+  73127 WAGGA WAGGA AGRICULTURAL INSTITUTE       -35.0517  147.3493 Apr 1913 Dec 1975   36.4   55   N
+  73128 GUNDAGAI RIDGE STREET                    -35.0778  148.1039 Aug 1976 May 1995   18.8  100   N
+  73138 YOUNG AIRPORT                            -34.2493  148.2475 Jul 1990 Mar 2025   34.8   97   Y
+  73141 GUNDAGAI (NANGUS RD)                     -35.0640  148.0986 May 1995 Mar 2023   27.3   94   N
+  73142 COOTAMUNDRA AIRPORT                      -34.6299  148.0365 Oct 1995 Mar 2025   29.5   99   N
+  73151 TEMORA AIRPORT                           -34.4277  147.5117 Feb 2005 Mar 2025   20.2   98   Y
+  74000 ARDLETHAN POST OFFICE                    -34.3570  146.9035 Jan 1965 Dec 1975   10.2   75   N
+  74009 BERRIGAN POST OFFICE                     -35.6576  145.8124 Jan 1965 Dec 1975   10.1   83   N
+  74023 FINLEY AIRPORT AWS                       -35.6613  145.5610 Mar 2001 Sep 2003    2.6   94   Y
+  74034 COROWA AIRPORT                           -35.9887  146.3574 Feb 1970 Mar 2025   53.8   89   N
+  74037 YANCO AGRICULTURAL INSTITUTE             -34.6222  146.4327 Aug 1999 Mar 2025   25.7   98   Y
+  74039 DENILIQUIN FALKINER MEMORIAL             -35.3667  145.0500 Jan 1957 Nov 1977   20.8   95   N
+  74062 LEETON CARAVAN PARK                      -34.5670  146.4114 Jan 1957 Dec 1975   17.6   90   N
+  74069 MATHOURA STATE FOREST                    -35.8119  144.9010 Jan 1957 Dec 1969   12.9   97   N
+  74077 MOIRA STATE FOREST                       -36.0167  144.9000 Jan 1965 Dec 1969    4.9   94   N
+  74082 NARRANDERA POST OFFICE                   -34.7500  146.5500 Jan 1962 Feb 1970    3.3   38   N
+  74083 NARRANDERA STATE FOREST                  -34.7500  146.5667 Jan 1965 Dec 1969    4.8   64   N
+  74093 FINLEY (STRATHDRUMMOND)                  -35.5667  145.5333 Jan 1965 Sep 1968    3.7   96   N
+  74106 TOCUMWAL AIRPORT                         -35.8170  145.6004 Dec 1970 May 2022   51.5   98   N
+  74110 URANA POST OFFICE                        -35.3305  146.2652 Jan 1965 Dec 1975   10.2   81   N
+  74114 WAGGA WAGGA RESEARCH CENTRE              -35.1311  147.3091 Jan 1948 Jul 2003   55.4   91   N
+  74128 DENILIQUIN (VISITOR INFORMATION CENTRE)  -35.5283  144.9651 Feb 1858 Jun 2003  141.5   93   N
+  74148 NARRANDERA AIRPORT AWS                   -34.7050  146.5140 Nov 1970 Mar 2025   29.2   52   Y
+  74210 DENILIQUIN AERO                          -35.5333  144.9667 Jan 1942 Sep 1945    3.7   96    
+  74211 TOCUMWAL AERO                            -35.7833  145.5667 Jul 1945 Apr 1946    0.8  100    
+  74221 NARRANDERA GOLF CLUB                     -34.7325  146.5592 Jan 1970 Sep 2014   44.8   97   N
+  74253 FINLEY (CSIRO)                           -35.7111  145.6236 Apr 1995 Mar 2001    4.5   62   Y
+  74258 DENILIQUIN AIRPORT AWS                   -35.5575  144.9458 Jun 1997 Mar 2025   27.8   99   Y
+  74272 KAPOOKA (DEFENCE)                        -35.1327  147.2512 Sep 2017 Mar 2025    7.6   97   Y
+  75019 HAY AIRPORT AWS                          -34.5412  144.8315 Jun 2007 Mar 2025   17.8   98   Y
+  75028 GRIFFITH CSIRO                           -34.3183  146.0667 Jan 1962 Jun 1989   27.5   99   N
+  75031 HAY (MILLER STREET)                      -34.5194  144.8545 Jan 1957 Jan 2015   58.0   98   N
+  75032 HILLSTON AIRPORT                         -33.4915  145.5248 Jan 1957 Mar 2025   66.8   96   N
+  75039 LAKE CARGELLIGO AIRPORT                  -33.2832  146.3706 Jan 1965 Mar 2025   57.7   85   N
+  75041 GRIFFITH AIRPORT AWS                     -34.2487  146.0695 Aug 1970 Mar 2025   50.1   81   Y
+  75046 MOULAMEIN POST OFFICE                    -35.0885  144.0349 Aug 1970 Dec 1975    5.4   93   N
+  75050 NARADHAN (URALBA)                        -33.6104  146.3161 Jul 1970 May 1991   20.7   97   N
+  75079 YENDA (HENRY STREET)                     -34.2502  146.1897 Jan 1965 Oct 1985   20.5   90   N
+  75174 GRIFFITH CSIRO                           -34.3229  146.0684 Apr 1995 Sep 2003    6.9   72   Y
+  75175 HAY CSIRO AWS                            -34.5471  144.8670 Apr 1995 Sep 2007   10.9   77   Y
+  76026 MERBEIN CSIRO RESEARCH STATION           -34.2133  142.0400 Jan 1965 Oct 1975   10.8  100   N
+  76031 MILDURA AIRPORT                          -34.2358  142.0867 Aug 1946 Mar 2025   78.7  100   Y
+  76047 OUYEN (POST OFFICE)                      -35.0682  142.3125 Jan 1957 Mar 2025   68.3   99   N
+  76064 WALPEUP RESEARCH                         -35.1201  142.0040 Jan 1965 Mar 2025   60.3   97   Y
+  76077 MILDURA POST OFFICE                      -34.1833  142.2000 Jun 1889 Dec 1949   59.8   91   N
+  76125 ROBINVALE CONSOLIDATED SCHOOL            -34.6000  142.7833 Dec 1970 Feb 1980    8.8   89   N
+  77004 BEULAH                                   -35.9368  142.4213 Jan 1957 Sep 1975   18.8   99   N
+  77007 BIRCHIP POST OFFICE                      -35.9825  142.9156 Jan 1965 Jan 1984   19.1   84   N
+  77010 HOPETOUN AIRPORT                         -35.7151  142.3569 Jun 2004 Mar 2025   20.8   98   Y
+  77035 RAINBOW POST OFFICE                      -35.8975  141.9950 Jan 1965 Jun 1970    5.5   82   N
+  77042 SWAN HILL POST OFFICE                    -35.3406  143.5533 Jan 1960 Dec 1996   37.0   99   N
+  77094 SWAN HILL AERODROME                      -35.3766  143.5416 Dec 1996 Mar 2025   28.3   98   Y
+  78011 DONALD POST OFFICE                       -36.4000  143.0000 Jan 1965 Jan 1966    0.8   56   N
+  78015 NHILL AERODROME                          -36.3093  141.6486 Jun 2003 Mar 2025   21.8   99   Y
+  78018 KELLALAC (WARRACKNABEAL AIRPORT)         -36.3203  142.4161 Dec 2016 Mar 2025    8.3   99   Y
+  78031 NHILL                                    -36.3347  141.6367 Mar 1897 Dec 2008  106.6   92   N
+  78034 SERVICETON                               -36.3667  140.9833 Jan 1957 Sep 1971   14.8  100   N
+  78045 WAIL                                     -36.5167  142.1667 Jan 1964 Jun 1969    4.6   55   N
+  78072 DONALD                                   -36.3718  143.0363 Oct 1966 Oct 2000   34.1   99   N
+  78077 WARRACKNABEAL MUSEUM                     -36.2614  142.4050 Jun 1969 Oct 2019   50.3   99   N
+  78086 JEPARIT                                  -36.1442  141.9928 Jan 1965 Sep 1975   10.8   88   N
+  79023 HORSHAM POLKEMMET RD                     -36.6613  142.0687 Jan 1957 Apr 2012   54.8   98   N
+  79028 LONGERENONG                              -36.6722  142.2991 Jan 1965 Mar 2025   60.1   96   Y
+  79040 ST ARNAUD                                -36.6175  143.2644 Jan 1957 Dec 1982   25.9   93   N
+  79042 STAWELL                                  -37.1000  142.8000 Jan 1965 May 1969    4.4   98   N
+  79080 STAWELL                                  -37.0717  142.7908 Jun 1969 Feb 1998   28.8   98   N
+  79097 KANAGULK                                 -37.1169  141.8031 May 2004 Mar 2025   20.9   99   Y
+  79099 EDENHOPE AIRPORT                         -37.0222  141.2657 Apr 2005 Mar 2025   20.0   98   Y
+  79100 HORSHAM AERODROME                        -36.6699  142.1733 Oct 1997 Mar 2025   27.5   98   Y
+  79101 PYRENEES (BEN NEVIS)                     -37.2281  143.2005 Dec 2007 Mar 2025   17.3   97   Y
+  79103 GRAMPIANS (MOUNT WILLIAM)                -37.2950  142.6039 Dec 2005 Dec 2024   19.1   98   Y
+  79105 STAWELL AERODROME                        -37.0720  142.7402 Feb 1996 Mar 2025   29.2   99   Y
+  80002 BOORT                                    -36.1160  143.7229 Jan 1965 Nov 1986   21.7   90   N
+  80006 CHARLTON POST OFFICE                     -36.3000  143.4000 Jan 1965 Sep 1971    6.8   99   N
+  80015 ECHUCA AERODROME                         -36.1639  144.7639 Jan 1957 Mar 2025   68.2   99   N
+  80023 KERANG                                   -35.7466  143.9350 Jan 1910 Mar 2025  112.2   91   N
+  80043 NUMURKAH POST OFFICE                     -36.1000  145.4500 Jan 1965 Jun 1977   12.5   97   N
+  80049 ROCHESTER                                -36.3612  144.7110 Jan 1965 Jul 1975   10.6  100   N
+  80091 KYABRAM                                  -36.3350  145.0638 Jan 1965 Mar 2025   60.3   98   Y
+  80099 SERPENTINE LODDON VALLEY H'WAY           -36.4093  143.9752 Apr 1969 Sep 1971    2.4   90   N
+  80101 NUMURKAH                                 -36.0921  145.4531 Jul 1977 Apr 1992   14.8   66   N
+  80128 CHARLTON                                 -36.2846  143.3341 Jul 2004 Mar 2025   20.8   98   Y
+  81000 AVOCA (POST OFFICE)                      -37.0887  143.4747 Jan 1965 Aug 1975   10.7   81   N
+  81003 BENDIGO PRISON                           -36.7533  144.2825 Jan 1957 Oct 1991   34.8   99   N
+  81013 DOOKIE AGRICULTURAL COLLEGE              -36.3717  145.7048 Jan 1965 Oct 1975   10.8   99   N
+  81044 GOULBURN RIVER @ SHEPPARTON              -36.3798  145.3935 Jan 1965 Jun 1972    7.5   70   N
+  81049 TATURA INST SUSTAINABLE AG               -36.4379  145.2673 Jan 1965 Mar 2025   60.3   97   Y
+  81057 YARRAWONGA POST OFFICE                   -36.0281  146.0044 Jan 1965 Sep 1975   10.8   89   N
+  81084 LEMNOS (CAMPBELLS SOUP)                  -36.3608  145.4594 Jan 1965 Jan 1996   31.1  100   N
+  81115 WANALTA DAEN STATION                     -36.6284  144.8727 Aug 1974 Jun 1984    9.9  100   N
+  81123 BENDIGO AIRPORT                          -36.7411  144.3274 Nov 1991 Mar 2025   33.4   99   Y
+  81124 YARRAWONGA                               -36.0294  146.0305 May 1993 Mar 2025   31.8   97   Y
+  81125 SHEPPARTON AIRPORT                       -36.4288  145.3949 Jul 1996 Mar 2025   28.8   99   Y
+  82001 BEECHWORTH COMPOSITE                     -36.3702  146.7132 Jan 1957 Nov 1986   29.9   97   N
+  82002 BENALLA (SHADFORTH STREET)               -36.5483  145.9703 Jan 1957 Nov 2006   49.9   99   N
+  82011 CORRYONG (PARISH LANE)                   -36.2003  147.8956 Feb 1972 Mar 2006   34.2   99   N
+  82016 EUROA                                    -36.7569  145.5660 Jan 1965 Feb 1976   11.2   95   N
+  82034 MYRTLEFORD POST OFFICE                   -36.5667  146.7333 Jan 1965 Feb 1969    4.2   86   N
+  82039 RUTHERGLEN RESEARCH                      -36.1048  146.5094 Nov 1912 Mar 2025  106.9   93   Y
+  82042 STRATHBOGIE                              -36.8472  145.7307 Jan 1974 Mar 2025   51.3   99   N
+  82053 WANGARATTA                               -36.3667  146.3000 Jan 1957 May 1987   30.1   98   N
+  82056 WODONGA                                  -36.1180  146.9061 Jan 1957 May 1968   11.4  100   N
+  82059 STANLEY STATE FOREST                     -36.4167  146.7667 Jan 1965 Jun 1966    1.5   82   N
+  82066 CORRYONG FORESTRY                        -36.2000  147.9000 Jan 1965 Jan 1972    6.5   71   N
+  82068 MITTA MITTA                              -36.5293  147.3748 Jan 1965 Feb 1972    7.2   76   N
+  82076 DARTMOUTH RESERVOIR                      -36.5352  147.4984 Jan 1975 Mar 2025   50.2   94   N
+  82092 SHELLEY                                  -36.1821  147.5515 Jan 1965 Jan 1972    5.8   60   N
+  82100 BONEGILLA                                -36.1333  147.0000 Jun 1968 Jun 1986   18.1   99   N
+  82137 BEECHWORTH WOOLSHED                      -36.3192  146.6803 Nov 1986 Apr 2012   13.5   49   N
+  82138 WANGARATTA AERO                          -36.4205  146.3056 May 1987 Mar 2025   37.9   99   Y
+  82139 HUNTERS HILL                             -36.2137  147.5395 Apr 1993 Mar 2025   31.9   96   Y
+  82169 CORRYONG AIRPORT                         -36.1826  147.8942 Mar 2006 Mar 2025   19.0   95   N
+  82170 BENALLA AIRPORT                          -36.5522  145.9977 Nov 2006 Mar 2025   18.4   98   N
+  83004 BOGONG                                   -36.8056  147.2239 Jan 1962 Sep 1975   13.8   91   N
+  83014 HOTHAM HEIGHTS                           -36.9833  147.1500 Jun 1967 Dec 1972    3.1   44   N
+  83023 MOUNT BEAUTY                             -36.7450  147.1633 Jan 1965 Jan 1994   28.3   95   N
+  83024 MOUNT BULLER                             -37.1450  146.4394 Mar 1985 Mar 2025   39.1   92   Y
+  83025 OMEO COMPARISON                          -37.1011  147.5980 Jan 1957 Dec 2009   52.7   96   N
+  83033 WOODS POINT                              -37.5695  146.2543 Jan 1957 Sep 1969   12.8  100   N
+  83037 FALLS CREEK SEC                          -36.8633  147.2794 Apr 1974 Sep 1990    5.0   29   N
+  83067 BRIGHT                                   -36.7313  146.9614 Jun 1969 Dec 1994   25.6   97   N
+  83071 FALLS CREEK                              -36.8667  147.2833 Jul 1970 Sep 1970    0.3   83   N
+  83073 MOUNT BUFFALO CHALET                     -36.7220  146.8189 Jan 1965 Apr 1980   14.3   89   N
+  83081 MOUNT HOTHAM                             -36.9833  147.1478 Dec 1977 Jul 1990   12.5   88   N
+  83083 EDI UPPER                                -36.7396  146.4671 Nov 1985 Mar 2025   35.7   72   N
+  83084 FALLS CREEK                              -36.8708  147.2755 Sep 1990 Mar 2025   34.3   94   Y
+  83085 MOUNT HOTHAM                             -36.9772  147.1342 Aug 1990 Mar 2025   34.3   92   Y
+  83090 OMEO                                     -37.1017  147.6008 Aug 2004 Mar 2025   20.7   99   Y
+  84016 GABO ISLAND LIGHTHOUSE                   -37.5679  149.9158 Jan 1910 Mar 2025  115.1   99   Y
+  84027 CANN RIVER FORESTRY                      -37.5333  149.1500 Jan 1965 Dec 1973    8.9   75   N
+  84028 NOWA NOWA                                -37.7279  148.0958 Jan 1965 Aug 1975   10.7   69   N
+  84030 ORBOST (COMPARISON)                      -37.6917  148.4589 Jan 1938 Nov 2011   73.6   98   N
+  84070 POINT HICKS (LIGHTHOUSE)                 -37.8017  149.2747 Jul 1966 Dec 2019   53.5   98   N
+  84077 BENDOC FORESTRY                          -37.1500  148.8833 Jan 1965 Sep 1967    2.6   62   N
+  84080 BAIRNSDALE POST OFFICE                   -37.8167  147.6167 Jan 1957 Mar 1970   13.3   99   N
+  84083 LAKES ENTRANCE                           -37.8692  147.9961 Sep 1965 May 2006   40.8   99   N
+  84084 MALLACOOTA                               -37.5976  149.7289 Apr 1993 Mar 2025   31.9   97   Y
+  84087 TABBERABBERA (THE PINES)                 -37.5833  147.3667 Apr 1974 Jun 1980    5.7   79   N
+  84108 BAIRNSDALE                               -37.8333  147.6500 Apr 1970 Jun 1983   12.6   92   N
+  84142 GELANTIPY                                -37.2200  148.2626 Dec 1992 Mar 2025   32.3   97   Y
+  84143 COMBIENBAR AWS                           -37.3416  149.0227 Jul 1994 Mar 2025   30.7   98   Y
+  84144 MOUNT NOWA NOWA                          -37.6924  148.0908 Nov 1995 Mar 2025   29.4   99   Y
+  84145 ORBOST                                   -37.6922  148.4667 Nov 2000 Mar 2025   24.4   96   Y
+  84150 LAKES ENTRANCE (EASTERN BEACH ROAD)      -37.8717  148.0060 Jun 2006 Mar 2025   18.8   97   N
+  85000 ABERFELDY                                -37.7000  146.3667 Sep 1969 Oct 1974    5.1   95   N
+  85026 ERICA                                    -37.9747  146.3745 Jan 1965 Sep 1975   10.8   97   N
+  85055 MAFFRA FORESTRY OFFICE                   -37.9664  146.9831 Jan 1965 Aug 1975   10.7   82   N
+  85072 EAST SALE                                -38.1156  147.1323 Aug 1945 Mar 2025   79.7  100   Y
+  85079 TANJIL BREN                              -37.8000  146.2000 Jan 1965 Aug 1971    6.1   90   N
+  85082 TIDAL RIVER                              -39.0310  146.3227 Jul 1965 Jan 1972    4.0   46   N
+  85093 WARRAGUL                                 -38.1731  145.9487 Jan 1962 Dec 1979   17.5   90   N
+  85096 WILSONS PROMONTORY LIGHTHOUSE            -39.1297  146.4246 Jan 1910 Mar 2025  114.5   98   Y
+  85097 WOODSIDE                                 -38.5000  146.9000 Aug 1889 Jan 1893    3.5   93   N
+  85099 POUND CREEK                              -38.6297  145.8107 Apr 2007 Mar 2025   17.9   98   Y
+  85103 YALLOURN SEC                             -38.1858  146.3317 Jan 1957 Sep 1986   29.7   99   N
+  85106 OLSENS BRIDGE (MORWELL RIVER PRISON)     -38.4861  146.3233 Jan 1962 Apr 1997   33.6   94   N
+  85133 SALE                                     -38.1000  147.0500 Jan 1910 Jul 1945   35.6  100   N
+  85150 HAZELWOOD SEC                            -38.2933  146.3883 Jan 1965 Apr 1967    2.3   98   N
+  85151 YARRAM AIRPORT                           -38.5647  146.7479 Oct 2007 Mar 2025   17.5   99   Y
+  85152 WON WRON PRISON                          -38.4856  146.6717 Feb 1967 Sep 1975    8.6   97   N
+  85153 NOOJEE                                   -37.9000  146.0000 Jun 1965 Sep 1975   10.1   96   N
+  85199 MOONDARRA RESERVOIR                      -38.0992  146.3792 Jan 1974 Feb 1988   14.2   94   N
+  85227 EAST TARWIN (MIRBOO PASTORAL COMPANY)    -38.5215  146.2041 Jan 1975 Jun 1984    9.5   98   N
+  85235 EAST TARWIN NO.18                        -38.5269  146.2581 May 1972 Dec 1974    2.7   95   N
+  85240 ELLINBANK DAIRY RESEARCH INST            -38.2456  145.9347 Aug 1983 Aug 2000   17.1   94   N
+  85269 NOOJEE PEARCE                            -37.8833  146.0167 Jul 1978 Oct 1981    3.3   94   N
+  85275 DARRIMAN (OMEGA)                         -38.4833  146.9333 Apr 1981 Feb 1982    0.9   99   N
+  85277 NOOJEE (SLIVAR)                          -37.9039  145.9719 Oct 1981 Apr 2012   30.5   98   N
+  85279 BAIRNSDALE AIRPORT                       -37.8818  147.5669 Apr 1943 Mar 2025   44.3   53   Y
+  85280 MORWELL (LATROBE VALLEY AIRPORT)         -38.2094  146.4746 Jan 1984 Mar 2025   41.3   99   Y
+  85283 WILLOW GROVE (BLUE ROCK RESERVOIR)       -38.0809  146.2139 Mar 1986 Jul 2019   33.2   74   N
+  85291 MOUNT BAW BAW                            -37.8384  146.2747 Aug 1997 Mar 2025   26.5   90   Y
+  85296 MOUNT MOORNAPA                           -37.7481  147.1428 Dec 1993 Mar 2025   31.3   97   Y
+  85298 EAST SALE COMPARISON                     -38.1072  147.1317 Jun 1996 Aug 2005    9.3   99   N
+  85301 CORNER INLET (YANAKIE)                   -38.8051  146.1936 Jan 2013 Mar 2025   12.3   96   Y
+  85313 NILMA NORTH (WARRAGUL)                   -38.1321  145.9865 Jan 2014 Mar 2025   11.3   97   Y
+  85314 EAST SALE AIRPORT                        -38.1016  147.1398 Oct 2017 Mar 2025    7.5   99   Y
+  86017 CAPE SCHANCK LIGHTHOUSE                  -38.4931  144.8858 Jan 1962 Aug 1997   33.5   84   N
+  86033 BRIGHTON BOWLS CLUB                      -37.9252  145.0254 Jan 1965 Nov 1967    2.9   99   N
+  86038 ESSENDON AIRPORT                         -37.7276  144.9066 Apr 1939 Mar 2025   55.5   64   Y
+  86050 HEALESVILLE (BADGER CRK SANCTUARY)       -37.6833  145.5333 Jul 1973 Sep 1990    6.3   31   N
+  86060 KEW                                      -37.8167  145.0333 Jan 1965 Jun 1973    8.0   88   N
+  86068 VIEWBANK                                 -37.7408  145.0972 Nov 1999 Mar 2025   25.4   99   Y
+  86071 MELBOURNE REGIONAL OFFICE                -37.8075  144.9700 May 1855 Jan 2015  159.8  100   Y
+  86077 MOORABBIN AIRPORT                        -37.9800  145.0962 Aug 1971 Mar 2025   53.5   98   Y
+  86079 MORNINGTON                               -38.2358  145.0667 Jan 1962 Aug 1975   13.7   92   N
+  86082 MOUNT ELIZA                              -38.2000  145.1000 Jan 1965 Jul 1973    8.6   97   N
+  86094 POWELLTOWN DNRE                          -37.8615  145.7443 Jan 1965 Jul 1978   13.6   98   N
+  86097 PORTSEA QUARANTINE STATION               -38.3167  144.6667 Jan 1965 Apr 1978   12.6   86   N
+  86104 SCORESBY RESEARCH INSTITUTE              -37.8710  145.2561 Jan 1965 Mar 2025   57.9   94   Y
+  86116 TOORADIN                                 -38.1667  145.4000 Jan 1957 Oct 1974   17.8   99   N
+  86122 WATSONIA LOYOLA                          -37.7000  145.0833 Jan 1965 Dec 1973    8.8   93   N
+  86127 WONTHAGGI                                -38.6078  145.5965 Jul 1968 Mar 2025   56.0   94   N
+  86142 TOOLANGI (MOUNT ST LEONARD DPI)          -37.5720  145.5014 Jan 1965 Nov 2006   41.7   85   N
+  86147 ASPENDALE CSIRO                          -38.0333  145.1000 Jan 1965 Jun 1982   17.2   98   N
+  86224 DANDENONG                                -37.9764  145.2247 Jan 1964 Nov 1974    9.6   85   N
+  86240 FRENCH ISLAND (MCLEOD PRISON)            -38.4000  145.3000 Oct 1969 Apr 1975    5.6   99   N
+  86243 MOUNT DANDENONG GTV9                     -37.8306  145.3500 Jan 1968 Dec 1986   19.0  100   N
+  86245 CARRUM DOWNS                             -38.1167  145.1797 Dec 1967 Oct 1975    7.9   71   N
+  86266 FERNY CREEK                              -37.8748  145.3497 Mar 2011 Mar 2025   14.1   99   Y
+  86282 MELBOURNE AIRPORT                        -37.6654  144.8322 Jul 1970 Mar 2025   54.8  100   Y
+  86306 STONY POINT                              -38.3833  145.2167 Aug 1972 Feb 1983   10.3   97   N
+  86338 MELBOURNE (OLYMPIC PARK)                 -37.8255  144.9816 Jun 2013 Mar 2025   11.8   99   Y
+  86344 SOUTH CHANNEL ISLAND                     -38.3065  144.8016 Dec 1998 Jul 2002    3.3   84   Y
+  86351 BUNDOORA (LATROBE UNIVERSITY)            -37.7163  145.0453 Sep 1979 Dec 2018   39.3   97   N
+  86354 PHILLIP ISLAND PENGUIN RESERVE           -38.5058  145.1503 Mar 1981 Feb 2018   35.0   64   N
+  86361 CERBERUS                                 -38.3646  145.1785 Jul 1990 Mar 2025   34.8   97   Y
+  86364 TARRAWARRA MONASTERY                     -37.6594  145.4457 Dec 1986 Apr 1997    8.9   84   N
+  86368 DALMORE                                  -38.1800  145.4317 Jun 1988 Aug 1990    2.3   96   N
+  86371 FRANKSTON BEACH                          -38.1480  145.1152 Feb 1992 Sep 2018   26.7   98   Y
+  86372 FERNY CREEK (DUNNS HILL)                 -37.8775  145.3364 Nov 1990 Jul 2011   20.8   97   Y
+  86373 RHYLL                                    -38.4612  145.3101 Jul 1990 Mar 2025   34.8   98   Y
+  86375 CRANBOURNE BOTANIC GARDENS               -38.1348  145.2636 Feb 1990 Mar 2020   29.6   92   N
+  86383 COLDSTREAM                               -37.7239  145.4092 Oct 1994 Mar 2025   30.5   98   Y
+  86384 MELBOURNE AIRPORT COMPARISON             -37.6750  144.8419 Aug 1999 Aug 2001    2.1   97   Y
+  86388 FRANKSTON (BALLAM PARK)                  -38.1517  145.1615 Jun 2020 Mar 2025    4.8   95   Y
+  87005 BALLAN (FISKVILLE)                       -37.6000  144.2000 Jan 1957 Jun 1969   12.4   95   N
+  87021 DURDIDWARRAH                             -37.8233  144.2078 Jan 1965 Jul 2000   35.6   99   N
+  87023 GEELONG SALINES (MOOLAP)                 -38.1587  144.3954 Jan 1965 Aug 1967    2.7   97   N
+  87025 GEELONG SEC                              -38.1167  144.3667 Jan 1964 Jun 1970    6.5   99   N
+  87031 LAVERTON RAAF                            -37.8565  144.7565 Oct 1943 Mar 2025   81.5   99   Y
+  87032 LAVERTON SALINES                         -37.9000  144.7500 Jan 1965 Apr 1965    0.3   67   N
+  87036 MACEDON FORESTRY                         -37.4155  144.5569 Jul 1969 Sep 1999   29.9   81   N
+  87038 MARIBYRNONG EXPLOSIVES FACTORY           -37.7750  144.8767 Jan 1964 Jul 1964    0.6   97   N
+  87054 QUEENSCLIFF                              -38.2714  144.6621 Jan 1957 Feb 1968   10.8   86   N
+  87065 WERRIBEE RESEARCH FARM                   -37.9000  144.6833 Jan 1965 Jul 1980   15.6  100   N
+  87080 GEELONG (POINT HENRY)                    -38.1333  144.4167 May 1984 Mar 1985    0.9   98   N
+  87113 AVALON AIRPORT                           -38.0288  144.4783 Apr 1995 Mar 2025   30.0   97   Y
+  87117 GEELONG (NORLANE)                        -38.0850  144.3356 Jun 1970 Jul 1996   26.2   97   N
+  87159 BLACKWOOD (ARMSTRONG)                    -37.4667  144.3167 Dec 1974 Dec 1982    8.0   98   N
+  87163 GROVEDALE (GEELONG AIRPORT)              -38.2241  144.3345 Nov 1983 Jun 2011   23.0   81   Y
+  87166 POINT WILSON                             -38.0958  144.5361 Feb 1994 Sep 2008   14.7   94   Y
+  87168 SHE OAKS                                 -37.9075  144.1303 Jul 1990 Mar 2025   34.8   97   Y
+  87177 LAVERTON COMPARISON                      -37.8633  144.7456 Mar 1997 Jul 1998    1.4  100    
+  87184 BREAKWATER (GEELONG RACECOURSE)          -38.1737  144.3765 Jun 2011 Mar 2025   13.8   99   Y
+  87185 POINT COOK RAAF                          -37.9273  144.7566 Dec 2021 Mar 2025    3.3   99   Y
+  88001 ALEXANDRA (POST OFFICE)                  -37.1916  145.7116 Jan 1965 Feb 1970    5.2   83   N
+  88014 CASTLEMAINE POST OFFICE                  -37.1000  144.2000 Jan 1965 Feb 1966    0.8   52   N
+  88015 CLUNES                                   -37.3049  143.7776 Jan 1965 Sep 1975   10.8   82   N
+  88019 CRESWICK                                 -37.4200  143.8924 Jan 1965 Sep 1975   10.7   98   N
+  88023 LAKE EILDON                              -37.2313  145.9124 Mar 1970 Mar 2025   55.1   99   N
+  88029 HEATHCOTE                                -36.9589  144.7010 Aug 1969 Sep 1975    5.8   86   N
+  88036 KYNETON POST OFFICE                      -37.2500  144.4500 Jan 1957 May 1966    9.4   89   N
+  88041 MALDON (DERBY HILL)                      -36.9989  144.0703 Jan 1965 Sep 1975   10.7   80   N
+  88043 MARYBOROUGH                              -37.0560  143.7320 Jan 1965 Mar 2025   60.3   98   N
+  88051 REDESDALE                                -37.0194  144.5203 Jun 1993 Mar 2025   31.8   97   Y
+  88053 SEYMOUR SHIRE DEPOT                      -37.0277  145.1491 Jan 1965 Sep 1970    5.7   82   N
+  88068 RUBICON SEC                              -37.3389  145.8547 Jan 1957 May 1993   36.4   99   Y
+  88109 MANGALORE AIRPORT                        -36.8886  145.1859 Jan 1959 Mar 2025   66.0   94   Y
+  88110 CASTLEMAINE PRISON                       -37.0809  144.2391 Mar 1966 Mar 2025   58.9   97   N
+  88111 MALMSBURY                                -37.2000  144.4000 Jul 1966 Jun 1969    3.0   93   N
+  88123 KYNETON                                  -37.2496  144.4321 Jul 1969 Feb 1976    6.7   99   N
+  88133 NEWBURY                                  -37.4167  144.2833 Jun 1972 Aug 1974    2.3   97   N
+  88153 SPRING CREEK BASIN TWO                   -37.0748  145.7220 Dec 1973 Jun 1984   10.6   99   N
+  88162 WALLAN (KILMORE GAP)                     -37.3807  144.9654 Dec 1993 Mar 2025   31.3   98   Y
+  88164 EILDON FIRE TOWER                        -37.2091  145.8423 Jul 1996 Mar 2025   28.8   98   Y
+  88166 PUCKAPUNYAL WEST (DEFENCE)               -37.0177  144.8546 Oct 2018 Mar 2025    6.5   98   Y
+  88167 PUCKAPUNYAL LYON HILL (DEFENCE)          -36.9381  145.0539 Oct 2018 Mar 2025    6.5   99   Y
+  89000 ARARAT POST OFFICE                       -37.2833  142.9500 Jan 1962 Apr 1969    7.3   98   N
+  89002 BALLARAT AERODROME                       -37.5127  143.7911 Jan 1957 Mar 2025   68.3   99   Y
+  89018 LISMORE (POST OFFICE)                    -37.9543  143.3437 Jan 1957 Mar 1994   37.0   86   N
+  89036 WOOHLPOOER                               -37.3333  142.1500 Jan 1965 Aug 1975   10.6   76   N
+  89085 ARARAT PRISON                            -37.2769  142.9786 Jun 1969 Mar 2025   55.8   98   N
+  89092 WARRAMBINE NO 2                          -37.8783  143.9023 Jun 1982 Aug 1984    2.3  100   N
+  89094 WARRAMBINE BASIN NO 3                    -37.8333  143.8833 Mar 1972 May 1982   10.2   99   N
+  89105 LOOKOUT HILL                             -37.2822  143.2469 Dec 1991 Apr 2007   15.1   91   Y
+  89112 WESTMERE                                 -37.7067  142.9378 Feb 2006 Mar 2025   19.2   99   Y
+  90011 CAMPERDOWN (POST OFFICE)                 -38.2331  143.1450 Jan 1965 Aug 1975   10.7   81   N
+  90014 CAPE NELSON LIGHTHOUSE COMPARISON        -38.4319  141.5419 Jan 1957 Jun 1999   42.5   99   N
+  90015 CAPE OTWAY LIGHTHOUSE                    -38.8557  143.5130 Apr 1864 Mar 2025  160.8   99   Y
+  90022 COLAC AIRPORT                            -38.2798  143.6613 Oct 1998 Aug 2000    1.9   95   N
+  90035 COLAC (MOUNT GELLIBRAND)                 -38.2333  143.7924 Jul 2000 Mar 2025   24.8   99   Y
+  90040 FORREST STATE FOREST                     -38.5198  143.7150 Jan 1965 Aug 1975   10.7   71   N
+  90044 HAMILTON                                 -37.7333  142.0167 Jan 1957 Jun 1983   24.9   94   N
+  90048 HEYWOOD FORESTRY                         -38.1355  141.6316 Jan 1965 Mar 2009   39.4   75   N
+  90077 TERANG                                   -38.2362  142.9166 Jan 1965 Sep 1975   10.6   78   N
+  90082 WARRNAMBOOL (POST OFFICE)                -38.3836  142.4814 Jan 1898 Apr 1983   32.3   38   N
+  90083 WEEAPROINAH                              -38.6357  143.5127 Jan 1965 Jan 2012   47.1   99   N
+  90092 RENNICK                                  -37.8408  140.9717 Jan 1965 Sep 1975   10.8   81   N
+  90103 HAMILTON RESEARCH STATION                -37.8250  142.0644 Jan 1965 Jun 2000   35.5   98   N
+  90134 GELLIBRAND RIVER FORESTRY                -38.5304  143.5390 Jan 1965 Oct 1981   16.8   94   N
+  90135 CASTERTON SHOWGROUNDS                    -37.5909  141.4124 Jan 1957 Feb 2011   54.2   99   N
+  90147 COLAC (SHIRE OFFICE)                     -38.3427  143.5848 Jan 1957 Apr 1983   24.8   94   N
+  90148 LORNE PIER HEAD                          -38.5333  143.9833 Dec 1969 Apr 1986   16.4   99   N
+  90162 PORTLAND AERO                            -38.3833  141.6333 Oct 1973 Jun 1982    8.8   97   N
+  90169 HAMILTON GODFREY                         -37.7167  141.9667 Jul 1980 Nov 1981    1.4   97   N
+  90171 PORTLAND AIRPORT                         -38.3148  141.4705 Jun 1982 Mar 2025   42.8   99   Y
+  90172 WARRNAMBOOL AIRPORT                      -38.2919  142.4353 Mar 1983 Jun 2000   17.3  100   N
+  90173 HAMILTON AIRPORT                         -37.6486  142.0636 Jul 1983 Mar 2025   41.4   98   Y
+  90174 COLAC (ELLIMINYT)                        -38.3933  143.5961 May 1983 Oct 1998   15.5  100   N
+  90175 PORT FAIRY AWS                           -38.3906  142.2348 Oct 1990 Mar 2025   34.5   98   Y
+  90176 MORTLAKE RACECOURSE                      -38.0737  142.7744 Jul 1990 Mar 2025   34.8   98   Y
+  90180 AIREYS INLET                             -38.4583  144.0883 Jul 1990 Mar 2025   34.8   97   Y
+  90182 CASTERTON                                -37.5830  141.3339 Mar 2005 Mar 2025   20.1   99   Y
+  90184 CAPE NELSON LIGHTHOUSE                   -38.4306  141.5437 Dec 1995 Mar 2025   29.3   98   Y
+  90186 WARRNAMBOOL AIRPORT NDB                  -38.2869  142.4524 Oct 1998 Mar 2025   26.5   99   Y
+  90192 PORTLAND NTC AWS                         -38.3439  141.6136 Apr 2011 Mar 2025   14.0   98   Y
+  90194 DARTMOOR                                 -37.9222  141.2614 Mar 2009 Mar 2025   16.1   99   Y
+  91007 BRIDPORT POST OFFICE                     -41.0067  147.3917 Jul 1969 Nov 1978    9.4   97   N
+  91009 BURNIE (ROUND HILL)                      -41.0661  145.9431 Jan 1965 Feb 2018   53.0   98   N
+  91022 CRESSY RESEARCH STATION (MAIN OFFICE)    -41.7217  147.0806 Jan 1965 Sep 1990   25.8   99   N
+  91030 ELLIOTT RESEARCH STATION                 -41.0828  145.7725 Jan 1965 Feb 1993   28.2   99   N
+  91049 LAUNCESTON (CITY)                        -41.4264  147.1275 Jan 1884 Dec 1959   59.2   77   N
+  91057 LOW HEAD (COMPARISON)                    -41.0567  146.7883 Jan 1895 Dec 2001  106.0   99   N
+  91079 PREOLENNA                                -41.0867  145.5517 Apr 1971 Jan 1994   22.8   99   N
+  91080 QUOIBA                                   -41.2083  146.3467 Jan 1957 Apr 1990   31.7   91   N
+  91082 REDPA (GREENES ROAD)                     -40.9272  144.7489 Jan 1957 Oct 1969   12.8   99   N
+  91091 SHEFFIELD                                -41.3831  146.3278 Jan 1965 Dec 1997   33.0  100   N
+  91092 SMITHTON (GRANT STREET)                  -40.8492  145.1125 Apr 1962 Oct 1997   35.6   99   N
+  91094 STANLEY POST OFFICE                      -40.7642  145.2944 Jan 1957 Feb 1976   19.0   93   N
+  91099 TEWKESBURY                               -41.2314  145.7061 Jan 1965 Mar 1989   24.1   97   N
+  91104 LAUNCESTON AIRPORT COMPARISON            -41.5397  147.2033 Apr 1939 Jun 2009   70.3   99   Y
+  91107 WYNYARD AIRPORT                          -40.9964  145.7311 Mar 1961 Mar 2025   39.5   61   Y
+  91111 DEVONPORT                                -41.1833  146.3667 Jan 1957 Sep 1975   18.8   99   N
+  91112 WYNYARD (JACKSON STREET)                 -40.9942  145.7292 Jan 1961 Oct 1992   25.4   78   N
+  91116 SCOTTSDALE (KRAFT FOODS)                 -41.1500  147.5167 Jan 1959 Feb 1971   12.2   99   N
+  91119 ERRIBA (CRADLE MOUNTAIN ROAD)            -41.4506  146.1089 Jan 1962 May 2000   37.9   98   N
+  91123 LAUNCESTON (MOUNT PLEASANT)              -41.4667  147.1500 Jan 1965 Apr 1989   22.6   86   N
+  91126 DEVONPORT AIRPORT                        -41.1701  146.4289 Dec 1990 Mar 2025   34.3   99   Y
+  91131 MOUNT BARROW                             -41.4000  147.4167 Jan 1965 Sep 1974    9.5   89   N
+  91132 BRIDPORT DEVELOPMENT                     -40.9667  147.4333 Jan 1965 Jul 1968    1.1   29   N
+  91179 LAUNCESTON (RADIO STATION 7EX)           -41.4500  147.1500 Jan 1966 Apr 1972    6.2   77   N
+  91186 FORTHSIDE RESEARCH STATION               -41.2039  146.2650 Jan 1966 Feb 1996   29.9   98   N
+  91187 DELORAINE (GODERICK)                     -41.5167  146.6333 Mar 1967 Jun 1970    3.3   98   N
+  91193 GEORGE TOWN                              -41.1167  146.8333 Oct 1968 Oct 1978   10.0   97   N
+  91206 MARRAWAH (GREENE)                        -40.9333  144.7000 Nov 1969 May 1971    1.3   84   N
+  91211 DELORAINE EAST                           -41.5333  146.6500 Sep 1970 Oct 1978    8.0   97   N
+  91218 LAUNCESTON (ELPHIN)                      -41.4500  147.1667 Dec 1971 Dec 1979    8.1   99   N
+  91219 SCOTTSDALE (WEST MINSTONE ROAD)          -41.1708  147.4883 Mar 1971 Mar 2025   49.8   91   Y
+  91223 MARRAWAH                                 -40.9089  144.7094 Mar 1971 Mar 2025   52.8   96   N
+  91232 DEVONPORT EAST                           -41.1800  146.3817 Sep 1975 Dec 1991   16.3  100   N
+  91237 LAUNCESTON (TI TREE BEND)                -41.4194  147.1219 May 1980 Mar 2025   44.9   99   Y
+  91240 GUNNS PLAINS                             -41.3000  145.9833 Sep 1980 Sep 1985    5.1   92   N
+  91245 CAPE GRIM BAPS (COMPARISON)              -40.6828  144.6900 Aug 1985 Mar 2023   31.7   82   Y
+  91246 SCOTTSDALE (FORESTRY)                    -41.1608  147.5156 Jul 1986 Sep 1987    1.3   86   N
+  91250 LILYDALE (HOLLYBANK)                     -41.3167  147.2000 Nov 1986 Jun 1988    1.5   45   N
+  91251 LAKE BARRINGTON                          -41.4167  146.1833 Jan 1987 Jan 1989    1.5   28   N
+  91259 LUNCHEON HILL (FORESTRY)                 -41.1492  145.1517 Sep 1995 Mar 2025   29.0   93   Y
+  91269 POWRANNA (TASMANIA FEEDLOT)              -41.6839  147.2831 Oct 1991 Dec 2008   17.3   94   N
+  91284 BRIDPORT (SEA VIEW VILLAS)               -41.0025  147.3869 Oct 1994 Feb 2018   23.4   96   N
+  91291 SHEFFIELD SCHOOL FARM                    -41.3890  146.3173 Feb 1997 Mar 2025   28.2   97   Y
+  91292 SMITHTON AERODROME                       -40.8347  145.0847 Dec 1996 Mar 2025   28.3   99   Y
+  91293 LOW HEAD                                 -41.0547  146.7874 Jan 1998 Mar 2025   27.3   99   Y
+  91306 CRESSY RESEARCH STATION                  -41.7256  147.0794 Apr 1999 Dec 2022   23.7   98   Y
+  91311 LAUNCESTON AIRPORT                       -41.5476  147.2156 Jul 2004 Mar 2025   20.8   99   Y
+  91331 KENNAOOK/CAPE GRIM                       -40.6764  144.6922 Dec 2010 Mar 2025   14.3   99   Y
+  91344 BURNIE NTC AWS                           -41.0500  145.9149 May 2013 Mar 2025   11.9   98   Y
+  91375 CRESSY (BRUMBYS CREEK)                   -41.7114  147.0820 Dec 2022 Mar 2025    2.3   97   Y
+  92000 ROSSARDEN (ABERFOYLE)                    -41.6667  147.7500 Jul 1965 Jul 1982   16.8   72   N
+  92003 BICHENO (COUNCIL DEPOT)                  -41.8739  148.3036 Jan 1965 Mar 2025   49.6   81   N
+  92012 FINGAL (LEGGE STREET)                    -41.6428  147.9664 Apr 1986 Nov 2021   35.7   99   Y
+  92019 LAKE LEAKE (ELIZABETH RIVER)             -42.0067  147.7975 Oct 1989 Sep 2022   33.0   99   N
+  92027 ORFORD (AUBIN COURT)                     -42.5519  147.8753 Aug 1968 Sep 2023   54.9   96   N
+  92033 ST HELENS POST OFFICE                    -41.3225  148.2489 Jan 1957 May 2001   44.3   93   N
+  92037 SWAN ISLAND LIGHTHOUSE                   -40.7314  148.1253 Oct 1983 May 2004   20.7   99   N
+  92038 SWANSEA POST OFFICE                      -42.1236  148.0731 Jan 1957 Sep 2008   51.8   96   N
+  92045 LARAPUNA (EDDYSTONE POINT)               -40.9928  148.3467 Jan 1910 Mar 2025  113.9   98   Y
+  92085 LAKE LEAKE (CHALET)                      -42.0097  147.7933 Apr 1971 Sep 1989   18.5   96   N
+  92094 SCAMANDER                                -41.4639  148.2644 Mar 1974 Mar 2013   29.6   74   N
+  92097 BICHENO (THE HOMESTEAD)                  -41.8667  148.2833 Dec 1978 Dec 1981    3.1   88   N
+  92100 STORYS CREEK (STORYS CREEK ROAD)         -41.6350  147.7292 Nov 1983 Jan 1998    9.0   59   Y
+  92114 FRIENDLY BEACHES                         -41.9953  148.2794 Mar 1997 Mar 2025   28.1   96   Y
+  92115 EDDYSTONE POINT COMPARISON               -40.9933  148.3467 Oct 1996 Oct 1998    1.9   49   N
+  92120 ST HELENS AERODROME                      -41.3381  148.2792 Jan 2001 Mar 2025   24.3   99   Y
+  92123 SWAN ISLAND                              -40.7292  148.1250 Oct 2001 Mar 2025   23.5   99   Y
+  92124 MARIA ISLAND (POINT LESUEUR)             -42.6621  148.0179 May 2004 Mar 2025   20.9   99   Y
+  92133 SPRING BAY NTC AWS                       -42.5464  147.9308 May 2013 Mar 2025   11.9   98   Y
+  92145 SWANSEA (MARIA STREET)                   -42.1233  148.0731 Sep 2008 Aug 2011    3.0   97   N
+  92148 SWANSEA (FRANCIS STREET)                 -42.1381  148.0736 Aug 2011 Mar 2025   13.7   99   N
+  92163 FINGAL (FLEMING ST)                      -41.6430  147.9800 Jul 2022 Mar 2025    2.8   97   Y
+  93003 CAMPBELL TOWN POST OFFICE                -41.9306  147.4928 Jul 1988 Sep 1993    5.3   63   N
+  93006 ROSS (ELLINTHORP)                        -42.0283  147.3300 Jan 1965 Dec 1968    3.9   92   N
+  93014 OATLANDS POST OFFICE                     -42.3006  147.3711 Jan 1957 Sep 1993   36.8   86   N
+  93027 PALMERSTON                               -41.7900  146.9886 Jan 1965 Oct 1993   28.8   99   N
+  93036 CAMPBELL TOWN                            -41.9333  147.4833 Jun 1972 May 1988   13.9   68   N
+  93053 ROSS (THE BOULEVARDS)                    -42.0250  147.4954 Oct 1993 Mar 2025   31.5   99   N
+  94007 CAMBRIDGE AERODROME                      -42.8333  147.4833 Jan 1944 May 1958   10.6   69   N
+  94008 HOBART AIRPORT WEST                      -42.8339  147.5033 Jun 1958 Aug 2022   64.3   99   Y
+  94010 CAPE BRUNY LIGHTHOUSE                    -43.4892  147.1453 Jan 1923 Apr 2021   98.3   99   N
+  94020 DOVER                                    -43.3330  146.9980 Oct 1989 Mar 2025   35.5   98   N
+  94027 HASTINGS CHALET                          -43.4133  146.8744 Jan 1957 Sep 1987   29.8   93   N
+  94029 HOBART (ELLERSLIE ROAD)                  -42.8897  147.3278 Apr 1882 Mar 2025  132.2   92   Y
+  94036 KINGSTON                                 -42.9667  147.3167 Nov 1965 Feb 1976   10.3   98   N
+  94041 MAATSUYKER ISLAND LIGHTHOUSE             -43.6578  146.2711 Jan 1957 Mar 2025   68.3   99   Y
+  94056 RISDON                                   -42.8333  147.3167 Jan 1957 Sep 1978   20.9   95   N
+  94066 MOUNT WELLINGTON (THE SPRINGS)           -42.9156  147.2464 Jan 1965 Jan 1967    2.0   93   N
+  94069 GROVE (COMPARISON)                       -42.9830  147.0771 May 1952 Feb 2010   57.6   97   N
+  94075 TASMAN ISLAND LIGHTHOUSE                 -43.2500  148.0000 Jan 1965 Apr 1977   12.3   98   N
+  94087 KUNANYI (MOUNT WELLINGTON PINNACLE)      -42.8950  147.2358 Mar 1961 Mar 2025   45.5   69   Y
+  94124 CLAREMONT HIGH SCHOOL                    -42.8000  147.2667 Aug 1967 Dec 1969    2.2   67   N
+  94137 GEEVESTON (CEMETERY ROAD)                -43.1647  146.9175 Feb 1971 Jul 2015   29.9   60   N
+  94140 MELTON MOWBRAY (LOVELY BANKS)            -42.4406  147.2278 Jan 1992 Sep 1993    1.1   42   N
+  94146 GEEVESTON (FOURFOOT)                     -43.1589  146.9197 Feb 1972 Apr 1989   14.9   83   N
+  94155 TASMAN ISLAND                            -43.2397  148.0025 Dec 2001 Mar 2025   23.3   98   Y
+  94157 PORT ARTHUR (PALMERS LOOKOUT)            -43.1639  147.8333 Nov 1980 Mar 2005   24.4   99   N
+  94166 BULL BAY (LAURISTON)                     -43.0903  147.3611 Oct 1991 Jul 2014   22.4   93   N
+  94174 HUONVILLE NORTH                          -43.0303  147.0522 Apr 1991 Mar 1992    1.0  100   N
+  94191 HARTZ MOUNTAIN (KEOGHS PIMPLE)           -43.2006  146.7683 Feb 1996 Mar 2025   28.7   95   Y
+  94195 TUNNACK FIRE STATION                     -42.4543  147.4612 Aug 1997 Mar 2025   27.7   98   Y
+  94198 CAPE BRUNY (CAPE BRUNY)                  -43.4886  147.1444 May 1997 Mar 2025   27.9   99   Y
+  94201 MELTON MOWBRAY (NORTH STOCKMAN)          -42.4928  147.1981 Jan 1997 Jun 2021   24.5   98   N
+  94212 CAMPANIA (KINCORA)                       -42.6867  147.4258 Apr 2000 Mar 2025   25.0   99   Y
+  94220 GROVE (RESEARCH STATION)                 -42.9844  147.0756 Jun 2004 Mar 2025   20.8   99   Y
+  94250 HOBART AIRPORT                           -42.8333  147.5119 Jun 2017 Mar 2025    7.8   99   Y
+  94254 DUNALLEY (STROUD POINT)                  -42.9017  147.7894 Mar 2012 Mar 2025   13.1   99   Y
+  94255 DENNES POINT                             -43.0639  147.3567 Sep 2012 Mar 2025   12.6   99   Y
+  95001 BOTHWELL (FRANKLIN STREET)               -42.3883  147.0061 Jan 1965 Apr 1989   19.6   74   N
+  95003 BUSHY PARK (BUSHY PARK ESTATES)          -42.7097  146.8983 Jan 1957 Mar 2025   63.6   92   Y
+  95011 MAYDENA                                  -42.7636  146.5972 Jan 1965 Jul 1992   24.8   81   N
+  95015 NEW NORFOLK                              -42.7833  147.0833 Jan 1965 Jul 1983   18.0   91   N
+  95018 TARRALEAH VILLAGE                        -42.3003  146.4486 Jul 1981 Aug 2012   30.8   95   N
+  95027 LIAPOOTAH POWER STATION                  -42.3808  146.5083 Jul 1989 Aug 1993    4.2   98   N
+  95048 OUSE FIRE STATION                        -42.4842  146.7106 Jul 1998 Mar 2025   26.8   99   Y
+  95060 MOOGARA (UXBRIDGE BACK ROAD)             -42.7889  146.9056 Nov 1990 Jun 2008   15.7   84   N
+  95063 MAYDENA POST OFFICE                      -42.7567  146.6239 Oct 1992 Oct 2020   28.1   97   N
+  96002 BRONTE HEIGHTS                           -42.1423  146.4932 Jan 1957 Jun 1974   16.8   96   N
+  96003 BUTLERS GORGE                            -42.2753  146.2758 Jun 1944 Mar 2025   66.2   81   Y
+  96005 CRADLE VALLEY (WALDHEIM)                 -41.6383  145.9444 May 1967 May 1977    9.9   96   N
+  96015 LAKE ST CLAIR (HEC)                      -42.1000  146.2167 Jan 1957 Apr 1989   31.3   93   N
+  96021 SHANNON HEC                              -42.0500  146.7500 Jan 1957 Feb 1985   27.8   90   N
+  96024 WIHAREJA                                 -42.0333  146.8000 Mar 1985 Dec 1989    4.8   61   N
+  96033 LIAWENEE                                 -41.8997  146.6694 Jan 2001 Mar 2025   24.3   99   Y
+  96034 CRADLE MOUNTAIN AIRSTRIP                 -41.5836  145.9358 Jun 2000 Oct 2003    3.4   88   N
+  96065 LIAWENEE COMPARISON                      -41.8983  146.6672 Oct 1985 Jun 2003   16.8   90   N
+  96071 LAKE ST CLAIR NATIONAL PARK              -42.1177  146.1771 Nov 1989 Jan 2025   34.3   88   N
+  96075 BARREN TIER                              -42.0197  146.7533 May 1995 Mar 2001    5.8   77   Y
+  97000 CAPE SORELL                              -42.1986  145.1700 Jan 1957 Mar 2025   27.7   40   Y
+  97007 PORT DAVEY (MELALEUCA)                   -43.4297  146.1597 Jan 1965 Nov 1969    3.8   56   N
+  97008 QUEENSTOWN (COPPER MINE)                 -42.0661  145.5681 Jul 1995 Sep 2002    5.8   66   N
+  97014 WARATAH (MOUNT ROAD)                     -41.4372  145.5258 Jan 1957 Feb 2002   19.3   40   N
+  97016 ZEEHAN POST OFFICE                       -41.8833  145.3333 Jan 1962 Jan 1968    6.1   89   N
+  97024 WARRA                                    -43.0609  146.7040 Sep 2004 Mar 2025   20.6   99   Y
+  97034 QUEENSTOWN (7XS)                         -42.0967  145.5447 Jan 1965 Apr 1995   29.6   92   N
+  97047 SAVAGE RIVER MINE                        -41.4892  145.2083 Aug 1966 Nov 1989   22.4   80   N
+  97048 STRATHGORDON (THE KNOB)                  -42.7333  145.9833 Mar 1967 Dec 1969    2.8   86   N
+  97053 STRATHGORDON VILLAGE                     -42.7681  146.0461 Dec 1969 Mar 2021   46.4   86   N
+  97054 ZEEHAN (WEST COAST PIONEERS MUSEUM)      -41.8822  145.3358 Jan 1969 Oct 1978    9.7   93   N
+  97067 STRAHAN (VIVIAN STREET)                  -42.1558  145.3267 Feb 1971 Dec 1991   20.9   96   N
+  97072 STRAHAN AERODROME                        -42.1550  145.2908 Jun 1981 Mar 2025   37.7   83   Y
+  97073 ROSEBERY (HEC SUBSTATION)                -41.7772  145.5381 Oct 1979 Jun 1993   13.8   99   N
+  97075 NEWTON CREEK HEC                         -41.9050  145.5867 Dec 1985 Nov 1989    4.0   97   N
+  97078 HELLYER MINE OFFICE                      -41.5722  145.7197 May 1989 Jul 1994    5.3   64   N
+  97080 LOW ROCKY POINT                          -42.9831  145.5025 Mar 2012 Mar 2025   13.1   99   Y
+  97082 STRAHAN (LODGE)                          -42.1514  145.3028 Dec 1991 Jul 1994    2.7   94   N
+  97083 SCOTTS PEAK DAM                          -43.0425  146.2722 Oct 1998 Mar 2025   26.4   97   Y
+  97084 ROSEBERY STATION                         -41.7903  145.5244 Nov 1994 Aug 1995    0.8   76   N
+  97085 MOUNT READ                               -41.8444  145.5417 Sep 1996 Mar 2025   27.3   89   Y
+  98001 CURRIE POST OFFICE                       -39.9322  143.8486 Jan 1957 Dec 1997   40.9   98   N
+  98017 KING ISLAND AIRPORT                      -39.8804  143.8857 Jun 1995 Mar 2025   29.8   99   Y
+  99001 DEAL ISLAND                              -39.4764  147.3153 Feb 1984 Jun 1998   14.4  100   N
+  99005 FLINDERS ISLAND AIRPORT                  -40.0911  148.0024 Jan 1962 Mar 2025   62.7   97   Y
+  99015 WHITEMARK POST OFFICE                    -40.1214  148.0167 Jan 1964 Jun 1993    3.4    5   N
+  99022 LADY BARRON AERODROME                    -40.2028  148.2372 Aug 1992 Jun 1996    3.9   96   N
+ 109504 ESPERANCE NTC AWS                        -33.8707  121.8971 Feb 2015 Mar 2025   10.2   96   Y
+ 109521 WITCHCLIFFE WEST                         -34.0258  115.0637 Mar 2022 Mar 2025    3.1   97   Y
+ 140007 REDLAND (ALEXANDRA HILLS)                -27.5433  153.2394 Aug 2015 Mar 2025    9.7   99   Y
+ 140008 CANUNGRA (DEFENCE)                       -28.0437  153.1871 Mar 2018 Mar 2025    7.1   98   Y
+ 140009 GREENBANK (DEFENCE)                      -27.6932  152.9935 Mar 2018 Mar 2025    7.1   98   Y
+ 140010 TIN CAN BAY (DEFENCE)                    -25.9351  152.9647 Mar 2018 Mar 2025    7.1   99   Y
+ 200001 MIDDLE PERCY ISLAND                      -21.6628  150.2711 Jan 1999 Mar 2025   23.4   84   Y
+ 200283 WILLIS ISLAND                            -16.2878  149.9652 Nov 1921 Mar 2025   97.5   94   Y
+ 200284 COCOS ISLAND AIRPORT                     -12.1892   96.8344 Feb 1952 Mar 2025   73.2  100   Y
+ 200288 NORFOLK ISLAND AERO                      -29.0389  167.9408 Apr 1939 Mar 2025   86.0  100   Y
+ 200304 ROCKY POINT                              -10.4167  105.6833 Sep 1959 Oct 1972   12.7   95   N
+ 200440 LORD HOWE ISLAND                         -31.5500  159.0833 Apr 1939 Nov 1988   49.6   99   N
+ 200601 CATO ISLAND                              -23.2503  155.5420 Apr 2019 Mar 2025    6.0   97   Y
+ 200701 FREDERICK REEF                           -20.9375  154.4019 Sep 2012 Mar 2025   10.2   69   Y
+ 200704 MARION REEF                              -19.0964  152.3892 Apr 2019 Mar 2025    6.0   99   Y
+ 200713 ROWLEY SHOALS                            -17.5217  118.9531 Dec 2014 Mar 2025    8.1   72   Y
+ 200731 POINT FAWCETT                            -11.7628  130.0300 Dec 1997 Mar 2025   26.9   95   Y
+ 200732 HOLMES REEF                              -16.4683  147.8734 Aug 2002 Mar 2025    9.8   39   Y
+ 200735 ADELE ISLAND                             -15.5114  123.1556 Jun 2013 Mar 2025   10.4   85   Y
+ 200736 CREAL REEF                               -20.5303  150.3773 Mar 2009 Mar 2025    6.3   33   Y
+ 200782 NORTH EAST ISLAND                        -13.6449  136.9445 Oct 2010 Jul 2014    3.8   98   Y
+ 200783 FLINDERS REEF                            -17.7195  148.4478 Aug 2002 Mar 2025   11.6   48   Y
+ 200784 BROWSE ISLAND                            -14.1093  123.5476 Jun 2013 Nov 2022    8.0   81   Y
+ 200786 CAPE WESSEL                              -11.0047  136.7586 Dec 2011 Mar 2025   13.3   99   Y
+ 200790 CHRISTMAS ISLAND AERO                    -10.4515  105.6890 Sep 1972 Mar 2025   51.1   94   Y
+ 200831 GANNET CAY                               -21.9769  152.4707 Jun 2018 Mar 2025    6.2   86   Y
+ 200837 CHRISTMAS ISLAND RADIO                   -10.4336  105.6844 Sep 1984 Nov 1985    1.2   85   N
+ 200838 HOGAN ISLAND                             -39.2225  146.9841 May 2003 Mar 2025   19.8   86   Y
+ 200839 LORD HOWE ISLAND AERO                    -31.5421  159.0786 Nov 1988 Mar 2025   36.4  100   Y
+ 200840 BOUGAINVILLE REEF                        -15.4877  147.1183 May 2015 Mar 2025    5.5   48   Y
+ 200849 NORFOLK ISLAND COMPARISON                -29.0428  167.9344 Jan 1997 Apr 1999    2.3   97   N
+ 200850 COCOS ISLAND MILOS AWS COMPARISON        -12.1903   96.8333 Nov 1998 May 2001    2.4   76   Y
+ 200869 WILLIS ISLAND COMPARISON                 -16.2878  149.9650 Sep 2004 Oct 2006    2.1   85   Y
+ 300000 DAVIS                                    -68.5744   77.9672 Feb 1957 Mar 2025   63.8   93   Y
+ 300001 MAWSON                                   -67.6017   62.8753 Mar 1954 Mar 2025   71.1  100   Y
+ 300002 TAYLOR ROOKERY                           -67.4500   60.8667 Jul 1957 Nov 1957    0.3   34    
+ 300003 WILKES                                   -66.2500  110.5833 Feb 1960 Feb 1969    9.1   97    
+ 300004 MACQUARIE ISLAND                         -54.4994  158.9369 Apr 1948 Mar 2025   77.0   99   Y
+ 300005 HEARD ISLAND (ATLAS COVE)                -53.0190   73.3918 Feb 1948 Jan 1987    7.4   18   Y
+ 300006 CASEY (THE TUNNEL)                       -66.2833  110.5333 Feb 1969 Jan 1990   21.0   99   N
+ 300007 MOUNT CRESSWELL                          -72.7333   64.3833 Nov 1971 Feb 1974    0.8   23   N
+ 300008 MOORE PYRAMID                            -70.3000   65.1000 Jan 1972 Feb 1974    0.3    8    
+ 300010 MOUNT KING                               -67.1000   52.5000 Dec 1979 Feb 1980    0.3   77    
+ 300011 LANYON JUNCTION                          -66.3000  110.8667 Jan 1984 Feb 1985    0.3   16    
+ 300015 LAW BASE                                 -69.4167   76.5000 Jan 1987 Feb 1988    0.3   17   N
+ 300017 CASEY                                    -66.2825  110.5231 Jan 1989 Mar 2025   36.3  100   Y
+ 300028 HEARD ISLAND (THE SPIT)                  -53.1082   73.7225 Apr 1992 Mar 1993    1.0   94   Y
+ 300050 WILKINS RUNWAY EAST                      -66.6831  111.5317 Dec 2011 Oct 2019    3.4   28   Y
+ 300055 DAVIS (WHOOP WHOOP)                      -68.4723   78.8735 Apr 2000 Mar 2024    5.3   15   Y
+ 300060 CASEY SKIWAY SOUTH                       -66.2803  110.7615 Oct 2002 Feb 2025    8.4   21   Y
+
+1814 stations
+
+(c) Copyright Commonwealth of Australia 2025, Bureau of Meteorology (ABN 92 637 533 532) 
+Please note Copyright, Disclaimer and Privacy Notice, accessible at <http://www.bom.gov.au/other/copyright.shtml>
+
