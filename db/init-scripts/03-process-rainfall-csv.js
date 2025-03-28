@@ -12,14 +12,47 @@ console.log('PGPORT:', process.env.PGPORT);
 console.log('PGDATABASE:', process.env.PGDATABASE);
 console.log('PGUSER:', process.env.PGUSER);
 
-// PostgreSQL connection
-const pool = new Pool({
-    host: process.env.POSTGRES_HOST || process.env.PGHOST || '127.0.0.1', // Use 127.0.0.1 to force IPv4
+// PostgreSQL connection configuration
+const pgConfig = {
+    host: process.env.POSTGRES_HOST || process.env.PGHOST || 'db', // Use the Docker service name
     port: parseInt(process.env.POSTGRES_PORT || process.env.PGPORT || '5432'),
     user: process.env.POSTGRES_USER || process.env.PGUSER || 'postgres',
     password: process.env.POSTGRES_PASSWORD || process.env.PGPASSWORD || 'postgres',
-    database: process.env.POSTGRES_DB || process.env.PGDATABASE || 'weather_db'
-});
+    database: process.env.POSTGRES_DB || process.env.PGDATABASE || 'weather_db',
+    // Add connection retry settings
+    connectionTimeoutMillis: 10000, // 10 seconds
+    max: 5, // Maximum number of clients in the pool
+    idleTimeoutMillis: 30000, // How long a client is allowed to remain idle
+    retryDelay: 1000, // Delay between connection retries
+    maxRetries: 5 // Maximum number of retries
+};
+
+// Create a function to establish connection with retries
+async function createPoolWithRetry(config, maxRetries = 5, delay = 1000) {
+    let retries = 0;
+    let pool;
+
+    while (retries < maxRetries) {
+        try {
+            pool = new Pool(config);
+            // Test the connection
+            const result = await pool.query('SELECT NOW()');
+            console.log('Successfully connected to PostgreSQL:', result.rows[0]);
+            return pool;
+        } catch (error) {
+            retries++;
+            console.error(`Connection attempt ${retries}/${maxRetries} failed:`, error.message);
+            
+            if (retries === maxRetries) {
+                console.error('Maximum retry attempts reached. Connection failed.');
+                throw error;
+            }
+            
+            console.log(`Waiting ${delay}ms before retrying...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+    }
+}
 
 // Try multiple possible locations for the rainfall CSV directory
 let rainfallCSVdir;
@@ -55,7 +88,7 @@ if (!rainfallCSVdir) {
 //     FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE
 // );
 
-async function insertRainfallData(filePath) {
+async function insertRainfallData(filePath, pool) {
     console.log(`Processing file: ${filePath}`);
     
     // Extract station ID from filename (assuming filename format like "IDCJAC0009_1000_1800_Data.csv")
@@ -118,8 +151,13 @@ async function insertRainfallData(filePath) {
  * @returns {Promise<void>}
  */
 async function processAllCSVFiles() {
+    let pool;
+    
     try {
         console.log(`Looking for CSV files in: ${rainfallCSVdir}`);
+        
+        // Create a connection pool with retry
+        pool = await createPoolWithRetry(pgConfig);
         
         // Check if directory exists
         if (!fs.existsSync(rainfallCSVdir)) {
@@ -145,7 +183,7 @@ async function processAllCSVFiles() {
         for (const file of files) {
             const filePath = path.join(rainfallCSVdir, file);
             try {
-                const result = await insertRainfallData(filePath);
+                const result = await insertRainfallData(filePath, pool);
                 if (result) {
                     totalRowsProcessed += result.successCount;
                 }
@@ -162,8 +200,10 @@ async function processAllCSVFiles() {
         console.error('Error processing CSV files:', error);
     } finally {
         // Close the database pool
-        await pool.end();
-        console.log('Database connection closed');
+        if (pool) {
+            await pool.end();
+            console.log('Database connection closed');
+        }
     }
 }
 

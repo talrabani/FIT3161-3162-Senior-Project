@@ -13,11 +13,17 @@ console.log('PGUSER:', process.env.PGUSER);
 
 // PostgreSQL connection - when running in the PostgreSQL docker container
 const pgConfig = {
-    host: process.env.POSTGRES_HOST || process.env.PGHOST || '127.0.0.1', // Use 127.0.0.1 to force IPv4
+    host: process.env.POSTGRES_HOST || process.env.PGHOST || 'db', // Use the Docker service name
     port: parseInt(process.env.POSTGRES_PORT || process.env.PGPORT || '5432'),
     user: process.env.POSTGRES_USER || process.env.PGUSER || 'postgres',
     password: process.env.POSTGRES_PASSWORD || process.env.PGPASSWORD || 'postgres',
-    database: process.env.POSTGRES_DB || process.env.PGDATABASE || 'weather_db'
+    database: process.env.POSTGRES_DB || process.env.PGDATABASE || 'weather_db',
+    // Add connection retry settings
+    connectionTimeoutMillis: 10000, // 10 seconds
+    max: 5, // Maximum number of clients in the pool
+    idleTimeoutMillis: 30000, // How long a client is allowed to remain idle
+    retryDelay: 1000, // Delay between connection retries
+    maxRetries: 5 // Maximum number of retries
 };
 
 console.log('Using PostgreSQL connection config:', {
@@ -27,22 +33,32 @@ console.log('Using PostgreSQL connection config:', {
     database: pgConfig.database
 });
 
-const pool = new Pool(pgConfig);
+// Create a function to establish connection with retries
+async function createPoolWithRetry(config, maxRetries = 5, delay = 1000) {
+    let retries = 0;
+    let pool;
 
-// Test the connection before proceeding
-pool.query('SELECT NOW()', (err, res) => {
-    if (err) {
-        console.error('Error connecting to PostgreSQL:', err);
-        console.error('Connection config used:', {
-            host: pgConfig.host,
-            port: pgConfig.port,
-            user: pgConfig.user,
-            database: pgConfig.database
-        });
-    } else {
-        console.log('Successfully connected to PostgreSQL:', res.rows[0]);
+    while (retries < maxRetries) {
+        try {
+            pool = new Pool(config);
+            // Test the connection
+            const result = await pool.query('SELECT NOW()');
+            console.log('Successfully connected to PostgreSQL:', result.rows[0]);
+            return pool;
+        } catch (error) {
+            retries++;
+            console.error(`Connection attempt ${retries}/${maxRetries} failed:`, error.message);
+            
+            if (retries === maxRetries) {
+                console.error('Maximum retry attempts reached. Connection failed.');
+                throw error;
+            }
+            
+            console.log(`Waiting ${delay}ms before retrying...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
     }
-});
+}
 
 // Read the stations.txt file
 // Try multiple possible locations for the stations file
@@ -102,9 +118,13 @@ try {
 async function insertStations() {
     let stationCount = 0;
     let successCount = 0;
+    let pool;
 
     try {
         console.log('Starting station data insertion...');
+        
+        // Create a connection pool with retry
+        pool = await createPoolWithRetry(pgConfig);
         
         // Skip header lines and process each station line
         for (let i = 4; i < stations.length; i++) {
