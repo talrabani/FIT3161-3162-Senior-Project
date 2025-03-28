@@ -31,7 +31,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - NODE_ENV=development
   db:
-    image: postgres
+    build: ./db # Custom Dockerfile with Node.js
     env_file: ./db/.env
     ports:
       - "${POSTGRES_LOCAL_PORT}:${POSTGRES_DOCKER_PORT}"
@@ -39,6 +39,7 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
       - ./db/init-scripts:/docker-entrypoint-initdb.d
+      - ./db/data:/db/data # Mount data directory for CSV access
 
 volumes:
   db:
