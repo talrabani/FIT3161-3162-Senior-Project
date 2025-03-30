@@ -56,12 +56,12 @@ COMMENT ON COLUMN SAVED_MAP.map_time_period IS 'A=Daily, B=Monthly, C=Yearly';
 CREATE TABLE IF NOT EXISTS STATION (
     station_id INTEGER PRIMARY KEY,
     station_name VARCHAR(100) NOT NULL,
-    station_latitude DECIMAL(3, 4) NOT NULL,
-    station_longitude DECIMAL(3, 4) NOT NULL,
-    station_height DECIMAL(4,1) NOT NULL,
+    station_latitude DECIMAL(8, 4) NOT NULL,
+    station_longitude DECIMAL(8, 4) NOT NULL,
+    station_height DECIMAL(6,1),
     station_state CHAR(3) NOT NULL,
     station_start_year INTEGER NOT NULL,
-    station_end_year INTEGER NOT NULL
+    station_end_year INTEGER
 );
 
 -- -- TEMPERATURE_DATA_DAILY table

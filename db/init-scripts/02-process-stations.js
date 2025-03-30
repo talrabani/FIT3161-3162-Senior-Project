@@ -121,39 +121,47 @@ async function insertStations() {
     let pool;
 
     try {
-        console.log('Starting station data insertion...');
+        console.log('Starting station data insertion... This may take a minute or two...');
         
         // Create a connection pool with retry
         pool = await createPoolWithRetry(pgConfig);
-        
+
+        const columns = stations[3].split(/\s+/);
+        let columnIndexes = [];
+        let totalLength = 0;
+        for (let i = 0; i < columns.length; i++) {
+            columnIndexes.push([totalLength, totalLength + columns[i].length]);
+            totalLength += columns[i].length + 1;
+        }
+
         // Skip header lines and process each station line
         for (let i = 4; i < stations.length; i++) {
             const line = stations[i].trim();
             if (!line) continue;
+            if (line.includes('stations')) {
+                // Check if this is the summary line that says "19479 stations"
+                if (line.match(/^\d+\s+stations$/)) {
+                    console.log(`Reached end of station data: ${line}`);
+                    break;
+                }
+            }
             
             stationCount++;
             
             // Parse the station data from the fixed-width format
-            const stationId = parseInt(line.substring(1, 8).trim());
-            const stationName = line.substring(12, 50).trim();
-            const startYear = line.substring(50, 58).trim();
-            const endYear = line.substring(58, 66).trim();
-            const latitude = parseFloat(line.substring(66, 74).trim());
-            const longitude = parseFloat(line.substring(75, 83).trim());
-            const state = line.substring(94, 97).trim();
+            const stationId = line.substring(columnIndexes[0][0], columnIndexes[0][1]).trim();
+            const stationName = line.substring(columnIndexes[2][0], columnIndexes[2][1]).trim();
+            const startYearRaw = line.substring(columnIndexes[3][0], columnIndexes[3][1]).trim();
+            const endYearRaw = line.substring(columnIndexes[4][0], columnIndexes[4][1]).trim();
+            const latitude = line.substring(columnIndexes[5][0], columnIndexes[5][1]).trim();
+            const longitude = line.substring(columnIndexes[6][0], columnIndexes[6][1]).trim();
+            const state = line.substring(columnIndexes[8][0], columnIndexes[8][1]).trim();
+            const heightRaw = line.substring(columnIndexes[9][0], columnIndexes[9][1]).trim();
             
-            // Height might be empty (marked as '..'), handle that case
-            let height = line.substring(97, 108).trim();
-            height = height === '..' ? 0 : parseFloat(height);
-            
-            // Handle special case for endYear
-            let parsedEndYear = endYear === '..' ? new Date().getFullYear() : parseInt(endYear);
-            let parsedStartYear = parseInt(startYear);
-            
-            if (isNaN(stationId) || isNaN(latitude) || isNaN(longitude)) {
-                console.error(`Invalid data in line ${i+1}: ${line}`);
-                continue;
-            }
+            // Handle special cases
+            const startYear = startYearRaw;
+            const endYear = endYearRaw === '..' ? new Date().getFullYear() : endYearRaw;
+            const height = heightRaw === '..' ? null : heightRaw;
             
             // Insert into database
             await pool.query(
@@ -176,8 +184,8 @@ async function insertStations() {
                     longitude, 
                     height, 
                     state, 
-                    parsedStartYear, 
-                    parsedEndYear
+                    startYear, 
+                    endYear
                 ]
             );
             
