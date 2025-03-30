@@ -1,4 +1,5 @@
 // This script is used to process the rainfall CSV files and insert the data into the database
+// Currently processing 10 stations at a time, inserting 5000 rows at a time
 
 const { Pool } = require('pg');
 const fs = require('fs');
@@ -19,11 +20,12 @@ const pgConfig = {
     user: process.env.POSTGRES_USER || process.env.PGUSER || 'postgres',
     password: process.env.POSTGRES_PASSWORD || process.env.PGPASSWORD || 'postgres',
     database: process.env.POSTGRES_DB || process.env.PGDATABASE || 'weather_db',
-    // Add connection retry settings
-    connectionTimeoutMillis: 10000, // 10 seconds
-    max: 5, // Maximum number of clients in the pool
-    idleTimeoutMillis: 30000, // How long a client is allowed to remain idle
-    retryDelay: 1000, // Delay between connection retries
+    // Adjust connection settings for better stability
+    connectionTimeoutMillis: 30000, // Increase to 30 seconds
+    statement_timeout: 60000, // 60 seconds for statement execution
+    max: 10, // Increase max clients in the pool
+    idleTimeoutMillis: 60000, // How long a client is allowed to remain idle
+    retryDelay: 2000, // Delay between connection retries
     maxRetries: 5 // Maximum number of retries
 };
 
@@ -104,6 +106,8 @@ async function insertRainfallData(filePath, pool) {
     
     let rowCount = 0;
     let successCount = 0;
+    const batchSize = 5000; // Rows to process at a time
+    let batch = [];
     
     return new Promise((resolve, reject) => {
         fs.createReadStream(filePath) // Reads the csv file in chunks
@@ -112,7 +116,7 @@ async function insertRainfallData(filePath, pool) {
                 console.error(`Error reading CSV file ${filePath}:`, error);
                 reject(error);
             })
-            .on('data', async row => {
+            .on('data', row => {
                 rowCount++;
                 
                 try {
@@ -127,22 +131,100 @@ async function insertRainfallData(filePath, pool) {
                         rainfall = parseFloat(row['Rainfall amount (millimetres)']);
                     }
 
-                    // Insert into the RAINFALL_DATA_DAILY table
-                    await pool.query(
-                        `INSERT INTO RAINFALL_DATA_DAILY (station_id, date, rainfall) VALUES ($1, $2, $3)`,
-                        [stationId, date, rainfall]
-                    );
-
-                    successCount++;
-                    // console.log(`Inserted ${successCount} rows of ${rowCount} for station ${stationId}`);
+                    // Add to batch instead of inserting immediately
+                    batch.push({
+                        stationId,
+                        date,
+                        rainfall
+                    });
+                    
+                    // When batch reaches batchSize, insert the batch
+                    if (batch.length >= batchSize) {
+                        processBatch();
+                    }
                 } catch (error) {
-                    console.error(`Error inserting row ${rowCount} for station ${stationId}:`, error);
+                    console.error(`Error processing row ${rowCount} for station ${stationId}:`, error);
                 }
             })
-            .on('end', () => {
+            .on('end', async () => {
+                // Process any remaining records in the batch
+                if (batch.length > 0) {
+                    await processBatch();
+                }
                 console.log(`Processed ${rowCount === successCount ? 'all' : `${successCount} of ${rowCount}`} rows for station ${stationId}`);
                 resolve({ rowCount, successCount });
             });
+            
+        // Function to process a batch of records with retry logic
+        async function processBatch() {
+            const currentBatch = [...batch]; // Create a copy of the current batch
+            batch = []; // Clear the original batch right away
+            
+            let retries = 0;
+            const maxBatchRetries = 3;
+            
+            while (retries < maxBatchRetries) {
+                try {
+                    // Create a parameterized query for the entire batch
+                    const values = [];
+                    const placeholders = [];
+                    let paramCount = 1;
+                    
+                    currentBatch.forEach(record => {
+                        placeholders.push(`($${paramCount}, $${paramCount + 1}, $${paramCount + 2})`);
+                        values.push(record.stationId, record.date, record.rainfall);
+                        paramCount += 3;
+                    });
+                    
+                    const query = `
+                        INSERT INTO RAINFALL_DATA_DAILY (station_id, date, rainfall) 
+                        VALUES ${placeholders.join(', ')}
+                        ON CONFLICT (station_id, date) DO UPDATE 
+                        SET rainfall = EXCLUDED.rainfall
+                    `;
+                    
+                    const client = await pool.connect(); // Get a dedicated client
+                    try {
+                        await client.query('BEGIN'); // Start transaction
+                        await client.query(query, values);
+                        await client.query('COMMIT');
+                        successCount += currentBatch.length;
+                        console.log(`Successfully inserted batch of ${currentBatch.length} records for station ${stationId}`);
+                        break; // Exit the retry loop if successful
+                    } catch (error) {
+                        await client.query('ROLLBACK');
+                        throw error; // Rethrow to be caught by the outer try/catch
+                    } finally {
+                        client.release(); // Always release the client back to the pool
+                    }
+                } catch (error) {
+                    retries++;
+                    console.error(`Error inserting batch for station ${stationId} (attempt ${retries}/${maxBatchRetries}):`, error.message);
+                    
+                    if (retries === maxBatchRetries) {
+                        console.error(`Failed to insert batch after ${maxBatchRetries} attempts for station ${stationId}`);
+                        
+                        // If still failing with a smaller batch size, try processing one by one as last resort
+                        if (currentBatch.length > 50) {
+                            console.log(`Splitting batch into smaller chunks for station ${stationId}`);
+                            // Process in smaller chunks recursively
+                            const chunkSize = Math.floor(currentBatch.length / 5);
+                            for (let i = 0; i < currentBatch.length; i += chunkSize) {
+                                const chunk = currentBatch.slice(i, i + chunkSize);
+                                batch.push(...chunk); // Add back to the main batch for processing
+                                if (batch.length >= 50) { // Process in very small chunks
+                                    await processBatch();
+                                }
+                            }
+                        }
+                    } else {
+                        // Wait before retrying
+                        console.log(`Waiting ${retries * 1000}ms before retry...`);
+                        await new Promise(resolve => setTimeout(resolve, retries * 1000));
+                    }
+                }
+            }
+        }
     });
 }
 
@@ -176,22 +258,33 @@ async function processAllCSVFiles() {
         
         console.log(`Found ${files.length} CSV files to process`);
         
-        // Process files one by one to avoid memory issues
+        // Process files in batches to limit concurrent operations
         let processedCount = 0;
         let totalRowsProcessed = 0;
+        const fileBatchSize = 10; // Process 10 files at a time
         
-        for (const file of files) {
-            const filePath = path.join(rainfallCSVdir, file);
-            try {
-                const result = await insertRainfallData(filePath, pool);
-                if (result) {
-                    totalRowsProcessed += result.successCount;
-                }
-                processedCount++;
-                console.log(`Processed ${processedCount} of ${files.length} files`);
-            } catch (error) {
-                console.error(`Failed to process file ${file}:`, error);
-            }
+        for (let i = 0; i < files.length; i += fileBatchSize) {
+            const fileBatch = files.slice(i, i + fileBatchSize);
+            const filePromises = fileBatch.map(file => {
+                const filePath = path.join(rainfallCSVdir, file);
+                return insertRainfallData(filePath, pool)
+                    .then(result => {
+                        if (result) {
+                            totalRowsProcessed += result.successCount;
+                        }
+                        processedCount++;
+                        console.log(`Processed ${processedCount} of ${files.length} files`);
+                        return result;
+                    })
+                    .catch(error => {
+                        console.error(`Failed to process file ${file}:`, error);
+                        processedCount++;
+                        return null;
+                    });
+            });
+            
+            await Promise.all(filePromises);
+            console.log(`Completed batch ${Math.floor(i / fileBatchSize) + 1} of ${Math.ceil(files.length / fileBatchSize)}`);
         }
         
         console.log(`Completed processing ${processedCount} of ${files.length} files`);
