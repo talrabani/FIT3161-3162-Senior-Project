@@ -273,7 +273,7 @@ async function processAllCSVFiles() {
                             totalRowsProcessed += result.successCount;
                         }
                         processedCount++;
-                        console.log(`Processed ${processedCount} of ${files.length} files`);
+                        console.log(`Processed ${processedCount} of ${files.length} files`);A
                         return result;
                     })
                     .catch(error => {
