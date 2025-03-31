@@ -17,9 +17,6 @@ export POSTGRES_DB=${POSTGRES_DB:-weather_db}
 export POSTGRES_USER=${POSTGRES_USER:-postgres}
 export POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
 
-# Force node to use IPv4
-export NODE_OPTIONS="--dns-result-order=ipv4first"
-
 echo "Database connection parameters:"
 echo "Host: $PGHOST / $POSTGRES_HOST"
 echo "Port: $PGPORT / $POSTGRES_PORT"
@@ -51,8 +48,8 @@ echo "Processing station data..."
 cd /docker-entrypoint-initdb.d
 node 02-process-stations.js
 
-echo "Processing rainfall data..."
-node 03-process-rainfall-csv.js
+# echo "Processing rainfall data..."
+# node 03-process-rainfall-csv.js
 
 echo "Post-initialization scripts completed successfully"
 

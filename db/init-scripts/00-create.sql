@@ -1,5 +1,8 @@
 -- Database schema for weather application
 
+-- Create the PostGIS extension if it doesn't exist
+CREATE EXTENSION IF NOT EXISTS postgis;
+
 -- TOWN table
 CREATE TABLE IF NOT EXISTS TOWN (
     name VARCHAR(100) NOT NULL,
@@ -53,16 +56,22 @@ CREATE TABLE IF NOT EXISTS SAVED_MAP (
 -- Add comments to explain the time period values
 COMMENT ON COLUMN SAVED_MAP.map_time_period IS 'A=Daily, B=Monthly, C=Yearly';
 
+-- Modified STATION table to use GeoJSON for coordinates
 CREATE TABLE IF NOT EXISTS STATION (
     station_id INTEGER PRIMARY KEY,
     station_name VARCHAR(100) NOT NULL,
-    station_latitude DECIMAL(8, 4) NOT NULL,
-    station_longitude DECIMAL(8, 4) NOT NULL,
+    station_location GEOMETRY(POINT, 4326) NOT NULL, -- Using SRID 4326 (WGS84) for GPS coordinates
     station_height DECIMAL(6,1),
     station_state CHAR(3) NOT NULL,
     station_start_year INTEGER NOT NULL,
     station_end_year INTEGER
 );
+
+-- Create spatial index on station location
+CREATE INDEX IF NOT EXISTS idx_station_location ON STATION USING GIST(station_location);
+
+-- Add comment to explain the coordinates format
+COMMENT ON COLUMN STATION.station_location IS 'Geographic coordinates in SRID 4326 (WGS84)';
 
 -- -- TEMPERATURE_DATA_DAILY table
 -- CREATE TABLE IF NOT EXISTS TEMPERATURE_DATA_DAILY (
@@ -85,7 +94,6 @@ CREATE TABLE IF NOT EXISTS RAINFALL_DATA_DAILY (
 );
 
 -- Add comments to explain the data tables
-
 COMMENT ON TABLE RAINFALL_DATA_DAILY IS 'Daily rainfall records for each station in mm';
 
 

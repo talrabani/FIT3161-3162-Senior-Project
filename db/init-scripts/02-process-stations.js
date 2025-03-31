@@ -103,16 +103,15 @@ try {
 //  001001 01    OOMBULGURRI                                 1914    2012 -15.1806  127.8456 GPS            WA         2.0       ..     ..
 //  001002 01    BEVERLEY SP                                 1959    1967 -16.5825  125.4828 .....          WA          ..       ..     ..
 
-// Station table
+// Updated Station table structure
 // CREATE TABLE IF NOT EXISTS STATION (
 //     station_id INTEGER PRIMARY KEY,
 //     station_name VARCHAR(100) NOT NULL,
-//     station_latitude DECIMAL(3, 4) NOT NULL,
-//     station_longitude DECIMAL(3, 4) NOT NULL,
-//     station_height DECIMAL(4,1) NOT NULL,
+//     station_location GEOMETRY(POINT, 4326) NOT NULL, -- Using SRID 4326 (WGS84) for GPS coordinates
+//     station_height DECIMAL(6,1),
 //     station_state CHAR(3) NOT NULL,
 //     station_start_year INTEGER NOT NULL,
-//     station_end_year INTEGER NOT NULL
+//     station_end_year INTEGER
 // );
 
 async function insertStations() {
@@ -163,16 +162,18 @@ async function insertStations() {
             const endYear = endYearRaw === '..' ? new Date().getFullYear() : endYearRaw;
             const height = heightRaw === '..' ? null : heightRaw;
             
-            // Insert into database
+            // Format as PostGIS Point using SRID 4326 (WGS84)
+            // Using ST_SetSRID and ST_MakePoint to create a POINT geometry
+            
+            // Insert into database with the new GeoJSON structure
             await pool.query(
                 `INSERT INTO STATION (
-                    station_id, station_name, station_latitude, station_longitude, 
+                    station_id, station_name, station_location, 
                     station_height, station_state, station_start_year, station_end_year
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                ) VALUES ($1, $2, ST_SetSRID(ST_MakePoint($3, $4), 4326), $5, $6, $7, $8)
                 ON CONFLICT (station_id) DO UPDATE 
                 SET station_name = $2, 
-                    station_latitude = $3, 
-                    station_longitude = $4, 
+                    station_location = ST_SetSRID(ST_MakePoint($3, $4), 4326), 
                     station_height = $5, 
                     station_state = $6,
                     station_start_year = $7,
@@ -180,8 +181,8 @@ async function insertStations() {
                 [
                     stationId, 
                     stationName, 
-                    latitude, 
-                    longitude, 
+                    longitude, // Note: longitude is first in PostGIS point format (x, y)
+                    latitude,  // latitude is second in PostGIS point format (x, y)
                     height, 
                     state, 
                     startYear, 

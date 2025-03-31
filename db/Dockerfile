@@ -1,4 +1,10 @@
-FROM postgres:latest
+FROM postgis/postgis:17-3.4
+
+# Ensure PostGIS is properly installed
+RUN apt-get update && \
+    apt-get install -y postgresql-17-postgis-3 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Node.js
 RUN apt-get update && \
