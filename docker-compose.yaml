@@ -23,7 +23,8 @@ services:
       - "${NODE_LOCAL_PORT}:${NODE_DOCKER_PORT}"
     restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./server:/app
       - /app/node_modules
@@ -31,7 +32,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - NODE_ENV=development
   db:
-    image: postgres
+    build: ./db # Custom Dockerfile with Node.js
     env_file: ./db/.env
     ports:
       - "${POSTGRES_LOCAL_PORT}:${POSTGRES_DOCKER_PORT}"
@@ -39,6 +40,14 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
       - ./db/init-scripts:/docker-entrypoint-initdb.d
+      - ./db/data:/db/data # Mount data directory for CSV access
+      - ./db/post-init.sh:/post-init.sh # Mount post-init script
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 volumes:
   db:
