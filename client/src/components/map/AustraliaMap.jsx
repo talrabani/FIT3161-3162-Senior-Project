@@ -10,15 +10,18 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3Bpc
 /**
  * Australia Map Component with selectable location markers using Mapbox
  */
-export default function AustraliaMap({ selectedLocations = [], onLocationSelect }) {
+export default function AustraliaMap({ 
+  selectedLocations = [], 
+  onLocationSelect,
+  showSA4Boundaries = false,
+  setShowSA4Boundaries = () => {},
+  showStations = false
+}) {
   // Center of Australia approximate coordinates
   const centerPosition = [133.7751, -25.2744]; // [lng, lat]
   
   // Track locations being processed to prevent double-clicks
   const [processingLocations, setProcessingLocations] = useState([]);
-  
-  // State for SA4 boundary visibility
-  const [showSA4Boundaries, setShowSA4Boundaries] = useState(false);
   
   // Refs for DOM elements
   const mapContainer = useRef(null);
@@ -66,34 +69,6 @@ export default function AustraliaMap({ selectedLocations = [], onLocationSelect 
     map.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
     map.current.addControl(new mapboxgl.ScaleControl(), 'bottom-right');
     map.current.addControl(new mapboxgl.FullscreenControl(), 'top-right');
-    
-    // Add SA4 boundaries toggle control
-    class SA4BoundariesControl {
-      onAdd(map) {
-        this.map = map;
-        this.container = document.createElement('div');
-        this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
-        this.button = document.createElement('button');
-        this.button.className = 'mapboxgl-ctrl-icon';
-        this.button.type = 'button';
-        this.button.innerHTML = '<span>SA4</span>';
-        this.button.style.fontWeight = 'bold';
-        this.button.style.width = '40px';
-        this.button.title = 'Toggle SA4 Boundaries';
-        this.button.onclick = () => {
-          setShowSA4Boundaries(prev => !prev);
-        };
-        this.container.appendChild(this.button);
-        return this.container;
-      }
-      
-      onRemove() {
-        this.container.parentNode.removeChild(this.container);
-        this.map = undefined;
-      }
-    }
-    
-    map.current.addControl(new SA4BoundariesControl(), 'top-left');
     
     // Clean up on unmount
     return () => {
@@ -210,7 +185,7 @@ export default function AustraliaMap({ selectedLocations = [], onLocationSelect 
     
     addBoundaries();
   }, [showSA4Boundaries]);
-  
+
   // Toggle SA4 boundary layer visibility
   useEffect(() => {
     if (!map.current || !boundariesSourceAdded.current) return;
@@ -231,6 +206,13 @@ export default function AustraliaMap({ selectedLocations = [], onLocationSelect 
       console.error('Error toggling SA4 boundary visibility:', error);
     }
   }, [showSA4Boundaries]);
+  
+  // Handle showing stations on the map (placeholder for future implementation)
+  useEffect(() => {
+    if (showStations) {
+      console.log('Show stations functionality will be implemented later');
+    }
+  }, [showStations]);
   
   // Update markers based on locations and selected state
   useEffect(() => {
