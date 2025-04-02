@@ -2,6 +2,8 @@ import axios from 'axios';
 
 // BOM API base URLs
 const OPEN_METEO_URL = 'https://api.open-meteo.com/v1/bom';
+// Server API base URL - adjust if your server is running on a different port or host
+const SERVER_API_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:8080/api';
 
 // The BOM direct URL might have CORS issues, so we'll only use Open-Meteo API
 // const BOM_OBSERVATIONS_URL = 'http://www.bom.gov.au/fwo';
@@ -207,4 +209,42 @@ export const weatherCodes = {
   95: 'Thunderstorm',
   96: 'Thunderstorm with slight hail',
   99: 'Thunderstorm with heavy hail'
+};
+
+/**
+ * Fetches SA4 boundaries as GeoJSON from the server
+ * @returns {Promise} Promise with GeoJSON data for SA4 boundaries
+ */
+export const fetchSA4Boundaries = async () => {
+  try {
+    const response = await axios.get(`${SERVER_API_URL}/boundaries/sa4`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching SA4 boundaries:', error);
+    // Return a valid empty GeoJSON structure
+    return {
+      type: 'FeatureCollection',
+      features: []
+    };
+  }
+};
+
+/**
+ * Fetches a specific SA4 boundary by code
+ * @param {string} code - The SA4 code to fetch
+ * @returns {Promise} Promise with GeoJSON data for the specific SA4 boundary
+ */
+export const fetchSA4BoundaryByCode = async (code) => {
+  try {
+    const response = await axios.get(`${SERVER_API_URL}/boundaries/sa4/${code}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching SA4 boundary for code ${code}:`, error);
+    // Return a valid empty GeoJSON feature
+    return {
+      type: 'Feature',
+      properties: {},
+      geometry: null
+    };
+  }
 }; 

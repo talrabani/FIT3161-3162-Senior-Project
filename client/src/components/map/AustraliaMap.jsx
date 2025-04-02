@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { australianLocations } from '../../services/weatherApi';
+import { australianLocations, fetchSA4Boundaries } from '../../services/weatherApi';
 import { P } from '../ui/typography';
 
 // Mapbox API token
@@ -17,11 +17,15 @@ export default function AustraliaMap({ selectedLocations = [], onLocationSelect 
   // Track locations being processed to prevent double-clicks
   const [processingLocations, setProcessingLocations] = useState([]);
   
+  // State for SA4 boundary visibility
+  const [showSA4Boundaries, setShowSA4Boundaries] = useState(false);
+  
   // Refs for DOM elements
   const mapContainer = useRef(null);
   const map = useRef(null);
   const markers = useRef({});
   const popups = useRef({});
+  const boundariesSourceAdded = useRef(false);
   
   // Safely handle location selection
   const handleLocationSelect = (location) => {
@@ -63,6 +67,34 @@ export default function AustraliaMap({ selectedLocations = [], onLocationSelect 
     map.current.addControl(new mapboxgl.ScaleControl(), 'bottom-right');
     map.current.addControl(new mapboxgl.FullscreenControl(), 'top-right');
     
+    // Add SA4 boundaries toggle control
+    class SA4BoundariesControl {
+      onAdd(map) {
+        this.map = map;
+        this.container = document.createElement('div');
+        this.container.className = 'mapboxgl-ctrl mapboxgl-ctrl-group';
+        this.button = document.createElement('button');
+        this.button.className = 'mapboxgl-ctrl-icon';
+        this.button.type = 'button';
+        this.button.innerHTML = '<span>SA4</span>';
+        this.button.style.fontWeight = 'bold';
+        this.button.style.width = '40px';
+        this.button.title = 'Toggle SA4 Boundaries';
+        this.button.onclick = () => {
+          setShowSA4Boundaries(prev => !prev);
+        };
+        this.container.appendChild(this.button);
+        return this.container;
+      }
+      
+      onRemove() {
+        this.container.parentNode.removeChild(this.container);
+        this.map = undefined;
+      }
+    }
+    
+    map.current.addControl(new SA4BoundariesControl(), 'top-left');
+    
     // Clean up on unmount
     return () => {
       if (map.current) {
@@ -71,6 +103,134 @@ export default function AustraliaMap({ selectedLocations = [], onLocationSelect 
       }
     };
   }, []);
+  
+  // Load SA4 boundaries data when the toggle is switched on
+  useEffect(() => {
+    if (!map.current || !showSA4Boundaries) return;
+    
+    // Only add source and layer once, when the map is loaded
+    const addBoundaries = async () => {
+      try {
+        if (!map.current.loaded()) {
+          map.current.on('load', addBoundaries);
+          return;
+        }
+        
+        // Fetch SA4 boundaries GeoJSON data
+        const boundariesData = await fetchSA4Boundaries();
+        
+        // Add source if it doesn't exist
+        if (!boundariesSourceAdded.current) {
+          map.current.addSource('sa4-boundaries', {
+            type: 'geojson',
+            data: boundariesData
+          });
+          
+          // Add layer for SA4 boundaries
+          map.current.addLayer({
+            id: 'sa4-boundaries-fill',
+            type: 'fill',
+            source: 'sa4-boundaries',
+            paint: {
+              'fill-color': '#088',
+              'fill-opacity': 0.1
+            }
+          });
+          
+          // Add layer for SA4 boundary lines
+          map.current.addLayer({
+            id: 'sa4-boundaries-line',
+            type: 'line',
+            source: 'sa4-boundaries',
+            paint: {
+              'line-color': '#088',
+              'line-width': 1,
+              'line-opacity': 0.5
+            }
+          });
+          
+          // Add layer for SA4 labels
+          map.current.addLayer({
+            id: 'sa4-boundaries-label',
+            type: 'symbol',
+            source: 'sa4-boundaries',
+            layout: {
+              'text-field': ['get', 'name'],
+              'text-size': 12,
+              'text-variable-anchor': ['center'],
+              'text-justify': 'auto',
+              'text-allow-overlap': false,
+              'text-ignore-placement': false
+            },
+            paint: {
+              'text-color': '#088',
+              'text-halo-color': '#fff',
+              'text-halo-width': 1
+            }
+          });
+          
+          // Add popups for SA4 regions
+          map.current.on('click', 'sa4-boundaries-fill', (e) => {
+            if (!e.features || e.features.length === 0) return;
+            
+            const feature = e.features[0];
+            const props = feature.properties;
+            
+            new mapboxgl.Popup()
+              .setLngLat(e.lngLat)
+              .setHTML(`
+                <div>
+                  <strong>${props.name}</strong><br>
+                  Code: ${props.code}<br>
+                  State: ${props.state}<br>
+                  Area: ${Math.round(props.area_sqkm)} km²
+                </div>
+              `)
+              .addTo(map.current);
+          });
+          
+          // Change cursor on hover
+          map.current.on('mouseenter', 'sa4-boundaries-fill', () => {
+            map.current.getCanvas().style.cursor = 'pointer';
+          });
+          
+          map.current.on('mouseleave', 'sa4-boundaries-fill', () => {
+            map.current.getCanvas().style.cursor = '';
+          });
+          
+          boundariesSourceAdded.current = true;
+        } else {
+          // Just update the data if source already exists
+          map.current.getSource('sa4-boundaries').setData(boundariesData);
+        }
+      } catch (error) {
+        console.error('Error adding SA4 boundaries to map:', error);
+      }
+    };
+    
+    addBoundaries();
+  }, [showSA4Boundaries]);
+  
+  // Toggle SA4 boundary layer visibility
+  useEffect(() => {
+    if (!map.current || !boundariesSourceAdded.current) return;
+    
+    try {
+      const visibility = showSA4Boundaries ? 'visible' : 'none';
+      
+      // Only attempt to set layer properties if the map is loaded and layers exist
+      if (map.current.loaded() && 
+          map.current.getLayer('sa4-boundaries-fill') && 
+          map.current.getLayer('sa4-boundaries-line') && 
+          map.current.getLayer('sa4-boundaries-label')) {
+        map.current.setLayoutProperty('sa4-boundaries-fill', 'visibility', visibility);
+        map.current.setLayoutProperty('sa4-boundaries-line', 'visibility', visibility);
+        map.current.setLayoutProperty('sa4-boundaries-label', 'visibility', visibility);
+      }
+    } catch (error) {
+      console.error('Error toggling SA4 boundary visibility:', error);
+    }
+  }, [showSA4Boundaries]);
   
   // Update markers based on locations and selected state
   useEffect(() => {
