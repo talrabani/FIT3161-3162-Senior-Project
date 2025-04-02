@@ -73,16 +73,23 @@ CREATE INDEX IF NOT EXISTS idx_station_location ON STATION USING GIST(station_lo
 -- Add comment to explain the coordinates format
 COMMENT ON COLUMN STATION.station_location IS 'Geographic coordinates in SRID 4326 (WGS84)';
 
--- -- TEMPERATURE_DATA_DAILY table
--- CREATE TABLE IF NOT EXISTS TEMPERATURE_DATA_DAILY (
---     station_id VARCHAR(50),
---     date DATE,
---     max_temp DECIMAL(5,2),
---     min_temp DECIMAL(5,2),
---     average_temp DECIMAL(5,2),
---     PRIMARY KEY (station_id, date),
---     FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE
--- );
+-- SA4 Boundaries table - 2021 data
+CREATE TABLE IF NOT EXISTS SA4_BOUNDARIES (
+    gid SERIAL PRIMARY KEY,
+    sa4_code21 VARCHAR(3),
+    sa4_name21 VARCHAR(100),
+    ste_code21 VARCHAR(1),
+    ste_name21 VARCHAR(50),
+    areasqkm21 NUMERIC,
+    loci_uri21 VARCHAR(255),
+    geometry GEOMETRY(MULTIPOLYGON, 4326)
+);
+
+-- Create spatial index
+CREATE INDEX IF NOT EXISTS idx_sa4_boundaries_geometry ON SA4_BOUNDARIES USING GIST(geometry);
+
+-- Add comment
+COMMENT ON TABLE SA4_BOUNDARIES IS 'Statistical Areas Level 4 (SA4) boundaries from ABS ASGS Edition 3'; 
 
 -- RAINFALL_DATA_DAILY table
 CREATE TABLE IF NOT EXISTS RAINFALL_DATA_DAILY (

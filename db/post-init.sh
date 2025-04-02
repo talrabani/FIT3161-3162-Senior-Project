@@ -38,18 +38,23 @@ while ! psql -c "SELECT 1" > /dev/null 2>&1; do
 done
 echo "PostgreSQL is ready and accepting connections!"
 
-# Ensure the SQL schema has been created
-if ! psql -c "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'station')" | grep -q 't'; then
-    echo "Creating initial database schema..."
-    psql -f /docker-entrypoint-initdb.d/00-create.sql
-fi
+# Always create the SQL schema to ensure all tables exist
+echo "Creating or updating database schema..."
+psql -f /docker-entrypoint-initdb.d/00-create.sql
 
-echo "Processing station data..."
+# Go to the init-scripts directory
 cd /docker-entrypoint-initdb.d
+
+# Process station data
+echo "Processing station data..."
 node 02-process-stations.js
 
 # echo "Processing rainfall data..."
 # node 03-process-rainfall-csv.js
+
+# Import SA4 boundary data 
+echo "Importing SA4 boundary data..."
+node 04-import-sa4-data.js
 
 echo "Post-initialization scripts completed successfully"
 
