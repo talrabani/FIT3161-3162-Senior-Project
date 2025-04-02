@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { australianLocations } from '../../services/weatherApi';
+import { fetchSA4Boundaries } from '../../services/boundariesApi';
 import { P } from '../ui/typography';
 
 // Mapbox API token
@@ -10,12 +11,15 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3Bpc
 /**
  * Australia Map Component with selectable location markers using Mapbox
  */
-export default function AustraliaMap({ selectedLocations = [], onLocationSelect }) {
+export default function AustraliaMap({ selectedLocations = [], onLocationSelect, showSA4Boundaries = false }) {
   // Center of Australia approximate coordinates
   const centerPosition = [133.7751, -25.2744]; // [lng, lat]
   
   // Track locations being processed to prevent double-clicks
   const [processingLocations, setProcessingLocations] = useState([]);
+  
+  // Track if the SA4 boundaries have been loaded
+  const [sa4BoundariesLoaded, setSA4BoundariesLoaded] = useState(false);
   
   // Refs for DOM elements
   const mapContainer = useRef(null);
@@ -71,6 +75,119 @@ export default function AustraliaMap({ selectedLocations = [], onLocationSelect 
       }
     };
   }, []);
+  
+  // Handle loading SA4 boundaries
+  useEffect(() => {
+    if (!map.current || sa4BoundariesLoaded) return;
+    
+    const loadSA4Boundaries = async () => {
+      try {
+        // Wait for the map to be ready
+        if (!map.current.loaded()) {
+          map.current.on('load', loadSA4Boundaries);
+          return;
+        }
+        
+        // Fetch the SA4 boundaries
+        const sa4GeoJSON = await fetchSA4Boundaries();
+        
+        // Add the source if it doesn't exist
+        if (!map.current.getSource('sa4-boundaries')) {
+          map.current.addSource('sa4-boundaries', {
+            type: 'geojson',
+            data: sa4GeoJSON
+          });
+          
+          // Add the fill layer
+          map.current.addLayer({
+            id: 'sa4-boundaries-fill',
+            type: 'fill',
+            source: 'sa4-boundaries',
+            layout: {
+              visibility: showSA4Boundaries ? 'visible' : 'none'
+            },
+            paint: {
+              'fill-color': [
+                'interpolate',
+                ['linear'],
+                ['get', 'area_sqkm'],
+                0, '#deebf7',
+                50000, '#9ecae1',
+                100000, '#3182bd'
+              ],
+              'fill-opacity': 0.4
+            }
+          });
+          
+          // Add the outline layer
+          map.current.addLayer({
+            id: 'sa4-boundaries-line',
+            type: 'line',
+            source: 'sa4-boundaries',
+            layout: {
+              visibility: showSA4Boundaries ? 'visible' : 'none'
+            },
+            paint: {
+              'line-color': '#3182bd',
+              'line-width': 1
+            }
+          });
+          
+          // Add popup on hover
+          const popup = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false
+          });
+          
+          map.current.on('mouseenter', 'sa4-boundaries-fill', (e) => {
+            map.current.getCanvas().style.cursor = 'pointer';
+            
+            const properties = e.features[0].properties;
+            const coordinates = e.lngLat;
+            
+            const html = `
+              <div>
+                <strong>${properties.name}</strong>
+                <div>Code: ${properties.code}</div>
+                <div>State: ${properties.state}</div>
+                <div>Area: ${Math.round(properties.area_sqkm).toLocaleString()} km²</div>
+              </div>
+            `;
+            
+            popup.setLngLat(coordinates)
+              .setHTML(html)
+              .addTo(map.current);
+          });
+          
+          map.current.on('mouseleave', 'sa4-boundaries-fill', () => {
+            map.current.getCanvas().style.cursor = '';
+            popup.remove();
+          });
+          
+          setSA4BoundariesLoaded(true);
+        }
+      } catch (error) {
+        console.error('Error loading SA4 boundaries:', error);
+      }
+    };
+    
+    loadSA4Boundaries();
+  }, [sa4BoundariesLoaded]);
+  
+  // Toggle SA4 boundaries visibility based on prop
+  useEffect(() => {
+    if (!map.current || !sa4BoundariesLoaded) return;
+    
+    const visibility = showSA4Boundaries ? 'visible' : 'none';
+    
+    if (map.current.getLayer('sa4-boundaries-fill')) {
+      map.current.setLayoutProperty('sa4-boundaries-fill', 'visibility', visibility);
+    }
+    
+    if (map.current.getLayer('sa4-boundaries-line')) {
+      map.current.setLayoutProperty('sa4-boundaries-line', 'visibility', visibility);
+    }
+  }, [showSA4Boundaries, sa4BoundariesLoaded]);
   
   // Update markers based on locations and selected state
   useEffect(() => {

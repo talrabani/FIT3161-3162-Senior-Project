@@ -36,6 +36,9 @@ function WeatherApp() {
   // State for debugging panel visibility
   const [showDebug, setShowDebug] = useState(false);
   
+  // State for showing SA4 boundaries
+  const [showSA4Boundaries, setShowSA4Boundaries] = useState(false);
+  
   return (
     <div className="container-fluid py-4">
       <header className="text-center mb-4">
@@ -43,12 +46,19 @@ function WeatherApp() {
         <P className="lead">
           Compare temperature and rainfall data across Australia
         </P>
-        <div className="mt-2">
+        <div className="mt-2 d-flex justify-content-center gap-2">
           <button 
             className="btn btn-sm btn-outline-secondary" 
             onClick={() => setShowDebug(!showDebug)}
           >
             {showDebug ? 'Hide' : 'Show'} Debug Info
+          </button>
+          
+          <button 
+            className={`btn btn-sm ${showSA4Boundaries ? 'btn-primary' : 'btn-outline-primary'}`}
+            onClick={() => setShowSA4Boundaries(!showSA4Boundaries)}
+          >
+            {showSA4Boundaries ? 'Hide' : 'Show'} SA4 Regions
           </button>
         </div>
       </header>
@@ -68,6 +78,7 @@ function WeatherApp() {
           <p>Chart Type: {chartType}</p>
           <p>Loading: {isLoading ? 'Yes' : 'No'}</p>
           <p>Error: {isError ? 'Yes' : 'No'}</p>
+          <p>SA4 Boundaries: {showSA4Boundaries ? 'Visible' : 'Hidden'}</p>
           <hr />
           <p className="mb-0">Weather Data Status:</p>
           <ul>
@@ -88,13 +99,26 @@ function WeatherApp() {
       <div className="row g-4 mb-4">
         <div className="col-lg-8">
           <div className="card h-100">
-            <div className="card-header">
+            <div className="card-header d-flex justify-content-between align-items-center">
               <h2 className="h5 mb-0">Interactive Map</h2>
+              <div className="form-check form-switch">
+                <input 
+                  className="form-check-input" 
+                  type="checkbox" 
+                  id="sa4BoundariesToggle"
+                  checked={showSA4Boundaries}
+                  onChange={() => setShowSA4Boundaries(!showSA4Boundaries)}
+                />
+                <label className="form-check-label small ms-2" htmlFor="sa4BoundariesToggle">
+                  Statistical Areas Level 4
+                </label>
+              </div>
             </div>
             <div className="card-body p-0" style={{ height: '500px' }}>
               <AustraliaMap 
                 selectedLocations={selectedLocations} 
-                onLocationSelect={addLocation} 
+                onLocationSelect={addLocation}
+                showSA4Boundaries={showSA4Boundaries}
               />
             </div>
             <div className="card-footer">
@@ -165,7 +189,7 @@ function WeatherApp() {
       
       <footer className="text-center text-muted py-3 mt-auto border-top">
         <P>
-          Data provided by the Australian Bureau of Meteorology. Explore historical weather trends and forecasts.
+          Data provided by the Australian Bureau of Meteorology. Statistical Areas Level 4 boundaries from the Australian Bureau of Statistics.
         </P>
         <small>© {new Date().getFullYear()} Australian Weather Explorer</small>
       </footer>

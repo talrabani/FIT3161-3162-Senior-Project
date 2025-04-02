@@ -38,9 +38,9 @@ while ! psql -c "SELECT 1" > /dev/null 2>&1; do
 done
 echo "PostgreSQL is ready and accepting connections!"
 
-# Always create the SQL schema to ensure all tables exist
-echo "Creating or updating database schema..."
-psql -f /docker-entrypoint-initdb.d/00-create.sql
+# # Always create the SQL schema to ensure all tables exist
+# echo "Creating or updating database schema..."
+# psql -f /docker-entrypoint-initdb.d/00-create.sql
 
 # Go to the init-scripts directory
 cd /docker-entrypoint-initdb.d
