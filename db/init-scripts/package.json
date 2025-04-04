@@ -1,0 +1,10 @@
+{
+  "name": "db-init-scripts",
+  "version": "1.0.0",
+  "description": "Database initialization scripts",
+  "private": true,
+  "dependencies": {
+    "fast-csv": "^4.3.6",
+    "pg": "^8.11.0"
+  }
+}
