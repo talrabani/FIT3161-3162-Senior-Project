@@ -36,6 +36,10 @@ function WeatherApp() {
   // State for debugging panel visibility
   const [showDebug, setShowDebug] = useState(false);
   
+  // State for SA4 boundaries and stations visibility
+  const [showSA4Boundaries, setShowSA4Boundaries] = useState(false);
+  const [showStations, setShowStations] = useState(false);
+  
   return (
     <div className="container-fluid py-4">
       <header className="text-center mb-4">
@@ -56,6 +60,24 @@ function WeatherApp() {
       {showDebug && (
         <div className="alert alert-info mb-4 text-start">
           <h4 className="alert-heading">Debug Information</h4>
+          
+          <div className="mb-3">
+            <div className="btn-group">
+              <button 
+                className={`btn btn-sm ${showSA4Boundaries ? 'btn-success' : 'btn-outline-secondary'}`}
+                onClick={() => setShowSA4Boundaries(!showSA4Boundaries)}
+              >
+                {showSA4Boundaries ? 'Hide SA4 Boundaries' : 'Show SA4 Boundaries'}
+              </button>
+              <button 
+                className={`btn btn-sm ${showStations ? 'btn-success' : 'btn-outline-secondary'}`}
+                onClick={() => setShowStations(!showStations)}
+              >
+                Put Stations on Map
+              </button>
+            </div>
+          </div>
+          
           <p>Selected Locations: {selectedLocations.length}</p>
           <ul>
             {selectedLocations.map(loc => (
@@ -94,7 +116,10 @@ function WeatherApp() {
             <div className="card-body p-0" style={{ height: '500px' }}>
               <AustraliaMap 
                 selectedLocations={selectedLocations} 
-                onLocationSelect={addLocation} 
+                onLocationSelect={addLocation}
+                showSA4Boundaries={showSA4Boundaries}
+                setShowSA4Boundaries={setShowSA4Boundaries}
+                showStations={showStations}
               />
             </div>
             <div className="card-footer">
