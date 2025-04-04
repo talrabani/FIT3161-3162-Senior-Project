@@ -14,9 +14,9 @@ logging.basicConfig(
 )
 
 def extract_zip_files():
-    """Extract all zip files in the data/rainfall directory"""
+    """Extract all zip files in the data/rainfall_zips directory"""
     # Set up directory paths
-    zip_dir = os.path.join('data', 'rainfall')
+    zip_dir = os.path.join('data', 'rainfall_zips')
     extract_dir = os.path.join('data', 'extracted', 'rainfall')
     
     # Create extraction directory if it doesn't exist
