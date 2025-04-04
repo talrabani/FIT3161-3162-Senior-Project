@@ -1,5 +1,8 @@
 {
 	"devDependencies": {
 		"@tailwindcss/postcss": "^4.0.12"
+	},
+	"dependencies": {
+		"pg": "^8.14.1"
 	}
 }

@@ -7,6 +7,7 @@ import DateRangePicker from './components/ui/DateRangePicker'
 import SelectedLocations from './components/ui/SelectedLocations'
 import ErrorBoundary from './components/ui/ErrorBoundary'
 import { useWeatherData } from './hooks/useWeatherData'
+import MapSidebar from './components/ui/MapSidebar'
 import './App.css'
 
 // Create a client
@@ -129,22 +130,7 @@ function WeatherApp() {
         </div>
         
         <div className="col-lg-4">
-          <div className="row g-4">
-            <div className="col-12">
-              <SelectedLocations 
-                selectedLocations={selectedLocations} 
-                onRemoveLocation={removeLocation} 
-              />
-            </div>
-            
-            <div className="col-12">
-              <DateRangePicker 
-                startDate={dateRange.startDate} 
-                endDate={dateRange.endDate} 
-                onRangeChange={updateDateRange} 
-              />
-            </div>
-          </div>
+          <MapSidebar /> 
         </div>
       </div>
       

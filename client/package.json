@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mapbox/search-js-react": "^1.0.0",
+    "@mui/material": "^7.0.1",
     "@popperjs/core": "^2.11.8",
     "@tanstack/react-query": "^5.67.2",
     "axios": "^1.8.2",
     "bootstrap": "^5.3.3",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
     "leaflet": "^1.9.4",
     "mapbox-gl": "^3.10.0",
     "react": "^19.0.0",
