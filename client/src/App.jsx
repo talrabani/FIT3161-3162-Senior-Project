@@ -96,7 +96,7 @@ function WeatherApp() {
             <div className="card-header">
               <h2 className="h5 mb-0">Interactive Map</h2>
             </div>
-            <div className="card-body p-0" style={{ height: '500px' }}>
+            <div className="card-body p-0" style={{ height: '700px' }}>
               <AustraliaMap 
                 selectedLocations={selectedLocations} 
                 onLocationSelect={addLocation}

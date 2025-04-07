@@ -156,18 +156,6 @@ export default function AustraliaMap({
             
             // Set the selected SA4 code which will trigger station fetching
             setSelectedSA4Code(props.code);
-            
-            new mapboxgl.Popup()
-              .setLngLat(e.lngLat)
-              .setHTML(`
-                <div>
-                  <strong>${props.name}</strong><br>
-                  Code: ${props.code}<br>
-                  State: ${props.state}<br>
-                  Area: ${Math.round(props.area_sqkm)} km²
-                </div>
-              `)
-              .addTo(map.current);
           });
           
           // Change cursor on hover
