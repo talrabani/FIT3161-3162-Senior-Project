@@ -2,9 +2,6 @@ import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { H1, P } from './components/ui/typography'
 import AustraliaMap from './components/map/AustraliaMap'
-import WeatherChart from './components/charts/WeatherChart'
-import DateRangePicker from './components/ui/DateRangePicker'
-import SelectedLocations from './components/ui/SelectedLocations'
 import ErrorBoundary from './components/ui/ErrorBoundary'
 import { useWeatherData } from './hooks/useWeatherData'
 import MapSidebar from './components/ui/MapSidebar'
@@ -29,7 +26,6 @@ function WeatherApp() {
     updateDateRange,
     chartType,
     toggleChartType,
-    weatherData,
     isLoading,
     isError,
   } = useWeatherData()
@@ -46,7 +42,7 @@ function WeatherApp() {
       <header className="text-center mb-4">
         <H1 className="mb-2">Australian Weather Explorer</H1>
         <P className="lead">
-          Compare temperature and rainfall data across Australia
+          Explore weather stations across Australia
         </P>
         <div className="mt-2">
           <button 
@@ -74,7 +70,7 @@ function WeatherApp() {
                 className={`btn btn-sm ${showStations ? 'btn-success' : 'btn-outline-secondary'}`}
                 onClick={() => setShowStations(!showStations)}
               >
-                Put Stations on Map
+                {showStations ? 'Hide Stations' : 'Show Stations'}
               </button>
             </div>
           </div>
@@ -83,7 +79,7 @@ function WeatherApp() {
           <ul>
             {selectedLocations.map(loc => (
               <li key={loc.name}>
-                {loc.name} ({loc.latitude}, {loc.longitude}), Station ID: {loc.stationId}
+                {loc.name} ({loc.latitude}, {loc.longitude})
               </li>
             ))}
           </ul>
@@ -91,20 +87,6 @@ function WeatherApp() {
           <p>Chart Type: {chartType}</p>
           <p>Loading: {isLoading ? 'Yes' : 'No'}</p>
           <p>Error: {isError ? 'Yes' : 'No'}</p>
-          <hr />
-          <p className="mb-0">Weather Data Status:</p>
-          <ul>
-            {weatherData.map(data => (
-              <li key={data.location.name}>
-                {data.location.name}: 
-                {data.isLoading ? ' Loading' : ' Loaded'}, 
-                {data.isError ? ' Has Error' : ' No Error'}, 
-                Historical Data: {data.historicalData?.daily?.time?.length || 0} days,
-                Forecast Data: {data.forecastData?.daily?.time?.length || 0} days,
-                Observations: {data.observationData?.data?.length || 0} entries
-              </li>
-            ))}
-          </ul>
         </div>
       )}
       
@@ -138,45 +120,14 @@ function WeatherApp() {
         <div className="alert alert-danger mb-4" role="alert">
           <h4 className="alert-heading">Error!</h4>
           <p>
-            There was an error loading the weather data. Please try again later or select different locations.
+            There was an error loading the data. Please try again later or select different locations.
           </p>
         </div>
       )}
       
-      <div className="row mb-4">
-        <div className="col-12">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h2 className="h4 mb-0">Data Visualization</h2>
-            <div className="btn-group">
-              <button 
-                className={`btn ${chartType === 'temperature' ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => toggleChartType()}
-                disabled={chartType === 'temperature'}
-              >
-                Temperature
-              </button>
-              <button 
-                className={`btn ${chartType === 'rainfall' ? 'btn-primary' : 'btn-outline-primary'}`}
-                onClick={() => toggleChartType()}
-                disabled={chartType === 'rainfall'}
-              >
-                Rainfall
-              </button>
-            </div>
-          </div>
-          
-          <ErrorBoundary>
-            <WeatherChart 
-              weatherData={weatherData} 
-              chartType={chartType} 
-            />
-          </ErrorBoundary>
-        </div>
-      </div>
-      
       <footer className="text-center text-muted py-3 mt-auto border-top">
         <P>
-          Data provided by the Australian Bureau of Meteorology. Explore historical weather trends and forecasts.
+          Data provided by the Australian Bureau of Meteorology. Explore weather stations across Australia.
         </P>
         <small>© {new Date().getFullYear()} Australian Weather Explorer</small>
       </footer>

@@ -6,6 +6,7 @@ require('dotenv').config()
 
 // Import routes
 const boundariesRoutes = require('./routes/boundaries');
+const rainfallRoutes = require('./routes/rainfall');
 
 // Configure CORS
 const corsOptions = {
@@ -20,6 +21,7 @@ app.use(cors(corsOptions));
 
 // Register routes
 app.use('/api/boundaries', boundariesRoutes);
+app.use('/api/rainfall', rainfallRoutes);
 
 // Basic health check endpoint
 app.get('/api/health', (req, res) => {

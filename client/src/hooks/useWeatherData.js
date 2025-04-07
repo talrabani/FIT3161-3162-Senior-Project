@@ -1,10 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useQueries, useQueryClient } from '@tanstack/react-query';
-import { fetchHistoricalWeather, fetchCurrentObservations, fetchWeatherForecast } from '../services/weatherApi';
+import { useQueryClient } from '@tanstack/react-query';
 
 /**
- * Custom hook for fetching and managing weather data
- * @returns {Object} Weather data and utility functions
+ * Custom hook for managing location and station selections
+ * @returns {Object} Location data and utility functions
  */
 export const useWeatherData = () => {
   // Selected locations for comparison
@@ -75,107 +74,6 @@ export const useWeatherData = () => {
   // Query client for invalidating queries
   const queryClient = useQueryClient();
   
-  // Use useQueries for observations (instead of mapping useQuery)
-  const observationResults = useQueries({
-    queries: selectedLocations.map(location => ({
-      queryKey: ['observations', location.name, location.stationId],
-      queryFn: () => fetchCurrentObservations(location.stationId, location.state),
-      enabled: !!location.stationId,
-      retry: 0,
-      staleTime: 1000 * 60 * 15, // 15 minutes
-      onError: () => {
-        console.error('Observation query failed for', location.name);
-        setHasError(true);
-      }
-    })),
-    combine: (results) => {
-      return {
-        data: results.map(result => result.data),
-        isLoading: results.some(result => result.isLoading),
-        isError: results.some(result => result.isError)
-      };
-    }
-  });
-  
-  // Use useQueries for forecasts (instead of mapping useQuery)
-  const forecastResults = useQueries({
-    queries: selectedLocations.map(location => ({
-      queryKey: ['forecast', location.name],
-      queryFn: () => fetchWeatherForecast(location.latitude, location.longitude),
-      enabled: !!location.name,
-      staleTime: 1000 * 60 * 60, // 1 hour
-      onError: () => {
-        console.error('Forecast query failed for', location.name);
-        setHasError(true);
-      }
-    })),
-    combine: (results) => {
-      return {
-        data: results.map(result => result.data),
-        isLoading: results.some(result => result.isLoading),
-        isError: results.some(result => result.isError)
-      };
-    }
-  });
-  
-  // Use useQueries for historical data (instead of mapping useQuery)
-  const historicalResults = useQueries({
-    queries: selectedLocations.map(location => ({
-      queryKey: ['weather', location.name, dateRange.startDate, dateRange.endDate],
-      queryFn: () => fetchHistoricalWeather(
-        location.latitude, 
-        location.longitude, 
-        dateRange.startDate, 
-        dateRange.endDate
-      ),
-      enabled: !!location.name,
-      staleTime: 1000 * 60 * 60 * 24, // 24 hours for historical data
-      onError: () => {
-        console.error('Historical query failed for', location.name);
-        setHasError(true);
-      }
-    })),
-    combine: (results) => {
-      return {
-        data: results.map(result => result.data),
-        isLoading: results.some(result => result.isLoading),
-        isError: results.some(result => result.isError)
-      };
-    }
-  });
-  
-  // Overall loading and error states
-  const isLoading = 
-    observationResults.isLoading || 
-    forecastResults.isLoading || 
-    historicalResults.isLoading;
-  
-  const isError = 
-    hasError || 
-    observationResults.isError || 
-    forecastResults.isError || 
-    historicalResults.isError;
-  
-  // Combine weather data with location information
-  const weatherData = selectedLocations.map((location, index) => {
-    return {
-      location,
-      historicalData: historicalResults.data[index] || { daily: { time: [] } },
-      observationData: observationResults.data[index] || { data: [] },
-      forecastData: forecastResults.data[index] || { daily: { time: [] } },
-      isLoading: (
-        (index < observationResults.data.length && observationResults.isLoading) ||
-        (index < forecastResults.data.length && forecastResults.isLoading) ||
-        (index < historicalResults.data.length && historicalResults.isLoading)
-      ),
-      isError: (
-        (index < observationResults.data.length && observationResults.isError) ||
-        (index < forecastResults.data.length && forecastResults.isError) ||
-        (index < historicalResults.data.length && historicalResults.isError)
-      ),
-    };
-  });
-  
   return {
     selectedLocations,
     addLocation,
@@ -184,8 +82,7 @@ export const useWeatherData = () => {
     updateDateRange,
     chartType,
     toggleChartType,
-    weatherData,
-    isLoading,
-    isError,
+    isLoading: false,
+    isError: hasError,
   };
 }; 
