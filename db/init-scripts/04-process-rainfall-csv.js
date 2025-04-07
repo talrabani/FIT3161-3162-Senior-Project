@@ -6,12 +6,6 @@ const fs = require('fs');
 const path = require('path');
 const csv = require('fast-csv');
 
-// Print environment variables for debugging (excluding sensitive data)
-console.log('Environment variables:');
-console.log('PGHOST:', process.env.PGHOST);
-console.log('PGPORT:', process.env.PGPORT);
-console.log('PGDATABASE:', process.env.PGDATABASE);
-console.log('PGUSER:', process.env.PGUSER);
 
 // PostgreSQL connection configuration
 const pgConfig = {
@@ -59,9 +53,9 @@ async function createPoolWithRetry(config, maxRetries = 5, delay = 1000) {
 // Try multiple possible locations for the rainfall CSV directory
 let rainfallCSVdir;
 const possiblePaths = [
-    '/db/data/extracted/rainfall',  // Based on docker-compose volume mapping
-    path.join(__dirname, '..', 'data', 'extracted', 'rainfall'),  // Relative to script
-    '/data/extracted/rainfall'  // Direct absolute path
+    '/db/data/extracted/rainfall_reduced',  // Based on docker-compose volume mapping
+    path.join(__dirname, '..', 'data', 'extracted', 'rainfall_reduced'),  // Relative to script
+    '/data/extracted/rainfall_reduced'  // Direct absolute path
 ];
 
 // Find the first path that exists
@@ -273,7 +267,7 @@ async function processAllCSVFiles() {
                             totalRowsProcessed += result.successCount;
                         }
                         processedCount++;
-                        console.log(`Processed ${processedCount} of ${files.length} files`);A
+                        console.log(`Processed ${processedCount} of ${files.length} files`);
                         return result;
                     })
                     .catch(error => {

@@ -4,12 +4,6 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
-// Print environment variables for debugging (excluding sensitive data)
-console.log('Environment variables:');
-console.log('PGHOST:', process.env.PGHOST);
-console.log('PGPORT:', process.env.PGPORT);
-console.log('PGDATABASE:', process.env.PGDATABASE);
-console.log('PGUSER:', process.env.PGUSER);
 
 // PostgreSQL connection - when running in the PostgreSQL docker container
 const pgConfig = {
@@ -26,12 +20,6 @@ const pgConfig = {
     maxRetries: 5 // Maximum number of retries
 };
 
-console.log('Using PostgreSQL connection config:', {
-    host: pgConfig.host,
-    port: pgConfig.port,
-    user: pgConfig.user,
-    database: pgConfig.database
-});
 
 // Create a function to establish connection with retries
 async function createPoolWithRetry(config, maxRetries = 5, delay = 1000) {
@@ -111,13 +99,18 @@ try {
 //     station_height DECIMAL(6,1),
 //     station_state CHAR(3) NOT NULL,
 //     station_start_year INTEGER NOT NULL,
-//     station_end_year INTEGER
+//     station_end_year INTEGER,
+//     sa4_code VARCHAR(3),
+//     FOREIGN KEY (sa4_code) REFERENCES SA4_BOUNDARIES(sa4_code21)
 // );
 
 async function insertStations() {
     let stationCount = 0;
     let successCount = 0;
+    let sa4LinkedCount = 0;
     let pool;
+    let lastProgressReport = 0;
+    const progressReportInterval = 500;
 
     try {
         console.log('Starting station data insertion... This may take a minute or two...');
@@ -146,14 +139,20 @@ async function insertStations() {
             }
             
             stationCount++;
+
+            // Report progress every 500 stations
+            if (stationCount - lastProgressReport >= progressReportInterval) {
+                console.log(`Progress: processed ${stationCount} stations, successfully imported ${successCount}, linked ${sa4LinkedCount} to SA4 areas`);
+                lastProgressReport = stationCount;
+            }
             
             // Parse the station data from the fixed-width format
             const stationId = line.substring(columnIndexes[0][0], columnIndexes[0][1]).trim();
             const stationName = line.substring(columnIndexes[2][0], columnIndexes[2][1]).trim();
             const startYearRaw = line.substring(columnIndexes[3][0], columnIndexes[3][1]).trim();
             const endYearRaw = line.substring(columnIndexes[4][0], columnIndexes[4][1]).trim();
-            const latitude = line.substring(columnIndexes[5][0], columnIndexes[5][1]).trim();
-            const longitude = line.substring(columnIndexes[6][0], columnIndexes[6][1]).trim();
+            const latitude = line.substring(columnIndexes[5][0]-1, columnIndexes[5][1]).trim();
+            const longitude = line.substring(columnIndexes[6][0]-1, columnIndexes[6][1]).trim();
             const state = line.substring(columnIndexes[8][0], columnIndexes[8][1]).trim();
             const heightRaw = line.substring(columnIndexes[9][0], columnIndexes[9][1]).trim();
             
@@ -161,32 +160,64 @@ async function insertStations() {
             const startYear = startYearRaw;
             const endYear = endYearRaw === '..' ? new Date().getFullYear() : endYearRaw;
             const height = heightRaw === '..' ? null : heightRaw;
+
+
+            // Validate that latitude and longitude are reasonable for Australia
+            // Australia's coordinates are roughly:
+            // Latitude: -9° to -44° (South)
+            // Longitude: 113° to 154° (East)
+            const latitudeNum = parseFloat(latitude);
+            const longitudeNum = parseFloat(longitude);
             
             // Format as PostGIS Point using SRID 4326 (WGS84)
-            // Using ST_SetSRID and ST_MakePoint to create a POINT geometry
+            // For PostGIS ST_MakePoint, the order is (longitude, latitude)
+            // This matches the (X, Y) format expected by PostGIS
+            const stationPoint = `ST_SetSRID(ST_MakePoint(${longitudeNum}, ${latitudeNum}), 4326)`;
             
-            // Insert into database with the new GeoJSON structure
+            // Find the SA4 area that contains this station point
+            let sa4Code = null;
+            try {
+                const sa4Query = `
+                    SELECT sa4_code21
+                    FROM SA4_BOUNDARIES
+                    WHERE ST_Intersects(geometry, ${stationPoint})
+                    LIMIT 1;
+                `;
+                const sa4Result = await pool.query(sa4Query);
+                
+                if (sa4Result.rows.length > 0) {
+                    sa4Code = sa4Result.rows[0].sa4_code21;
+                    sa4LinkedCount++;
+                }
+            } catch (error) {
+                console.warn(`Error finding SA4 area for station ${stationId}: ${error.message}`);
+            }
+            
+            // Insert into database with the new GeoJSON structure and SA4 code
             await pool.query(
                 `INSERT INTO STATION (
                     station_id, station_name, station_location, 
-                    station_height, station_state, station_start_year, station_end_year
-                ) VALUES ($1, $2, ST_SetSRID(ST_MakePoint($3, $4), 4326), $5, $6, $7, $8)
+                    station_height, station_state, station_start_year, station_end_year,
+                    sa4_code
+                ) VALUES ($1, $2, ST_SetSRID(ST_MakePoint($3, $4), 4326), $5, $6, $7, $8, $9)
                 ON CONFLICT (station_id) DO UPDATE 
                 SET station_name = $2, 
                     station_location = ST_SetSRID(ST_MakePoint($3, $4), 4326), 
                     station_height = $5, 
                     station_state = $6,
                     station_start_year = $7,
-                    station_end_year = $8`,
+                    station_end_year = $8,
+                    sa4_code = $9`,
                 [
                     stationId, 
                     stationName, 
-                    longitude, // Note: longitude is first in PostGIS point format (x, y)
-                    latitude,  // latitude is second in PostGIS point format (x, y)
+                    longitudeNum, // Longitude is first in PostGIS point format (x, y)
+                    latitudeNum,  // Latitude is second in PostGIS point format (x, y)
                     height, 
                     state, 
                     startYear, 
-                    endYear
+                    endYear,
+                    sa4Code
                 ]
             );
             
@@ -194,6 +225,8 @@ async function insertStations() {
         }
         
         console.log(`Successfully inserted ${successCount} of ${stationCount} stations`);
+        console.log(`Linked ${sa4LinkedCount} stations to their SA4 areas`);
+
     } catch (error) {
         console.error('Error inserting station data:', error);
     } finally {

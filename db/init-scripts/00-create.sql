@@ -56,27 +56,10 @@ CREATE TABLE IF NOT EXISTS SAVED_MAP (
 -- Add comments to explain the time period values
 COMMENT ON COLUMN SAVED_MAP.map_time_period IS 'A=Daily, B=Monthly, C=Yearly';
 
--- Modified STATION table to use GeoJSON for coordinates
-CREATE TABLE IF NOT EXISTS STATION (
-    station_id INTEGER PRIMARY KEY,
-    station_name VARCHAR(100) NOT NULL,
-    station_location GEOMETRY(POINT, 4326) NOT NULL, -- Using SRID 4326 (WGS84) for GPS coordinates
-    station_height DECIMAL(6,1),
-    station_state CHAR(3) NOT NULL,
-    station_start_year INTEGER NOT NULL,
-    station_end_year INTEGER
-);
-
--- Create spatial index on station location
-CREATE INDEX IF NOT EXISTS idx_station_location ON STATION USING GIST(station_location);
-
--- Add comment to explain the coordinates format
-COMMENT ON COLUMN STATION.station_location IS 'Geographic coordinates in SRID 4326 (WGS84)';
-
 -- SA4 Boundaries table - 2021 data
 CREATE TABLE IF NOT EXISTS SA4_BOUNDARIES (
     gid SERIAL PRIMARY KEY,
-    sa4_code21 VARCHAR(3),
+    sa4_code21 VARCHAR(3) UNIQUE,
     sa4_name21 VARCHAR(100),
     ste_code21 VARCHAR(1),
     ste_name21 VARCHAR(50),
@@ -89,7 +72,27 @@ CREATE TABLE IF NOT EXISTS SA4_BOUNDARIES (
 CREATE INDEX IF NOT EXISTS idx_sa4_boundaries_geometry ON SA4_BOUNDARIES USING GIST(geometry);
 
 -- Add comment
-COMMENT ON TABLE SA4_BOUNDARIES IS 'Statistical Areas Level 4 (SA4) boundaries from ABS ASGS Edition 3'; 
+COMMENT ON TABLE SA4_BOUNDARIES IS 'Statistical Areas Level 4 (SA4) boundaries from ABS ASGS Edition 3';
+
+-- Modified STATION table to use GeoJSON for coordinates and add SA4 link
+CREATE TABLE IF NOT EXISTS STATION (
+    station_id INTEGER PRIMARY KEY,
+    station_name VARCHAR(100) NOT NULL,
+    station_location GEOMETRY(POINT, 4326) NOT NULL, -- Using SRID 4326 (WGS84) for GPS coordinates
+    station_height DECIMAL(6,1),
+    station_state CHAR(3) NOT NULL,
+    station_start_year INTEGER NOT NULL,
+    station_end_year INTEGER,
+    sa4_code VARCHAR(3),
+    FOREIGN KEY (sa4_code) REFERENCES SA4_BOUNDARIES(sa4_code21)
+);
+
+-- Create spatial index on station location
+CREATE INDEX IF NOT EXISTS idx_station_location ON STATION USING GIST(station_location);
+
+-- Add comment to explain the coordinates format
+COMMENT ON COLUMN STATION.station_location IS 'Geographic coordinates in SRID 4326 (WGS84)';
+COMMENT ON COLUMN STATION.sa4_code IS 'Statistical Area Level 4 code that this station belongs to';
 
 -- RAINFALL_DATA_DAILY table
 CREATE TABLE IF NOT EXISTS RAINFALL_DATA_DAILY (

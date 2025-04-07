@@ -100,4 +100,85 @@ router.get('/sa4/:code', async (req, res) => {
   }
 });
 
+/**
+ * GET /api/boundaries/sa4/:code/stations
+ * Returns all stations that belong to a specific SA4 boundary
+ */
+router.get('/sa4/:code/stations', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const { code } = req.params;
+    
+    try {
+      // Query to get all stations in a specific SA4 boundary
+      const result = await client.query(`
+        SELECT 
+          s.station_id,
+          s.station_name,
+          ST_AsGeoJSON(s.station_location)::json as location,
+          s.station_height,
+          s.station_state,
+          s.station_start_year,
+          s.station_end_year,
+          b.sa4_name21 as sa4_name
+        FROM 
+          STATION s
+        JOIN 
+          SA4_BOUNDARIES b ON s.sa4_code = b.sa4_code21
+        WHERE 
+          s.sa4_code = $1
+        ORDER BY 
+          s.station_name;
+      `, [code]);
+      
+      if (result.rows.length > 0) {
+        res.json(result.rows);
+      } else {
+        res.json([]);
+      }
+    } finally {
+      client.release();
+    }
+  } catch (err) {
+    console.error('Error fetching stations for SA4 boundary:', err);
+    res.status(500).json({ error: 'Failed to fetch stations for SA4 boundary' });
+  }
+});
+
+/**
+ * GET /api/boundaries/sa4-summary
+ * Returns a summary of how many stations are in each SA4 boundary
+ */
+router.get('/sa4-summary', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    
+    try {
+      // Query to get station count by SA4 boundary
+      const result = await client.query(`
+        SELECT 
+          b.sa4_code21 as code,
+          b.sa4_name21 as name,
+          b.ste_name21 as state,
+          COUNT(s.station_id) as station_count
+        FROM 
+          SA4_BOUNDARIES b
+        LEFT JOIN 
+          STATION s ON b.sa4_code21 = s.sa4_code
+        GROUP BY 
+          b.sa4_code21, b.sa4_name21, b.ste_name21
+        ORDER BY 
+          station_count DESC, name;
+      `);
+      
+      res.json(result.rows);
+    } finally {
+      client.release();
+    }
+  } catch (err) {
+    console.error('Error fetching SA4 summary:', err);
+    res.status(500).json({ error: 'Failed to fetch SA4 summary' });
+  }
+});
+
 module.exports = router; 

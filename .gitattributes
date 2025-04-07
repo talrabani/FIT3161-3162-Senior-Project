@@ -1,0 +1,25 @@
+# Set default behavior to automatically normalize line endings.
+* text=auto
+
+# Force bash/shell scripts to always use LF line endings so that they can be run on Linux/MacOS
+*.sh text eol=lf
+db/post-init.sh text eol=lf
+db/init-scripts/*.sh text eol=lf
+
+# Force other Unix scripts to use LF
+*.js text eol=lf
+*.py text eol=lf
+
+# Make sure Docker related files have LF line endings
+Dockerfile text eol=lf
+docker-compose.yml text eol=lf
+.dockerignore text eol=lf
+
+# Binary files should not be modified
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+*.gz binary 

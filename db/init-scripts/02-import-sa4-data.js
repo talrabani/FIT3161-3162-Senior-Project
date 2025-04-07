@@ -103,8 +103,7 @@ async function importSA4Data() {
               ST_Transform(geom, 4326) as geometry
             FROM sa4_temp;
           `;
-          
-          console.log(`Executing insert query: ${insertQuery}`);
+
           await client.query(insertQuery);
           
           // Count how many records were imported

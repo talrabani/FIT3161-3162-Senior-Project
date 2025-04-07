@@ -234,4 +234,33 @@ export const fetchSA4BoundaryByCode = async (code) => {
       geometry: null
     };
   }
+};
+
+/**
+ * Fetches stations that belong to a specific SA4 boundary
+ * @param {string} code - The SA4 code to fetch stations for
+ * @returns {Promise} Promise with array of stations in the SA4 boundary
+ */
+export const fetchStationsBySA4 = async (code) => {
+  try {
+    const response = await axios.get(`${SERVER_API_URL}/boundaries/sa4/${code}/stations`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching stations for SA4 code ${code}:`, error);
+    return [];
+  }
+};
+
+/**
+ * Fetches a summary of SA4 boundaries with station counts
+ * @returns {Promise} Promise with array of SA4 boundaries and their station counts
+ */
+export const fetchSA4Summary = async () => {
+  try {
+    const response = await axios.get(`${SERVER_API_URL}/boundaries/sa4-summary`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching SA4 summary:', error);
+    return [];
+  }
 }; 

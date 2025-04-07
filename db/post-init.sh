@@ -38,23 +38,19 @@ while ! psql -c "SELECT 1" > /dev/null 2>&1; do
 done
 echo "PostgreSQL is ready and accepting connections!"
 
-# Always create the SQL schema to ensure all tables exist
-echo "Creating or updating database schema..."
-psql -f /docker-entrypoint-initdb.d/00-create.sql
-
 # Go to the init-scripts directory
 cd /docker-entrypoint-initdb.d
 
-# Process station data
+# Import SA4 boundary data first
+echo "Importing SA4 boundary data..."
+node 02-import-sa4-data.js
+
+# Process station data (which now includes linking to SA4 boundaries)
 echo "Processing station data..."
-node 02-process-stations.js
+node 03-process-stations.js
 
 # echo "Processing rainfall data..."
-# node 03-process-rainfall-csv.js
-
-# Import SA4 boundary data 
-echo "Importing SA4 boundary data..."
-node 04-import-sa4-data.js
+# node 04-process-rainfall-csv.js
 
 echo "Post-initialization scripts completed successfully"
 
