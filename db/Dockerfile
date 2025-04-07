@@ -30,3 +30,7 @@ CMD bash -c "/usr/local/bin/docker-entrypoint.sh postgres & \
     until pg_isready -U postgres; do sleep 1; done && \
     echo 'PostgreSQL is ready, running post-initialization scripts' && \
     bash /post-init.sh" 
+    
+# Check every five minutes that a web-server is able to serve the site's main page within three seconds
+HEALTHCHECK --interval=5m --timeout=3s \
+CMD curl -f http://localhost/ || exit 1
