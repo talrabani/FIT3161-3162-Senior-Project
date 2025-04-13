@@ -34,11 +34,14 @@ function WeatherApp() {
   const [showDebug, setShowDebug] = useState(false);
   
   // State for SA4 boundaries and stations visibility
-  const [showSA4Boundaries, setShowSA4Boundaries] = useState(false);
-  const [showStations, setShowStations] = useState(false);
+  const [showSA4Boundaries, setShowSA4Boundaries] = useState(true);
+  const [showStations, setShowStations] = useState(true);
+  
+  // State for form data from the sidebar
+  const [mapFormData, setMapFormData] = useState(null);
   
   return (
-    <div className="container-fluid py-4">
+    <div className="container-fluid py-4 app-container">
       <header className="text-center mb-4">
         <H1 className="mb-2">Australian Weather Explorer</H1>
         <P className="lead">
@@ -103,16 +106,15 @@ function WeatherApp() {
                 showSA4Boundaries={showSA4Boundaries}
                 setShowSA4Boundaries={setShowSA4Boundaries}
                 showStations={showStations}
+                selectedDate={mapFormData ? mapFormData.selectedDate : null}
+                formData={mapFormData}
               />
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">Select up to 3 locations to compare weather data</small>
             </div>
           </div>
         </div>
         
         <div className="col-lg-4">
-          <MapSidebar /> 
+          <MapSidebar onFormDataChange={setMapFormData} /> 
         </div>
       </div>
       

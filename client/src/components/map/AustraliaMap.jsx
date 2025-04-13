@@ -13,9 +13,11 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3Bpc
 export default function AustraliaMap({ 
   selectedLocations = [], 
   onLocationSelect,
-  showSA4Boundaries = false,
+  showSA4Boundaries = true,
   setShowSA4Boundaries = () => {},
-  showStations = false
+  showStations = true,
+  selectedDate = null,
+  formData = null // New prop for the complete form data
 }) {
   // Center of Australia approximate coordinates
   const centerPosition = [133.7751, -25.2744]; // [lng, lat]
@@ -27,6 +29,7 @@ export default function AustraliaMap({
   const [selectedSA4Code, setSelectedSA4Code] = useState(null);
   const [stationsInSA4, setStationsInSA4] = useState([]);
   const stationMarkers = useRef({});
+  const sa4DataLoaded = useRef(false);
   
   // Refs for DOM elements
   const mapContainer = useRef(null);
@@ -207,8 +210,8 @@ export default function AustraliaMap({
     
     const fetchStations = async () => {
       try {
-        console.log(`Fetching stations for SA4 code: ${selectedSA4Code}`);
-        const stations = await fetchStationsBySA4(selectedSA4Code);
+        console.log(`Fetching stations for SA4 code: ${selectedSA4Code}${selectedDate ? ` with date filter: ${selectedDate.toISOString().split('T')[0]}` : ''}`);
+        const stations = await fetchStationsBySA4(selectedSA4Code, selectedDate);
         setStationsInSA4(stations);
       } catch (error) {
         console.error(`Error fetching stations for SA4 code ${selectedSA4Code}:`, error);
@@ -217,7 +220,7 @@ export default function AustraliaMap({
     };
     
     fetchStations();
-  }, [selectedSA4Code, showStations]);
+  }, [selectedSA4Code, showStations, selectedDate]);
   
   // Display stations on the map when stationsInSA4 changes
   useEffect(() => {
@@ -302,6 +305,15 @@ export default function AustraliaMap({
       }
     }
   }, [stationsInSA4, showStations]);
+  
+  // Add a useEffect to log when formData changes
+  useEffect(() => {
+    if (formData) {
+      console.log('Map received form data:', formData);
+      // Here you can use any of the form values to customize the map behavior
+      // For example: formData.type, formData.frequency, formData.location
+    }
+  }, [formData]);
   
   return (
     <div 

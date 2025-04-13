@@ -8,22 +8,20 @@ import FrequencyRadioGroup from './FrequencyRadioGroup.jsx'
 import LocationInput from './LocationInput.jsx'
 import TypeSelect from './TypeSelect.jsx'
 
-export default function MapSidebar() {
-  const [location, setLocation] = useState('')
-  const [type, setType] = useState('temperature')
-  const [selectedDate, setSelectedDate] = useState(new Date())
-  const [frequency, setFrequency] = useState('yearly')
+export default function MapSidebar({ onFormDataChange = () => {} }) {
+  // Single state object for all form data
+  const [formData, setFormData] = useState({
+    location: '',
+    type: 'temperature',
+    selectedDate: new Date(),
+    frequency: 'yearly'
+  })
 
-   
   const handleVisualise = () => {
-    const visualisationData = {
-      location,
-      type,
-      selectedDate,
-      frequency
-    }
-
-    console.log(`visualisationData: ${visualisationData}`)
+    console.log('visualisationData:', formData)
+    
+    // Call the onFormDataChange prop with the entire form data
+    onFormDataChange(formData)
   }
 
   // Call handleVisualise on initial load
@@ -31,25 +29,19 @@ export default function MapSidebar() {
     handleVisualise()
   }, []) // Empty dependency array means this runs once on mount
 
-  // Create wrapped setter functions that update state and call handleVisualise
-  const handleLocationChange = (newLocation) => {
-    setLocation(newLocation)
-    handleVisualise()
-  }
-
-  const handleTypeChange = (newType) => {
-    setType(newType)
-    handleVisualise()
-  }
-
-  const handleDateChange = (newDate) => {
-    setSelectedDate(newDate)
-    handleVisualise()
-  }
-
-  const handleFrequencyChange = (newFrequency) => {
-    setFrequency(newFrequency)
-    handleVisualise()
+  // Generic update function that handles all form fields
+  const updateFormData = (field, value) => {
+    const updatedFormData = {
+      ...formData,
+      [field]: value
+    }
+    
+    // Update state
+    setFormData(updatedFormData)
+    
+    // Log and notify parent component with the complete updated form data
+    console.log('visualisationData:', updatedFormData)
+    onFormDataChange(updatedFormData)
   }
 
   return (
@@ -60,12 +52,16 @@ export default function MapSidebar() {
       padding: '20px',
     }}>
       {/* Search bar at the top */}
-      <LocationInput location={location} setLocation={handleLocationChange} />
-      
+      <LocationInput 
+        location={formData.location} 
+        setLocation={(newLocation) => updateFormData('location', newLocation)} 
+      />
       
       {/* Type selector below the search bar */}
-      <TypeSelect type={type} setType={handleTypeChange} />
-
+      <TypeSelect 
+        type={formData.type} 
+        setType={(newType) => updateFormData('type', newType)} 
+      />
       
       {/* Calendar input */}
       <Box sx={{ 
@@ -77,13 +73,16 @@ export default function MapSidebar() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <StaticDatePicker
             orientation="landscape"
-            value={selectedDate}
-            onChange={handleDateChange}
+            value={formData.selectedDate}
+            onChange={(newDate) => updateFormData('selectedDate', newDate)}
           />
         </LocalizationProvider>
       </Box>
       
-      <FrequencyRadioGroup frequency={frequency} setFrequency={handleFrequencyChange}/>
+      <FrequencyRadioGroup 
+        frequency={formData.frequency} 
+        setFrequency={(newFrequency) => updateFormData('frequency', newFrequency)}
+      />
     </Box>
   )
 }

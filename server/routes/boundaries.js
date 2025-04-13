@@ -103,15 +103,18 @@ router.get('/sa4/:code', async (req, res) => {
 /**
  * GET /api/boundaries/sa4/:code/stations
  * Returns all stations that belong to a specific SA4 boundary
+ * Optional query parameter:
+ *  - date: Filter stations that have data available for the provided date (YYYY-MM-DD)
  */
 router.get('/sa4/:code/stations', async (req, res) => {
   try {
     const client = await pool.connect();
     const { code } = req.params;
+    const { date } = req.query;
     
     try {
-      // Query to get all stations in a specific SA4 boundary
-      const result = await client.query(`
+      // Build the query based on whether we have a date filter
+      let query = `
         SELECT 
           s.station_id,
           s.station_name,
@@ -127,9 +130,31 @@ router.get('/sa4/:code/stations', async (req, res) => {
           SA4_BOUNDARIES b ON s.sa4_code = b.sa4_code21
         WHERE 
           s.sa4_code = $1
-        ORDER BY 
-          s.station_name;
-      `, [code]);
+      `;
+
+      const params = [code];
+
+      // Add date filtering if date parameter is provided
+      if (date) {
+        // Extract the year from the provided date
+        const dateObj = new Date(date);
+        const year = dateObj.getFullYear();
+
+        // Add condition to filter by year range
+        query += ` 
+          AND (
+            (s.station_start_year IS NOT NULL AND s.station_start_year <= $2)
+            AND
+            (s.station_end_year IS NULL OR s.station_end_year >= $2)
+          )
+        `;
+        params.push(year);
+      }
+
+      // Add the ordering
+      query += ' ORDER BY s.station_name';
+      
+      const result = await client.query(query, params);
       
       if (result.rows.length > 0) {
         res.json(result.rows);

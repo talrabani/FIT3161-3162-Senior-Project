@@ -49,11 +49,24 @@ export const fetchSA4BoundaryByCode = async (code) => {
 /**
  * Fetches stations that belong to a specific SA4 boundary
  * @param {string} code - The SA4 code to fetch stations for
+ * @param {Date|string} [date] - Optional date to filter stations that have data available on that date
  * @returns {Promise} Promise with array of stations in the SA4 boundary
  */
-export const fetchStationsBySA4 = async (code) => {
+export const fetchStationsBySA4 = async (code, date) => {
   try {
-    const response = await axios.get(`${SERVER_API_URL}/boundaries/sa4/${code}/stations`);
+    let url = `${SERVER_API_URL}/boundaries/sa4/${code}/stations`;
+    let params = {};
+    
+    // Add date parameter if provided
+    if (date) {
+      // Format date as YYYY-MM-DD if it's a Date object
+      const formattedDate = date instanceof Date 
+        ? date.toISOString().split('T')[0] 
+        : date;
+      params.date = formattedDate;
+    }
+    
+    const response = await axios.get(url, { params });
     return response.data;
   } catch (error) {
     console.error(`Error fetching stations for SA4 code ${code}:`, error);
