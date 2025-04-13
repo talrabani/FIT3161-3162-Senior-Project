@@ -9,15 +9,8 @@ export const useWeatherData = () => {
   // Selected locations for comparison
   const [selectedLocations, setSelectedLocations] = useState([]);
   
-  // Date range for historical data
-  const [dateRange, setDateRange] = useState({
-    startDate: new Date(new Date().getFullYear() - 1, 0, 1).toISOString().split('T')[0], // Last year Jan 1
-    endDate: new Date().toISOString().split('T')[0], // Today
-  });
 
-  // Chart type - 'temperature' or 'rainfall'
-  const [chartType, setChartType] = useState('temperature');
-  
+
   // Error state for overall application
   const [hasError, setHasError] = useState(false);
   
@@ -52,36 +45,17 @@ export const useWeatherData = () => {
   const removeLocation = useCallback((locationName) => {
     setSelectedLocations(prev => prev.filter(loc => loc.name !== locationName));
   }, []);
-  
-  // Update date range
-  const updateDateRange = useCallback((start, end) => {
-    setDateRange({
-      startDate: start,
-      endDate: end,
-    });
-  }, []);
 
-  // Toggle chart type
-  const toggleChartType = useCallback(() => {
-    setChartType(prev => prev === 'temperature' ? 'rainfall' : 'temperature');
-  }, []);
-  
   // Reset error state whenever selections change
   useEffect(() => {
     setHasError(false);
-  }, [selectedLocations, dateRange.startDate, dateRange.endDate]);
+  }, [selectedLocations]);
   
-  // Query client for invalidating queries
-  const queryClient = useQueryClient();
-  
+
   return {
     selectedLocations,
     addLocation,
     removeLocation,
-    dateRange,
-    updateDateRange,
-    chartType,
-    toggleChartType,
     isLoading: false,
     isError: hasError,
   };

@@ -21,7 +21,7 @@ app.use(cors(corsOptions));
 
 // Register routes
 app.use('/api/boundaries', boundariesRoutes);
-// app.use('/api/rainfall', rainfallRoutes);
+app.use('/api/rainfall', rainfallRoutes);
 
 // Basic health check endpoint
 app.get('/api/health', (req, res) => {

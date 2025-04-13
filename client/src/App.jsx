@@ -7,6 +7,7 @@ import { useWeatherData } from './hooks/useWeatherData'
 import MapSidebar from './components/ui/MapSidebar'
 import Navbar from './components/ui/Navbar'
 import DebugInfo from './components/ui/DebugInfo'
+import SelectedStationsBox from './components/selectedStations/selectedStationsBox'
 import './App.css'
 
 // Create a client
@@ -78,9 +79,6 @@ function WeatherApp() {
         <div className="row g-4 mb-4">
           <div className="col-lg-8">
             <div className="card h-100">
-              <div className="card-header">
-                <h2 className="h5 mb-0">Interactive Map</h2>
-              </div>
               <div className="card-body p-0" style={{ height: '700px' }}>
                 <AustraliaMap 
                   selectedLocations={selectedLocations} 
@@ -100,6 +98,16 @@ function WeatherApp() {
           </div>
         </div>
         
+        <div className="row mt-4">
+          <div className="col-12">
+            <SelectedStationsBox 
+              selectedStations={selectedLocations}
+              onRemoveStation={removeLocation}
+              selectedDate={mapFormData?.selectedDate || null}
+            />
+          </div>
+        </div>
+        
         {isError && (
           <div className="alert alert-danger mb-4" role="alert">
             <h4 className="alert-heading">Error!</h4>
@@ -109,6 +117,7 @@ function WeatherApp() {
           </div>
         )}
       </div>
+
       
       <footer className="text-center text-muted py-3 border-top">
         <P>

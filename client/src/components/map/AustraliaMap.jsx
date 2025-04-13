@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { fetchSA4Boundaries, fetchStationsBySA4 } from '../../services/weatherApi';
 import { P } from '../ui/typography';
-import StationSelectCard from './StationSelectCard';
+import StationSelectCard from './MapStationSelectCard';
 
 // Mapbox API token
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3BpcGp3dTYyN2wifQ.nntDVPhkBzS5Zm5XuFybXg';

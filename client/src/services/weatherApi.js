@@ -117,4 +117,54 @@ export const fetchSA4Summary = async () => {
     console.error('Error fetching SA4 summary:', error);
     return [];
   }
+};
+
+/**
+ * Fetches rainfall data for a specific station on a given date
+ * @param {string|number} stationId - The station ID to fetch data for
+ * @param {Date|string} date - The date to get data for (Date object or YYYY-MM-DD string)
+ * @returns {Promise} Promise with rainfall data for the station on the specified date
+ */
+export const fetchStationRainfall = async (stationId, date) => {
+  try {
+    // Format date as YYYY-MM-DD if it's a Date object
+    const formattedDate = date instanceof Date 
+      ? date.toISOString().split('T')[0] 
+      : date;
+    
+    const url = `${SERVER_API_URL}/rainfall/station/${stationId}/date/${formattedDate}`;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching rainfall data for station ${stationId}:`, error);
+    return null;
+  }
+};
+
+/**
+ * Fetches temperature data for a specific station on a given date
+ * @param {string|number} stationId - The station ID to fetch data for
+ * @param {Date|string} date - The date to get data for (Date object or YYYY-MM-DD string)
+ * @returns {Promise} Promise with temperature data for the station on the specified date
+ */
+export const fetchStationTemperature = async (stationId, date) => {
+  try {
+    // Format date as YYYY-MM-DD if it's a Date object
+    const formattedDate = date instanceof Date 
+      ? date.toISOString().split('T')[0] 
+      : date;
+    
+    // Temporary return a dummy temperature data
+    const dummyTemperatureData = {
+      temperature: 20,
+      date: formattedDate
+    };
+
+    // const url = `${SERVER_API_URL}/temperature/station/${stationId}/date/${formattedDate}`;
+    // const response = await axios.get(url);
+    return dummyTemperatureData;
+  } catch (error) {
+    console.error(`Error fetching temperature data for station ${stationId}:`, error);
+    return null;
+  }
 }; 
