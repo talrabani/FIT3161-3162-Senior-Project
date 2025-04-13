@@ -61,6 +61,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  padding-top: 0; /* Remove padding since navbar will be at the top */
 }
 
 /* Ensure navbar is visible */
@@ -117,4 +118,15 @@
 
 .mapboxgl-marker:hover {
   transform: scale(1.1);
+}
+
+/* Add navbar styles */
+.navbar-brand {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.content-container {
+  flex: 1;
+  padding-top: 1rem;
 }
