@@ -1,5 +1,8 @@
-import  { Box, TextField, Button } from '@mui/material'
-import { useState } from 'react'
+import { Box, TextField, Button } from '@mui/material'
+import { useState, useEffect } from 'react'
+import { DatePicker, StaticDatePicker } from '@mui/x-date-pickers'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 import FrequencyRadioGroup from './FrequencyRadioGroup.jsx'
 import LocationInput from './LocationInput.jsx'
@@ -8,8 +11,7 @@ import TypeSelect from './TypeSelect.jsx'
 export default function MapSidebar() {
   const [location, setLocation] = useState('')
   const [type, setType] = useState('temperature')
-  const [startDate, setStartDate] = useState('2024-01-01')
-  const [endDate, setEndDate] = useState('2025-01-01')
+  const [selectedDate, setSelectedDate] = useState(new Date())
   const [frequency, setFrequency] = useState('yearly')
 
    
@@ -17,40 +19,71 @@ export default function MapSidebar() {
     const visualisationData = {
       location,
       type,
-      startDate,
-      endDate,
+      selectedDate,
       frequency
     }
 
-    console.log(visualisationData)
+    console.log(`visualisationData: ${visualisationData}`)
+  }
+
+  // Call handleVisualise on initial load
+  useEffect(() => {
+    handleVisualise()
+  }, []) // Empty dependency array means this runs once on mount
+
+  // Create wrapped setter functions that update state and call handleVisualise
+  const handleLocationChange = (newLocation) => {
+    setLocation(newLocation)
+    handleVisualise()
+  }
+
+  const handleTypeChange = (newType) => {
+    setType(newType)
+    handleVisualise()
+  }
+
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate)
+    handleVisualise()
+  }
+
+  const handleFrequencyChange = (newFrequency) => {
+    setFrequency(newFrequency)
+    handleVisualise()
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px'}}>
-      <LocationInput location={location} setLocation={setLocation} />
-      <TypeSelect type={type} setType={setType} />
-      <Box sx={{display: 'flex', flexDirection: 'row', gap: "20px"}}>
-        <TextField 
-          sx={{ width: "100%" }} 
-          label="Start Date" 
-          id="start_date" 
-          onChange={(event) => setStartDate(event.target.value)}
-        />
-        <TextField 
-          sx={{ width: "100%" }} 
-          label="End Date" 
-          id="end_date" 
-          onChange={(event) => setEndDate(event.target.value)}
-        />
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      gap: '20px', 
+      padding: '20px',
+    }}>
+      {/* Search bar at the top */}
+      <LocationInput location={location} setLocation={handleLocationChange} />
+      
+      
+      {/* Type selector below the search bar */}
+      <TypeSelect type={type} setType={handleTypeChange} />
+
+      
+      {/* Calendar input */}
+      <Box sx={{ 
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        padding: '10px'
+      }}>
+        <Box sx={{ fontSize: '20px', fontWeight: 'bold', mb: 2 }}>Calender input</Box>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <StaticDatePicker
+            orientation="landscape"
+            value={selectedDate}
+            onChange={handleDateChange}
+          />
+        </LocalizationProvider>
       </Box>
-      <FrequencyRadioGroup frequency={frequency} setFrequency={setFrequency}/>
-      <Button 
-        variant="container" 
-        sx={{ background: 'pink' }}
-        onClick={handleVisualise}
-      >
-        Visualise
-      </Button>
+      
+      <FrequencyRadioGroup frequency={frequency} setFrequency={handleFrequencyChange}/>
     </Box>
   )
 }

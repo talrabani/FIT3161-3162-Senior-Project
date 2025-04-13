@@ -49,8 +49,8 @@ node 02-import-sa4-data.js
 echo "Processing station data..."
 node 03-process-stations.js
 
-echo "Processing rainfall data..."
-node 04-process-rainfall-csv.js
+# echo "Processing rainfall data..."
+# node 04-process-rainfall-csv.js
 
 echo "Post-initialization scripts completed successfully"
 
