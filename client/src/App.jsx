@@ -46,33 +46,6 @@ function WeatherApp() {
       <Navbar />
       
       <div className="container-fluid py-4 flex-grow-1">
-        <div className="text-center mb-4">
-          <P className="lead">
-            Explore weather stations across Australia
-          </P>
-          <div className="mt-2">
-            <button 
-              className="btn btn-sm btn-outline-secondary" 
-              onClick={() => setShowDebug(!showDebug)}
-            >
-              {showDebug ? 'Hide' : 'Show'} Debug Info
-            </button>
-          </div>
-        </div>
-        
-        {showDebug && (
-          <DebugInfo 
-            selectedLocations={selectedLocations}
-            showSA4Boundaries={showSA4Boundaries}
-            setShowSA4Boundaries={setShowSA4Boundaries}
-            showStations={showStations}
-            setShowStations={setShowStations}
-            dateRange={dateRange}
-            chartType={chartType}
-            isLoading={isLoading}
-            isError={isError}
-          />
-        )}
         
         <div className="row g-4 mb-4">
           <div className="col-lg-8">
@@ -112,6 +85,33 @@ function WeatherApp() {
           </div>
         )}
       </div>
+
+
+      <div className="mt-2 text-center">
+        <button 
+          className="btn btn-sm btn-outline-secondary" 
+          onClick={() => setShowDebug(!showDebug)}
+        >
+          {showDebug ? 'Hide' : 'Show'} Debug Info
+        </button>
+      
+        
+        {showDebug && (
+          <DebugInfo 
+            selectedLocations={selectedLocations}
+            showSA4Boundaries={showSA4Boundaries}
+            setShowSA4Boundaries={setShowSA4Boundaries}
+            showStations={showStations}
+            setShowStations={setShowStations}
+            dateRange={dateRange}
+            chartType={chartType}
+            isLoading={isLoading}
+            isError={isError}
+          />
+        )}
+        
+      </div>
+
 
       
       <footer className="text-center text-muted py-3 border-top">

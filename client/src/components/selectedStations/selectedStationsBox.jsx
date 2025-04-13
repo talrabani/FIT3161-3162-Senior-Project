@@ -9,7 +9,7 @@ The rainfall and temperature data for the current selected date in MapSidebar wi
 */
 
 import React from 'react';
-import { Card, CardContent, Typography, Box } from '@mui/material';
+import { Card, CardContent, Typography, Box, Button, Stack } from '@mui/material';
 import StationCard from './stationCard';
 import { useMapContext } from '../../context/MapContext';
 
@@ -21,6 +21,21 @@ const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
   // Get the selected date from the context
   const { selectedDate } = useMapContext();
   
+  // Placeholder function for Compare button
+  const handleCompare = () => {
+    console.log('Compare button clicked');
+    // Logic for comparison will be implemented later
+  };
+  
+  // Remove All button
+  const handleRemoveAll = () => {
+    console.log('Remove All button clicked');
+    // Could call onRemoveStation for each station
+    selectedStations.forEach(station => {
+      onRemoveStation(station.name);
+    });
+  };
+  
   return (
     <Card sx={{ 
       p: 1, 
@@ -28,8 +43,42 @@ const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
       borderRadius: '12px'
     }}>
       <CardContent>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>Selected Stations</Typography>
-        <Typography variant="body2" color="text.secondary" mt={1} mb={2}>
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          mb: 2
+        }}>
+          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>
+            Selected Stations
+          </Typography>
+          
+          <Stack direction="row" spacing={1}>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              size="small"
+              disabled={selectedStations.length < 2}
+              onClick={handleCompare}
+              sx={{ fontSize: '0.8rem' }}
+            >
+              Compare
+            </Button>
+            
+            <Button 
+              variant="outlined" 
+              color="error" 
+              size="small"
+              disabled={selectedStations.length === 0}
+              onClick={handleRemoveAll}
+              sx={{ fontSize: '0.8rem' }}
+            >
+              Remove All
+            </Button>
+          </Stack>
+        </Box>
+        
+        <Typography variant="body2" color="text.secondary" mb={2}>
           {selectedStations.length === 0 
             ? 'No stations selected. Click on stations on the map to select them.' 
             : `${selectedStations.length} station(s) selected`}
