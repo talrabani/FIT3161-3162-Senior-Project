@@ -8,6 +8,7 @@ import MapSidebar from './components/ui/MapSidebar'
 import Navbar from './components/ui/Navbar'
 import DebugInfo from './components/ui/DebugInfo'
 import SelectedStationsBox from './components/selectedStations/selectedStationsBox'
+import { MapContextProvider } from './context/MapContext'
 import './App.css'
 
 // Create a client
@@ -39,9 +40,6 @@ function WeatherApp() {
   // State for SA4 boundaries and stations visibility
   const [showSA4Boundaries, setShowSA4Boundaries] = useState(true);
   const [showStations, setShowStations] = useState(true);
-  
-  // State for form data from the sidebar
-  const [mapFormData, setMapFormData] = useState(null);
   
   return (
     <div className="app-container d-flex flex-column min-vh-100">
@@ -86,15 +84,13 @@ function WeatherApp() {
                   showSA4Boundaries={showSA4Boundaries}
                   setShowSA4Boundaries={setShowSA4Boundaries}
                   showStations={showStations}
-                  selectedDate={mapFormData ? mapFormData.selectedDate : null}
-                  formData={mapFormData}
                 />
               </div>
             </div>
           </div>
           
           <div className="col-lg-4">
-            <MapSidebar onFormDataChange={setMapFormData} /> 
+            <MapSidebar />
           </div>
         </div>
         
@@ -103,7 +99,6 @@ function WeatherApp() {
             <SelectedStationsBox 
               selectedStations={selectedLocations}
               onRemoveStation={removeLocation}
-              selectedDate={mapFormData?.selectedDate || null}
             />
           </div>
         </div>
@@ -133,7 +128,9 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
-        <WeatherApp />
+        <MapContextProvider>
+          <WeatherApp />
+        </MapContextProvider>
       </ErrorBoundary>
     </QueryClientProvider>
   )

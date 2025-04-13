@@ -4,6 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { fetchSA4Boundaries, fetchStationsBySA4 } from '../../services/weatherApi';
 import { P } from '../ui/typography';
 import StationSelectCard from './MapStationSelectCard';
+import { useMapContext } from '../../context/MapContext';
 
 // Mapbox API token
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3BpcGp3dTYyN2wifQ.nntDVPhkBzS5Zm5XuFybXg';
@@ -15,10 +16,11 @@ export default function AustraliaMap({
   onLocationSelect,
   showSA4Boundaries = true,
   setShowSA4Boundaries = () => {},
-  showStations = true,
-  selectedDate = null,
-  formData = null // New prop for the complete form data
+  showStations = true
 }) {
+  // Access shared data from context
+  const { selectedDate, selectedSA4, setSelectedSA4 } = useMapContext();
+  
   // Center of Australia approximate coordinates
   const centerPosition = [133.7751, -25.2744]; // [lng, lat]
   
@@ -26,7 +28,6 @@ export default function AustraliaMap({
   const [processingLocations, setProcessingLocations] = useState([]);
   
   // State for currently selected SA4 area and its stations
-  const [selectedSA4Code, setSelectedSA4Code] = useState(null);
   const [stationsInSA4, setStationsInSA4] = useState([]);
   const stationMarkers = useRef({});
   const sa4DataLoaded = useRef(false);
@@ -162,7 +163,7 @@ export default function AustraliaMap({
             const props = feature.properties;
             
             // Set the selected SA4 code which will trigger station fetching
-            setSelectedSA4Code(props.code);
+            setSelectedSA4(props.code);
           });
           
           // Change cursor on hover
@@ -210,21 +211,21 @@ export default function AustraliaMap({
   
   // Fetch stations when an SA4 area is clicked and showStations is true
   useEffect(() => {
-    if (!map.current || !selectedSA4Code || !showStations) return;
+    if (!map.current || !selectedSA4 || !showStations) return;
     
     const fetchStations = async () => {
       try {
-        console.log(`Fetching stations for SA4 code: ${selectedSA4Code}${selectedDate ? ` with date filter: ${selectedDate.toISOString().split('T')[0]}` : ''}`);
-        const stations = await fetchStationsBySA4(selectedSA4Code, selectedDate);
+        console.log(`Fetching stations for SA4 code: ${selectedSA4}${selectedDate ? ` with date filter: ${selectedDate.toISOString().split('T')[0]}` : ''}`);
+        const stations = await fetchStationsBySA4(selectedSA4, selectedDate);
         setStationsInSA4(stations);
       } catch (error) {
-        console.error(`Error fetching stations for SA4 code ${selectedSA4Code}:`, error);
+        console.error(`Error fetching stations for SA4 code ${selectedSA4}:`, error);
         setStationsInSA4([]);
       }
     };
     
     fetchStations();
-  }, [selectedSA4Code, showStations, selectedDate]);
+  }, [selectedSA4, showStations, selectedDate]);
   
   // Display stations on the map when stationsInSA4 changes
   useEffect(() => {
@@ -309,15 +310,6 @@ export default function AustraliaMap({
       }
     }
   }, [stationsInSA4, showStations]);
-  
-  // Add a useEffect to log when formData changes
-  useEffect(() => {
-    if (formData) {
-      console.log('Map received form data:', formData);
-      // Here you can use any of the form values to customize the map behavior
-      // For example: formData.type, formData.frequency, formData.location
-    }
-  }, [formData]);
   
   // Add an effect to update the card position when the map moves
   useEffect(() => {

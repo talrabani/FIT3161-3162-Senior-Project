@@ -3,45 +3,55 @@ import { useState, useEffect } from 'react'
 import { DatePicker, StaticDatePicker } from '@mui/x-date-pickers'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { useMapContext } from '../../context/MapContext'
 
 import FrequencyRadioGroup from './FrequencyRadioGroup.jsx'
 import LocationInput from './LocationInput.jsx'
 import TypeSelect from './TypeSelect.jsx'
 
-export default function MapSidebar({ onFormDataChange = () => {} }) {
-  // Single state object for all form data
+export default function MapSidebar() {
+  const { 
+    selectedDate, 
+    setSelectedDate, 
+    selectedSA4, 
+    setSelectedSA4 
+  } = useMapContext();
+  
+  // Local state for form fields that might not need to be shared globally
   const [formData, setFormData] = useState({
     location: '',
     type: 'temperature',
-    selectedDate: new Date(),
     frequency: 'yearly'
   })
 
-  const handleVisualise = () => {
-    console.log('visualisationData:', formData)
-    
-    // Call the onFormDataChange prop with the entire form data
-    onFormDataChange(formData)
-  }
-
-  // Call handleVisualise on initial load
-  useEffect(() => {
-    handleVisualise()
-  }, []) // Empty dependency array means this runs once on mount
-
-  // Generic update function that handles all form fields
+  // Generic update function that handles local form fields
   const updateFormData = (field, value) => {
     const updatedFormData = {
       ...formData,
       [field]: value
     }
     
-    // Update state
+    // Update local state
     setFormData(updatedFormData)
     
-    // Log and notify parent component with the complete updated form data
-    console.log('visualisationData:', updatedFormData)
-    onFormDataChange(updatedFormData)
+    // Log changes
+    console.log('Form data updated:', updatedFormData)
+  }
+  
+  // Handle date change - this updates the context
+  const handleDateChange = (newDate) => {
+    setSelectedDate(newDate);
+    console.log('Selected date updated:', newDate);
+  }
+  
+  // Handle location change - this might update the SA4 code in context
+  const handleLocationChange = (newLocation) => {
+    updateFormData('location', newLocation);
+    
+    // If the location has an SA4 code, update the context
+    if (newLocation && newLocation.sa4Code) {
+      setSelectedSA4(newLocation.sa4Code);
+    }
   }
 
   return (
@@ -54,7 +64,7 @@ export default function MapSidebar({ onFormDataChange = () => {} }) {
       {/* Search bar at the top */}
       <LocationInput 
         location={formData.location} 
-        setLocation={(newLocation) => updateFormData('location', newLocation)} 
+        setLocation={handleLocationChange} 
       />
       
       {/* Type selector below the search bar */}
@@ -73,8 +83,8 @@ export default function MapSidebar({ onFormDataChange = () => {} }) {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <StaticDatePicker
             orientation="landscape"
-            value={formData.selectedDate}
-            onChange={(newDate) => updateFormData('selectedDate', newDate)}
+            value={selectedDate}
+            onChange={handleDateChange}
           />
         </LocalizationProvider>
       </Box>

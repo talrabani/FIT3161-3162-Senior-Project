@@ -18,10 +18,6 @@ export const useWeatherData = () => {
   const addLocation = useCallback((location) => {
     try {
       setSelectedLocations(prev => {
-        // Don't add if already selected (max 3 locations)
-        if (prev.some(loc => loc.name === location.name) || prev.length >= 3) {
-          return prev;
-        }
         
         // Add validation
         if (!location || !location.name || !location.latitude || !location.longitude) {

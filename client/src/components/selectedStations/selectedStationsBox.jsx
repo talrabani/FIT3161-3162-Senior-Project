@@ -11,12 +11,16 @@ The rainfall and temperature data for the current selected date in MapSidebar wi
 import React from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import StationCard from './stationCard';
+import { useMapContext } from '../../context/MapContext';
 
 const onRemoveStation = (station) => {
   console.log('Removing station:', station);
 };
 
-const SelectedStationsBox = ({ selectedStations, onRemoveStation, selectedDate }) => {
+const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
+  // Get the selected date from the context
+  const { selectedDate } = useMapContext();
+  
   return (
     <Card sx={{ 
       p: 1, 
