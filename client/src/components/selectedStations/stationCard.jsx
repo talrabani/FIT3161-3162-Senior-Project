@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, Button, Box, Grid, CircularProgress } from '@mui/material';
+import { Card, CardContent, Typography, Button, Box, CircularProgress } from '@mui/material';
 import { format } from 'date-fns';
 import { fetchStationRainfall, fetchStationTemperature } from '../../services/weatherApi';
 
@@ -16,7 +16,6 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
     const [temperatureData, setTemperatureData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const formattedDate = selectedDate ? format(selectedDate, 'MMMM d, yyyy') : 'Date not selected';
     
     // For visual representation, use percentages (a real implementation would scale actual values)
     const rainfallValue = rainfallData ? Math.min(rainfallData.rainfall || 0, 100) : 0; 
@@ -37,14 +36,20 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
               fetchStationTemperature(station.id, selectedDate)
             ]);
             
-            // Handle possible array or direct object response for rainfall data
-            setRainfallData(Array.isArray(rainfall) ? rainfall[0] || { rainfall: 0 } : rainfall || { rainfall: 0 });
+            console.log('rainfall', rainfall);
+            console.log('temperature', temperature);
+
+            // Set rainfall data - API returns a float value
+            // Handle the case where rainfall might be null or undefined
+            setRainfallData({ rainfall: typeof rainfall === 'number' ? rainfall : 0 });
             
-            // Handle possible array or direct object response for temperature data
-            setTemperatureData(Array.isArray(temperature) ? temperature[0] || { temperature: 0 } : temperature || { temperature: 0 });
-          
+            // Set temperature data - API returns a float value
+            // Handle the case where temperature might be null or undefined
+            setTemperatureData({ temperature: typeof temperature === 'number' ? temperature : 0 });
         } catch (error) {
           console.error('Error fetching weather data:', error);
+          setRainfallData({ rainfall: 0 });
+          setTemperatureData({ temperature: 0 });
         } finally {
           setLoading(false);
         }
@@ -55,7 +60,6 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
     
     // Handle remove button click
     const handleRemove = () => {
-      // The removeLocation function in useWeatherData expects a location name
       console.log('Removing station:', station.name);
       onRemove(station.name);
     };
@@ -63,11 +67,12 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
     return (
       <Card 
         sx={{ 
-          position: 'relative', 
-          borderRadius: 4,
-          mb: 2,
-          overflow: 'visible',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+          position: 'relative',
+          width: '230px',
+          borderRadius: '20px',
+          boxShadow: '0 1px 4px rgba(0,0,0,0.1)',
+          m: 1,
+          bgcolor: 'white'
         }}
       >
         <Button 
@@ -75,15 +80,17 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
           onClick={handleRemove}
           sx={{ 
             position: 'absolute', 
-            right: 0, 
-            top: 0,
-            minWidth: '30px',
-            height: '30px',
-            m: 1,
+            right: 10, 
+            top: 10,
+            minWidth: '24px',
+            width: '24px',
+            height: '24px',
             p: 0,
+            borderRadius: '4px',
             backgroundColor: 'error.main',
             color: 'white',
             fontWeight: 'bold',
+            fontSize: '12px',
             '&:hover': {
               backgroundColor: 'error.dark',
             }
@@ -92,91 +99,120 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
           X
         </Button>
         
-        <CardContent sx={{ p: 3 }}>
-          <Typography variant="h5" component="div" gutterBottom>
+        <CardContent sx={{ p: 2, pb: 2 }}>
+          <Typography variant="subtitle1" component="div" sx={{ 
+            fontWeight: 'bold', 
+            mb: 1.5,
+            pr: 2, // Space for X button
+            height: '40px',
+            overflow: 'hidden',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            lineHeight: '1.2',
+            fontSize: '0.95rem'
+          }}>
             {station.name}
           </Typography>
           
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
             ID: {station.id || '000000'}
           </Typography>
           
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
             State: {station.state || 'xxx'}
           </Typography>
           
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
             Elevation: {station.elevation || '000.0'}m
           </Typography>
           
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem', mb: 2 }}>
             Years: {station.startYear || '1900'} — {station.endYear || '2025'}
           </Typography>
           
-          {error && (
-            <Typography variant="body2" color="error" sx={{ mb: 1, fontSize: '0.75rem' }}>
-              {error}
-            </Typography>
-          )}
-          
-          <Grid container spacing={2} sx={{ mt: 2 }}>
-            <Grid item xs={6}>
-              <Typography variant="body2" color="text.secondary" align="center">
-                Rainfall
-              </Typography>
-              <Box sx={{ mt: 1, mb: 1, position: 'relative', height: '100px', border: '1px solid #ccc', borderRadius: 1 }}>
-                {loading ? (
-                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                    <CircularProgress size={24} />
-                  </Box>
-                ) : (
-                  <Box sx={{ 
-                    position: 'absolute', 
-                    bottom: 0, 
-                    width: '100%', 
-                    height: `${rainfallValue}%`, 
-                    bgcolor: '#29B6F6', // Light blue for rainfall
-                    borderBottomLeftRadius: 3,
-                    borderBottomRightRadius: 3,
-                    transition: 'height 0.5s ease-in-out'
-                  }} />
-                )}
+          <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'flex-end',
+            mt: 1,
+            mb: 1.5
+          }}>
+            <Box sx={{ 
+              width: '100%', 
+              display: 'flex', 
+              flexDirection: 'row', 
+              justifyContent: 'space-around',
+              alignItems: 'flex-end'
+            }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '70px' }}>
+                <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 0.5, fontSize: '0.85rem' }}>
+                  Rainfall
+                </Typography>
+                <Box sx={{ 
+                  position: 'relative', 
+                  width: '35px', 
+                  height: '90px', 
+                  border: '1px solid #ddd', 
+                  borderRadius: 1,
+                  bgcolor: '#fff'
+                }}>
+                  {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                      <CircularProgress size={16} />
+                    </Box>
+                  ) : (
+                    <Box sx={{ 
+                      position: 'absolute', 
+                      bottom: 0, 
+                      width: '100%', 
+                      height: `${rainfallValue}%`, 
+                      bgcolor: '#29B6F6', // Light blue for rainfall
+                      transition: 'height 0.5s ease-in-out'
+                    }} />
+                  )}
+                </Box>
+                <Typography variant="caption" color="text.secondary" align="center" sx={{ mt: 0.5, fontSize: '0.75rem' }}>
+                  {loading ? '-' : rainfallData?.rainfall >= 0 ? `${rainfallData.rainfall.toFixed(1)}mm` : 'NaN'}
+                </Typography>
               </Box>
-              <Typography variant="body2" color="text.secondary" align="center">
-                {loading ? '-' : `${rainfallData?.rainfall.toFixed(1) || 0}mm`}
-              </Typography>
-            </Grid>
-            
-            <Grid item xs={6}>
-              <Typography variant="body2" color="text.secondary" align="center">
-                Temperature
-              </Typography>
-              <Box sx={{ mt: 1, mb: 1, position: 'relative', height: '100px', border: '1px solid #ccc', borderRadius: 1 }}>
-                {loading ? (
-                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                    <CircularProgress size={24} />
-                  </Box>
-                ) : (
-                  <Box sx={{ 
-                    position: 'absolute', 
-                    bottom: 0, 
-                    width: '100%', 
-                    height: `${temperatureValue}%`, 
-                    bgcolor: '#FFE082', // Light yellow for temperature
-                    borderBottomLeftRadius: 3,
-                    borderBottomRightRadius: 3,
-                    transition: 'height 0.5s ease-in-out'
-                  }} />
-                )}
+              
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '70px' }}>
+                <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 0.5, fontSize: '0.85rem' }}>
+                  Temperature
+                </Typography>
+                <Box sx={{ 
+                  position: 'relative', 
+                  width: '35px', 
+                  height: '90px', 
+                  border: '1px solid #ddd', 
+                  borderRadius: 1,
+                  bgcolor: '#fff'
+                }}>
+                  {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                      <CircularProgress size={16} />
+                    </Box>
+                  ) : (
+                    <Box sx={{ 
+                      position: 'absolute', 
+                      bottom: 0, 
+                      width: '100%', 
+                      height: `${temperatureValue}%`, 
+                      bgcolor: '#FFE082', // Light yellow for temperature
+                      transition: 'height 0.5s ease-in-out'
+                    }} />
+                  )}
+                </Box>
+                <Typography variant="caption" color="text.secondary" align="center" sx={{ mt: 0.5, fontSize: '0.75rem' }}>
+                  {loading ? '-' : temperatureData?.temperature >= -80 ? `${temperatureData.temperature.toFixed(1)}°C` : 'NaN'}
+                </Typography>
               </Box>
-              <Typography variant="body2" color="text.secondary" align="center">
-                {loading ? '-' : `${temperatureData?.temperature.toFixed(1) || 0}°C`}
-              </Typography>
-            </Grid>
-          </Grid>
+            </Box>
+          </Box>
           
-          <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 2 }}>
-            {formattedDate}
+          <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1, fontSize: '0.75rem' }}>
+            {selectedDate ? format(selectedDate, 'MMMM d, yyyy') : 'No date'}
           </Typography>
         </CardContent>
       </Card>

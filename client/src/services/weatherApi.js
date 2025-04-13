@@ -127,14 +127,28 @@ export const fetchSA4Summary = async () => {
  */
 export const fetchStationRainfall = async (stationId, date) => {
   try {
+    // Add leading zero to stationId if it's less than 6 digits
+    const formattedStationId = stationId.toString().padStart(6, '0');
+
     // Format date as YYYY-MM-DD if it's a Date object
     const formattedDate = date instanceof Date 
       ? date.toISOString().split('T')[0] 
       : date;
     
-    const url = `${SERVER_API_URL}/rainfall/station/${stationId}/date/${formattedDate}`;
+    console.log('CLIENT SERVICE: Fetching rainfall data for station:', formattedStationId, 'on date:', formattedDate);
+    const url = `${SERVER_API_URL}/rainfall/station/${formattedStationId}/date/${formattedDate}`;
     const response = await axios.get(url);
-    return response.data;
+    // Check if response.data is an array and extract the first item if it exists
+    const data = Array.isArray(response.data) && response.data.length > 0 
+      ? response.data[0] 
+      : response.data;
+    
+    // Extract rainfall value and convert to float if it exists
+    const rainfallData = data && data.rainfall !== undefined 
+      ? parseFloat(data.rainfall) 
+      : 0;
+    console.log('CLIENT SERVICE: Rainfall data:', rainfallData);
+    return rainfallData;
   } catch (error) {
     console.error(`Error fetching rainfall data for station ${stationId}:`, error);
     return null;
@@ -155,10 +169,7 @@ export const fetchStationTemperature = async (stationId, date) => {
       : date;
     
     // Temporary return a dummy temperature data
-    const dummyTemperatureData = {
-      temperature: 20,
-      date: formattedDate
-    };
+    const dummyTemperatureData = 20;
 
     // const url = `${SERVER_API_URL}/temperature/station/${stationId}/date/${formattedDate}`;
     // const response = await axios.get(url);

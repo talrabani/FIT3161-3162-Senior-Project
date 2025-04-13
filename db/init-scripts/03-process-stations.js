@@ -147,7 +147,7 @@ async function insertStations() {
             }
             
             // Parse the station data from the fixed-width format
-            const stationId = line.substring(columnIndexes[0][0]-1, columnIndexes[0][1]).trim();
+            const stationId = (line.substring(columnIndexes[0][0]-1, columnIndexes[0][1]).trim()).padStart(6, '0');
             const stationName = line.substring(columnIndexes[2][0]-1, columnIndexes[2][1]).trim();
             const startYearRaw = line.substring(columnIndexes[3][0]-1, columnIndexes[3][1]).trim();
             const endYearRaw = line.substring(columnIndexes[4][0], columnIndexes[4][1]).trim();

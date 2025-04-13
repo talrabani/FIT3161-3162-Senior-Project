@@ -18,16 +18,26 @@ const onRemoveStation = (station) => {
 
 const SelectedStationsBox = ({ selectedStations, onRemoveStation, selectedDate }) => {
   return (
-    <Card>
+    <Card sx={{ 
+      p: 1, 
+      bgcolor: '#f9f9f9',
+      borderRadius: '12px'
+    }}>
       <CardContent>
-        <Typography variant="h6">Selected Stations</Typography>
-        <Typography variant="body2" color="text.secondary" mt={1}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>Selected Stations</Typography>
+        <Typography variant="body2" color="text.secondary" mt={1} mb={2}>
           {selectedStations.length === 0 
             ? 'No stations selected. Click on stations on the map to select them.' 
             : `${selectedStations.length} station(s) selected`}
         </Typography>
         
-        <Box sx={{ mt: 2 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: 'row', 
+          flexWrap: 'wrap', 
+          gap: 2,
+          justifyContent: 'flex-start',
+        }}>
           {selectedStations.map(station => (
             <StationCard 
               key={station.id || station.name} 
