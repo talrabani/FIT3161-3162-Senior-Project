@@ -3,6 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { fetchSA4Boundaries, fetchStationsBySA4 } from '../../services/weatherApi';
 import { P } from '../ui/typography';
+import StationSelectCard from './StationSelectCard';
 
 // Mapbox API token
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3BpcGp3dTYyN2wifQ.nntDVPhkBzS5Zm5XuFybXg';
@@ -11,7 +12,6 @@ mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3Bpc
  * Australia Map Component with selectable location markers using Mapbox
  */
 export default function AustraliaMap({ 
-  selectedLocations = [], 
   onLocationSelect,
   showSA4Boundaries = true,
   setShowSA4Boundaries = () => {},
@@ -30,6 +30,10 @@ export default function AustraliaMap({
   const [stationsInSA4, setStationsInSA4] = useState([]);
   const stationMarkers = useRef({});
   const sa4DataLoaded = useRef(false);
+  
+  // State for the selected station
+  const [selectedStation, setSelectedStation] = useState(null);
+  const [selectedStationCoords, setSelectedStationCoords] = useState(null); // Store pixel coordinates - used to position the card of selected station
   
   // Refs for DOM elements
   const mapContainer = useRef(null);
@@ -259,23 +263,23 @@ export default function AustraliaMap({
         // Extract coordinates from location property
         const coordinates = station.location.coordinates;
         
-        // Create popup with station details
-        const popup = new mapboxgl.Popup({ closeButton: true, offset: [0, -10] })
-          .setHTML(`
-            <div>
-              <strong>${station.station_name}</strong><br>
-              ID: ${station.station_id}<br>
-              State: ${station.station_state}<br>
-              ${station.station_height ? `Elevation: ${station.station_height}m<br>` : ''}
-              Years: ${station.station_start_year || 'N/A'} - ${station.station_end_year || 'Present'}
-            </div>
-          `);
-        
-        // Create marker
+        // Create marker with click handler instead of popup
         const marker = new mapboxgl.Marker(el)
           .setLngLat(coordinates)
-          .setPopup(popup)
           .addTo(map.current);
+        
+        // Add click event to marker
+        el.addEventListener('click', () => {
+          // Get the geographic coordinates of the station
+          const lngLat = marker.getLngLat();
+          
+          // Convert to pixel coordinates (for positioning the card)
+          const pixelCoords = map.current.project(lngLat);
+          
+          // Store both the station data and its pixel coordinates
+          setSelectedStation(station);
+          setSelectedStationCoords(pixelCoords);
+        });
         
         // Store reference to marker
         stationMarkers.current[station.station_id] = marker;
@@ -315,10 +319,74 @@ export default function AustraliaMap({
     }
   }, [formData]);
   
+  // Add an effect to update the card position when the map moves
+  useEffect(() => {
+    if (!map.current || !selectedStation || !selectedStationCoords) return;
+    
+    // Function to update the position of the card based on the station's geographic location
+    const updateCardPosition = () => {
+      const lngLat = [
+        selectedStation.location.coordinates[0],
+        selectedStation.location.coordinates[1]
+      ];
+      const newPixelCoords = map.current.project(lngLat);
+      setSelectedStationCoords(newPixelCoords);
+    };
+    
+    // Add event listeners for map movements
+    map.current.on('move', updateCardPosition);
+    map.current.on('zoom', updateCardPosition);
+    
+    // Clean up event listeners
+    return () => {
+      if (map.current) {
+        map.current.off('move', updateCardPosition);
+        map.current.off('zoom', updateCardPosition);
+      }
+    };
+  }, [selectedStation]);
+  
   return (
-    <div 
-      ref={mapContainer} 
-      className="australia-map-container w-100 h-100"
-    ></div>
+    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+      <div 
+        ref={mapContainer} 
+        className="australia-map-container w-100 h-100"
+      ></div>
+      
+      {selectedStation && selectedStationCoords && (
+        <div style={{ 
+          position: 'absolute', 
+          left: `${selectedStationCoords.x}px`,
+          top: `${selectedStationCoords.y - 10}px`, // Position slightly above the marker
+          transform: 'translate(-50%, -100%)', // Center horizontally and position above
+          zIndex: 10 
+        }}>
+          <StationSelectCard 
+            station={selectedStation}
+            onClose={() => {
+              setSelectedStation(null);
+              setSelectedStationCoords(null);
+            }}
+            onSelect={(station) => {
+              // Convert station to location format expected by onLocationSelect
+              const location = {
+                name: station.station_name,
+                id: station.station_id,
+                latitude: station.location.coordinates[1],
+                longitude: station.location.coordinates[0],
+                state: station.station_state,
+                elevation: station.station_height,
+                startYear: station.station_start_year,
+                endYear: station.station_end_year
+              };
+              
+              onLocationSelect(location);
+              setSelectedStation(null);
+              setSelectedStationCoords(null);
+            }}
+          />
+        </div>
+      )}
+    </div>
   );
 } 
