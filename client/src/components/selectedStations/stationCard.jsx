@@ -116,19 +116,19 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
           </Typography>
           
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
-            ID: {station.id || '000000'}
+            <span style={{ fontWeight: 'bold' }}>ID:</span> {station.id || '000000'}
           </Typography>
           
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
-            State: {station.state || 'xxx'}
+            <span style={{ fontWeight: 'bold' }}>State:</span> {station.state || 'xxx'}
           </Typography>
           
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
-            Elevation: {station.elevation || '000.0'}m
+            <span style={{ fontWeight: 'bold' }}>Elevation:</span> {station.elevation || '000.0'}m
           </Typography>
           
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem', mb: 2 }}>
-            Years: {station.startYear || '1900'} — {station.endYear || '2025'}
+            <span style={{ fontWeight: 'bold' }}>Years:</span> {station.startYear || '1900'} — {station.endYear || '2025'}
           </Typography>
           
           <Box sx={{ 
