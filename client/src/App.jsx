@@ -104,7 +104,6 @@ function WeatherApp() {
             showStations={showStations}
             setShowStations={setShowStations}
             dateRange={dateRange}
-            chartType={chartType}
             isLoading={isLoading}
             isError={isError}
           />

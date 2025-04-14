@@ -179,3 +179,19 @@ export const fetchStationTemperature = async (stationId, date) => {
     return null;
   }
 }; 
+
+/**
+ * Fetches average rainfall data for all SA4 areas on a given month, year
+ * @param {string} month - The month to get rainfall data for (MM)
+ * @param {string} year - The year to get rainfall data for (YYYY)
+ * @returns {Promise} Promise with array of SA4 boundaries and their station counts
+ */
+export const fetchAverageRainfallBySA4 = async (month, year) => {
+  try {
+    const response = await axios.get(`${SERVER_API_URL}/rainfall/sa4/month/${month}/year/${year}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching average rainfall data for SA4:', error);
+    return [];
+  }
+};

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { P } from './typography';
+import { useMapContext } from '../../context/MapContext';
+import { fetchAverageRainfallBySA4, fetchSA4Summary } from '../../services/weatherApi';
 
 /**
  * Debug Information Panel
@@ -12,10 +14,73 @@ const DebugInfo = ({
   showStations = true,
   setShowStations = () => {},
   dateRange = { startDate: '', endDate: '' },
-  chartType = '',
   isLoading = false,
   isError = false
 }) => {
+  // Get selectedDate and selectedSA4 from the context
+  const { selectedDate, selectedSA4 } = useMapContext();
+  
+  // State for SA4 rainfall data
+  const [sa4RainfallData, setSa4RainfallData] = useState([]);
+  const [sa4Information, setSa4Information] = useState([]);
+  const [isLoadingRainfall, setIsLoadingRainfall] = useState(false);
+  const [rainfallError, setRainfallError] = useState(null);
+  
+  // Format selected date for display
+  const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : 'Not set';
+  
+  // Extract month and year from the selected date
+  const selectedMonth = selectedDate ? String(selectedDate.getMonth() + 1).padStart(2, '0') : null; // +1 because getMonth() returns 0-11
+  const selectedYear = selectedDate ? selectedDate.getFullYear().toString() : null;
+  
+  // Fetch SA4 information once on component mount
+  useEffect(() => {
+    const fetchSA4Info = async () => {
+      try {
+        const data = await fetchSA4Summary();
+        setSa4Information(data);
+      } catch (error) {
+        console.error('Error fetching SA4 information:', error);
+      }
+    };
+    
+    fetchSA4Info();
+  }, []);
+  
+  // Fetch rainfall data when the selected date changes
+  useEffect(() => {
+    if (!selectedMonth || !selectedYear) return;
+    
+    const fetchRainfallData = async () => {
+      setIsLoadingRainfall(true);
+      setRainfallError(null);
+      
+      try {
+        const data = await fetchAverageRainfallBySA4(selectedMonth, selectedYear);
+        setSa4RainfallData(data);
+      } catch (error) {
+        console.error('Error fetching SA4 rainfall data:', error);
+        setRainfallError('Failed to fetch rainfall data');
+        setSa4RainfallData([]);
+      } finally {
+        setIsLoadingRainfall(false);
+      }
+    };
+    
+    fetchRainfallData();
+  }, [selectedMonth, selectedYear]);
+  
+  // Combine rainfall data with SA4 information
+  const combinedRainfallData = sa4RainfallData.map(rainfallItem => {
+    const sa4Info = sa4Information.find(item => item.code === rainfallItem.sa4_code);
+    return {
+      sa4_code: rainfallItem.sa4_code,
+      sa4_name: sa4Info?.name || 'Unknown',
+      state: sa4Info?.state || 'Unknown',
+      avg_rainfall: rainfallItem.rainfall
+    };
+  });
+  
   return (
     <div className="alert alert-info mb-4 text-start">
       <h4 className="alert-heading">Debug Information</h4>
@@ -45,10 +110,45 @@ const DebugInfo = ({
           </li>
         ))}
       </ul>
+      <p>Selected Date: {formattedDate}</p>
       <p>Date Range: {dateRange.startDate} to {dateRange.endDate}</p>
-      <p>Chart Type: {chartType}</p>
+      <p>Selected SA4: {selectedSA4 || 'None'}</p>
       <p>Loading: {isLoading ? 'Yes' : 'No'}</p>
       <p>Error: {isError ? 'Yes' : 'No'}</p>
+      
+      <div className="mt-4">
+        <h5>Average Rainfall by SA4 - {selectedMonth}/{selectedYear}</h5>
+        {isLoadingRainfall ? (
+          <p>Loading rainfall data...</p>
+        ) : rainfallError ? (
+          <p className="text-danger">{rainfallError}</p>
+        ) : combinedRainfallData.length > 0 ? (
+          <div className="table-responsive" style={{ maxHeight: '300px', overflowY: 'auto' }}>
+            <table className="table table-sm table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>SA4 Code</th>
+                  <th>SA4 Name</th>
+                  <th>State</th>
+                  <th>Average Rainfall (mm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {combinedRainfallData.map(item => (
+                  <tr key={item.sa4_code} className={selectedSA4 === item.sa4_code ? 'table-primary' : ''}>
+                    <td>{item.sa4_code}</td>
+                    <td>{item.sa4_name}</td>
+                    <td>{item.state}</td>
+                    <td>{item.avg_rainfall ? Number(item.avg_rainfall).toFixed(2) : 'N/A'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p>No rainfall data available for this month/year</p>
+        )}
+      </div>
     </div>
   );
 };
