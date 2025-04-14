@@ -103,6 +103,16 @@ CREATE TABLE IF NOT EXISTS RAINFALL_DATA_DAILY (
     FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE
 );
 
+-- Average rainfall for every SA4 area by month
+CREATE TABLE IF NOT EXISTS SA4_RAINFALL_MONTHLY (
+    sa4_code VARCHAR(3),
+    year INTEGER,
+    month INTEGER,
+    rainfall DECIMAL(5,1),
+    PRIMARY KEY (sa4_code, year, month),
+    FOREIGN KEY (sa4_code) REFERENCES SA4_BOUNDARIES(sa4_code21)
+);
+
 -- Add comments to explain the data tables
 COMMENT ON TABLE RAINFALL_DATA_DAILY IS 'Daily rainfall records for each station in mm';
 

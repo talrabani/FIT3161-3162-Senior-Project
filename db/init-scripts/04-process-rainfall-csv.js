@@ -1,5 +1,5 @@
 // This script is used to process the rainfall CSV files and insert the data into the database
-// Currently processing 50 stations at a time, inserting 10000 rows at a time  
+// Currently processing 16 files at a time, inserting 10000 rows at a time  
 
 const { Pool } = require('pg');
 const fs = require('fs');
@@ -255,7 +255,7 @@ async function processAllCSVFiles() {
         // Process files in batches to limit concurrent operations
         let processedCount = 0;
         let totalRowsProcessed = 0;
-        const fileBatchSize = 50; // Process 50 files at a time
+        const fileBatchSize = 16; // Process 50 files at a time
         
         for (let i = 0; i < files.length; i += fileBatchSize) {
             const fileBatch = files.slice(i, i + fileBatchSize);

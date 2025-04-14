@@ -113,11 +113,20 @@ async function insertStations() {
     const progressReportInterval = 500;
 
     try {
-        console.log('Starting station data insertion... This may take a minute or two...');
+        
         
         // Create a connection pool with retry
         pool = await createPoolWithRetry(pgConfig);
 
+        // Check if the station table is already full
+        const oldCount = await pool.query('SELECT COUNT(*) FROM STATION');
+        if (oldCount.rows[0].count >= 19000) {
+            console.log('Station table is already full, skipping station data insertion');
+            return;
+        }
+
+        console.log('Starting station data insertion... This may take a minute or two...');
+        // Process the stations.txt file
         const columns = stations[3].split(/\s+/);
         let columnIndexes = [];
         let totalLength = 0;

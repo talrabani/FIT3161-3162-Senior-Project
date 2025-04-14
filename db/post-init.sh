@@ -52,6 +52,9 @@ node 03-process-stations.js
 echo "Processing rainfall data..."
 node 04-process-rainfall-csv.js
 
+echo "Processing average rainfall for every SA4 area by month..."
+node 05-process-average-sa4.js
+
 echo "Post-initialization scripts completed successfully"
 
 # Keep the script running so the container doesn't exit
