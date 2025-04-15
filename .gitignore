@@ -1,5 +1,5 @@
 client/node_modules
 server/node_modules
 node_modules
-db/data/extracted
+db/data/extracted/rainfall
 client/.env

@@ -27,7 +27,7 @@ echo "User: $PGUSER / $POSTGRES_USER"
 echo "Verifying PostgreSQL connection..."
 maxRetries=30
 retryCount=0
-while ! psql -c "SELECT 1" > /dev/null 2>&1; do
+while ! psql -U postgres -h localhost -p 5432 -d weather_db -c "select 1"; do
     retryCount=$((retryCount+1))
     if [ $retryCount -ge $maxRetries ]; then
         echo "Error: Maximum retry attempts ($maxRetries) reached. PostgreSQL is still not ready."
