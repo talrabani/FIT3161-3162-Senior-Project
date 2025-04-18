@@ -17,9 +17,24 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     
-    // For visual representation, use percentages (a real implementation would scale actual values)
-    const rainfallValue = rainfallData ? Math.min(rainfallData.rainfall || 0, 100) : 0; 
-    const temperatureValue = temperatureData ? Math.min((temperatureData.temperature || 0) * 2, 100) : 0;
+    // Calculate fill percentages based on the specified ranges
+    // Rainfall: 0mm = 0%, >=30mm = 100%
+    // Temperature: <=-10°C = 0%, >=40°C = 100%
+    const calculateRainfallPercentage = (rainfall) => {
+      if (rainfall <= 0) return 0;
+      if (rainfall >= 30) return 100;
+      return (rainfall / 30) * 100;
+    };
+    
+    const calculateTemperaturePercentage = (temperature) => {
+      if (temperature <= -10) return 0;
+      if (temperature >= 40) return 100;
+      // Scale from -10 to 40 (range of 50 degrees)
+      return ((temperature + 10) / 50) * 100;
+    };
+    
+    const rainfallPercentage = rainfallData ? calculateRainfallPercentage(rainfallData.rainfall || 0) : 0;
+    const temperaturePercentage = temperatureData ? calculateTemperaturePercentage(temperatureData.temperature || 0) : 0;
     
     // Fetch weather data when station or date changes
     useEffect(() => {
@@ -166,7 +181,7 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
                       position: 'absolute', 
                       bottom: 0, 
                       width: '100%', 
-                      height: `${rainfallValue}%`, 
+                      height: `${rainfallPercentage}%`, 
                       bgcolor: '#29B6F6', // Light blue for rainfall
                       transition: 'height 0.5s ease-in-out'
                     }} />
@@ -198,7 +213,7 @@ const StationCard = ({ station, onRemove, selectedDate }) => {
                       position: 'absolute', 
                       bottom: 0, 
                       width: '100%', 
-                      height: `${temperatureValue}%`, 
+                      height: `${temperaturePercentage}%`, 
                       bgcolor: '#FFE082', // Light yellow for temperature
                       transition: 'height 0.5s ease-in-out'
                     }} />

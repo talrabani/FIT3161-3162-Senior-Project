@@ -9,7 +9,7 @@ export const useMapContext = () => useContext(MapContext);
 // Provider component
 export const MapContextProvider = ({ children }) => {
   // State from MapSidebar that needs to be shared
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date(2000, 0, 1)); // Jan 1, 2000
   const [selectedSA4, setSelectedSA4] = useState(null);
   const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
   const [isRangeMode, setIsRangeMode] = useState(false);
