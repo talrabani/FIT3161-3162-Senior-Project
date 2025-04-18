@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { fetchSA4Boundaries, fetchStationsBySA4 } from '../../services/weatherApi';
+import { fetchSA4Boundaries, fetchStationsBySA4, fetchAverageRainfallBySA4 } from '../../services/weatherApi';
 import { P } from '../ui/typography';
 import StationSelectCard from './MapStationSelectCard';
 import { useMapContext } from '../../context/MapContext';
+import chroma from 'chroma-js';  // Import chroma.js for color scaling
 
 // Mapbox API token
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3BpcGp3dTYyN2wifQ.nntDVPhkBzS5Zm5XuFybXg';
@@ -35,6 +36,10 @@ export default function AustraliaMap({
   // State for the selected station
   const [selectedStation, setSelectedStation] = useState(null);
   const [selectedStationCoords, setSelectedStationCoords] = useState(null); // Store pixel coordinates - used to position the card of selected station
+  
+  // State for rainfall data
+  const [rainfallData, setRainfallData] = useState([]);
+  const rainDataLoaded = useRef(false);
   
   // Refs for DOM elements
   const mapContainer = useRef(null);
@@ -90,6 +95,121 @@ export default function AustraliaMap({
     };
   }, []);
   
+  // Fetch rainfall data when the selected date changes
+  useEffect(() => {
+    if (!selectedDate || !map.current) return;
+    
+    const fetchRainfallData = async () => {
+      try {
+        // Extract month and year from selected date
+        const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // +1 because getMonth() returns 0-11
+        const year = selectedDate.getFullYear().toString();
+        
+        console.log(`Fetching rainfall data for month: ${month}, year: ${year}`);
+        const data = await fetchAverageRainfallBySA4(month, year);
+        setRainfallData(data);
+        rainDataLoaded.current = true;
+        
+        // Update map colors if boundaries are already loaded
+        if (boundariesSourceAdded.current && map.current.getSource('sa4-boundaries')) {
+          updateMapColors();
+        }
+      } catch (error) {
+        console.error('Error fetching rainfall data:', error);
+        setRainfallData([]);
+      }
+    };
+    
+    fetchRainfallData();
+  }, [selectedDate]);
+  
+  // Function to update map colors based on rainfall data
+  const updateMapColors = () => {
+    if (!map.current || !boundariesSourceAdded.current || rainfallData.length === 0) return;
+    
+    try {
+      // Extract rainfall values to determine min/max for color scale
+      const rainfallValues = rainfallData.map(item => parseFloat(item.rainfall) || 0);
+      const minRainfall = Math.min(...rainfallValues);
+      const maxRainfall = Math.max(...rainfallValues);
+      
+      console.log(`Rainfall range: ${minRainfall} to ${maxRainfall} mm`);
+      
+      // Create a color scale from light blue to dark blue
+      const colorScale = chroma.scale(['#e0f3ff', '#025196']).domain([minRainfall, maxRainfall]);
+      
+      // Create a lookup object for SA4 code to rainfall
+      const rainfallBySA4 = {};
+      rainfallData.forEach(item => {
+        rainfallBySA4[item.sa4_code] = parseFloat(item.rainfall) || 0;
+      });
+      
+      console.log('SA4 Rainfall data:', rainfallBySA4);
+      
+      // Alternative approach: Pre-compute the colors for each SA4 area
+      // This avoids complex expressions that might not be supported in all versions
+      const colorBySA4 = {};
+      Object.entries(rainfallBySA4).forEach(([code, value]) => {
+        colorBySA4[code] = colorScale(value).hex();
+      });
+      
+      // Update the fill layer with data-driven style
+      // Using a simpler expression that just looks up the color directly
+      map.current.setPaintProperty('sa4-boundaries-fill', 'fill-color', [
+        'match',
+        ['get', 'code'],
+        ...Object.entries(colorBySA4).flat(),
+        '#cccccc' // Default color for areas with no data
+      ]);
+      
+      // Set fill opacity
+      map.current.setPaintProperty('sa4-boundaries-fill', 'fill-opacity', 0.7);
+      
+      // Update or create the legend
+      updateLegend(minRainfall, maxRainfall, colorScale);
+    } catch (error) {
+      console.error('Error updating map colors:', error);
+    }
+  };
+  
+  // Helper function to update or create the legend
+  const updateLegend = (minRainfall, maxRainfall, colorScale) => {
+    let legend = document.getElementById('map-legend');
+    
+    // If legend doesn't exist, create it
+    if (!legend) {
+      legend = document.createElement('div');
+      legend.id = 'map-legend';
+      legend.style.position = 'absolute';
+      legend.style.bottom = '20px';
+      legend.style.left = '20px';
+      legend.style.padding = '10px';
+      legend.style.backgroundColor = 'white';
+      legend.style.borderRadius = '4px';
+      legend.style.boxShadow = '0 1px 2px rgba(0,0,0,0.1)';
+      legend.style.zIndex = '10';
+      mapContainer.current.appendChild(legend);
+    }
+    
+    // Format the selected date for display
+    const formattedDate = selectedDate ? 
+      `${selectedDate.toLocaleString('default', { month: 'long' })} ${selectedDate.getFullYear()}` : 
+      'Selected Date';
+    
+    // Update the legend content
+    legend.innerHTML = `
+      <h4 style="margin: 0 0 5px 0; font-size: 14px;">Rainfall (mm)</h4>
+      <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">${formattedDate}</p>
+      <div style="display: flex; align-items: center; margin-bottom: 5px;">
+        <div style="width: 150px; height: 10px; background: linear-gradient(to right, ${colorScale(minRainfall).hex()}, ${colorScale(maxRainfall).hex()});"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 12px;">
+        <span>${minRainfall.toFixed(1)}</span>
+        <span>${maxRainfall.toFixed(1)}</span>
+      </div>
+    `;
+  };
+  
   // Load SA4 boundaries data when the toggle is switched on
   useEffect(() => {
     if (!map.current || !showSA4Boundaries) return;
@@ -118,7 +238,7 @@ export default function AustraliaMap({
             type: 'fill',
             source: 'sa4-boundaries',
             paint: {
-              'fill-color': '#088',
+              'fill-color': '#088',  // This will be overridden by data-driven style
               'fill-opacity': 0.1
             }
           });
@@ -176,9 +296,19 @@ export default function AustraliaMap({
           });
           
           boundariesSourceAdded.current = true;
+          
+          // Apply rainfall colors if we already have the data
+          if (rainDataLoaded.current && rainfallData.length > 0) {
+            updateMapColors();
+          }
         } else {
           // Just update the data if source already exists
           map.current.getSource('sa4-boundaries').setData(boundariesData);
+          
+          // Re-apply color styling if we have rainfall data
+          if (rainDataLoaded.current && rainfallData.length > 0) {
+            updateMapColors();
+          }
         }
       } catch (error) {
         console.error('Error adding SA4 boundaries to map:', error);
