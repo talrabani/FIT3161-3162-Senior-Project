@@ -146,14 +146,45 @@ export const fetchStationRainfall = async (stationId, date) => {
     // Extract rainfall value and convert to float if it exists
     const rainfallData = data && data.rainfall !== undefined 
       ? parseFloat(data.rainfall) 
-      : 0;
-    console.log('CLIENT SERVICE: Rainfall data:', rainfallData);
+      : null;
     return rainfallData;
   } catch (error) {
     console.error(`Error fetching rainfall data for station ${stationId}:`, error);
     return null;
   }
 };
+
+/**
+ * Fetches rainfall data for a specific station on a given date range
+ * @param {string|number} stationId - The station ID to fetch data for
+ * @param {Date|string} startDate - The start date to get data for (Date object or YYYY-MM-DD string)
+ * @param {Date|string} endDate - The end date to get data for (Date object or YYYY-MM-DD string)
+ * @returns {Promise} Promise with rainfall data for the station on the specified date range
+ */
+export const fetchStationRainfallRange = async (stationId, startDate, endDate) => {
+  try {
+    // Add leading zero to stationId if it's less than 6 digits
+    const formattedStationId = stationId.toString().padStart(6, '0');
+
+    // Format dates as YYYY-MM-DD if they're Date objects
+    const formattedStartDate = startDate instanceof Date 
+      ? startDate.toISOString().split('T')[0] 
+      : startDate;
+    
+    const formattedEndDate = endDate instanceof Date 
+      ? endDate.toISOString().split('T')[0] 
+      : endDate;
+    
+    console.log('CLIENT SERVICE: Fetching rainfall data for station:', formattedStationId, 'on date range:', formattedStartDate, 'to', formattedEndDate);
+    const url = `${SERVER_API_URL}/rainfall/station/${formattedStationId}/date/${formattedStartDate}/end_date/${formattedEndDate}`;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching rainfall data for station ${stationId} on date range ${startDate} to ${endDate}:`, error);
+    return [];
+  }
+};
+
 
 /**
  * Fetches temperature data for a specific station on a given date

@@ -13,7 +13,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useMapContext } from '../../context/MapContext';
 import { format } from 'date-fns';
-import { fetchStationRainfall, fetchStationTemperature } from '../../services/weatherApi';
+import { fetchStationRainfallRange } from '../../services/weatherApi';
 
 /**
  * CompareStationsBox Component
@@ -23,10 +23,11 @@ import { fetchStationRainfall, fetchStationTemperature } from '../../services/we
  */
 const CompareStationsBox = ({ stationsToCompare }) => {
   const { dateRange, setDateRange } = useMapContext();
-  const [startDate, setStartDate] = useState(dateRange.startDate || new Date(2000, 0, 1));
+  const { selectedDate } = useMapContext();
+  const [startDate, setStartDate] = useState(dateRange.startDate || selectedDate);
   const [endDate, setEndDate] = useState(dateRange.endDate || new Date());
   const [loading, setLoading] = useState(false);
-  const [comparisonData, setComparisonData] = useState([]);
+  const [comparisonData, setComparisonData] = useState({});
   const [error, setError] = useState(null);
 
   // Handle date changes
@@ -60,20 +61,17 @@ const CompareStationsBox = ({ stationsToCompare }) => {
         console.log('Stations:', stationsToCompare.map(s => s.name).join(', '));
         console.log('Date range:', format(startDate, 'yyyy-MM-dd'), 'to', format(endDate, 'yyyy-MM-dd'));
         
-        // Simulate fetching data
-        const mockData = stationsToCompare.map(station => ({
-          stationId: station.id,
-          stationName: station.name,
-          data: [
-            // This would be time series data in a real implementation
-            { date: startDate, rainfall: Math.random() * 30, temperature: 15 + Math.random() * 10 }
-          ]
-        }));
-        
-        // Wait a bit to simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        setComparisonData(mockData);
+        // Dictionary to store station data
+        const stationData = {};
+
+        // Fetch data for each station
+        for (const station of stationsToCompare) {
+          const data = await fetchStationRainfallRange(station.id, startDate, endDate);
+          stationData[station.id] = data;
+        }
+
+        // Set the fetched data
+        setComparisonData(stationData);
       } catch (err) {
         console.error('Error fetching comparison data:', err);
         setError('Failed to fetch comparison data. Please try again.');

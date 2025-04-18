@@ -14,7 +14,7 @@ const pool = new Pool({
 });
 
 /**
- * API endpoint to get rainfall data for a specific station on a given date
+ * API endpoint to get DAY rainfall data for a specific station on a given date
  * GET /api/rainfall/station/:station_id/date/:date
  */
 router.get('/station/:station_id/date/:date', async (req, res) => {
@@ -27,6 +27,27 @@ router.get('/station/:station_id/date/:date', async (req, res) => {
       AND date = $2
     `, [station_id, date]);
 
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching rainfall data:', error);
+    res.status(500).json({ error: 'Failed to fetch rainfall data' });
+  }
+});
+
+/**
+ * API endpoint to get DAILTY rainfall data for a specific station for a range of dates
+ * GET /api/rainfall/station/:station_id/date/:start_date/end_date/:end_date
+ */
+router.get('/station/:station_id/date/:start_date/end_date/:end_date', async (req, res) => {
+  const { station_id, start_date, end_date } = req.params;
+  
+  try {
+    const result = await pool.query(`
+      SELECT * FROM RAINFALL_DATA_DAILY 
+      WHERE station_id = $1 
+      AND date BETWEEN $2 AND $3
+    `, [station_id, start_date, end_date]);
+  
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching rainfall data:', error);
