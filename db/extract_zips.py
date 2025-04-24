@@ -4,20 +4,17 @@ import logging
 from tqdm import tqdm
 
 # Set up logging
+os.makedirs('logs', exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('zip_extraction.log'),
+        logging.FileHandler('logs/zip_extract.log'),
         logging.StreamHandler()
     ]
 )
 
-def extract_zip_files():
-    """Extract all zip files in the data/rainfall_zips directory"""
-    # Set up directory paths
-    zip_dir = os.path.join('data', 'rainfall_zips')
-    extract_dir = os.path.join('data', 'extracted', 'rainfall')
+def extract_zip_files(zip_dir, extract_dir):
     
     # Create extraction directory if it doesn't exist
     os.makedirs(extract_dir, exist_ok=True)
@@ -43,4 +40,23 @@ def extract_zip_files():
 if __name__ == "__main__":
     # Change working directory to the script's location
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-    extract_zip_files()
+
+    """Extract all zip files in the data/rainfall_zips directory"""
+    # Set up directory paths
+    zip_dir = os.path.join('data', 'rainfall_zips')
+    extract_dir = os.path.join('data', 'extracted', 'rainfall')
+    extract_zip_files(zip_dir, extract_dir)
+
+
+    """Extract all zip files in the data/max_temp_zips directory"""
+    # Set up directory paths
+    zip_dir = os.path.join('data', 'max_temp_zips')
+    extract_dir = os.path.join('data', 'extracted', 'max_temp')
+    extract_zip_files(zip_dir, extract_dir)
+
+
+    """Extract all zip files in the data/min_temp_zips directory"""
+    # Set up directory paths
+    zip_dir = os.path.join('data', 'min_temp_zips')
+    extract_dir = os.path.join('data', 'extracted', 'min_temp')
+    extract_zip_files(zip_dir, extract_dir)
