@@ -1,5 +1,3 @@
-Bureau of Meteorology product IDCJMC0014.                                       Produced: 24 Mar 2025
-Australian stations measuring maximum air temperature
 Site    Name                                     Lat       Lon      Start    End       Years   %  AWS
 -----------------------------------------------------------------------------------------------------
    1005 WYNDHAM PORT                             -15.4644  128.1000 Jan 1957 Oct 1967   10.8   98   N
