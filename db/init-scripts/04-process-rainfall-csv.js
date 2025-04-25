@@ -50,41 +50,64 @@ async function createPoolWithRetry(config, maxRetries = 5, delay = 1000) {
     }
 }
 
-// Try multiple possible locations for the rainfall CSV directory
-let rainfallCSVdir;
-const possiblePaths = [
+// Find the first path that exists
+function findFilePath(possiblePaths) {
+    for (const testPath of possiblePaths) {
+        if (fs.existsSync(testPath)) {
+            console.log(`Found CSV directory at: ${testPath}`);
+            return testPath;
+        }
+    }
+    // Call error when the loop finishes without finding the directory
+    console.error('Failed to find CSV directory in any expected location');
+    console.error('Searched in:');
+    possiblePaths.forEach(p => console.error(`  - ${p}`));
+    process.exit(1);
+    }
+
+// Try multiple possible locations for:
+// rainfall CSV directory
+const possibleRainfallPaths = [
     '/db/data/extracted/rainfall_reduced',  // Based on docker-compose volume mapping
     path.join(__dirname, '..', 'data', 'extracted', 'rainfall_reduced'),  // Relative to script
     '/data/extracted/rainfall_reduced'  // Direct absolute path
 ];
 
-// Find the first path that exists
-for (const testPath of possiblePaths) {
-    if (fs.existsSync(testPath)) {
-        rainfallCSVdir = testPath;
-        console.log(`Found rainfall CSV directory at: ${rainfallCSVdir}`);
-        break;
-    }
-}
+// max temp CSV directory
+const possibleMaxTempPaths = [
+    '/db/data/extracted/max_temp_reduced',  // Based on docker-compose volume mapping
+    path.join(__dirname, '..', 'data', 'extracted', 'max_temp_reduced'),  // Relative to script
+    '/data/extracted/max_temp_reduced'  // Direct absolute path
+];
 
-if (!rainfallCSVdir) {
-    console.error('Failed to find rainfall CSV directory in any expected location');
-    console.error('Searched in:');
-    possiblePaths.forEach(p => console.error(`  - ${p}`));
-    process.exit(1);
-}
+// min temp CSV directory
+const possibleMinTempPaths = [
+    '/db/data/extracted/min_temp_reduced',  // Based on docker-compose volume mapping
+    path.join(__dirname, '..', 'data', 'extracted', 'min_temp_reduced'),  // Relative to script
+    '/data/extracted/min_temp_reduced'  // Direct absolute path
+];
+
+// Assign paths to each data
+const rainfallCSVdir = findFilePath(possibleRainfallPaths);
+const maxTempCSVdir = findFilePath(possibleMaxTempPaths);
+const minTempCSVdir = findFilePath(possibleMinTempPaths);
+// try {
+// }
+// catch (error) {
+//     console.error(`Error finding CSV directory`, error);
+// }
 
 // Insert function for row of rainfall data
 // -- RAINFALL_DATA_DAILY table
 // CREATE TABLE IF NOT EXISTS RAINFALL_DATA_DAILY (
 //     station_id INTEGER(6),
 //     date DATE,
-//     rainfall DECIMAL(3,1),
+//     rainfall DECIMAL(5,1),
 //     PRIMARY KEY (station_id, date),
 //     FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE
 // );
 
-async function insertRainfallData(filePath, pool) {
+async function insertCSVData(filePath, pool) {
     console.log(`Processing file: ${filePath}`);
     
     // Extract station ID from filename (assuming filename format like "IDCJAC0009_1000_1800_Data.csv")
@@ -114,22 +137,46 @@ async function insertRainfallData(filePath, pool) {
                 rowCount++;
                 
                 try {
-                    // CSV has columns: Product code	Bureau of Meteorology station number	Year	Month	Day	Rainfall amount (millimetres)	Period over which rainfall was measured (days)	Quality
+                    // CSV has columns:
+                    // Rainfall:=   Product code	Bureau of Meteorology station number	Year	Month	Day	    Rainfall amount (millimetres)	Period over which rainfall was measured (days)	Quality
+                    // Max Temp:=   Product code    Bureau of Meteorology station number    Year    Month   Day     Maximum temperature (Degree C)  Days of accumulation of minimum temperature     Quality
+                    // Min Temp:=   Product code    Bureau of Meteorology station number    Year    Month   Day     Minimum temperature (Degree C)  Days of accumulation of minimum temperature     Quality
                     // We only want the date and rainfall amount
                     const date = new Date(row.Year, row.Month - 1, row.Day);
-                    // Check if rainfall data exists and is valid, otherwise set to null
-                    let rainfall = null;
-                    if (row['Rainfall amount (millimetres)'] !== undefined && 
-                        row['Rainfall amount (millimetres)'] !== '' && 
-                        !isNaN(parseFloat(row['Rainfall amount (millimetres)']))) {
-                        rainfall = parseFloat(row['Rainfall amount (millimetres)']);
-                    }
+
+                    // Check if data exists and is valid, otherwise set to null for:
+                    
+                    // Rainfall
+                    let rainfall = row['Rainfall amount (millimetres)'];
+                    if (rainfall !== undefined && 
+                        rainfall !== '' && 
+                        !isNaN(parseFloat(rainfall))) {
+                        rainfall = parseFloat(rainfall);
+                    } else { rainfall = null; }
+
+                    // MaxTemp
+                    let max_temp = row['Maximum temperature (Degree C)'];
+                    if (max_temp !== undefined && 
+                        max_temp !== '' && 
+                        !isNaN(parseFloat(max_temp))) {
+                        max_temp = parseFloat(max_temp);
+                    } else { max_temp = null; }
+
+                    // MinTemp
+                    let min_temp = row['Minimum temperature (Degree C)'];
+                    if (min_temp !== undefined && 
+                        min_temp !== '' && 
+                        !isNaN(parseFloat(min_temp))) {
+                        min_temp = parseFloat(min_temp);
+                    } else { min_temp = null; }
 
                     // Add to batch instead of inserting immediately
                     batch.push({
                         stationId,
                         date,
-                        rainfall
+                        rainfall,
+                        max_temp,
+                        min_temp,
                     });
                     
                     // When batch reaches batchSize, insert the batch
@@ -165,16 +212,18 @@ async function insertRainfallData(filePath, pool) {
                     let paramCount = 1;
                     
                     currentBatch.forEach(record => {
-                        placeholders.push(`($${paramCount}, $${paramCount + 1}, $${paramCount + 2})`);
-                        values.push(record.stationId, record.date, record.rainfall);
-                        paramCount += 3;
+                        placeholders.push(`($${paramCount}, $${paramCount + 1}, $${paramCount + 2}, $${paramCount + 3}, $${paramCount + 4})`);
+                        values.push(record.stationId, record.date, record.rainfall, record.max_temp, record.min_temp);
+                        paramCount += 5;
                     });
                     
                     const query = `
-                        INSERT INTO RAINFALL_DATA_DAILY (station_id, date, rainfall) 
+                        INSERT INTO RAINFALL_DATA_DAILY (station_id, date, rainfall, max_temp, min_temp) 
                         VALUES ${placeholders.join(', ')}
                         ON CONFLICT (station_id, date) DO UPDATE 
-                        SET rainfall = EXCLUDED.rainfall
+                        SET rainfall = COALESCE(RAINFALL_DATA_DAILY.rainfall, EXCLUDED.rainfall),
+                            max_temp = COALESCE(RAINFALL_DATA_DAILY.max_temp, EXCLUDED.max_temp),
+                            min_temp = COALESCE(RAINFALL_DATA_DAILY.min_temp, EXCLUDED.min_temp)
                     `;
                     
                     const client = await pool.connect(); // Get a dedicated client
@@ -230,59 +279,82 @@ async function processAllCSVFiles() {
     let pool;
     
     try {
-        console.log(`Looking for CSV files in: ${rainfallCSVdir}`);
-        
+        console.log('Connecting to pool')
         // Create a connection pool with retry
         pool = await createPoolWithRetry(pgConfig);
         
-        // Check if directory exists
+        console.log(`Looking for CSV files`);
+        
+        // Check if directories exists
         if (!fs.existsSync(rainfallCSVdir)) {
             console.error(`Directory not found: ${rainfallCSVdir}`);
             return;
         }
+        if (!fs.existsSync(maxTempCSVdir)) {
+            console.error(`Directory not found: ${maxTempCSVdir}`);
+            return;
+        }
+        if (!fs.existsSync(minTempCSVdir)) {
+            console.error(`Directory not found: ${minTempCSVdir}`);
+            return;
+        }
         
         // Get all CSV files
-        const files = fs.readdirSync(rainfallCSVdir)
+        const rainfallFiles = fs.readdirSync(rainfallCSVdir)
+            .filter(file => file.toLowerCase().endsWith('.csv'));
+        const maxTempFiles = fs.readdirSync(maxTempCSVdir)
+            .filter(file => file.toLowerCase().endsWith('.csv'));
+        const minTempFiles = fs.readdirSync(minTempCSVdir)
             .filter(file => file.toLowerCase().endsWith('.csv'));
         
-        if (files.length === 0) {
+        if (
+            rainfallFiles.length === 0
+            && maxTempFiles.length === 0
+            && maxTempFiles.length === 0) {
             console.log('No CSV files found to process');
             return;
         }
         
-        console.log(`Found ${files.length} CSV files to process`);
+        console.log(`Found ${rainfallFiles.length} Rainfall, ${maxTempFiles.length} Max Temp, and ${minTempFiles.length} Min Temp CSV files to process`);
         
         // Process files in batches to limit concurrent operations
         let processedCount = 0;
         let totalRowsProcessed = 0;
         const fileBatchSize = 16; // Process 50 files at a time
-        
-        for (let i = 0; i < files.length; i += fileBatchSize) {
-            const fileBatch = files.slice(i, i + fileBatchSize);
-            const filePromises = fileBatch.map(file => {
-                const filePath = path.join(rainfallCSVdir, file);
-                return insertRainfallData(filePath, pool)
-                    .then(result => {
-                        if (result) {
-                            totalRowsProcessed += result.successCount;
-                        }
-                        processedCount++;
-                        console.log(`Processed ${processedCount} of ${files.length} files`);
-                        return result;
-                    })
-                    .catch(error => {
-                        console.error(`Failed to process file ${file}:`, error);
-                        processedCount++;
-                        return null;
-                    });
-            });
-            
-            await Promise.all(filePromises);
-            console.log(`Completed batch ${Math.floor(i / fileBatchSize) + 1} of ${Math.ceil(files.length / fileBatchSize)}`);
+        const filesToProcess = {}
+        filesToProcess[rainfallCSVdir] = rainfallFiles;
+        filesToProcess[maxTempCSVdir] = maxTempFiles;
+        filesToProcess[minTempCSVdir] = minTempFiles;
+
+        // {rainfallCSVdir : rainfallFiles, }
+        for (const [fileDir, files] of Object.entries(filesToProcess)){
+            for (let i = 0; i < files.length; i += fileBatchSize) {
+                const fileBatch = files.slice(i, i + fileBatchSize);
+                const filePromises = fileBatch.map(file => {
+                    const filePath = path.join(fileDir, file);
+                    return insertCSVData(filePath, pool)
+                        .then(result => {
+                            if (result) {
+                                totalRowsProcessed += result.successCount;
+                            }
+                            processedCount++;
+                            console.log(`Processed ${processedCount} of ${files.length} files`);
+                            return result;
+                        })
+                        .catch(error => {
+                            console.error(`Failed to process file ${file}:`, error);
+                            processedCount++;
+                            return null;
+                        });
+                });
+
+                await Promise.all(filePromises);
+                console.log(`Completed batch ${Math.floor(i / fileBatchSize) + 1} of ${Math.ceil(files.length / fileBatchSize)}`);
+            }
+            console.log(`Completed processing ${processedCount} of ${files.length} files from ${fileDir}`);
+            console.log(`Total rows inserted: ${totalRowsProcessed}`);
         }
         
-        console.log(`Completed processing ${processedCount} of ${files.length} files`);
-        console.log(`Total rows inserted: ${totalRowsProcessed}`);
     } catch (error) {
         console.error('Error processing CSV files:', error);
     } finally {
@@ -296,18 +368,18 @@ async function processAllCSVFiles() {
 
 // Execute the script if run directly
 if (require.main === module) {
-    console.log('Starting rainfall data processing...');
+    console.log('Starting data processing...');
     processAllCSVFiles().then(() => {
-        console.log('Rainfall data processing completed');
+        console.log('Data processing completed');
     }).catch(error => {
-        console.error('Error in rainfall data processing:', error);
+        console.error('Error in data processing:', error);
         process.exit(1);
     });
 }
 
 // Export functions for use in other modules
 module.exports = {
-    insertRainfallData,
+    insertCSVData,
     processAllCSVFiles
 };
 

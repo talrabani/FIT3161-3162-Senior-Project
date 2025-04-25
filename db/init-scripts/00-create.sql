@@ -99,6 +99,8 @@ CREATE TABLE IF NOT EXISTS RAINFALL_DATA_DAILY (
     station_id INTEGER,
     date DATE,
     rainfall DECIMAL(5,1),
+    max_temp DECIMAL(5,1),
+    min_temp DECIMAL(5,1),
     PRIMARY KEY (station_id, date),
     FOREIGN KEY (station_id) REFERENCES STATION(station_id) ON DELETE CASCADE
 );
