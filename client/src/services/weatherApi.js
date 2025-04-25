@@ -194,17 +194,32 @@ export const fetchStationRainfallRange = async (stationId, startDate, endDate) =
  */
 export const fetchStationTemperature = async (stationId, date) => {
   try {
+    // Add leading zero to stationId if it's less than 6 digits
+    const formattedStationId = stationId.toString().padStart(6, '0');
+
     // Format date as YYYY-MM-DD if it's a Date object
     const formattedDate = date instanceof Date 
       ? date.toISOString().split('T')[0] 
       : date;
     
-    // Temporary return a dummy temperature data
-    const dummyTemperatureData = 20;
-
+    console.log('CLIENT SERVICE: Fetching temperature data for station:', formattedStationId, 'on date:', formattedDate);
     // const url = `${SERVER_API_URL}/temperature/station/${stationId}/date/${formattedDate}`;
-    // const response = await axios.get(url);
-    return dummyTemperatureData;
+    const url = `${SERVER_API_URL}/rainfall/station/${formattedStationId}/date/${formattedDate}`;
+    const response = await axios.get(url);
+    // Check if response.data is an array and extract the first item if it exists
+    const data = Array.isArray(response.data) && response.data.length > 0 
+      ? response.data[0]
+      : response.data;
+    
+    // Extract min and max temp value and convert to float if it exists
+    const maxTempData = data && data.max_temp !== undefined 
+      ? parseFloat(data.max_temp) 
+      : null;
+    const minTempData = data && data.min_temp !== undefined 
+      ? parseFloat(data.min_temp) 
+      : null;
+    return [minTempData, maxTempData];
+  
   } catch (error) {
     console.error(`Error fetching temperature data for station ${stationId}:`, error);
     return null;
