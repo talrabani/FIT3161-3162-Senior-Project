@@ -25,25 +25,6 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
-  // Calculate fill percentages based on the specified ranges
-  // Rainfall: 0mm = 0%, >=30mm = 100%
-  // Temperature: <=-10°C = 0%, >=40°C = 100%
-  const calculateRainfallPercentage = (rainfall) => {
-    if (rainfall <= 0) return 0;
-    if (rainfall >= 30) return 100;
-    return (rainfall / 30) * 100;
-  };
-  
-  const calculateTemperaturePercentage = (temperature) => {
-    if (temperature <= -10) return 0;
-    if (temperature >= 40) return 100;
-    // Scale from -10 to 40 (range of 50 degrees)
-    return ((temperature + 10) / 50) * 100;
-  };
-  
-  const rainfallPercentage = rainfallData ? calculateRainfallPercentage(rainfallData.rainfall || 0) : 0;
-  const temperaturePercentage = temperatureData ? calculateTemperaturePercentage(temperatureData.temperature || 0) : 0;
-  
   // Fetch weather data when station or selected date changes
   useEffect(() => {
     const fetchData = async () => {
@@ -54,13 +35,13 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
       
       try {
           // Call weather api to get rainfall and temperature data
-          const [rainfall, temperature] = await Promise.all([
+          const [rainfall, [minTemp, maxTemp]] = await Promise.all([
             fetchStationRainfall(station.station_id, selectedDate),
             fetchStationTemperature(station.station_id, selectedDate)
           ]);
           
           console.log('rainfall', rainfall);
-          console.log('temperature', temperature);
+          console.log(`min/max temperature: ${minTemp} / ${maxTemp}`);
 
           // Set rainfall data - API returns a float value
           // Handle the case where rainfall might be null or undefined
@@ -68,11 +49,14 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
           
           // Set temperature data - API returns a float value
           // Handle the case where temperature might be null or undefined
-          setTemperatureData({ temperature: typeof temperature === 'number' ? temperature : 0 });
+          setTemperatureData({
+            minTemp: typeof minTemp === 'number' ? minTemp : 0,
+            maxTemp: typeof maxTemp === 'number' ? maxTemp : 0
+          });
       } catch (error) {
         console.error('Error fetching weather data:', error);
         setRainfallData({ rainfall: 0 });
-        setTemperatureData({ temperature: 0 });
+        setTemperatureData({ minTemp: 0, maxTemp: 0 });
       } finally {
         setLoading(false);
       }
@@ -86,6 +70,25 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
       onSelect(station);
     }
   };
+  // Calculate fill percentages based on the specified ranges
+  // Rainfall: 0mm = 0%, >= 200mm = 100%
+  // Temperature: <=-10°C = 0%, >=40°C = 100%
+  const calculateRainfallPercentage = (rainfall) => {
+    if (rainfall <= 0) return 0;
+    if (rainfall >= 200) return 100;
+    return (rainfall / 200) * 100;
+  };
+  
+  const calculateTemperaturePercentage = (temperature) => {
+    if (temperature <= -10) return 0;
+    if (temperature >= 40) return 100;
+    // Scale from -10 to 40 (range of 50 degrees)
+    return ((temperature + 10) / 50) * 100;
+  };
+  
+  const rainfallPercentage = rainfallData ? calculateRainfallPercentage(rainfallData.rainfall || 0) : 0;
+  const minTempPercentage = temperatureData ? calculateTemperaturePercentage(temperatureData.minTemp || 0) : 0;
+  const maxTempPercentage = temperatureData ? calculateTemperaturePercentage(temperatureData.maxTemp || 0) : 0;
 
   return (
     <div style={{ position: 'relative' }}>
@@ -180,17 +183,17 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
                       bottom: 0, 
                       width: '100%', 
                       height: `${rainfallPercentage}%`, 
-                      bgcolor: '#29B6F6', // Light blue for rainfall
+                      bgcolor: 'rgb(0, 106, 255)', // Light blue for rainfall
                       transition: 'height 0.5s ease-in-out'
                     }} />
                   )}
                 </Box>
                 <Typography variant="caption" color="text.secondary" align="center" sx={{ mt: 0.5, fontSize: '0.75rem' }}>
-                  {loading ? '-' : rainfallData?.rainfall >= 0 ? `${rainfallData.rainfall.toFixed(1)}mm` : 'NaN'}
+                  {loading ? '-' : rainfallData?.rainfall >= 0 ? `${rainfallData.rainfall.toFixed(1)}mm` : 'No data'}
                 </Typography>
               </Box>
               
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '70px' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100px' }}>
                 <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 0.5, fontSize: '0.85rem' }}>
                   Temperature
                 </Typography>
@@ -207,18 +210,26 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
                       <CircularProgress size={16} />
                     </Box>
                   ) : (
-                    <Box sx={{ 
+                    <>
+                    <Box sx={{ // Min temperature line
                       position: 'absolute', 
-                      bottom: 0, 
+                      bottom: `${minTempPercentage}%`, 
                       width: '100%', 
-                      height: `${temperaturePercentage}%`, 
-                      bgcolor: '#FFE082', // Light yellow for temperature
-                      transition: 'height 0.5s ease-in-out'
+                      height: `${minTempPercentage > 0? '0px': '4px'}`, 
+                      bgcolor: 'rgb(125, 194, 255)' // Different light blue shade for min temp
                     }} />
+                    <Box sx={{ // Max temperature line
+                      position: 'absolute', 
+                      bottom: `${maxTempPercentage}%`, 
+                      width: '100%', 
+                      height: `${maxTempPercentage > 0? '0px': '4px'}`, 
+                      bgcolor: 'rgb(255, 196, 4)', // Light yellow for max temp
+                    }} />
+                    </>
                   )}
                 </Box>
                 <Typography variant="caption" color="text.secondary" align="center" sx={{ mt: 0.5, fontSize: '0.75rem' }}>
-                  {loading ? '-' : temperatureData?.temperature >= -80 ? `${temperatureData.temperature.toFixed(1)}°C` : 'NaN'}
+                {loading ? '-' : temperatureData?.maxTemp >= -80 ? `${temperatureData.minTemp.toFixed(1)}°C to ${temperatureData.maxTemp.toFixed(1)}°C` : 'No data'}
                 </Typography>
               </Box>
             </Box>
