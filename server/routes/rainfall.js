@@ -64,7 +64,7 @@ router.get('/sa4/month/:month/year/:year', async (req, res) => {
   
   try {
     const result = await pool.query(`
-      SELECT * FROM SA4_RAINFALL_MONTHLY 
+      SELECT sa4_code, year, month, rainfall, max_temp, min_temp FROM SA4_RAINFALL_MONTHLY 
       WHERE month = $1
       AND year = $2
       `, [month, year]);

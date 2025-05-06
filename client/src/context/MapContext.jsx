@@ -15,6 +15,9 @@ export const MapContextProvider = ({ children }) => {
   const [isRangeMode, setIsRangeMode] = useState(false);
   const [selectedStations, setSelectedStations] = useState([]);
   
+  // Add type selection state - default to 'rainfall'
+  const [selectedType, setSelectedType] = useState('rainfall');
+  
   // Value to be provided to consuming components
   const value = {
     // Date related
@@ -32,6 +35,10 @@ export const MapContextProvider = ({ children }) => {
     // Station related
     selectedStations,
     setSelectedStations,
+    
+    // Type selection (rainfall or temperature)
+    selectedType,
+    setSelectedType,
     
     // Helper methods
     addStation: (station) => {

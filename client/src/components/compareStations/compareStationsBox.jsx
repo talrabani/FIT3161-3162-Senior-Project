@@ -94,7 +94,7 @@ const CompareStationsBox = ({ stationsToCompare }) => {
 
         // Fetch data for each station
         for (const station of stationsToCompare) {
-          const data = await fetchStationRainfallRange(station.id, startDate, endDate);
+          const data = await fetchStationWeatherRange(station.id, startDate, endDate);
           stationData[station.id] = {
             id: station.id,
             name: station.name,

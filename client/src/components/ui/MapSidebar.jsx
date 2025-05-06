@@ -14,13 +14,14 @@ export default function MapSidebar() {
     selectedDate, 
     setSelectedDate, 
     selectedSA4, 
-    setSelectedSA4 
+    setSelectedSA4,
+    selectedType,
+    setSelectedType
   } = useMapContext();
   
   // Local state for form fields that might not need to be shared globally
   const [formData, setFormData] = useState({
     location: '',
-    type: 'temperature',
     frequency: 'yearly'
   })
 
@@ -54,6 +55,12 @@ export default function MapSidebar() {
     }
   }
 
+  // Handle type change - this updates the context
+  const handleTypeChange = (newType) => {
+    setSelectedType(newType);
+    console.log('Selected type updated:', newType);
+  }
+
   return (
     <Box sx={{ 
       display: 'flex', 
@@ -69,8 +76,8 @@ export default function MapSidebar() {
       
       {/* Type selector below the search bar */}
       <TypeSelect 
-        type={formData.type} 
-        setType={(newType) => updateFormData('type', newType)} 
+        type={selectedType} 
+        setType={handleTypeChange} 
       />
       
       {/* Calendar input */}
