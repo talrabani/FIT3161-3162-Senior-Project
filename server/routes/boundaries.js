@@ -114,6 +114,17 @@ router.get('/sa4/:code/stations', async (req, res) => {
     
     try {
       // Build the query based on whether we have a date filter
+      // location = {
+      //              "type": "Feature",
+      //              "geometry":{ 
+      //                       "type": "Point",
+      //                       "coordinates": [lat,lon]
+      //                        },
+      //              "crs":{
+      //                      "type":"name",
+      //                      "properties":{"name":"WGS84:4326"}
+      //                    }
+      //             }
       let query = `
         SELECT 
           s.station_id,
