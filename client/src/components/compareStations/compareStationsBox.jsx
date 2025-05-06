@@ -13,7 +13,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useMapContext } from '../../context/MapContext';
 import { format } from 'date-fns';
-import { fetchStationRainfallRange } from '../../services/weatherApi';
+import { fetchStationWeatherRange } from '../../services/weatherApi';
 import RainfallLineGraph from './rainfallLineGraph';
 
 /**

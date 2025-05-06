@@ -22,7 +22,7 @@ router.get('/station/:station_id/date/:date', async (req, res) => {
   
   try {
     const result = await pool.query(`
-      SELECT * FROM RAINFALL_DATA_DAILY 
+      SELECT station_id, date, rainfall, max_temp, min_temp FROM RAINFALL_DATA_DAILY 
       WHERE station_id = $1 
       AND date = $2
     `, [station_id, date]);
@@ -43,7 +43,7 @@ router.get('/station/:station_id/date/:start_date/end_date/:end_date', async (re
   
   try {
     const result = await pool.query(`
-      SELECT * FROM RAINFALL_DATA_DAILY 
+      SELECT station_id, date, rainfall, max_temp, min_temp FROM RAINFALL_DATA_DAILY 
       WHERE station_id = $1 
       AND date BETWEEN $2 AND $3
     `, [station_id, start_date, end_date]);

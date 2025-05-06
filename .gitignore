@@ -1,8 +1,7 @@
 client/node_modules
 server/node_modules
 node_modules
-db/data/extracted/rainfall
-db/data/extracted/max_temp
-db/data/extracted/min_temp
+db/data/extracted
+db/data/station_data
 db/logs
 client/.env
