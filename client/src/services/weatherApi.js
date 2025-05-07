@@ -120,12 +120,12 @@ export const fetchSA4Summary = async () => {
 };
 
 /**
- * Fetches rainfall data for a specific station on a given date
+ * Fetches weather data for a specific station on a given date
  * @param {string|number} stationId - The station ID to fetch data for
  * @param {Date|string} date - The date to get data for (Date object or YYYY-MM-DD string)
- * @returns {Promise} Promise with rainfall data for the station on the specified date
+ * @returns {Promise} Promise with weather data for the station on the specified date
  */
-export const fetchStationRainfall = async (stationId, date) => {
+export const fetchStationWeather = async (stationId, date) => {
   try {
     // Add leading zero to stationId if it's less than 6 digits
     const formattedStationId = stationId.toString().padStart(6, '0');
@@ -135,33 +135,52 @@ export const fetchStationRainfall = async (stationId, date) => {
       ? date.toISOString().split('T')[0] 
       : date;
     
-    console.log('CLIENT SERVICE: Fetching rainfall data for station:', formattedStationId, 'on date:', formattedDate);
+    console.log('CLIENT SERVICE: Fetching weather data for station:', formattedStationId, 'on date:', formattedDate);
     const url = `${SERVER_API_URL}/rainfall/station/${formattedStationId}/date/${formattedDate}`;
     const response = await axios.get(url);
+    console.log('CLIENT SERVICE: Response:', response.data);
+    
+    // Check if response is empty or invalid
+    if (!response.data || (Array.isArray(response.data) && response.data.length === 0)) {
+      console.log('No data found for this station and date');
+      return [null, [null, null]]; // Return nulls with the expected array structure
+    }
+    
     // Check if response.data is an array and extract the first item if it exists
     const data = Array.isArray(response.data) && response.data.length > 0 
       ? response.data[0] 
       : response.data;
     
-    // Extract rainfall value and convert to float if it exists
-    const rainfallData = data && data.rainfall !== undefined 
+    // Extract rainfall and temperature values and convert to float if they exist
+    const rainfallData = data && data.rainfall !== undefined && data.rainfall !== null
       ? parseFloat(data.rainfall) 
       : null;
-    return rainfallData;
+    
+    const minTemp = data && data.min_temp !== undefined && data.min_temp !== null
+      ? parseFloat(data.min_temp)
+      : null;
+      
+    const maxTemp = data && data.max_temp !== undefined && data.max_temp !== null
+      ? parseFloat(data.max_temp)
+      : null;
+    
+    // Return rainfall data and temperature data as an array [rainfall, [minTemp, maxTemp]]
+    return [rainfallData, [minTemp, maxTemp]];
   } catch (error) {
-    console.error(`Error fetching rainfall data for station ${stationId}:`, error);
-    return null;
+    console.error(`Error fetching weather data for station ${stationId}:`, error);
+    // Return nulls with the expected structure instead of just null
+    return [null, [null, null]];
   }
 };
 
 /**
- * Fetches rainfall data for a specific station on a given date range
+ * Fetches weather data for a specific station on a given date range
  * @param {string|number} stationId - The station ID to fetch data for
  * @param {Date|string} startDate - The start date to get data for (Date object or YYYY-MM-DD string)
  * @param {Date|string} endDate - The end date to get data for (Date object or YYYY-MM-DD string)
- * @returns {Promise} Promise with rainfall data for the station on the specified date range
+ * @returns {Promise} Promise with weather data for the station on the specified date range
  */
-export const fetchStationRainfallRange = async (stationId, startDate, endDate) => {
+export const fetchStationWeatherRange = async (stationId, startDate, endDate) => {
   try {
     // Add leading zero to stationId if it's less than 6 digits
     const formattedStationId = stationId.toString().padStart(6, '0');
@@ -175,12 +194,12 @@ export const fetchStationRainfallRange = async (stationId, startDate, endDate) =
       ? endDate.toISOString().split('T')[0] 
       : endDate;
     
-    console.log('CLIENT SERVICE: Fetching rainfall data for station:', formattedStationId, 'on date range:', formattedStartDate, 'to', formattedEndDate);
+    console.log('CLIENT SERVICE: Fetching weather data for station:', formattedStationId, 'on date range:', formattedStartDate, 'to', formattedEndDate);
     const url = `${SERVER_API_URL}/rainfall/station/${formattedStationId}/date/${formattedStartDate}/end_date/${formattedEndDate}`;
     const response = await axios.get(url);
     return response.data;
   } catch (error) {
-    console.error(`Error fetching rainfall data for station ${stationId} on date range ${startDate} to ${endDate}:`, error);
+    console.error(`Error fetching weather data for station ${stationId} on date range ${startDate} to ${endDate}:`, error);
     return [];
   }
 };
@@ -227,17 +246,42 @@ export const fetchStationTemperature = async (stationId, date) => {
 }; 
 
 /**
- * Fetches average rainfall data for all SA4 areas on a given month, year
- * @param {string} month - The month to get rainfall data for (MM)
- * @param {string} year - The year to get rainfall data for (YYYY)
- * @returns {Promise} Promise with array of SA4 boundaries and their station counts
+ * Fetches average weather data for all SA4 areas on a given month, year
+ * @param {string} month - The month to get weather data for (MM)
+ * @param {string} year - The year to get weather data for (YYYY)
+ * @returns {Promise} Promise with array of SA4 boundaries and their weather data (including rainfall and temperature)
  */
-export const fetchAverageRainfallBySA4 = async (month, year) => {
+export const fetchAverageWeatherBySA4 = async (month, year) => {
   try {
-    const response = await axios.get(`${SERVER_API_URL}/rainfall/sa4/month/${month}/year/${year}`);
-    return response.data;
+    console.log('CLIENT SERVICE: Fetching average weather data for month:', month, 'year:', year);
+    const url = `${SERVER_API_URL}/rainfall/sa4/month/${month}/year/${year}`;
+    const response = await axios.get(url);
+    
+    // Check if response is empty or invalid
+    if (!response.data || (Array.isArray(response.data) && response.data.length === 0)) {
+      console.log('No weather data found for this month and year');
+      return [];
+    }
+    
+    // Process the data to ensure all temperature values are properly parsed
+    const processedData = Array.isArray(response.data) 
+      ? response.data.map(item => ({
+          ...item,
+          rainfall: item.rainfall !== undefined && item.rainfall !== null 
+            ? parseFloat(item.rainfall) 
+            : null,
+          min_temp: item.min_temp !== undefined && item.min_temp !== null 
+            ? parseFloat(item.min_temp) 
+            : null,
+          max_temp: item.max_temp !== undefined && item.max_temp !== null 
+            ? parseFloat(item.max_temp) 
+            : null
+        }))
+      : [];
+      
+    return processedData;
   } catch (error) {
-    console.error('Error fetching average rainfall data for SA4:', error);
+    console.error('Error fetching average weather data for SA4:', error);
     return [];
   }
 };

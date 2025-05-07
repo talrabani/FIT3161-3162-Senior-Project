@@ -282,6 +282,13 @@ async function processAllCSVFiles() {
         console.log('Connecting to pool')
         // Create a connection pool with retry
         pool = await createPoolWithRetry(pgConfig);
+
+        // Check if data already exists in the database, if so, skip the processing
+        const result = await pool.query('SELECT COUNT(*) FROM RAINFALL_DATA_DAILY');
+        if (result.rows[0].count > 0) {
+            console.log('Data already exists in the database, skipping the processing');
+            return;
+        }
         
         console.log(`Looking for CSV files`);
         

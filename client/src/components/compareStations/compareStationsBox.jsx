@@ -13,7 +13,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useMapContext } from '../../context/MapContext';
 import { format } from 'date-fns';
-import { fetchStationRainfallRange } from '../../services/weatherApi';
+import { fetchStationWeatherRange } from '../../services/weatherApi';
 import RainfallLineGraph from './rainfallLineGraph';
 
 /**
@@ -94,7 +94,7 @@ const CompareStationsBox = ({ stationsToCompare }) => {
 
         // Fetch data for each station
         for (const station of stationsToCompare) {
-          const data = await fetchStationRainfallRange(station.id, startDate, endDate);
+          const data = await fetchStationWeatherRange(station.id, startDate, endDate);
           stationData[station.id] = {
             id: station.id,
             name: station.name,

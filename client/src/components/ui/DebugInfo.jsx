@@ -77,7 +77,9 @@ const DebugInfo = ({
       sa4_code: rainfallItem.sa4_code,
       sa4_name: sa4Info?.name || 'Unknown',
       state: sa4Info?.state || 'Unknown',
-      avg_rainfall: rainfallItem.rainfall
+      avg_rainfall: rainfallItem.rainfall,
+      avg_max_temp: rainfallItem.max_temp,
+      avg_min_temp: rainfallItem.min_temp
     };
   });
   
@@ -131,6 +133,8 @@ const DebugInfo = ({
                   <th>SA4 Name</th>
                   <th>State</th>
                   <th>Average Rainfall (mm)</th>
+                  <th>Average Max Temp (°C)</th>
+                  <th>Average Min Temp (°C)</th>
                 </tr>
               </thead>
               <tbody>
@@ -140,6 +144,8 @@ const DebugInfo = ({
                     <td>{item.sa4_name}</td>
                     <td>{item.state}</td>
                     <td>{item.avg_rainfall ? Number(item.avg_rainfall).toFixed(2) : 'N/A'}</td>
+                    <td>{item.avg_max_temp ? Number(item.avg_max_temp).toFixed(2) : 'N/A'}</td>
+                    <td>{item.avg_min_temp ? Number(item.avg_min_temp).toFixed(2) : 'N/A'}</td>
                   </tr>
                 ))}
               </tbody>

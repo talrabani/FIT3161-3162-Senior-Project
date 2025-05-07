@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, Typography, Button, Box, CircularProgress } from '@mui/material';
 import { format } from 'date-fns';
-import { fetchStationRainfall, fetchStationTemperature } from '../../services/weatherApi';
+import { fetchStationWeather } from '../../services/weatherApi';
 import { useMapContext } from '../../context/MapContext';
 
 /**
@@ -14,56 +14,74 @@ import { useMapContext } from '../../context/MapContext';
  * @param {Function} onClose - Function to call when the card is closed
  * @param {Function} onSelect - Function to call when the station is selected
  */
-const StationSelectCard = ({ station, onClose, onSelect }) => {
+const StationSelectCard = ({ station, onClose = () => {}, onSelect = () => {} }) => {
   if (!station) return null;
   
   // Get the selectedDate from the context
   const { selectedDate } = useMapContext();
   
-  const [rainfallData, setRainfallData] = useState(null);
-  const [temperatureData, setTemperatureData] = useState(null);
+  const [rainfallData, setRainfallData] = useState({ rainfall: 'No data' });
+  const [temperatureData, setTemperatureData] = useState({ minTemp: 'No data', maxTemp: 'No data' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
   // Fetch weather data when station or selected date changes
   useEffect(() => {
     const fetchData = async () => {
-      if (!station.station_id || !selectedDate) return;
+      if (!station || !station.station_id || !selectedDate) {
+        console.log('Missing required data for fetching weather:', { 
+          stationExists: !!station,
+          stationId: station?.station_id, 
+          selectedDate
+        });
+        setRainfallData({ rainfall: 'No data' });
+        setTemperatureData({ minTemp: 'No data', maxTemp: 'No data' });
+        return;
+      }
       
       setLoading(true);
       setError(null);
       
       try {
           // Call weather api to get rainfall and temperature data
-          const [rainfall, [minTemp, maxTemp]] = await Promise.all([
-            fetchStationRainfall(station.station_id, selectedDate),
-            fetchStationTemperature(station.station_id, selectedDate)
-          ]);
+          const weatherData = await fetchStationWeather(station.station_id, selectedDate);
           
+          // Handle case where fetchStationWeather returns null or undefined
+          if (!weatherData) {
+              console.error('Weather data returned null or undefined');
+              setRainfallData({ rainfall: 'No data' });
+              setTemperatureData({
+                  minTemp: 'No data',
+                  maxTemp: 'No data'
+              });
+              return;
+          }
+          
+          const [rainfall, [minTemp, maxTemp]] = weatherData;
           console.log('rainfall', rainfall);
           console.log(`min/max temperature: ${minTemp} / ${maxTemp}`);
 
           // Set rainfall data - API returns a float value
           // Handle the case where rainfall might be null or undefined
-          setRainfallData({ rainfall: typeof rainfall === 'number' ? rainfall : 0 });
+          setRainfallData({ rainfall: typeof rainfall === 'number' ? rainfall : 'No data' });
           
           // Set temperature data - API returns a float value
           // Handle the case where temperature might be null or undefined
           setTemperatureData({
-            minTemp: typeof minTemp === 'number' ? minTemp : 0,
-            maxTemp: typeof maxTemp === 'number' ? maxTemp : 0
+            minTemp: typeof minTemp === 'number' ? minTemp : 'No data',
+            maxTemp: typeof maxTemp === 'number' ? maxTemp : 'No data'
           });
       } catch (error) {
         console.error('Error fetching weather data:', error);
-        setRainfallData({ rainfall: 0 });
-        setTemperatureData({ minTemp: 0, maxTemp: 0 });
+        setRainfallData({ rainfall: 'No data' });
+        setTemperatureData({ minTemp: 'No data', maxTemp: 'No data' });
       } finally {
         setLoading(false);
       }
     };
     
     fetchData();
-  }, [station.station_id, selectedDate]);
+  }, [station?.station_id, selectedDate]);
 
   const handleSelect = () => {
     if (onSelect) {
@@ -71,19 +89,35 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
     }
   };
   // Calculate fill percentages based on the specified ranges
-  // Rainfall: 0mm = 0%, >= 200mm = 100%
+  // Rainfall: 0mm = 0%, >= 30mm = 100%
   // Temperature: <=-10°C = 0%, >=40°C = 100%
   const calculateRainfallPercentage = (rainfall) => {
-    if (rainfall <= 0) return 0;
-    if (rainfall >= 200) return 100;
-    return (rainfall / 200) * 100;
+    // Handle non-numeric values
+    if (rainfall === undefined || rainfall === null || rainfall === 'No data') return 0;
+    
+    // Convert to number if it's a string that can be parsed
+    const numericRainfall = typeof rainfall === 'string' ? parseFloat(rainfall) : rainfall;
+    
+    // Check if it's a valid number after conversion
+    if (isNaN(numericRainfall) || numericRainfall <= 0) return 0;
+    if (numericRainfall >= 30) return 100;
+    
+    return (numericRainfall / 30) * 100;
   };
   
   const calculateTemperaturePercentage = (temperature) => {
-    if (temperature <= -10) return 0;
-    if (temperature >= 40) return 100;
+    // Handle non-numeric values
+    if (temperature === undefined || temperature === null || temperature === 'No data') return 0;
+    
+    // Convert to number if it's a string that can be parsed
+    const numericTemp = typeof temperature === 'string' ? parseFloat(temperature) : temperature;
+    
+    // Check if it's a valid number after conversion
+    if (isNaN(numericTemp) || numericTemp <= -10) return 0;
+    if (numericTemp >= 40) return 100;
+    
     // Scale from -10 to 40 (range of 50 degrees)
-    return ((temperature + 10) / 50) * 100;
+    return ((numericTemp + 10) / 50) * 100;
   };
   
   const rainfallPercentage = rainfallData ? calculateRainfallPercentage(rainfallData.rainfall || 0) : 0;
@@ -126,25 +160,25 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
             lineHeight: '1.2',
             fontSize: '0.95rem'
           }}>
-            {station.station_name}
+            {station?.station_name || 'Unnamed Station'}
           </Typography>
           
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
-            <span style={{ fontWeight: 'bold' }}>ID:</span> {station.station_id}
+            <span style={{ fontWeight: 'bold' }}>ID:</span> {station?.station_id || 'Unknown'}
           </Typography>
           
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
-            <span style={{ fontWeight: 'bold' }}>State:</span> {station.station_state}
+            <span style={{ fontWeight: 'bold' }}>State:</span> {station?.station_state || 'Unknown'}
           </Typography>
           
-          {station.station_height && (
+          {station?.station_height && (
             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
               <span style={{ fontWeight: 'bold' }}>Elevation:</span> {station.station_height}m
             </Typography>
           )}
           
           <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem', mb: 2 }}>
-            <span style={{ fontWeight: 'bold' }}>Years:</span> {station.station_start_year || 'N/A'} — {station.station_end_year || 'Present'}
+            <span style={{ fontWeight: 'bold' }}>Years:</span> {station?.station_start_year || 'N/A'} — {station?.station_end_year || 'Present'}
           </Typography>
           
           <Box sx={{ 
@@ -189,7 +223,12 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
                   )}
                 </Box>
                 <Typography variant="caption" color="text.secondary" align="center" sx={{ mt: 0.5, fontSize: '0.75rem' }}>
-                  {loading ? '-' : rainfallData?.rainfall >= 0 ? `${rainfallData.rainfall.toFixed(1)}mm` : 'No data'}
+                  {loading 
+                    ? '-' 
+                    : (!rainfallData || rainfallData.rainfall === 'No data' || rainfallData.rainfall === null || rainfallData.rainfall === undefined) 
+                        ? 'No data' 
+                        : `${parseFloat(rainfallData.rainfall).toFixed(1)}mm`
+                  }
                 </Typography>
               </Box>
               
@@ -229,7 +268,13 @@ const StationSelectCard = ({ station, onClose, onSelect }) => {
                   )}
                 </Box>
                 <Typography variant="caption" color="text.secondary" align="center" sx={{ mt: 0.5, fontSize: '0.75rem' }}>
-                {loading ? '-' : temperatureData?.maxTemp >= -80 ? `${temperatureData.minTemp.toFixed(1)}°C to ${temperatureData.maxTemp.toFixed(1)}°C` : 'No data'}
+                  {loading 
+                    ? '-' 
+                    : (!temperatureData || temperatureData.minTemp === 'No data' || temperatureData.minTemp === null || temperatureData.minTemp === undefined ||
+                        temperatureData.maxTemp === 'No data' || temperatureData.maxTemp === null || temperatureData.maxTemp === undefined) 
+                        ? 'No data' 
+                        : `${parseFloat(temperatureData.minTemp).toFixed(1)}°C to ${parseFloat(temperatureData.maxTemp).toFixed(1)}°C`
+                  }
                 </Typography>
               </Box>
             </Box>

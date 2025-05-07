@@ -120,8 +120,8 @@ async function insertStations() {
 
         // Check if the station table is already full
         const oldCount = await pool.query('SELECT COUNT(*) FROM STATION');
-        if (oldCount.rows[0].count >= 19000) {
-            console.log('Station table is already full, skipping station data insertion');
+        if (oldCount.rows[0].count >= 1) {
+            console.log('Station table is already has data, skipping station data insertion');
             return;
         }
 

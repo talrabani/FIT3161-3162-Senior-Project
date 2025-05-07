@@ -111,6 +111,8 @@ CREATE TABLE IF NOT EXISTS SA4_RAINFALL_MONTHLY (
     year INTEGER,
     month INTEGER,
     rainfall DECIMAL(5,1),
+    max_temp DECIMAL(5,1),
+    min_temp DECIMAL(5,1),
     PRIMARY KEY (sa4_code, year, month),
     FOREIGN KEY (sa4_code) REFERENCES SA4_BOUNDARIES(sa4_code21)
 );
