@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { P } from './typography';
 import { useMapContext } from '../../context/MapContext';
-import { fetchAverageRainfallBySA4, fetchSA4Summary } from '../../services/weatherApi';
+import { fetchSA4Summary } from '../../services/weatherApi';
 
 /**
  * Debug Information Panel
