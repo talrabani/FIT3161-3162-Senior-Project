@@ -254,14 +254,14 @@ const StationSelectCard = ({ station, onClose = () => {}, onSelect = () => {} })
                       position: 'absolute', 
                       bottom: `${minTempPercentage}%`, 
                       width: '100%', 
-                      height: `${minTempPercentage > 0? '0px': '4px'}`, 
+                      height: `${minTempPercentage > 0? '4px': '0px'}`, 
                       bgcolor: 'rgb(125, 194, 255)' // Different light blue shade for min temp
                     }} />
                     <Box sx={{ // Max temperature line
                       position: 'absolute', 
                       bottom: `${maxTempPercentage}%`, 
                       width: '100%', 
-                      height: `${maxTempPercentage > 0? '0px': '4px'}`, 
+                      height: `${maxTempPercentage > 0? '4px': '0px'}`, 
                       bgcolor: 'rgb(255, 196, 4)', // Light yellow for max temp
                     }} />
                     </>

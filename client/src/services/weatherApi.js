@@ -82,7 +82,7 @@ export const fetchStationsBySA4 = async (code, date) => {
  * @param {string} endDate - Optional end date for a date range (YYYY-MM-DD)
  * @returns {Promise} Promise with array of stations with their rainfall data
  */
-export const fetchRainfallBySA4 = async (code, date, startDate, endDate) => {
+export const fetchAverageRainfallBySA4 = async (code, date, startDate, endDate) => {
   try {
     let url = `${SERVER_API_URL}/rainfall/sa4/${code}`;
     let params = {};
