@@ -6,7 +6,7 @@ import {
   Box, 
   TextField,
   Stack,
-  CircularProgress
+  Button,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -15,7 +15,7 @@ import { useMapContext } from '../../context/MapContext';
 import { format } from 'date-fns';
 import { fetchStationWeatherRange } from '../../services/weatherApi';
 import RainfallLineGraph from './rainfallLineGraph';
-
+import * as d3 from "d3";
 /**
  * CompareStationsBox Component
  * Displays the comparison chart interface with date selectors and a D3.js line graph
@@ -116,19 +116,57 @@ const CompareStationsBox = ({ stationsToCompare }) => {
     fetchComparisonData();
   }, [stationsToCompare, startDate, endDate]);
 
+  const svgToXML = (svg) => {
+    var serializer = new XMLSerializer();
+    var xmlString = serializer.serializeToString(svg);
+    return 'data:image/svg+xml;base64,' + btoa(xmlString);
+  }
+  const makeCanvas = (svg) => {
+    const img = new Image;
+    img.setAttribute('src', svgToXML(svg));
+    const canvas = document.createElement('canvas');
+    canvas.setAttribute('width', svg.clientWidth);
+    canvas.setAttribute('height', svg.clientHeight);
+    canvas.getContext('2d').drawImage(img, 0, 0);
+    return canvas;
+  }
+  // Make download button for the user
+  const downloadGraph = (fileExtension) => {
+    if (!d3.select('#chart').node()) return;
+    const svg = d3.select('#chart').node();
+    if (fileExtension != 'svg') {
+      const canvas = makeCanvas(svg);
+      var url = canvas.toDataURL(`image/${fileExtension}`, 1.0);
+    } else {
+      var url = svgToXML(svg);
+    }
+    const a = document.createElement('a');
+    a.setAttribute('download', `download.${fileExtension}`);
+    a.setAttribute('href', url);
+    a.dispatchEvent(new MouseEvent('click'));
+  }
+  const downloadGraphAsPNG = () => {
+    downloadGraph('png');
+  }
+  const downloadGraphAsJPEG = () => {
+    downloadGraph('jpeg');
+  }
+  const downloadGraphAsSVG = () => {
+    downloadGraph('svg');
+  }
   return (
     <Card sx={{ 
       p: 1, 
       bgcolor: '#f9f9f9',
       borderRadius: '12px',
-      mt: 2
+      mt: 2,
     }}>
       <CardContent>
         <Box sx={{ 
           display: 'flex', 
           justifyContent: 'space-between', 
           alignItems: 'center',
-          mb: 2
+          mb: 1,
         }}>
           <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>
             Station Comparison
@@ -166,24 +204,58 @@ const CompareStationsBox = ({ stationsToCompare }) => {
             </Stack>
           </LocalizationProvider>
         </Box>
-        
-        {/* Rainfall Line Graph */}
-        <RainfallLineGraph 
-          stationData={comparisonData}
-          loading={loading}
-          error={error}
-          height={300}
-        />
-
+        <Stack direction="column" spacing={2}>
+            {/* Rainfall Line Graph */}
+            <RainfallLineGraph 
+              stationData={comparisonData}
+              loading={loading}
+              error={error}
+              height={300}
+            />
+          
+          {/* Download buttons for the user */}
+          <Stack direction="row" spacing={2} justifyContent="center">
+            <Button
+              variant="contained" 
+              color="primary"
+              size="small"
+              disabled={(!comparisonData || Object.keys(comparisonData).length === 0)}
+              sx={{ fontSize: '0.8rem' }}
+              onClick={downloadGraphAsSVG}
+              >
+              Download Graph as SVG
+            </Button>
+            <Button
+              variant="contained" 
+              color="primary"
+              size="small"
+              disabled={(!comparisonData || Object.keys(comparisonData).length === 0)}
+              sx={{ fontSize: '0.8rem' }}
+              onClick={downloadGraphAsPNG}
+              >
+              Download Graph as PNG
+            </Button>
+            <Button
+              variant="contained" 
+              color="primary"
+              size="small"
+              disabled={(!comparisonData || Object.keys(comparisonData).length === 0)}
+              sx={{ fontSize: '0.8rem' }}
+              onClick={downloadGraphAsJPEG}
+              >
+              Download Graph as JPEG
+            </Button>
+          </Stack>
+        </Stack>
         {/* Station list summary */}
-        <Box sx={{ mt: 2 }}>
+        {/* <Box sx={{ mt: 2 }}>
           <Typography variant="body2" color="text.secondary">
             Comparing {stationsToCompare?.length || 0} stations
           </Typography>
           <Typography variant="caption" color="text.secondary">
             {stationsToCompare?.map(station => station.name).join(', ')}
           </Typography>
-        </Box>
+        </Box> */}
       </CardContent>
     </Card>
   );

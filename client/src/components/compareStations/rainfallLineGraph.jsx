@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from "d3";
 import wrap from "../utils/textWrap";
 import { format, parseISO } from 'date-fns';
+import { Button } from '@mui/material';
 
 /**
  * RainfallLineGraph Component
@@ -52,6 +53,8 @@ export default function RainfallLineGraph({
         .append('svg')
           .attr('width', containerWidth)
           .attr('height', containerHeight)
+          .attr('id', 'chart')
+          .style("background", "white")
         .append('g')
           .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -304,7 +307,7 @@ export default function RainfallLineGraph({
         curPos += legendItem.node().getBBox().height;
       });
     };
-
+    
     renderChart();
 
     // Add window resize handler for responsiveness
@@ -320,6 +323,7 @@ export default function RainfallLineGraph({
       window.removeEventListener('resize', handleResize);
     };
   }, [stationData, loading, error, height]);
+  
 
   return (
     <div 
