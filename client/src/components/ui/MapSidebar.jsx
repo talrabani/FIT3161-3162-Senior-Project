@@ -74,7 +74,7 @@ export default function MapSidebar() {
         setLocation={handleLocationChange} 
       />
       
-      {/* Type selector below the search bar */}
+      {/* Weather type selector */}
       <TypeSelect 
         type={selectedType} 
         setType={handleTypeChange} 
