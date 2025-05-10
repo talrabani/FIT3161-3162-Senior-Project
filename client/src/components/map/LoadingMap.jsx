@@ -13,7 +13,7 @@ import './LoadingMap.css';
 const LoadingMap = ({ 
   show, 
   message = 'Loading map data...', 
-  subtitle = 'Please wait while we get the latest weather information'
+  subtitle = 'Please wait for the weather data to load'
 }) => {
   return (
     <div className={`loading-map-overlay ${!show ? 'hidden' : ''}`}>
