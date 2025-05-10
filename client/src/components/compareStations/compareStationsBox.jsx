@@ -4,13 +4,13 @@ import {
   CardContent, 
   Typography, 
   Box, 
-  TextField,
   Stack,
   Button,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import TypeSelect from '../ui/TypeSelect'
 import { useMapContext } from '../../context/MapContext';
 import { format } from 'date-fns';
 import { fetchStationWeatherRange } from '../../services/weatherApi';
@@ -24,14 +24,15 @@ import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG } from '../
  * @param {Array} stationsToCompare - The stations being compared
  */
 const CompareStationsBox = ({ stationsToCompare }) => {
-  const { selectedDate, dateRange, setDateRange } = useMapContext();
-  // const [startDate, setStartDate] = useState(dateRange.startDate || selectedDate);
-  // const [endDate, setEndDate] = useState(dateRange.endDate || new Date());
+  const { selectedDate, dateRange, setDateRange, selectedType } = useMapContext();
   const [loading, setLoading] = useState(false);
   const [comparisonData, setComparisonData] = useState({});
   const [error, setError] = useState(null);
   
-  // Handle changes in the date range
+  // Set the graph type, which is separate to one on the map
+  const [selectedGraphType, setSelectedType] = useState(selectedType.valueOf());
+  
+  // Handle changes in the date range - this updates the context
   const handleStartDateChange = (newDate) => {
     setDateRange(prev => ({ ...prev, startDate: newDate }));
     console.log('Start Date updated:', newDate);
@@ -41,6 +42,12 @@ const CompareStationsBox = ({ stationsToCompare }) => {
     setDateRange(prev => ({ ...prev, endDate: newDate }));
     console.log('End Date updated:', newDate);
     };
+  
+  // Handle type change - this updates the context
+  const handleTypeChange = (newType) => {
+    setSelectedType(newType);
+    console.log('Selected type updated:', newType);
+  }
 
   // Generate a consistent color for each station ID
   const getStationColor = (stationId) => {
@@ -86,7 +93,6 @@ const CompareStationsBox = ({ stationsToCompare }) => {
       }
       setLoading(true);
       setError(null);
-      // console.log(selectedDate.set);
       try {
         console.log('Fetching comparison data for:');
         console.log('Stations:', stationsToCompare.map(s => s.name).join(', '));
@@ -117,7 +123,7 @@ const CompareStationsBox = ({ stationsToCompare }) => {
     };
     
     fetchComparisonData();
-  }, [stationsToCompare, dateRange.startDate, dateRange.endDate]);
+  }, [stationsToCompare, dateRange.startDate, dateRange.endDate, selectedGraphType]);
 
   return (
     <Card sx={{ 
@@ -137,8 +143,12 @@ const CompareStationsBox = ({ stationsToCompare }) => {
             Station Comparison
           </Typography>
           
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={2}>
+            <TypeSelect 
+              type={selectedGraphType} 
+              setType={handleTypeChange} 
+            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Start Date"
                 value={dateRange.startDate}
@@ -166,13 +176,14 @@ const CompareStationsBox = ({ stationsToCompare }) => {
                   }
                 }}
               />
-            </Stack>
-          </LocalizationProvider>
+            </LocalizationProvider>
+          </Stack>
         </Box>
         <Stack direction="column" spacing={2}>
             {/* Rainfall Line Graph */}
             <RainfallLineGraph 
               stationData={comparisonData}
+              selectedType={selectedGraphType}
               loading={loading}
               error={error}
               height={300}

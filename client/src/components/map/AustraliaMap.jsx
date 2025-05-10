@@ -179,20 +179,42 @@ export default function AustraliaMap({
         const firstRecord = data[0];
         console.log('Sample data record:', firstRecord);
         
-        // Validate data availability for the selected type
-        if (selectedType === 'min_temp' || selectedType === 'max_temp') {
-          const hasRequestedTempData = firstRecord && firstRecord[selectedType] !== undefined;
-          
-          if (!hasRequestedTempData) {
-            console.warn(`${selectedType} data is not available in the API response`);
-          }
-        } else if (selectedType === 'rainfall') {
-          const hasRainfallData = firstRecord && firstRecord.rainfall !== undefined;
-          
-          if (!hasRainfallData) {
-            console.warn('Rainfall data is not available in the API response');
-          }
+        const hasRequestedData = firstRecord && firstRecord[selectedType] !== undefined;
+        if (!hasRequestedData) {
+          console.warn(`${selectedType} data is not available in the API response`);
         }
+        console.warn(`${selectedType} data is not available in the API response`);
+        // Validate temperature data availability if that's the selected type
+        // switch (selectedType) {
+        //   case 'max_temp': {
+        //     if (firstRecord && 
+        //         (firstRecord.max_temp !== undefined || 
+        //         firstRecord.avg_max_temp !== undefined))
+        //         { console.warn('max temp data is not available in the API response') }
+        //     break;
+        //   }
+        //   case 'min_temp': {
+        //     if (firstRecord && 
+        //         (firstRecord.min_temp !== undefined || 
+        //         firstRecord.avg_min_temp !== undefined))
+        //         { console.warn('min temp data is not available in the API response') }
+        //     break;
+        //     default:
+        //       console.warn('Invalid type selected')
+        //     }
+        //     // Validate data availability for the selected type
+        //     if (selectedType === 'min_temp' || selectedType === 'max_temp') {
+        //       const hasRequestedTempData = firstRecord && firstRecord[selectedType] !== undefined;
+              
+        //       if (!hasRequestedTempData) {
+        //         console.warn(`${selectedType} data is not available in the API response`);
+        //       }
+        //     } else if (selectedType === 'rainfall') {
+        //       const hasRainfallData = firstRecord && firstRecord.rainfall !== undefined;
+              
+        //       if (!hasRainfallData) {
+        //         console.warn('Rainfall data is not available in the API response');
+        //       }
         
         setWeatherData(data);
         weatherDataLoaded.current = true;
@@ -254,71 +276,56 @@ export default function AustraliaMap({
     
     try {
       console.log(`Updating map colors for ${selectedType} with ${data.length} data points (direct)`);
-      let dataField, legendTitle, colorScale;
+      let dataField, legendTitle, colourScale;
       
       // Set properties based on selected type
+      
+      dataField = selectedType;
       if (selectedType === 'rainfall') {
         dataField = 'rainfall';
         legendTitle = 'Rainfall (mm)';
         
-        // Extract rainfall values for the color scale
-        const rainfallValues = data
-          .map(item => parseFloat(item[dataField]) || 0)
-          .filter(val => !isNaN(val) && val !== 0);
+        // // Extract temperature values for the color scale
+        // const tempValues = data
+        //   .map(item => parseFloat(item[dataField]) || 0)
+        //   .filter(val => !isNaN(val) && val !== 0);
           
-        if (rainfallValues.length === 0) {
-          console.warn('No valid rainfall values found in data');
-          return;
-        }
+        // if (tempValues.length === 0) {
+        //   console.warn(`No valid ${selectedType} values found in data`);
+        //   return;
+        // }
         
-      const minRainfall = Math.min(...rainfallValues);
-      const maxRainfall = Math.max(...rainfallValues);
-      
-        console.log(`Rainfall range: ${minRainfall.toFixed(2)} to ${maxRainfall.toFixed(2)} mm`);
         
-        // Create rainfall color scale (blues)
-        colorScale = chroma.scale(['#e0f3ff', '#025196']).domain([minRainfall, maxRainfall]);
-      } else if (selectedType === 'max_temp' || selectedType === 'min_temp') {
-        // Use the selected temperature field
-        dataField = selectedType;
-        legendTitle = selectedType === 'max_temp' ? 'Maximum Temperature (°C)' : 'Minimum Temperature (°C)';
-        
-        // Extract temperature values for the color scale
-        const tempValues = data
-          .map(item => parseFloat(item[dataField]) || 0)
-          .filter(val => !isNaN(val) && val !== 0);
-          
-        if (tempValues.length === 0) {
-          console.warn(`No valid ${selectedType} values found in data`);
-          return;
-        }
-        
-        const minTemp = Math.min(...tempValues);
-        const maxTemp = Math.max(...tempValues);
-        
-        console.log(`${selectedType} range: ${minTemp.toFixed(2)} to ${maxTemp.toFixed(2)} °C`);
+        // console.log(`${selectedType} range: ${minTemp.toFixed(2)} to ${maxTemp.toFixed(2)} °C`);
         
         // Create a temperature color scale that spans from -20°C (dark blue) to 50°C (dark red)
         // This creates a consistent color mapping regardless of the actual data range
-        const absoluteTempScale = chroma.scale([
-          '#0d0887', // Very dark blue (-20°C)
-          '#4e67ce', // Blue (0°C)
-          '#72d5e8', // Light blue (10°C)
-          '#fee090', // Light yellow (20°C)
-          '#fd9747', // Orange (30°C)
-          '#e03a39', // Red (40°C)
-          '#7a0403'  // Dark red (50°C)
-        ]).domain([-20, 0, 10, 20, 30, 40, 50]);
+        // const absoluteTempScale = chroma.scale([
+        //   '#0d0887', // Very dark blue (-20°C)
+        //   '#4e67ce', // Blue (0°C)
+        //   '#72d5e8', // Light blue (10°C)
+        //   '#fee090', // Light yellow (20°C)
+        //   '#fd9747', // Orange (30°C)
+        //   '#e03a39', // Red (40°C)
+        //   '#7a0403'  // Dark red (50°C)
+        // ]).domain([-20, 0, 10, 20, 30, 40, 50]);
         
         // Scale the actual data values to colors
-        colorScale = (value) => {
-          // Clamp value between -20 and 50 for the color scale
-          const clampedValue = Math.max(-20, Math.min(50, value));
-          return absoluteTempScale(clampedValue);
-        };
-      } else {
-        console.warn(`Unknown weather type: ${selectedType}`);
-        return;
+      //   colorScale = (value) => {
+      //     // Clamp value between -20 and 50 for the color scale
+      //     const clampedValue = Math.max(-20, Math.min(50, value));
+      //     return absoluteTempScale(clampedValue);
+      //   };
+      // } else {
+      //   console.warn(`Unknown weather type: ${selectedType}`);
+        // return;
+        colorStart = '#e0f3ff';
+        colorEnd = '#025196';
+      } else { // temperature
+        // const firstRecord = weatherData[0];
+        legendTitle = 'Temperature (°C)';
+        colorStart = 'rgba(0, 0, 255, 1)';
+        colorEnd = 'rgba(255, 0, 0, 1)';
       }
       
       console.log(`Using data field: ${dataField} for type: ${selectedType}`);
@@ -333,8 +340,22 @@ export default function AustraliaMap({
         return;
       }
       
-      const minValue = Math.min(...values);
-      const maxValue = Math.max(...values);
+      // Format colour scale with a standard range, unless data exceeds
+      var minValue, maxValue;
+
+      if (selectedType === 'rainfall') {
+        minValue = 0;
+        maxValue = Math.max(...values, 20);
+      } else {
+        maxValue = Math.max(...values, 40);
+        minValue = Math.min(...values, -10);
+      }
+      
+      console.log(`${selectedType} range: ${minValue} to ${maxValue}`);
+      // console.log(Math.max(...values), Math.min(...values))
+      
+      // Create a color scale
+      const colorScale = chroma.scale([colorStart, colorEnd]).domain([minValue, maxValue]);
       
       // Create a lookup object for SA4 code to data value
       const valueBySA4 = {};

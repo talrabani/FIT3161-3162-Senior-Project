@@ -24,6 +24,7 @@ export default function RainfallLineGraph({
   width = '100%',
   height = 400
 }) {
+
   const chartRef = useRef(null);
 
   // Create/update chart when data changes or container resizes
@@ -60,8 +61,9 @@ export default function RainfallLineGraph({
 
       // Prepare data for the chart
       let allDataPoints = [];
+      var typeString, units;
       const stationSeries = [];
-      console.log(stationData);
+
       // Process and combine all data points
       Object.values(stationData).forEach(station => {
         if (!station.data || station.data.length === 0) return;
@@ -73,14 +75,17 @@ export default function RainfallLineGraph({
           stationId: station.id,
           stationName: station.name
         }))
-
+        
         // Filter out points with null dates, NaN rainfall values, or rainfall === null
         const rainfallPoints = stationPoints.filter(d => {
           return d.date && 
                  d.rainfall !== null && 
                  !isNaN(d.rainfall) && 
                  d.rainfall !== undefined;
-        });
+        }).map(d => ({
+          date: d.date,
+          dataPoint: d.rainfall
+      }));
         
 
         const maxTempStationPoints = stationPoints.filter(d => {
@@ -88,22 +93,48 @@ export default function RainfallLineGraph({
                  d.max_temp !== null && 
                  !isNaN(d.max_temp) && 
                  d.max_temp !== undefined;
-        });
+        }).map(d => ({
+          date: d.date,
+          dataPoint: d.max_temp
+      }));
 
         const minTempStationPoints = stationPoints.filter(d => {
           return d.date && 
                  d.min_temp !== null && 
                  !isNaN(d.min_temp) && 
                  d.min_temp !== undefined;
-        });
+        }).map(d => ({
+            date: d.date,
+            dataPoint: d.min_temp
+        }));
 
-        if (rainfallPoints.length > 0) {
-          allDataPoints = [...allDataPoints, ...rainfallPoints];
+        switch (selectedType) {
+          case "rainfall":
+            var dataPoints = rainfallPoints;
+            typeString = "Total rainfall";
+            units = 'mm';
+            break;
+          case "max_temp":
+            var dataPoints = maxTempStationPoints;
+            units = '°C';
+            typeString = "Maximum temperature";
+            break;
+          case "min_temp":
+            var dataPoints = minTempStationPoints;
+            units = '°C';
+            typeString = "Minimum temperature";
+            break;
+          default:
+            console.log("No data type selected");
+        }
+        
+        if (dataPoints.length > 0) {
+          allDataPoints = [...allDataPoints, ...dataPoints];
           stationSeries.push({
             id: station.id,
             name: station.name,
             color: station.color,
-            values: rainfallPoints
+            values: dataPoints
           });
         }
       });
@@ -114,10 +145,9 @@ export default function RainfallLineGraph({
           .attr('x', graphWidth / 2)
           .attr('y', graphHeight / 2)
           .attr('text-anchor', 'middle')
-          .text('No rainfall data available for the selected period.');
+          .text('No data available for the selected period.');
         return;
       }
-
       // Sort data chronologically for proper line drawing
       allDataPoints.sort((a, b) => a.date - b.date);
       stationSeries.forEach(station => {
@@ -130,19 +160,19 @@ export default function RainfallLineGraph({
         .range([0, graphWidth]);
 
       const y = d3.scaleLinear()
-        .domain([0, d3.max(allDataPoints, d => d.rainfall) * 1.1]) // Add 10% padding on top
+        .domain([0, d3.max(allDataPoints, d => d.dataPoint) * 1.1]) // Add 10% padding on top
         .range([graphHeight, 0]);
 
       // Line generator
       const line = d3.line()
         .defined(d => {
-          return d.rainfall !== null && 
-                 !isNaN(d.rainfall) && 
-                 d.rainfall !== undefined;
+          return d.dataPoint !== null && 
+                 !isNaN(d.dataPoint) && 
+                 d.dataPoint !== undefined;
         })
         .x(d => x(d.date))
-        .y(d => y(d.rainfall));
-
+        .y(d => y(d.dataPoint));
+      
       // Add X axis
       svg.append('g')
         .attr('transform', `translate(0,${graphHeight})`)
@@ -155,7 +185,7 @@ export default function RainfallLineGraph({
         .attr('text-anchor', 'middle')
         .style('font-size', '12px')
         .text('Date');
-
+      
       // Add Y axis
       svg.append('g')
         .call(d3.axisLeft(y))
@@ -165,7 +195,7 @@ export default function RainfallLineGraph({
         .attr('y', -25)
         .attr('x', -graphHeight / 2)
         .attr('text-anchor', 'middle')
-        .text('Rainfall (mm)');
+        .text(`${typeString} [${units}]`);
 
       // Add grid lines
       svg.append('g')
@@ -207,15 +237,15 @@ export default function RainfallLineGraph({
         // Add dots for each data point
         svg.selectAll(`.dot-${station.id}`)
           .data(station.values.filter(d => 
-            d.rainfall !== null && 
-            !isNaN(d.rainfall) && 
-            d.rainfall !== undefined
+            d.dataPoint !== null && 
+            !isNaN(d.dataPoint) && 
+            d.dataPoint !== undefined
           ))
           .enter()
           .append('circle')
           .attr('class', `dot-${station.id}`)
           .attr('cx', d => x(d.date))
-          .attr('cy', d => y(d.rainfall))
+          .attr('cy', d => y(d.dataPoint))
           .attr('r', 3.5)
           .attr('fill', station.color)
           .attr('stroke', '#fff')
@@ -230,12 +260,12 @@ export default function RainfallLineGraph({
             .attr('r', 3.5)
             .attr('stroke-width', 1.5);
 
-            const pointsOnDate = allDataPoints.filter(d => 
+            const pointsOnDate = station.values.filter(d => 
                 format(d.date, 'yyyy-MM-dd') === format(xDate, 'yyyy-MM-dd')
                 );
 
             pointsOnDate.forEach(p => {
-              svg.selectAll(`.dot-${p.stationId}`)
+              svg.selectAll(`.dot-${station.id}`)
                 .filter(d => format(d.date, 'yyyy-MM-dd') === format(p.date, 'yyyy-MM-dd'))
                 .attr('r', 5)
                 .attr('stroke-width', 2);
@@ -249,10 +279,10 @@ export default function RainfallLineGraph({
             
             // Add each station's rainfall to the tooltip
             pointsOnDate.forEach(p => {
-              if (p.rainfall !== null && !isNaN(p.rainfall) && p.rainfall !== undefined) {
-                tooltip.html(tooltip.html() + `${p.stationName}: ${p.rainfall.toFixed(1)} mm<br/>`);
+              if (p.dataPoint !== null && !isNaN(station.id) && p.dataPoint !== undefined) {
+                tooltip.html(tooltip.html() + `${station.name}: ${p.dataPoint.toFixed(1)} ${units}<br/>`);
               } else {
-                tooltip.html(tooltip.html() + `${p.stationName}: No data<br/>`);
+                tooltip.html(tooltip.html() + `${station.name}: No data<br/>`);
               }
           });
         })
@@ -274,7 +304,7 @@ export default function RainfallLineGraph({
         .attr('text-anchor', 'middle')
         .style('font-size', '16px')
         .style('text-decoration', 'bold')
-        .text(`Average Rainfall in ${Object.keys(stationData).length} stations
+        .text(`${typeString} in ${Object.keys(stationData).length} stations
           from ${x.domain()[0].toLocaleDateString('en-gb',
             {day: 'numeric', month: 'long', year: 'numeric'})}
           to ${x.domain()[1].toLocaleDateString('en-gb',
@@ -367,7 +397,7 @@ export default function RainfallLineGraph({
           color: '#666',
           textAlign: 'center'
         }}>
-          Select at least two stations and a date range to compare rainfall data
+          Select at least two stations and a date range to compare weather data
         </div>
       )}
     </div>

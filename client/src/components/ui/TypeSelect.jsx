@@ -4,8 +4,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+// Handle type change - this updates the context
 export default function TypeSelect( { type, setType } ) {
-
+  
   return (
     <Box>
       <FormControl fullWidth>
