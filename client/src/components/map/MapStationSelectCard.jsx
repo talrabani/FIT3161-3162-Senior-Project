@@ -10,15 +10,30 @@ import { useMapContext } from '../../context/MapContext';
  * Station Select Card Component
  * Displays information about a selected station and provides options to interact with it
  * 
- * @param {Object} station - The selected station data
- * @param {Function} onClose - Function to call when the card is closed
- * @param {Function} onSelect - Function to call when the station is selected
+ * @param {Object} station - The selected station data (can be provided directly or from context)
+ * @param {Function} onClose - Function to call when the card is closed (optional, defaults to context handler)
+ * @param {Function} onSelect - Function to call when the station is selected (optional)
  */
-const StationSelectCard = ({ station, onClose = () => {}, onSelect = () => {} }) => {
-  if (!station) return null;
+const StationSelectCard = ({ 
+  station: propStation, 
+  onClose: propOnClose, 
+  onSelect: propOnSelect = () => {} 
+}) => {
+  // Get context values
+  const { 
+    selectedDate, 
+    selectedMapStation, 
+    clearSelectedMapStation,
+    addStation
+  } = useMapContext();
   
-  // Get the selectedDate from the context
-  const { selectedDate } = useMapContext();
+  // Use station from props or context
+  const station = propStation || selectedMapStation;
+  
+  // Use onClose from props or default to context's clearSelectedMapStation
+  const onClose = propOnClose || clearSelectedMapStation;
+  
+  if (!station) return null;
   
   const [rainfallData, setRainfallData] = useState({ rainfall: 'No data' });
   const [temperatureData, setTemperatureData] = useState({ minTemp: 'No data', maxTemp: 'No data' });
@@ -84,10 +99,25 @@ const StationSelectCard = ({ station, onClose = () => {}, onSelect = () => {} })
   }, [station?.station_id, selectedDate]);
 
   const handleSelect = () => {
-    if (onSelect) {
-      onSelect(station);
-    }
+    // Add the station to the context's selected stations
+    addStation({
+      id: station.station_id,
+      name: station.station_name,
+      state: station.station_state,
+      elevation: station.station_height,
+      startYear: station.station_start_year,
+      endYear: station.station_end_year,
+      latitude: station.location?.coordinates[1],
+      longitude: station.location?.coordinates[0]
+    });
+    
+    // Call onSelect from props if provided
+    propOnSelect(station);
+    
+    // Close the card
+    onClose();
   };
+  
   // Calculate fill percentages based on the specified ranges
   // Rainfall: 0mm = 0%, >= 30mm = 100%
   // Temperature: <=-10°C = 0%, >=40°C = 100%
@@ -254,14 +284,14 @@ const StationSelectCard = ({ station, onClose = () => {}, onSelect = () => {} })
                       position: 'absolute', 
                       bottom: `${minTempPercentage}%`, 
                       width: '100%', 
-                      height: `${minTempPercentage > 0? '0px': '4px'}`, 
+                      height: `${minTempPercentage > 0? '4px': '0px'}`, 
                       bgcolor: 'rgb(125, 194, 255)' // Different light blue shade for min temp
                     }} />
                     <Box sx={{ // Max temperature line
                       position: 'absolute', 
                       bottom: `${maxTempPercentage}%`, 
                       width: '100%', 
-                      height: `${maxTempPercentage > 0? '0px': '4px'}`, 
+                      height: `${maxTempPercentage > 0? '4px': '0px'}`, 
                       bgcolor: 'rgb(255, 196, 4)', // Light yellow for max temp
                     }} />
                     </>

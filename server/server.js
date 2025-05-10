@@ -8,6 +8,7 @@ require('dotenv').config()
 const boundariesRoutes = require('./routes/boundaries');
 const rainfallRoutes = require('./routes/rainfall');
 const authRoutes = require('./routes/auth');
+const stationsRoutes = require('./routes/stations');
 
 // Configure CORS
 const corsOptions = {
@@ -24,6 +25,8 @@ app.use(cors(corsOptions));
 app.use('/api/boundaries', boundariesRoutes);
 app.use('/api/rainfall', rainfallRoutes);
 app.use('/api/auth', authRoutes);
+
+app.use('/api/stations', stationsRoutes);
 
 // Basic health check endpoint
 app.get('/api/health', (req, res) => {

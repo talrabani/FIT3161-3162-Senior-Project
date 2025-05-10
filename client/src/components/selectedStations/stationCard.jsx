@@ -108,7 +108,6 @@ const StationCard = ({ station = {}, onRemove = () => {}, selectedDate = null })
       // Check if it's a valid number after conversion
       if (isNaN(numericTemp) || numericTemp <= -10) return 0;
       if (numericTemp >= 40) return 100;
-      
       // Scale from -10 to 40 (range of 50 degrees)
       return ((numericTemp + 10) / 50) * 100;
     };
@@ -255,16 +254,16 @@ const StationCard = ({ station = {}, onRemove = () => {}, selectedDate = null })
                     <>
                     <Box sx={{ // Min temperature line
                       position: 'absolute', 
-                      bottom: `${minTempPercentage}%`, 
+                      bottom: `${minTempPercentage}%`,
                       width: '100%', 
-                      height: `${minTempPercentage > 0? '0px': '4px'}`, 
+                      height: `${minTempPercentage > 0? '4px': '0px'}`, 
                       bgcolor: 'rgb(125, 194, 255)' // Different light blue shade for min temp
                     }} />
                     <Box sx={{ // Max temperature line
                       position: 'absolute', 
                       bottom: `${maxTempPercentage}%`, 
                       width: '100%', 
-                      height: `${maxTempPercentage > 0? '0px': '4px'}`, 
+                      height: `${maxTempPercentage > 0? '4px': '0px'}`, 
                       bgcolor: 'rgb(255, 196, 4)', // Light yellow for max temp
                     }} />
                     </>

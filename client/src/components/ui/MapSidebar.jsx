@@ -1,4 +1,4 @@
-import { Box, TextField, Button } from '@mui/material'
+import { Box, TextField, Button, Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { DatePicker, StaticDatePicker } from '@mui/x-date-pickers'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -6,7 +6,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { useMapContext } from '../../context/MapContext'
 
 import FrequencyRadioGroup from './FrequencyRadioGroup.jsx'
-import LocationInput from './LocationInput.jsx'
+import StationSearch from './StationSearch.jsx'
 import TypeSelect from './TypeSelect.jsx'
 
 export default function MapSidebar() {
@@ -21,7 +21,6 @@ export default function MapSidebar() {
   
   // Local state for form fields that might not need to be shared globally
   const [formData, setFormData] = useState({
-    location: '',
     frequency: 'yearly'
   })
 
@@ -45,15 +44,16 @@ export default function MapSidebar() {
     console.log('Selected date updated:', newDate);
   }
   
-  // Handle location change - this might update the SA4 code in context
-  const handleLocationChange = (newLocation) => {
-    updateFormData('location', newLocation);
+  // Handle when a station is selected - we may need to update SA4 context
+  const handleStationSelect = (station) => {
+    console.log('Station selected in MapSidebar:', station);
     
-    // If the location has an SA4 code, update the context
-    if (newLocation && newLocation.sa4Code) {
-      setSelectedSA4(newLocation.sa4Code);
+    // If the station has location data that contains SA4 info, we could update context
+    // This would typically come from the backend, but for now we just log it
+    if (station.original && station.original.sa4_code) {
+      setSelectedSA4(station.original.sa4_code);
     }
-  }
+  };
 
   // Handle type change - this updates the context
   const handleTypeChange = (newType) => {
@@ -68,13 +68,15 @@ export default function MapSidebar() {
       gap: '20px', 
       padding: '20px',
     }}>
-      {/* Search bar at the top */}
-      <LocationInput 
-        location={formData.location} 
-        setLocation={handleLocationChange} 
-      />
+      {/* Replace LocationInput with StationSearch */}
+      <Box>
+        <StationSearch onStationSelect={handleStationSelect} />
+        <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+          Search for stations by name, ID, or location
+        </Typography>
+      </Box>
       
-      {/* Type selector below the search bar */}
+      {/* Weather type selector */}
       <TypeSelect 
         type={selectedType} 
         setType={handleTypeChange} 

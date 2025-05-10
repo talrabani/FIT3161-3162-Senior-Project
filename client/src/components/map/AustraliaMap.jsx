@@ -6,6 +6,9 @@ import { P } from '../ui/typography';
 import StationSelectCard from './MapStationSelectCard';
 import { useMapContext } from '../../context/MapContext';
 import chroma from 'chroma-js';  // Import chroma.js for color scaling
+import LoadingMap from './LoadingMap';  // Import the loading component
+import MapLegendContainer from './MapLegend'; // Import the new MapLegend component
+import './AustraliaMap.css';  // Import custom CSS
 
 // Mapbox API token
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3BpcGp3dTYyN2wifQ.nntDVPhkBzS5Zm5XuFybXg';
@@ -20,7 +23,20 @@ export default function AustraliaMap({
   showStations = true
 }) {
   // Access shared data from context
-  const { selectedDate, selectedSA4, setSelectedSA4, selectedType } = useMapContext();
+  const { 
+    selectedDate, 
+    selectedSA4, 
+    setSelectedSA4, 
+    selectedType,
+    selectedMapStation,
+    setSelectedMapStation,
+    clearSelectedMapStation
+  } = useMapContext();
+  
+  // Loading state
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [isBoundariesLoaded, setIsBoundariesLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   
   // Center of Australia approximate coordinates
   const centerPosition = [133.7751, -25.2744]; // [lng, lat]
@@ -33,13 +49,21 @@ export default function AustraliaMap({
   const stationMarkers = useRef({});
   const sa4DataLoaded = useRef(false);
   
-  // State for the selected station
-  const [selectedStation, setSelectedStation] = useState(null);
-  const [selectedStationCoords, setSelectedStationCoords] = useState(null); // Store pixel coordinates - used to position the card of selected station
+  // State for coordinates which is view-specific
+  const [selectedStationCoords, setSelectedStationCoords] = useState(null);
   
   // State for weather data
   const [weatherData, setWeatherData] = useState([]);
   const weatherDataLoaded = useRef(false);
+  
+  // State for legend data
+  const [legendData, setLegendData] = useState({
+    minValue: 0,
+    maxValue: 0,
+    colorScale: null,
+    title: '',
+    type: 'rainfall'
+  });
   
   // Refs for DOM elements
   const mapContainer = useRef(null);
@@ -74,6 +98,8 @@ export default function AustraliaMap({
   useEffect(() => {
     if (map.current) return; // Skip if already initialized
     
+    console.log('Initializing map...');
+    
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/outdoors-v12',
@@ -86,6 +112,32 @@ export default function AustraliaMap({
     map.current.addControl(new mapboxgl.ScaleControl(), 'bottom-right');
     map.current.addControl(new mapboxgl.FullscreenControl(), 'top-right');
     
+    // Wait for the map to fully load
+    map.current.on('load', () => {
+      console.log('Map fully loaded');
+      setIsMapLoaded(true);
+      
+      // Pre-fetch weather data as soon as the map loads
+      if (selectedDate && (!weatherData || weatherData.length === 0)) {
+        const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+        const year = selectedDate.getFullYear().toString();
+        
+        console.log(`Pre-fetching initial weather data: ${month}/${year}`);
+        
+        fetchAverageWeatherBySA4(month, year)
+          .then(data => {
+            if (data && data.length > 0) {
+              console.log(`Received ${data.length} initial weather records`);
+              setWeatherData(data);
+              weatherDataLoaded.current = true;
+            }
+          })
+          .catch(error => {
+            console.error('Error pre-fetching initial weather data:', error);
+          });
+      }
+    });
+    
     // Clean up on unmount
     return () => {
       if (map.current) {
@@ -95,9 +147,16 @@ export default function AustraliaMap({
     };
   }, []);
   
-  // Fetch weather data when the selected date or type changes
+  // Fetch weather data when the selected date or type changes or on initial load
   useEffect(() => {
-    if (!selectedDate || !map.current) return;
+    // Don't run if no date is selected
+    if (!selectedDate) return;
+    
+    // Skip if map isn't initialized yet
+    if (!map.current) return;
+    
+    // Reset data loaded state when starting to fetch
+    setIsDataLoaded(false);
     
     const fetchWeatherData = async () => {
       try {
@@ -120,16 +179,18 @@ export default function AustraliaMap({
         const firstRecord = data[0];
         console.log('Sample data record:', firstRecord);
         
-        // Validate temperature data availability if that's the selected type
-        if (selectedType === 'temperature') {
-          const hasTempData = firstRecord && 
-            (firstRecord.max_temp !== undefined || 
-             firstRecord.avg_max_temp !== undefined || 
-             firstRecord.temp !== undefined || 
-             firstRecord.temperature !== undefined);
+        // Validate data availability for the selected type
+        if (selectedType === 'min_temp' || selectedType === 'max_temp') {
+          const hasRequestedTempData = firstRecord && firstRecord[selectedType] !== undefined;
           
-          if (!hasTempData) {
-            console.warn('Temperature data is not available in the API response');
+          if (!hasRequestedTempData) {
+            console.warn(`${selectedType} data is not available in the API response`);
+          }
+        } else if (selectedType === 'rainfall') {
+          const hasRainfallData = firstRecord && firstRecord.rainfall !== undefined;
+          
+          if (!hasRainfallData) {
+            console.warn('Rainfall data is not available in the API response');
           }
         }
         
@@ -139,50 +200,131 @@ export default function AustraliaMap({
         // Update map colors if boundaries are already loaded
         if (boundariesSourceAdded.current && map.current.getSource('sa4-boundaries')) {
           updateMapColors();
+          // Set data loaded to true after everything is ready
+          setIsDataLoaded(true);
         }
       } catch (error) {
         console.error('Error fetching weather data:', error);
         setWeatherData([]);
+        // Even on error, we should update the loading state
+        setIsDataLoaded(true);
       }
     };
     
     fetchWeatherData();
-  }, [selectedDate, selectedType]);
+  }, [selectedDate, selectedType, weatherDataLoaded.current]);
   
   // Function to update map colors based on selected weather data type
   const updateMapColors = () => {
-    if (!map.current || !boundariesSourceAdded.current || weatherData.length === 0) return;
+    if (!map.current) {
+      console.log('Cannot update map colors: Map not initialized');
+      return;
+    }
+    
+    if (!boundariesSourceAdded.current) {
+      console.log('Cannot update map colors: Boundaries not added yet');
+      return;
+    }
+    
+    if (!weatherData || weatherData.length === 0) {
+      console.log('Cannot update map colors: No weather data available');
+      return;
+    }
+    
+    // Use the current weatherData state
+    updateMapColorsWithData(weatherData);
+  };
+  
+  // Function to update map colors using provided data
+  const updateMapColorsWithData = (data) => {
+    if (!map.current) {
+      console.log('Cannot update map colors: Map not initialized');
+      return;
+    }
+    
+    if (!boundariesSourceAdded.current) {
+      console.log('Cannot update map colors: Boundaries not added yet');
+      return;
+    }
+    
+    if (!data || data.length === 0) {
+      console.log('Cannot update map colors: No data provided');
+      return;
+    }
     
     try {
-      let dataField, legendTitle, colorStart, colorEnd;
+      console.log(`Updating map colors for ${selectedType} with ${data.length} data points (direct)`);
+      let dataField, legendTitle, colorScale;
       
       // Set properties based on selected type
       if (selectedType === 'rainfall') {
         dataField = 'rainfall';
         legendTitle = 'Rainfall (mm)';
-        colorStart = '#e0f3ff';
-        colorEnd = '#025196';
-      } else { // temperature
-        // Check what temp data fields are available in the first record
-        const firstRecord = weatherData[0];
-        const tempFields = ['max_temp', 'avg_max_temp', 'temp', 'temperature'];
         
-        // Find the first available temperature field
-        dataField = tempFields.find(field => 
-          firstRecord && 
-          firstRecord[field] !== undefined && 
-          firstRecord[field] !== null
-        ) || 'max_temp';
+        // Extract rainfall values for the color scale
+        const rainfallValues = data
+          .map(item => parseFloat(item[dataField]) || 0)
+          .filter(val => !isNaN(val) && val !== 0);
+          
+        if (rainfallValues.length === 0) {
+          console.warn('No valid rainfall values found in data');
+          return;
+        }
         
-        legendTitle = 'Temperature (°C)';
-        colorStart = '#ffffcc';
-        colorEnd = '#ff3300';
+      const minRainfall = Math.min(...rainfallValues);
+      const maxRainfall = Math.max(...rainfallValues);
+      
+        console.log(`Rainfall range: ${minRainfall.toFixed(2)} to ${maxRainfall.toFixed(2)} mm`);
+        
+        // Create rainfall color scale (blues)
+        colorScale = chroma.scale(['#e0f3ff', '#025196']).domain([minRainfall, maxRainfall]);
+      } else if (selectedType === 'max_temp' || selectedType === 'min_temp') {
+        // Use the selected temperature field
+        dataField = selectedType;
+        legendTitle = selectedType === 'max_temp' ? 'Maximum Temperature (°C)' : 'Minimum Temperature (°C)';
+        
+        // Extract temperature values for the color scale
+        const tempValues = data
+          .map(item => parseFloat(item[dataField]) || 0)
+          .filter(val => !isNaN(val) && val !== 0);
+          
+        if (tempValues.length === 0) {
+          console.warn(`No valid ${selectedType} values found in data`);
+          return;
+        }
+        
+        const minTemp = Math.min(...tempValues);
+        const maxTemp = Math.max(...tempValues);
+        
+        console.log(`${selectedType} range: ${minTemp.toFixed(2)} to ${maxTemp.toFixed(2)} °C`);
+        
+        // Create a temperature color scale that spans from -20°C (dark blue) to 50°C (dark red)
+        // This creates a consistent color mapping regardless of the actual data range
+        const absoluteTempScale = chroma.scale([
+          '#0d0887', // Very dark blue (-20°C)
+          '#4e67ce', // Blue (0°C)
+          '#72d5e8', // Light blue (10°C)
+          '#fee090', // Light yellow (20°C)
+          '#fd9747', // Orange (30°C)
+          '#e03a39', // Red (40°C)
+          '#7a0403'  // Dark red (50°C)
+        ]).domain([-20, 0, 10, 20, 30, 40, 50]);
+        
+        // Scale the actual data values to colors
+        colorScale = (value) => {
+          // Clamp value between -20 and 50 for the color scale
+          const clampedValue = Math.max(-20, Math.min(50, value));
+          return absoluteTempScale(clampedValue);
+        };
+      } else {
+        console.warn(`Unknown weather type: ${selectedType}`);
+        return;
       }
       
       console.log(`Using data field: ${dataField} for type: ${selectedType}`);
       
-      // Extract values to determine min/max for color scale
-      const values = weatherData
+      // Extract values to determine min/max for display
+      const values = data
         .map(item => parseFloat(item[dataField]) || 0)
         .filter(val => !isNaN(val) && val !== 0); // Filter out zero values as they might be placeholders
       
@@ -194,19 +336,27 @@ export default function AustraliaMap({
       const minValue = Math.min(...values);
       const maxValue = Math.max(...values);
       
-      console.log(`${selectedType} range: ${minValue} to ${maxValue}`);
-      
-      // Create a color scale
-      const colorScale = chroma.scale([colorStart, colorEnd]).domain([minValue, maxValue]);
-      
       // Create a lookup object for SA4 code to data value
       const valueBySA4 = {};
-      weatherData.forEach(item => {
+      data.forEach(item => {
+        if (!item.sa4_code) {
+          console.warn('Item missing sa4_code:', item);
+          return;
+        }
+        
         const value = parseFloat(item[dataField]);
         if (!isNaN(value)) {
           valueBySA4[item.sa4_code] = value;
         }
       });
+      
+      // Check if we have any values to display
+      if (Object.keys(valueBySA4).length === 0) {
+        console.warn('No valid SA4 values to display on map');
+        return;
+      }
+      
+      console.log(`Applying colors for ${Object.keys(valueBySA4).length} SA4 regions`);
       
       // Pre-compute the colors for each SA4 area
       const colorBySA4 = {};
@@ -225,68 +375,41 @@ export default function AustraliaMap({
       // Set fill opacity
       map.current.setPaintProperty('sa4-boundaries-fill', 'fill-opacity', 0.7);
       
-      // Update or create the legend
-      updateLegend(minValue, maxValue, colorScale, legendTitle);
+      // Update legend data state
+      setLegendData({
+        minValue,
+        maxValue,
+        colorScale,
+        title: legendTitle,
+        type: selectedType
+      });
+      
+      console.log('Map colors updated successfully');
     } catch (error) {
-      console.error('Error updating map colors:', error);
+      console.error('Error updating map colors with direct data:', error);
     }
   };
   
-  // Helper function to update or create the legend
-  const updateLegend = (minValue, maxValue, colorScale, legendTitle) => {
-    let legend = document.getElementById('map-legend');
-    
-    // If legend doesn't exist, create it
-    if (!legend) {
-      legend = document.createElement('div');
-      legend.id = 'map-legend';
-      legend.style.position = 'absolute';
-      legend.style.bottom = '20px';
-      legend.style.left = '20px';
-      legend.style.padding = '10px';
-      legend.style.backgroundColor = 'white';
-      legend.style.borderRadius = '4px';
-      legend.style.boxShadow = '0 1px 2px rgba(0,0,0,0.1)';
-      legend.style.zIndex = '10';
-      mapContainer.current.appendChild(legend);
-    }
-    
-    // Format the selected date for display
-    const formattedDate = selectedDate ? 
-      `${selectedDate.toLocaleString('default', { month: 'long' })} ${selectedDate.getFullYear()}` : 
-      'Selected Date';
-    
-    // Update the legend content
-    legend.innerHTML = `
-      <h4 style="margin: 0 0 5px 0; font-size: 14px;">${legendTitle}</h4>
-      <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">${formattedDate}</p>
-      <div style="display: flex; align-items: center; margin-bottom: 5px;">
-        <div style="width: 150px; height: 10px; background: linear-gradient(to right, ${colorScale(minValue).hex()}, ${colorScale(maxValue).hex()});"></div>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-size: 12px;">
-        <span>${minValue.toFixed(1)}</span>
-        <span>${maxValue.toFixed(1)}</span>
-      </div>
-    `;
-  };
-  
-  // Load SA4 boundaries data when the toggle is switched on
+  // Load SA4 boundaries data once on initial mount
   useEffect(() => {
-    if (!map.current || !showSA4Boundaries) return;
+    if (!map.current || !isMapLoaded) return;
     
     // Only add source and layer once, when the map is loaded
     const addBoundaries = async () => {
       try {
-        if (!map.current.loaded()) {
-          map.current.on('load', addBoundaries);
+        // Skip if boundaries are already added
+        if (boundariesSourceAdded.current) {
+          console.log('Boundaries already loaded, skipping');
           return;
         }
+        
+        console.log('Loading boundaries for the first time');
+        setIsBoundariesLoaded(false);
         
         // Fetch SA4 boundaries GeoJSON data
         const boundariesData = await fetchSA4Boundaries();
         
-        // Add source if it doesn't exist
-        if (!boundariesSourceAdded.current) {
+        console.log('Adding SA4 boundaries to map');
           map.current.addSource('sa4-boundaries', {
             type: 'geojson',
             data: boundariesData
@@ -300,6 +423,9 @@ export default function AustraliaMap({
             paint: {
               'fill-color': '#088',  // This will be overridden by data-driven style
               'fill-opacity': 0.1
+          },
+          layout: {
+            visibility: showSA4Boundaries ? 'visible' : 'none'
             }
           });
           
@@ -312,6 +438,9 @@ export default function AustraliaMap({
               'line-color': '#088',
               'line-width': 1,
               'line-opacity': 0.5
+          },
+          layout: {
+            visibility: showSA4Boundaries ? 'visible' : 'none'
             }
           });
           
@@ -326,7 +455,8 @@ export default function AustraliaMap({
               'text-variable-anchor': ['center'],
               'text-justify': 'auto',
               'text-allow-overlap': false,
-              'text-ignore-placement': false
+            'text-ignore-placement': false,
+            visibility: showSA4Boundaries ? 'visible' : 'none'
             },
             paint: {
               'text-color': '#088',
@@ -356,38 +486,72 @@ export default function AustraliaMap({
           });
           
           boundariesSourceAdded.current = true;
+        setIsBoundariesLoaded(true);
           
-          // Apply weather colors if we already have the data
-          if (weatherDataLoaded.current && weatherData.length > 0) {
+        // Apply weather colors if we already have the data
+        if (weatherDataLoaded.current && weatherData.length > 0) {
+          console.log('Boundaries loaded and weather data available - applying colors');
             updateMapColors();
-          }
+          setIsDataLoaded(true);
         } else {
-          // Just update the data if source already exists
-          map.current.getSource('sa4-boundaries').setData(boundariesData);
+          console.log('Boundaries loaded but weather data not available - fetching it now');
           
-          // Re-apply color styling if we have weather data
-          if (weatherDataLoaded.current && weatherData.length > 0) {
-            updateMapColors();
+          // Fetch weather data right after boundaries are loaded if we don't have it
+          if (selectedDate) {
+            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const year = selectedDate.getFullYear().toString();
+            
+            console.log(`Fetching weather data after boundaries loaded: ${month}/${year}`);
+            
+            fetchAverageWeatherBySA4(month, year)
+              .then(data => {
+                if (data && data.length > 0) {
+                  console.log(`Received ${data.length} weather records after boundaries loaded`);
+                  
+                  // Update state
+                  setWeatherData(data);
+                  weatherDataLoaded.current = true;
+                  
+                  // Update colors directly with the data we just received
+                  // Instead of waiting for state update
+                  updateMapColorsWithData(data);
+                  
+                  setIsDataLoaded(true);
+                } else {
+                  console.warn('No weather data received after boundaries loaded');
+                  setIsDataLoaded(true); // Mark as loaded even if no data
+                }
+              })
+              .catch(error => {
+                console.error('Error fetching weather data after boundaries loaded:', error);
+                setIsDataLoaded(true); // Mark as loaded even on error
+              });
+          } else {
+            console.log('No date selected, cannot fetch weather data');
+            setIsDataLoaded(true);
           }
         }
       } catch (error) {
         console.error('Error adding SA4 boundaries to map:', error);
+        // Even on error, mark as loaded to prevent endless loading state
+        setIsBoundariesLoaded(true);
       }
     };
     
     addBoundaries();
-  }, [showSA4Boundaries]);
+  }, [isMapLoaded]); // Only run when map is loaded, just once
 
-  // Toggle SA4 boundary layer visibility
+  // Toggle SA4 boundary layer visibility without reloading boundaries
   useEffect(() => {
     if (!map.current || !boundariesSourceAdded.current) return;
     
     try {
       const visibility = showSA4Boundaries ? 'visible' : 'none';
       
+      console.log(`Toggling boundary visibility to: ${visibility}`);
+      
       // Only attempt to set layer properties if the map is loaded and layers exist
-      if (map.current.loaded() && 
-          map.current.getLayer('sa4-boundaries-fill') && 
+      if (map.current.getLayer('sa4-boundaries-fill') && 
           map.current.getLayer('sa4-boundaries-line') && 
           map.current.getLayer('sa4-boundaries-label')) {
         map.current.setLayoutProperty('sa4-boundaries-fill', 'visibility', visibility);
@@ -468,7 +632,7 @@ export default function AustraliaMap({
           const pixelCoords = map.current.project(lngLat);
           
           // Store both the station data and its pixel coordinates
-          setSelectedStation(station);
+          setSelectedMapStation(station);
           setSelectedStationCoords(pixelCoords);
         });
         
@@ -501,15 +665,68 @@ export default function AustraliaMap({
     }
   }, [stationsInSA4, showStations]);
   
+  // Watch for changes to selectedMapStation from the context
+  useEffect(() => {
+    if (!map.current || !selectedMapStation) return;
+    
+    // Check if the station has valid location data
+    if (!selectedMapStation.location || !selectedMapStation.location.coordinates) {
+      console.warn(`Station ${selectedMapStation.station_name} has invalid location data`);
+      return;
+    }
+    
+    // Extract coordinates from location property
+    const coordinates = selectedMapStation.location.coordinates;
+    
+    // Find if we already have a marker for this station
+    const existingMarker = stationMarkers.current[selectedMapStation.station_id];
+    
+    if (existingMarker) {
+      // If we already have a marker for this station, just trigger a click on it
+      console.log(`Station ${selectedMapStation.station_name} already has a marker, triggering click event`);
+      
+      // Get the geographic coordinates
+      const lngLat = existingMarker.getLngLat();
+      
+      // Pan the map to the station
+      map.current.flyTo({
+        center: lngLat,
+        zoom: 10,
+        speed: 1.2
+      });
+      
+      // Convert to pixel coordinates
+      const pixelCoords = map.current.project(lngLat);
+      setSelectedStationCoords(pixelCoords);
+    } else {
+      // If we don't have a marker for this station (e.g., selected from search),
+      // pan to its location and create a temporary marker if needed
+      console.log(`Flying to station ${selectedMapStation.station_name} (selected externally)`);
+      
+      // Pan the map to the station
+      map.current.flyTo({
+        center: coordinates,
+        zoom: 10,
+        speed: 1.2
+      });
+      
+      // Set pixel coordinates based on the selected station's geographic location
+      const pixelCoords = map.current.project(coordinates);
+      setSelectedStationCoords(pixelCoords);
+    }
+  }, [selectedMapStation]);
+  
   // Add an effect to update the card position when the map moves
   useEffect(() => {
-    if (!map.current || !selectedStation || !selectedStationCoords) return;
+    if (!map.current || !selectedMapStation || !selectedStationCoords) return;
     
     // Function to update the position of the card based on the station's geographic location
     const updateCardPosition = () => {
+      if (!selectedMapStation || !selectedMapStation.location) return;
+      
       const lngLat = [
-        selectedStation.location.coordinates[0],
-        selectedStation.location.coordinates[1]
+        selectedMapStation.location.coordinates[0],
+        selectedMapStation.location.coordinates[1]
       ];
       const newPixelCoords = map.current.project(lngLat);
       setSelectedStationCoords(newPixelCoords);
@@ -526,7 +743,18 @@ export default function AustraliaMap({
         map.current.off('zoom', updateCardPosition);
       }
     };
-  }, [selectedStation]);
+  }, [selectedMapStation, selectedStationCoords]);
+  
+  // Show loading overlay if any of the loading states are true
+  const isLoading = !isMapLoaded || !isBoundariesLoaded || !isDataLoaded;
+  
+  // Determine the appropriate loading message based on what's still loading
+  const getLoadingMessage = () => {
+    if (!isMapLoaded) return 'Initializing map...';
+    if (!isBoundariesLoaded) return 'Loading boundary data...';
+    if (!isDataLoaded) return 'Loading weather data...';
+    return 'Loading map data...';
+  };
   
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -535,7 +763,7 @@ export default function AustraliaMap({
         className="australia-map-container w-100 h-100"
       ></div>
       
-      {selectedStation && selectedStationCoords && (
+      {selectedMapStation && selectedStationCoords && (
         <div style={{ 
           position: 'absolute', 
           left: `${selectedStationCoords.x}px`,
@@ -544,9 +772,9 @@ export default function AustraliaMap({
           zIndex: 10 
         }}>
           <StationSelectCard 
-            station={selectedStation}
+            station={selectedMapStation}
             onClose={() => {
-              setSelectedStation(null);
+              clearSelectedMapStation();
               setSelectedStationCoords(null);
             }}
             onSelect={(station) => {
@@ -563,12 +791,31 @@ export default function AustraliaMap({
               };
               
               onLocationSelect(location);
-              setSelectedStation(null);
+              clearSelectedMapStation();
               setSelectedStationCoords(null);
             }}
           />
         </div>
       )}
+      
+      {/* Map Legend */}
+      {legendData.colorScale && (
+        <MapLegendContainer 
+          minValue={legendData.minValue}
+          maxValue={legendData.maxValue}
+          colorScale={legendData.colorScale}
+          title={legendData.title}
+          type={legendData.type}
+          date={selectedDate}
+          position="bottom-left"
+        />
+      )}
+      
+      {/* Loading overlay */}
+      <LoadingMap 
+        show={isLoading} 
+        message={getLoadingMessage()} 
+      />
     </div>
   );
 } 

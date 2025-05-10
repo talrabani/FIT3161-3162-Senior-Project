@@ -82,7 +82,7 @@ export const fetchStationsBySA4 = async (code, date) => {
  * @param {string} endDate - Optional end date for a date range (YYYY-MM-DD)
  * @returns {Promise} Promise with array of stations with their rainfall data
  */
-export const fetchRainfallBySA4 = async (code, date, startDate, endDate) => {
+export const fetchAverageRainfallBySA4 = async (code, date, startDate, endDate) => {
   try {
     let url = `${SERVER_API_URL}/rainfall/sa4/${code}`;
     let params = {};
@@ -282,6 +282,51 @@ export const fetchAverageWeatherBySA4 = async (month, year) => {
     return processedData;
   } catch (error) {
     console.error('Error fetching average weather data for SA4:', error);
+    return [];
+  }
+};
+
+/**
+ * Searches for weather stations based on a search term
+ * @param {string} searchTerm - The search term to look for stations
+ * @returns {Promise} Promise with array of matching stations
+ */
+export const searchWeatherStations = async (searchTerm) => {
+  try {
+    if (!searchTerm || searchTerm.trim() === '') {
+      return [];
+    }
+    
+    const trimmedTerm = searchTerm.trim();
+    
+    // Format query - if it's numeric, ensure we're sending a properly formatted ID
+    let queryParam = trimmedTerm;
+    
+    // Check if it's a numeric ID - if so, ensure we don't have leading zeros interfering
+    if (/^\d+$/.test(trimmedTerm)) {
+      // For numeric searches, we'll let the server handle the exact matching logic
+      // But we'll log that we're specifically searching for a station ID
+      console.log('CLIENT SERVICE: Searching for stations with numeric ID:', trimmedTerm);
+    } else {
+      console.log('CLIENT SERVICE: Searching for stations with term:', trimmedTerm);
+    }
+    
+    const url = `${SERVER_API_URL}/stations/search`;
+    const response = await axios.get(url, { 
+      params: { 
+        query: queryParam
+      } 
+    });
+    
+    if (!response.data || !Array.isArray(response.data)) {
+      console.log('No stations found or invalid response format');
+      return [];
+    }
+    
+    console.log(`Found ${response.data.length} stations matching "${trimmedTerm}"`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error searching for stations with term "${searchTerm}":`, error);
     return [];
   }
 };

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from "d3";
+import wrap from "../utils/textWrap";
 import { format, parseISO } from 'date-fns';
+import { Button } from '@mui/material';
 
 /**
  * RainfallLineGraph Component
@@ -13,12 +15,14 @@ import { format, parseISO } from 'date-fns';
  * @param {number} props.width - Width of the chart (default: 100%)
  * @param {number} props.height - Height of the chart (default: 300)
  */
+
 export default function RainfallLineGraph({
   stationData,
+  selectedType,
   loading = false,
   error = null,
   width = '100%',
-  height = 300
+  height = 400
 }) {
   const chartRef = useRef(null);
 
@@ -40,7 +44,7 @@ export default function RainfallLineGraph({
       const containerHeight = height;
       
       // Set margins
-      const margin = { top: 20, right: 80, bottom: 50, left: 50 };
+      const margin = { top: 40, right: 120, bottom: 40, left: 40 };
       const graphWidth = containerWidth - margin.left - margin.right;
       const graphHeight = containerHeight - margin.top - margin.bottom;
 
@@ -49,38 +53,57 @@ export default function RainfallLineGraph({
         .append('svg')
           .attr('width', containerWidth)
           .attr('height', containerHeight)
+          .attr('id', 'chart')
+          .style("background", "white")
         .append('g')
           .attr('transform', `translate(${margin.left},${margin.top})`);
 
       // Prepare data for the chart
       let allDataPoints = [];
       const stationSeries = [];
-
+      console.log(stationData);
       // Process and combine all data points
       Object.values(stationData).forEach(station => {
         if (!station.data || station.data.length === 0) return;
-
         const stationPoints = station.data.map(d => ({
           date: d.date ? (typeof d.date === 'string' ? parseISO(d.date) : d.date) : null,
+          min_temp: d.min_temp !== undefined ? parseFloat(d.min_temp) : null,
+          max_temp: d.max_temp !== undefined ? parseFloat(d.max_temp) : null,
           rainfall: d.rainfall !== undefined ? parseFloat(d.rainfall) : null,
           stationId: station.id,
           stationName: station.name
         }))
+
         // Filter out points with null dates, NaN rainfall values, or rainfall === null
-        .filter(d => {
+        const rainfallPoints = stationPoints.filter(d => {
           return d.date && 
                  d.rainfall !== null && 
                  !isNaN(d.rainfall) && 
                  d.rainfall !== undefined;
         });
+        
 
-        if (stationPoints.length > 0) {
-          allDataPoints = [...allDataPoints, ...stationPoints];
+        const maxTempStationPoints = stationPoints.filter(d => {
+          return d.date && 
+                 d.max_temp !== null && 
+                 !isNaN(d.max_temp) && 
+                 d.max_temp !== undefined;
+        });
+
+        const minTempStationPoints = stationPoints.filter(d => {
+          return d.date && 
+                 d.min_temp !== null && 
+                 !isNaN(d.min_temp) && 
+                 d.min_temp !== undefined;
+        });
+
+        if (rainfallPoints.length > 0) {
+          allDataPoints = [...allDataPoints, ...rainfallPoints];
           stationSeries.push({
             id: station.id,
             name: station.name,
             color: station.color,
-            values: stationPoints
+            values: rainfallPoints
           });
         }
       });
@@ -118,23 +141,17 @@ export default function RainfallLineGraph({
                  d.rainfall !== undefined;
         })
         .x(d => x(d.date))
-        .y(d => y(d.rainfall))
-        .curve(d3.curveMonotoneX); // Smooth curve
+        .y(d => y(d.rainfall));
 
       // Add X axis
       svg.append('g')
         .attr('transform', `translate(0,${graphHeight})`)
         .call(d3.axisBottom(x).ticks(6).tickFormat(d3.timeFormat('%d %b %Y')))
-        .selectAll('text')
-          .style('text-anchor', 'end')
-          .attr('dx', '-.8em')
-          .attr('dy', '.15em')
-          .attr('transform', 'rotate(-45)');
       
       // Add X axis label
       svg.append('text')
         .attr('x', graphWidth / 2)
-        .attr('y', graphHeight + margin.bottom - 5)
+        .attr('y', graphHeight + margin.bottom - 10)
         .attr('text-anchor', 'middle')
         .style('font-size', '12px')
         .text('Date');
@@ -145,7 +162,7 @@ export default function RainfallLineGraph({
         .append('text')
         .attr('fill', '#000')
         .attr('transform', 'rotate(-90)')
-        .attr('y', -40)
+        .attr('y', -25)
         .attr('x', -graphHeight / 2)
         .attr('text-anchor', 'middle')
         .text('Rainfall (mm)');
@@ -163,6 +180,19 @@ export default function RainfallLineGraph({
       
       svg.selectAll('.grid .domain')
         .style('stroke', 'none');
+      
+      // Add tooltip container
+        const tooltip = d3.select(container)
+        .append('div')
+        .attr('class', 'tooltip')
+        .style('opacity', 0)
+        .style('position', 'absolute')
+        .style('background-color', 'white')
+        .style('border', '1px solid #ddd')
+        .style('border-radius', '4px')
+        .style('padding', '10px')
+        .style('pointer-events', 'none')
+        .style('box-shadow', '0 2px 5px rgba(0,0,0,0.1)');
 
       // Draw lines for each station
       stationSeries.forEach(station => {
@@ -173,7 +203,7 @@ export default function RainfallLineGraph({
           .attr('fill', 'none')
           .attr('stroke', station.color)
           .attr('stroke-width', 2);
-        
+
         // Add dots for each data point
         svg.selectAll(`.dot-${station.id}`)
           .data(station.values.filter(d => 
@@ -189,77 +219,21 @@ export default function RainfallLineGraph({
           .attr('r', 3.5)
           .attr('fill', station.color)
           .attr('stroke', '#fff')
-          .attr('stroke-width', 1.5);
-      });
+          .attr('stroke-width', 1.5)
+          // Add overlay to display data when mouse hovers over data point
+          .on('mouseover', function(event) {
+            const pointer = d3.pointer(event);
+            const xDate = x.invert(pointer[0]);
 
-      // Add a legend
-      const legend = svg.append('g')
-        .attr('class', 'legend')
-        .attr('transform', `translate(${graphWidth + 5}, 0)`);
-
-      stationSeries.forEach((station, i) => {
-        const legendItem = legend.append('g')
-          .attr('transform', `translate(0, ${i * 20})`);
-        
-        legendItem.append('rect')
-          .attr('width', 15)
-          .attr('height', 2)
-          .attr('fill', station.color);
-        
-        legendItem.append('text')
-          .attr('x', 20)
-          .attr('y', 5)
-          .style('font-size', '12px')
-          .text(station.name);
-      });
-
-      // Add tooltip container
-      const tooltip = d3.select(container)
-        .append('div')
-        .attr('class', 'tooltip')
-        .style('opacity', 0)
-        .style('position', 'absolute')
-        .style('background-color', 'white')
-        .style('border', '1px solid #ddd')
-        .style('border-radius', '4px')
-        .style('padding', '10px')
-        .style('pointer-events', 'none')
-        .style('box-shadow', '0 2px 5px rgba(0,0,0,0.1)');
-
-      // Add interactive overlay
-      svg.append('rect')
-        .attr('class', 'overlay')
-        .attr('width', graphWidth)
-        .attr('height', graphHeight)
-        .attr('fill', 'none')
-        .attr('pointer-events', 'all')
-        .on('mousemove', function(event) {
-          const pointer = d3.pointer(event);
-          const xDate = x.invert(pointer[0]);
-          
-          // Find the closest data point to the mouse position
-          let closestPoint = null;
-          let minDistance = Infinity;
-          
-          allDataPoints.forEach(d => {
-            const distance = Math.abs(d.date - xDate);
-            if (distance < minDistance) {
-              minDistance = distance;
-              closestPoint = d;
-            }
-          });
-          
-          if (closestPoint) {
-            // Get all points for the same date
-            const pointsOnDate = allDataPoints.filter(d => 
-              format(d.date, 'yyyy-MM-dd') === format(closestPoint.date, 'yyyy-MM-dd')
-            );
-            
             // Highlight points
             svg.selectAll('circle')
-              .attr('r', 3.5)
-              .attr('stroke-width', 1.5);
-            
+            .attr('r', 3.5)
+            .attr('stroke-width', 1.5);
+
+            const pointsOnDate = allDataPoints.filter(d => 
+                format(d.date, 'yyyy-MM-dd') === format(xDate, 'yyyy-MM-dd')
+                );
+
             pointsOnDate.forEach(p => {
               svg.selectAll(`.dot-${p.stationId}`)
                 .filter(d => format(d.date, 'yyyy-MM-dd') === format(p.date, 'yyyy-MM-dd'))
@@ -269,7 +243,7 @@ export default function RainfallLineGraph({
             
             // Show tooltip
             tooltip.style('opacity', 0.9);
-            tooltip.html(`<strong>${format(closestPoint.date, 'MMMM d, yyyy')}</strong><br/>`)
+            tooltip.html(`<strong>${format(xDate, 'MMMM d, yyyy')}</strong><br/>`)
               .style('left', `${event.offsetX + 10}px`)
               .style('top', `${event.offsetY - 28}px`);
             
@@ -280,8 +254,7 @@ export default function RainfallLineGraph({
               } else {
                 tooltip.html(tooltip.html() + `${p.stationName}: No data<br/>`);
               }
-            });
-          }
+          });
         })
         .on('mouseout', function() {
           // Reset point sizes
@@ -292,8 +265,49 @@ export default function RainfallLineGraph({
           // Hide tooltip
           tooltip.style('opacity', 0);
         });
-    };
+      });
 
+      // Add a title
+      svg.append('text')
+        .attr('x', (graphWidth / 2))
+        .attr('y', -(margin.top / 2))
+        .attr('text-anchor', 'middle')
+        .style('font-size', '16px')
+        .style('text-decoration', 'bold')
+        .text(`Average Rainfall in ${Object.keys(stationData).length} stations
+          from ${x.domain()[0].toLocaleDateString('en-gb',
+            {day: 'numeric', month: 'long', year: 'numeric'})}
+          to ${x.domain()[1].toLocaleDateString('en-gb',
+            {day: 'numeric', month: 'long', year: 'numeric'}
+          )}`);
+
+      
+      // Add a legend
+      const legend = svg.append('g')
+        .attr('class', 'legend')
+        .attr('transform', `translate(${graphWidth + 5}, 0)`);
+      
+      let curPos = 0;
+
+      stationSeries.forEach((station, i) => {
+        const legendItem = legend.append('g')
+          .attr('transform', `translate(0, ${i + curPos})`);
+        
+        legendItem.append('rect')
+          .attr('width', 15)
+          .attr('height', 2)
+          .attr('fill', station.color);
+        
+        legendItem.append('text')
+          .attr('x', 20)
+          .attr('y', 5)
+          .style('font-size', '12px')
+          .text(station.name)
+          .call(wrap, 100);
+        curPos += legendItem.node().getBBox().height;
+      });
+    };
+    
     renderChart();
 
     // Add window resize handler for responsiveness
@@ -309,6 +323,7 @@ export default function RainfallLineGraph({
       window.removeEventListener('resize', handleResize);
     };
   }, [stationData, loading, error, height]);
+  
 
   return (
     <div 

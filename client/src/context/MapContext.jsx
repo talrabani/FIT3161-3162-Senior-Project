@@ -15,7 +15,10 @@ export const MapContextProvider = ({ children }) => {
   const [isRangeMode, setIsRangeMode] = useState(false);
   const [selectedStations, setSelectedStations] = useState([]);
   
-  // Add type selection state - default to 'rainfall'
+  // Selected station from map or search
+  const [selectedMapStation, setSelectedMapStation] = useState(null);
+  
+  // Weather visualization settings - default to rainfall
   const [selectedType, setSelectedType] = useState('rainfall');
   
   // Value to be provided to consuming components
@@ -32,11 +35,15 @@ export const MapContextProvider = ({ children }) => {
     selectedSA4,
     setSelectedSA4,
     
+    // Currently selected station on map
+    selectedMapStation,
+    setSelectedMapStation,
+    
     // Station related
     selectedStations,
     setSelectedStations,
     
-    // Type selection (rainfall or temperature)
+    // Weather visualization
     selectedType,
     setSelectedType,
     
@@ -55,6 +62,11 @@ export const MapContextProvider = ({ children }) => {
       setSelectedStations(prev => 
         prev.filter(s => s.name !== stationName)
       );
+    },
+    
+    // Helper method to clear the selected map station
+    clearSelectedMapStation: () => {
+      setSelectedMapStation(null);
     }
   };
   
