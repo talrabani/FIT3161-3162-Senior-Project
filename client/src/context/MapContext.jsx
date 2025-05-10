@@ -14,6 +14,9 @@ export const MapContextProvider = ({ children }) => {
   const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
   const [isRangeMode, setIsRangeMode] = useState(false);
   const [selectedStations, setSelectedStations] = useState([]);
+  const [timeFrequency, setFrequency] = useState(['day', 'month', 'year']);
+  // const [startRect, setStartRect] = useState(false);
+  // const [currentMousePos, setMousePos] = useState(null);
   
   // Selected station from map or search
   const [selectedMapStation, setSelectedMapStation] = useState(null);
@@ -46,6 +49,15 @@ export const MapContextProvider = ({ children }) => {
     // Weather visualization
     selectedType,
     setSelectedType,
+    
+    // Daily, Monthly, or Yearly
+    timeFrequency,
+    setFrequency,
+    // User selects region
+    // startRect,
+    // setStartRect,
+    // currentMousePos,
+    // setMousePos,
     
     // Helper methods
     addStation: (station) => {

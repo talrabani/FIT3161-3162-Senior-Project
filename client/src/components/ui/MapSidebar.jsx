@@ -16,14 +16,35 @@ export default function MapSidebar() {
     selectedSA4, 
     setSelectedSA4,
     selectedType,
-    setSelectedType
+    setSelectedType,
+    timeFrequency,
+    setFrequency,
   } = useMapContext();
   
   // Local state for form fields that might not need to be shared globally
   const [formData, setFormData] = useState({
     frequency: 'yearly'
   })
-
+  const handleFrequencyChange = (value) => {
+    var newDate;
+    switch (value) {
+      case 'daily': {
+        setFrequency(['year', 'month', 'day']);
+        newDate = selectedDate;
+        break;
+      }
+      case 'monthly': {
+        setFrequency(['year','month']);
+        newDate = new Date(selectedDate.getYear(), selectedDate.getMonth(), 1)
+        break;}
+      case 'yearly': {
+        setFrequency(['year']);
+        newDate = new Date(selectedDate.getYear(), 0, 1)
+        break;}
+      }
+    handleDateChange(newDate);
+    updateFormData('frequency', value);
+  }
   // Generic update function that handles local form fields
   const updateFormData = (field, value) => {
     const updatedFormData = {
@@ -88,9 +109,10 @@ export default function MapSidebar() {
         borderRadius: '4px',
         padding: '10px'
       }}>
-        <Box sx={{ fontSize: '20px', fontWeight: 'bold', mb: 2 }}>Calender input</Box>
+        <Box sx={{ fontSize: '20px', fontWeight: 'bold', mb: 2 }}>Calendar input</Box>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <StaticDatePicker
+            views={timeFrequency}
             orientation="landscape"
             value={selectedDate}
             onChange={handleDateChange}
@@ -100,7 +122,7 @@ export default function MapSidebar() {
       
       <FrequencyRadioGroup 
         frequency={formData.frequency} 
-        setFrequency={(newFrequency) => updateFormData('frequency', newFrequency)}
+        setFrequency={(newFrequency) => handleFrequencyChange(newFrequency)}
       />
     </Box>
   )
