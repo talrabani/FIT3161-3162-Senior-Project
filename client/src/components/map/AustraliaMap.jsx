@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { fetchSA4Boundaries, fetchStationsBySA4, fetchAverageWeatherBySA4 } from '../../services/weatherApi';
-import { P } from '../ui/typography';
+import { fetchSA4Boundaries, fetchStationsBySA4, fetchAverageWeatherBySA4, fetchAverageWeatherByRect } from '../../services/weatherApi';
 import StationSelectCard from './MapStationSelectCard';
 import { useMapContext } from '../../context/MapContext';
 import chroma from 'chroma-js';  // Import chroma.js for color scaling
 import LoadingMap from './LoadingMap';  // Import the loading component
 import MapLegendContainer from './MapLegend'; // Import the new MapLegend component
 import './AustraliaMap.css';  // Import custom CSS
+import { SelectBoundingBox } from '../selectedStations/selectBoundingBox';
 
 // Mapbox API token
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3BpcGp3dTYyN2wifQ.nntDVPhkBzS5Zm5XuFybXg';
@@ -276,7 +276,7 @@ export default function AustraliaMap({
     
     try {
       console.log(`Updating map colors for ${selectedType} with ${data.length} data points (direct)`);
-      let dataField, legendTitle, colourScale, colourStart, colourEnd;
+      let dataField, legendTitle, colourScale, colourStart, colourMid, colourEnd;
       
       // Set properties based on selected type
       dataField = selectedType;
@@ -284,8 +284,9 @@ export default function AustraliaMap({
       if (selectedType === 'rainfall') {
         dataField = 'rainfall';
         legendTitle = 'Rainfall (mm)';
-        colourStart = '#e0f3ff';
-        colourEnd = '#025196';
+        colourStart = 'rgb(255,255,255)';
+        colourMid = 'rgb(0, 157, 255)'
+        colourEnd = 'rgb(128, 0, 255)';
         // // Extract temperature values for the color scale
         // const tempValues = data
         //   .map(item => parseFloat(item[dataField]) || 0)
@@ -324,8 +325,9 @@ export default function AustraliaMap({
       } else { // temperature
         // const firstRecord = weatherData[0];
         legendTitle = 'Temperature (°C)';
-        colourStart = 'rgb(0, 145, 255)';
-        colourEnd = 'rgba(255, 0, 0, 1)';
+        colourStart = 'rgb(0, 162, 255)';
+        colourMid = 'rgb(255,255,0)';
+        colourEnd = 'rgb(255, 0, 0)';
       }
       
       console.log(colourStart);
@@ -341,13 +343,15 @@ export default function AustraliaMap({
       }
       
       // Format colour scale with a standard range, unless data exceeds
-      var minValue, maxValue;
+      var minValue, midValue, maxValue;
 
       if (selectedType === 'rainfall') {
         minValue = 0;
+        midValue = 10;
         maxValue = Math.max(...values, 20);
       } else {
-        maxValue = Math.max(...values, 40);
+        maxValue = Math.max(...values, 50);
+        midValue = 20;
         minValue = Math.min(...values, -20);
       }
       
@@ -355,7 +359,7 @@ export default function AustraliaMap({
       // console.log(Math.max(...values), Math.min(...values))
       
       // Create a color scale
-      colourScale = chroma.scale([colourStart, colourEnd]).domain([minValue, maxValue]);
+      colourScale = chroma.scale([colourStart, colourMid, colourEnd]).domain([minValue, midValue, maxValue]);
       
       // Create a lookup object for SA4 code to data value
       const valueBySA4 = {};
@@ -801,7 +805,85 @@ export default function AustraliaMap({
     if (!isDataLoaded) return 'Loading weather data...';
     return 'Loading map data...';
   };
+
+  // Let users select region through mouse drag
+  useEffect(() => {
+      if (!map.current) return;
+      const canvas = map.current.getCanvasContainer();
+      let startPoint = null;
+      let box = null;
+
+      const mousePos = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        return { 
+          x: e.clientX - rect.left - canvas.clientLeft,
+          y: e.clientY - rect.top - canvas.clientTop
+        }
+      }
+      const onMouseDown = (e) => {
+        if (!e.originalEvent.shiftKey) return;
+        
+        map.current.dragPan.disable();
+        startPoint = e.point;
+        
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      };
   
+      const onMouseMove = (e) => {
+        if (!startPoint) return;
+        
+        const currentPoint = mousePos(e);
+  
+        if (!box) {
+          box = document.createElement('div');
+          box.id = 'selection-box';
+          box.style.position = 'absolute';
+          box.style.pointerEvents = 'none';
+          mapContainer.current.appendChild(box);
+        }
+  
+        const minX = Math.min(startPoint.x, currentPoint.x),
+          maxX = Math.max(startPoint.x, currentPoint.x),
+          minY = Math.min(startPoint.y, currentPoint.y),
+          maxY = Math.max(startPoint.y, currentPoint.y);
+
+        // Adjust width and xy position of the box element ongoing
+        const pos = `translate(${minX}px, ${minY}px)`;
+        box.style.transform = pos;
+        box.style.width = maxX - minX + 'px';
+        box.style.height = maxY - minY + 'px';
+      };
+  
+      const onMouseUp = async (e) => {
+        const endPoint = mousePos(e);
+
+        const topLeft = map.current.unproject([startPoint.x, startPoint.y]);
+        const bottomRight = map.current.unproject([endPoint.x, endPoint.y]);
+        const bounds = [topLeft.lat, bottomRight.lat, topLeft.lng, bottomRight.lng];
+        try {
+          const res = await fetchAverageWeatherByRect(bounds);
+          setStationsInSA4(res);
+        } catch (err) {
+          console.error('Error fetching stations in bounding box:', err);
+        }
+        // Clear existing station markers
+        Object.values(stationMarkers.current).forEach(marker => marker.remove());
+        stationMarkers.current = {};
+        box.remove();
+        box = null;
+        // if (box && mapContainer.current.contains(box)) {
+        // }
+  
+        startPoint = null;
+        map.current.dragPan.enable();
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      };
+  
+      map.current.on('mousedown', onMouseDown);
+    }, []);
+
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <div 

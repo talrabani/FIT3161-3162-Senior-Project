@@ -124,7 +124,7 @@ router.get('/sa4/:code/stations', async (req, res) => {
       //                      "type":"name",
       //                      "properties":{"name":"WGS84:4326"}
       //                    }
-      //             }
+      // 
       let query = `
         SELECT 
           s.station_id,
@@ -217,4 +217,53 @@ router.get('/sa4-summary', async (req, res) => {
   }
 });
 
-module.exports = router; 
+/**
+ * GET /api/stations-in-rect
+ * Body: { minLat, maxLat, minLng, maxLng }
+ * Returns all stations within the bounding box
+ */
+router.get('/rect/:minLat/:maxLat/:minLng/:maxLng', async (req, res) => {
+  const { minLat, maxLat, minLng, maxLng } = req.params;
+  if (
+    minLat === undefined || maxLat === undefined ||
+    minLng === undefined || maxLng === undefined
+  ) {
+    console.log("err 400");
+    return res.status(400).json({ error: 'Missing bounding box coordinates' });
+  }
+  try {
+    const client = await pool.connect();
+    try {
+      // const query = `SELECT * FROM STATION`;
+      const query = `
+      SELECT s.station_id,
+        s.station_name,
+        ST_AsGeoJSON(s.station_location)::json as location,
+        s.station_height,
+        s.station_state,
+        s.station_start_year,
+        s.station_end_year
+      FROM 
+        STATION s
+      WHERE ST_Intersects(
+        s.station_location,
+        ST_MakeEnvelope($1, $2, $3, $4, 4326)
+      );`;
+    // Execute the query to get stations within the bounding box
+    const result = await client.query(query, [minLng, minLat, maxLng, maxLat]);
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'No stations found in the specified region' });
+    }
+    
+    res.json(result.rows);
+    } finally {
+      client.release();
+    }
+  } catch (error) {
+    console.error('Error fetching stations:', error);
+    res.status(500).json({ error: 'Internal server error'});
+  }
+});
+
+module.exports = router;

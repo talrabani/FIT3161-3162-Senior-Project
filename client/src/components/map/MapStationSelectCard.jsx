@@ -146,8 +146,8 @@ const StationSelectCard = ({
     if (isNaN(numericTemp) || numericTemp <= -10) return 0;
     if (numericTemp >= 40) return 100;
     
-    // Scale from -10 to 40 (range of 50 degrees)
-    return ((numericTemp + 10) / 50) * 100;
+    // Scale from -10 to 50 (range of 60 degrees)
+    return ((numericTemp + 10) / 60) * 100;
   };
   
   const rainfallPercentage = rainfallData ? calculateRainfallPercentage(rainfallData.rainfall || 0) : 0;
@@ -289,7 +289,7 @@ const StationSelectCard = ({
                     }} />
                     <Box sx={{ // Max temperature line
                       position: 'absolute', 
-                      bottom: `${maxTempPercentage}%`, 
+                      bottom: `${maxTempPercentage}%`,
                       width: '100%', 
                       height: `${maxTempPercentage > 0? '4px': '0px'}`, 
                       bgcolor: 'rgb(255, 196, 4)', // Light yellow for max temp

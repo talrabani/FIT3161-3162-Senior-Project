@@ -330,3 +330,17 @@ export const searchWeatherStations = async (searchTerm) => {
     return [];
   }
 };
+export async function fetchAverageWeatherByRect(bounds) {
+  const [minLat, maxLat, minLng, maxLng] = bounds;
+  
+  console.log('CLIENT SERVICE: Fetching average weather data within [', minLat, maxLat, minLng, maxLng, ']');
+  const url = `${SERVER_API_URL}/boundaries/rect/${minLat}/${maxLat}/${minLng}/${maxLng}`;
+
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching average weather:', error);
+    return [];
+  }
+}
