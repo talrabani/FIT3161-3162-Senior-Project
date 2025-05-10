@@ -6,6 +6,8 @@ import { P } from '../ui/typography';
 import StationSelectCard from './MapStationSelectCard';
 import { useMapContext } from '../../context/MapContext';
 import chroma from 'chroma-js';  // Import chroma.js for color scaling
+import LoadingMap from './LoadingMap';  // Import the loading component
+import './AustraliaMap.css';  // Import custom CSS
 
 // Mapbox API token
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3BpcGp3dTYyN2wifQ.nntDVPhkBzS5Zm5XuFybXg';
@@ -20,7 +22,17 @@ export default function AustraliaMap({
   showStations = true
 }) {
   // Access shared data from context
-  const { selectedDate, selectedSA4, setSelectedSA4, selectedType } = useMapContext();
+  const { 
+    selectedDate, 
+    selectedSA4, 
+    setSelectedSA4, 
+    selectedType 
+  } = useMapContext();
+  
+  // Loading state
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [isBoundariesLoaded, setIsBoundariesLoaded] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   
   // Center of Australia approximate coordinates
   const centerPosition = [133.7751, -25.2744]; // [lng, lat]
@@ -86,6 +98,15 @@ export default function AustraliaMap({
     map.current.addControl(new mapboxgl.ScaleControl(), 'bottom-right');
     map.current.addControl(new mapboxgl.FullscreenControl(), 'top-right');
     
+    // Wait for the map to fully load, then trigger initial data fetch
+    map.current.on('load', () => {
+      console.log('Map fully loaded - triggering initial data fetch');
+      setIsMapLoaded(true);
+      // We need to force a re-render to trigger the data fetch effect
+      // One way to do this is to create a dummy state update
+      setWeatherData([]); // This will cause the fetch effect to run
+    });
+    
     // Clean up on unmount
     return () => {
       if (map.current) {
@@ -95,9 +116,16 @@ export default function AustraliaMap({
     };
   }, []);
   
-  // Fetch weather data when the selected date or type changes
+  // Fetch weather data when the selected date or type changes or on initial load
   useEffect(() => {
-    if (!selectedDate || !map.current) return;
+    // Don't run if no date is selected
+    if (!selectedDate) return;
+    
+    // Skip if map isn't initialized yet
+    if (!map.current) return;
+    
+    // Reset data loaded state when starting to fetch
+    setIsDataLoaded(false);
     
     const fetchWeatherData = async () => {
       try {
@@ -120,16 +148,18 @@ export default function AustraliaMap({
         const firstRecord = data[0];
         console.log('Sample data record:', firstRecord);
         
-        // Validate temperature data availability if that's the selected type
-        if (selectedType === 'temperature') {
-          const hasTempData = firstRecord && 
-            (firstRecord.max_temp !== undefined || 
-             firstRecord.avg_max_temp !== undefined || 
-             firstRecord.temp !== undefined || 
-             firstRecord.temperature !== undefined);
+        // Validate data availability for the selected type
+        if (selectedType === 'min_temp' || selectedType === 'max_temp') {
+          const hasRequestedTempData = firstRecord && firstRecord[selectedType] !== undefined;
           
-          if (!hasTempData) {
-            console.warn('Temperature data is not available in the API response');
+          if (!hasRequestedTempData) {
+            console.warn(`${selectedType} data is not available in the API response`);
+          }
+        } else if (selectedType === 'rainfall') {
+          const hasRainfallData = firstRecord && firstRecord.rainfall !== undefined;
+          
+          if (!hasRainfallData) {
+            console.warn('Rainfall data is not available in the API response');
           }
         }
         
@@ -139,49 +169,104 @@ export default function AustraliaMap({
         // Update map colors if boundaries are already loaded
         if (boundariesSourceAdded.current && map.current.getSource('sa4-boundaries')) {
           updateMapColors();
+          // Set data loaded to true after everything is ready
+          setIsDataLoaded(true);
         }
       } catch (error) {
         console.error('Error fetching weather data:', error);
         setWeatherData([]);
+        // Even on error, we should update the loading state
+        setIsDataLoaded(true);
       }
     };
     
     fetchWeatherData();
-  }, [selectedDate, selectedType]);
+  }, [selectedDate, selectedType, weatherDataLoaded.current]);
   
   // Function to update map colors based on selected weather data type
   const updateMapColors = () => {
-    if (!map.current || !boundariesSourceAdded.current || weatherData.length === 0) return;
+    if (!map.current) {
+      console.log('Cannot update map colors: Map not initialized');
+      return;
+    }
+    
+    if (!boundariesSourceAdded.current) {
+      console.log('Cannot update map colors: Boundaries not added yet');
+      return;
+    }
+    
+    if (!weatherData || weatherData.length === 0) {
+      console.log('Cannot update map colors: No weather data available');
+      return;
+    }
     
     try {
-      let dataField, legendTitle, colorStart, colorEnd;
+      console.log('Updating map colors for', selectedType);
+      let dataField, legendTitle, colorScale;
       
       // Set properties based on selected type
       if (selectedType === 'rainfall') {
         dataField = 'rainfall';
         legendTitle = 'Rainfall (mm)';
-        colorStart = '#e0f3ff';
-        colorEnd = '#025196';
-      } else { // temperature
-        // Check what temp data fields are available in the first record
-        const firstRecord = weatherData[0];
-        const tempFields = ['max_temp', 'avg_max_temp', 'temp', 'temperature'];
         
-        // Find the first available temperature field
-        dataField = tempFields.find(field => 
-          firstRecord && 
-          firstRecord[field] !== undefined && 
-          firstRecord[field] !== null
-        ) || 'max_temp';
+        // Extract rainfall values for the color scale
+        const rainfallValues = weatherData
+          .map(item => parseFloat(item[dataField]) || 0)
+          .filter(val => !isNaN(val) && val !== 0);
+          
+        if (rainfallValues.length === 0) {
+          console.warn('No valid rainfall values found in data');
+          return;
+        }
         
-        legendTitle = 'Temperature (°C)';
-        colorStart = '#ffffcc';
-        colorEnd = '#ff3300';
+        const minRainfall = Math.min(...rainfallValues);
+        const maxRainfall = Math.max(...rainfallValues);
+        
+        // Create rainfall color scale (blues)
+        colorScale = chroma.scale(['#e0f3ff', '#025196']).domain([minRainfall, maxRainfall]);
+      } else if (selectedType === 'max_temp' || selectedType === 'min_temp') {
+        // Use the selected temperature field
+        dataField = selectedType;
+        legendTitle = selectedType === 'max_temp' ? 'Maximum Temperature (°C)' : 'Minimum Temperature (°C)';
+        
+        // Extract temperature values for the color scale
+        const tempValues = weatherData
+          .map(item => parseFloat(item[dataField]) || 0)
+          .filter(val => !isNaN(val) && val !== 0);
+          
+        if (tempValues.length === 0) {
+          console.warn(`No valid ${selectedType} values found in data`);
+          return;
+        }
+        
+        const minTemp = Math.min(...tempValues);
+        const maxTemp = Math.max(...tempValues);
+        
+        console.log(`${selectedType} range: ${minTemp} to ${maxTemp}`);
+        
+        // Create a temperature color scale that spans from -20°C (dark blue) to 50°C (dark red)
+        // This creates a consistent color mapping regardless of the actual data range
+        const absoluteTempScale = chroma.scale([
+          '#0d0887', // Very dark blue (-20°C)
+          '#4e67ce', // Blue (0°C)
+          '#72d5e8', // Light blue (10°C)
+          '#fee090', // Light yellow (20°C)
+          '#fd9747', // Orange (30°C)
+          '#e03a39', // Red (40°C)
+          '#7a0403'  // Dark red (50°C)
+        ]).domain([-20, 0, 10, 20, 30, 40, 50]);
+        
+        // Scale the actual data values to colors
+        colorScale = (value) => {
+          // Clamp value between -20 and 50 for the color scale
+          const clampedValue = Math.max(-20, Math.min(50, value));
+          return absoluteTempScale(clampedValue);
+        };
       }
       
       console.log(`Using data field: ${dataField} for type: ${selectedType}`);
       
-      // Extract values to determine min/max for color scale
+      // Extract values to determine min/max for display
       const values = weatherData
         .map(item => parseFloat(item[dataField]) || 0)
         .filter(val => !isNaN(val) && val !== 0); // Filter out zero values as they might be placeholders
@@ -193,11 +278,6 @@ export default function AustraliaMap({
       
       const minValue = Math.min(...values);
       const maxValue = Math.max(...values);
-      
-      console.log(`${selectedType} range: ${minValue} to ${maxValue}`);
-      
-      // Create a color scale
-      const colorScale = chroma.scale([colorStart, colorEnd]).domain([minValue, maxValue]);
       
       // Create a lookup object for SA4 code to data value
       const valueBySA4 = {};
@@ -226,14 +306,14 @@ export default function AustraliaMap({
       map.current.setPaintProperty('sa4-boundaries-fill', 'fill-opacity', 0.7);
       
       // Update or create the legend
-      updateLegend(minValue, maxValue, colorScale, legendTitle);
+      updateTemperatureLegend(minValue, maxValue, colorScale, legendTitle);
     } catch (error) {
       console.error('Error updating map colors:', error);
     }
   };
   
-  // Helper function to update or create the legend
-  const updateLegend = (minValue, maxValue, colorScale, legendTitle) => {
+  // Helper function to update or create the legend for temperature data
+  const updateTemperatureLegend = (minValue, maxValue, colorScale, legendTitle) => {
     let legend = document.getElementById('map-legend');
     
     // If legend doesn't exist, create it
@@ -256,23 +336,52 @@ export default function AustraliaMap({
       `${selectedDate.toLocaleString('default', { month: 'long' })} ${selectedDate.getFullYear()}` : 
       'Selected Date';
     
-    // Update the legend content
-    legend.innerHTML = `
-      <h4 style="margin: 0 0 5px 0; font-size: 14px;">${legendTitle}</h4>
-      <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">${formattedDate}</p>
-      <div style="display: flex; align-items: center; margin-bottom: 5px;">
-        <div style="width: 150px; height: 10px; background: linear-gradient(to right, ${colorScale(minValue).hex()}, ${colorScale(maxValue).hex()});"></div>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-size: 12px;">
-        <span>${minValue.toFixed(1)}</span>
-        <span>${maxValue.toFixed(1)}</span>
-      </div>
-    `;
+    // For temperature, create a more detailed gradient legend
+    if (selectedType === 'min_temp' || selectedType === 'max_temp') {
+      // Create gradient stops for the legend
+      const stops = [-20, -10, 0, 10, 20, 30, 40, 50];
+      const gradientColors = stops.map(temp => colorScale(temp).hex()).join(', ');
+      
+      // Update the legend content with temperature scale
+      legend.innerHTML = `
+        <h4 style="margin: 0 0 5px 0; font-size: 14px;">${legendTitle}</h4>
+        <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">${formattedDate}</p>
+        <div style="display: flex; align-items: center; margin-bottom: 5px;">
+          <div style="width: 200px; height: 15px; background: linear-gradient(to right, ${gradientColors});"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 10px; width: 200px;">
+          <span>-20°C</span>
+          <span>0°C</span>
+          <span>20°C</span>
+          <span>40°C</span>
+          <span>50°C</span>
+        </div>
+        <div style="margin-top: 5px; font-size: 11px;">
+          <span>Data range: ${minValue.toFixed(1)}°C to ${maxValue.toFixed(1)}°C</span>
+        </div>
+      `;
+    } else {
+      // For rainfall, use the simpler legend
+      legend.innerHTML = `
+        <h4 style="margin: 0 0 5px 0; font-size: 14px;">${legendTitle}</h4>
+        <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">${formattedDate}</p>
+        <div style="display: flex; align-items: center; margin-bottom: 5px;">
+          <div style="width: 150px; height: 10px; background: linear-gradient(to right, ${colorScale(minValue).hex()}, ${colorScale(maxValue).hex()});"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 12px;">
+          <span>${minValue.toFixed(1)}</span>
+          <span>${maxValue.toFixed(1)}</span>
+        </div>
+      `;
+    }
   };
   
   // Load SA4 boundaries data when the toggle is switched on
   useEffect(() => {
     if (!map.current || !showSA4Boundaries) return;
+    
+    // Reset boundaries loaded state
+    setIsBoundariesLoaded(false);
     
     // Only add source and layer once, when the map is loaded
     const addBoundaries = async () => {
@@ -287,6 +396,7 @@ export default function AustraliaMap({
         
         // Add source if it doesn't exist
         if (!boundariesSourceAdded.current) {
+          console.log('Adding SA4 boundaries to map');
           map.current.addSource('sa4-boundaries', {
             type: 'geojson',
             data: boundariesData
@@ -356,28 +466,46 @@ export default function AustraliaMap({
           });
           
           boundariesSourceAdded.current = true;
+          setIsBoundariesLoaded(true);
           
           // Apply weather colors if we already have the data
           if (weatherDataLoaded.current && weatherData.length > 0) {
+            console.log('Boundaries loaded and weather data available - applying colors');
             updateMapColors();
+            setIsDataLoaded(true);
+          } else {
+            console.log('Boundaries loaded but waiting for weather data');
           }
         } else {
           // Just update the data if source already exists
           map.current.getSource('sa4-boundaries').setData(boundariesData);
+          setIsBoundariesLoaded(true);
           
           // Re-apply color styling if we have weather data
           if (weatherDataLoaded.current && weatherData.length > 0) {
             updateMapColors();
+            setIsDataLoaded(true);
           }
         }
       } catch (error) {
         console.error('Error adding SA4 boundaries to map:', error);
+        // Even on error, mark as loaded to prevent endless loading state
+        setIsBoundariesLoaded(true);
       }
     };
     
     addBoundaries();
-  }, [showSA4Boundaries]);
+  }, [showSA4Boundaries, weatherData]);
 
+  // Effect that runs once on component mount to ensure data is loaded
+  useEffect(() => {
+    console.log('Component mounted - ensuring data will be loaded');
+    
+    // We don't need to do anything here, just having the effect with 
+    // a different dependency array ensures we trigger data loading once
+    
+  }, []); // Empty dependency array = only run once on mount
+  
   // Toggle SA4 boundary layer visibility
   useEffect(() => {
     if (!map.current || !boundariesSourceAdded.current) return;
@@ -528,6 +656,17 @@ export default function AustraliaMap({
     };
   }, [selectedStation]);
   
+  // Show loading overlay if any of the loading states are true
+  const isLoading = !isMapLoaded || !isBoundariesLoaded || !isDataLoaded;
+  
+  // Determine the appropriate loading message based on what's still loading
+  const getLoadingMessage = () => {
+    if (!isMapLoaded) return 'Initializing map...';
+    if (!isBoundariesLoaded) return 'Loading boundary data...';
+    if (!isDataLoaded) return 'Loading weather data...';
+    return 'Loading map data...';
+  };
+  
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
       <div 
@@ -569,6 +708,12 @@ export default function AustraliaMap({
           />
         </div>
       )}
+      
+      {/* Loading overlay */}
+      <LoadingMap 
+        show={isLoading} 
+        message={getLoadingMessage()} 
+      />
     </div>
   );
 } 

@@ -9,15 +9,16 @@ export default function TypeSelect( { type, setType } ) {
   return (
     <Box>
       <FormControl fullWidth>
-        <InputLabel id="type-select-label">Type</InputLabel>
+        <InputLabel id="type-select-label">Weather Type</InputLabel>
         <Select
           id="type-select"
           value={type}
-          label="Type"
+          label="Weather Type"
           onChange={(event) => setType(event.target.value)}
         >
-          <MenuItem value={'temperature'}>Temperature</MenuItem>
           <MenuItem value={'rainfall'}>Rainfall</MenuItem>
+          <MenuItem value={'max_temp'}>Maximum Temperature</MenuItem>
+          <MenuItem value={'min_temp'}>Minimum Temperature</MenuItem>
         </Select>
       </FormControl>
     </Box>
