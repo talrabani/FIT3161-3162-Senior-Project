@@ -1,11 +1,21 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Container } from '@mui/material';
+import { AppBar, Toolbar, Typography, Container, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import AuthService from '../../services/auth.service';
 
 /**
  * Simple navigation bar component for the Australian Weather Explorer
  * Currently only displays the application title centered in the navbar
  */
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    AuthService.signout();
+    navigate('/login');
+    window.location.reload(); // Force a page reload to clear any cached state
+  };
+
   return (
     <AppBar 
       position="static" 
@@ -19,7 +29,7 @@ const Navbar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ 
           display: 'flex', 
-          justifyContent: 'center', 
+          justifyContent: 'space-between', 
           height: { xs: '56px', sm: '64px' }
         }}>
           <Typography
@@ -36,6 +46,18 @@ const Navbar = () => {
           >
             Australian Weather Explorer
           </Typography>
+          
+          <Button 
+            onClick={handleLogout}
+            sx={{
+              color: 'white',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)'
+              }
+            }}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </Container>
     </AppBar>

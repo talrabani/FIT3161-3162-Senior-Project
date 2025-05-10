@@ -7,6 +7,7 @@ require('dotenv').config()
 // Import routes
 const boundariesRoutes = require('./routes/boundaries');
 const rainfallRoutes = require('./routes/rainfall');
+const authRoutes = require('./routes/auth');
 const stationsRoutes = require('./routes/stations');
 
 // Configure CORS
@@ -23,6 +24,8 @@ app.use(cors(corsOptions));
 // Register routes
 app.use('/api/boundaries', boundariesRoutes);
 app.use('/api/rainfall', rainfallRoutes);
+app.use('/api/auth', authRoutes);
+
 app.use('/api/stations', stationsRoutes);
 
 // Basic health check endpoint
