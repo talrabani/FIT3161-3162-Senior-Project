@@ -7,6 +7,7 @@ import StationSelectCard from './MapStationSelectCard';
 import { useMapContext } from '../../context/MapContext';
 import chroma from 'chroma-js';  // Import chroma.js for color scaling
 import LoadingMap from './LoadingMap';  // Import the loading component
+import MapLegendContainer from './MapLegend'; // Import the new MapLegend component
 import './AustraliaMap.css';  // Import custom CSS
 
 // Mapbox API token
@@ -52,6 +53,15 @@ export default function AustraliaMap({
   // State for weather data
   const [weatherData, setWeatherData] = useState([]);
   const weatherDataLoaded = useRef(false);
+  
+  // State for legend data
+  const [legendData, setLegendData] = useState({
+    minValue: 0,
+    maxValue: 0,
+    colorScale: null,
+    title: '',
+    type: 'rainfall'
+  });
   
   // Refs for DOM elements
   const mapContainer = useRef(null);
@@ -363,76 +373,18 @@ export default function AustraliaMap({
       // Set fill opacity
       map.current.setPaintProperty('sa4-boundaries-fill', 'fill-opacity', 0.7);
       
-      // Update or create the legend
-      updateTemperatureLegend(minValue, maxValue, colorScale, legendTitle);
+      // Update legend data state
+      setLegendData({
+        minValue,
+        maxValue,
+        colorScale,
+        title: legendTitle,
+        type: selectedType
+      });
       
       console.log('Map colors updated successfully');
     } catch (error) {
       console.error('Error updating map colors with direct data:', error);
-    }
-  };
-  
-  // Helper function to update or create the legend for temperature data
-  const updateTemperatureLegend = (minValue, maxValue, colorScale, legendTitle) => {
-    let legend = document.getElementById('map-legend');
-    
-    // If legend doesn't exist, create it
-    if (!legend) {
-      legend = document.createElement('div');
-      legend.id = 'map-legend';
-      legend.style.position = 'absolute';
-      legend.style.bottom = '20px';
-      legend.style.left = '20px';
-      legend.style.padding = '10px';
-      legend.style.backgroundColor = 'white';
-      legend.style.borderRadius = '4px';
-      legend.style.boxShadow = '0 1px 2px rgba(0,0,0,0.1)';
-      legend.style.zIndex = '10';
-      mapContainer.current.appendChild(legend);
-    }
-    
-    // Format the selected date for display
-    const formattedDate = selectedDate ? 
-      `${selectedDate.toLocaleString('default', { month: 'long' })} ${selectedDate.getFullYear()}` : 
-      'Selected Date';
-    
-    // For temperature, create a more detailed gradient legend
-    if (selectedType === 'min_temp' || selectedType === 'max_temp') {
-      // Create gradient stops for the legend
-      const stops = [-20, -10, 0, 10, 20, 30, 40, 50];
-      const gradientColors = stops.map(temp => colorScale(temp).hex()).join(', ');
-      
-      // Update the legend content with temperature scale
-      legend.innerHTML = `
-        <h4 style="margin: 0 0 5px 0; font-size: 14px;">${legendTitle}</h4>
-        <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">${formattedDate}</p>
-        <div style="display: flex; align-items: center; margin-bottom: 5px;">
-          <div style="width: 200px; height: 15px; background: linear-gradient(to right, ${gradientColors});"></div>
-        </div>
-        <div style="display: flex; justify-content: space-between; font-size: 10px; width: 200px;">
-          <span>-20°C</span>
-          <span>0°C</span>
-          <span>20°C</span>
-          <span>40°C</span>
-          <span>50°C</span>
-        </div>
-        <div style="margin-top: 5px; font-size: 11px;">
-          <span>Data range: ${minValue.toFixed(1)}°C to ${maxValue.toFixed(1)}°C</span>
-        </div>
-      `;
-    } else {
-      // For rainfall, use the simpler legend
-      legend.innerHTML = `
-        <h4 style="margin: 0 0 5px 0; font-size: 14px;">${legendTitle}</h4>
-        <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">${formattedDate}</p>
-        <div style="display: flex; align-items: center; margin-bottom: 5px;">
-          <div style="width: 150px; height: 10px; background: linear-gradient(to right, ${colorScale(minValue).hex()}, ${colorScale(maxValue).hex()});"></div>
-        </div>
-        <div style="display: flex; justify-content: space-between; font-size: 12px;">
-          <span>${minValue.toFixed(1)}</span>
-          <span>${maxValue.toFixed(1)}</span>
-        </div>
-      `;
     }
   };
   
@@ -789,6 +741,19 @@ export default function AustraliaMap({
             }}
           />
         </div>
+      )}
+      
+      {/* Map Legend */}
+      {legendData.colorScale && (
+        <MapLegendContainer 
+          minValue={legendData.minValue}
+          maxValue={legendData.maxValue}
+          colorScale={legendData.colorScale}
+          title={legendData.title}
+          type={legendData.type}
+          date={selectedDate}
+          position="bottom-left"
+        />
       )}
       
       {/* Loading overlay */}
