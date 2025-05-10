@@ -42,36 +42,46 @@ const MapLegend = ({
             style={{ background: `linear-gradient(to right, ${gradientColors})` }}
           ></div>
         </div>
-        <div className="legend-labels temp-labels">
-          <span>-20°C</span>
+        <div className="legend-labels">
+          <span>{minValue}°C</span>
+          <span>-10°C</span>
           <span>0°C</span>
           <span>20°C</span>
           <span>40°C</span>
-          <span>50°C</span>
+          <span>{maxValue}°C</span>
         </div>
-        <div className="legend-data-range">
+        {/* <div className="legend-data-range">
           <span>Data range: {minValue.toFixed(1)}°C to {maxValue.toFixed(1)}°C</span>
-        </div>
+        </div> */}
       </div>
     );
   } 
   // For rainfall data
   else if (type === 'rainfall') {
+    const stops = [0, 2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20];
+    const gradientColors = stops.map(temp => colorScale(temp).hex()).join(', ');
     return (
       <div className="map-legend">
         <h4 className="legend-title">{title}</h4>
         <p className="legend-subtitle">{formattedDate}</p>
         <div className="legend-gradient-container">
           <div 
-            className="legend-gradient rainfall-gradient" 
+            className="legend-gradient" 
             style={{ 
-              background: `linear-gradient(to right, ${colorScale(minValue).hex()}, ${colorScale(maxValue).hex()})` 
+              background: `linear-gradient(to right, ${gradientColors})` 
             }}
           ></div>
         </div>
-        <div className="legend-labels rainfall-labels">
-          <span>{minValue.toFixed(1)}</span>
-          <span>{maxValue.toFixed(1)}</span>
+        <div className="legend-labels">
+          <span>0</span>
+          <span>2.5</span>
+          <span>5</span>
+          <span>7.5</span>
+          <span>10</span>
+          <span>12.5</span>
+          <span>15</span>
+          <span>17.5</span>
+          <span>{maxValue}</span>
         </div>
       </div>
     );

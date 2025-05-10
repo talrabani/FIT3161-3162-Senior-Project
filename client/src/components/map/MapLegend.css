@@ -68,12 +68,13 @@
 .legend-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 12px;
   color: #333;
 }
 
 .legend-labels.temp-labels {
   width: 200px;
+  font-size: 12px;
 }
 
 .legend-labels.rainfall-labels {

@@ -60,7 +60,7 @@ export default function AustraliaMap({
   const [legendData, setLegendData] = useState({
     minValue: 0,
     maxValue: 0,
-    colorScale: null,
+    colourScale: null,
     title: '',
     type: 'rainfall'
   });
@@ -276,15 +276,16 @@ export default function AustraliaMap({
     
     try {
       console.log(`Updating map colors for ${selectedType} with ${data.length} data points (direct)`);
-      let dataField, legendTitle, colourScale;
+      let dataField, legendTitle, colourScale, colourStart, colourEnd;
       
       // Set properties based on selected type
-      
       dataField = selectedType;
+      console.log(`Using data field: ${dataField} for type: ${selectedType}`);
       if (selectedType === 'rainfall') {
         dataField = 'rainfall';
         legendTitle = 'Rainfall (mm)';
-        
+        colourStart = '#e0f3ff';
+        colourEnd = '#025196';
         // // Extract temperature values for the color scale
         // const tempValues = data
         //   .map(item => parseFloat(item[dataField]) || 0)
@@ -319,16 +320,15 @@ export default function AustraliaMap({
       // } else {
       //   console.warn(`Unknown weather type: ${selectedType}`);
         // return;
-        colorStart = '#e0f3ff';
-        colorEnd = '#025196';
+        
       } else { // temperature
         // const firstRecord = weatherData[0];
         legendTitle = 'Temperature (°C)';
-        colorStart = 'rgba(0, 0, 255, 1)';
-        colorEnd = 'rgba(255, 0, 0, 1)';
+        colourStart = 'rgb(0, 145, 255)';
+        colourEnd = 'rgba(255, 0, 0, 1)';
       }
       
-      console.log(`Using data field: ${dataField} for type: ${selectedType}`);
+      console.log(colourStart);
       
       // Extract values to determine min/max for display
       const values = data
@@ -348,14 +348,14 @@ export default function AustraliaMap({
         maxValue = Math.max(...values, 20);
       } else {
         maxValue = Math.max(...values, 40);
-        minValue = Math.min(...values, -10);
+        minValue = Math.min(...values, -20);
       }
       
       console.log(`${selectedType} range: ${minValue} to ${maxValue}`);
       // console.log(Math.max(...values), Math.min(...values))
       
       // Create a color scale
-      const colorScale = chroma.scale([colorStart, colorEnd]).domain([minValue, maxValue]);
+      colourScale = chroma.scale([colourStart, colourEnd]).domain([minValue, maxValue]);
       
       // Create a lookup object for SA4 code to data value
       const valueBySA4 = {};
@@ -382,7 +382,7 @@ export default function AustraliaMap({
       // Pre-compute the colors for each SA4 area
       const colorBySA4 = {};
       Object.entries(valueBySA4).forEach(([code, value]) => {
-        colorBySA4[code] = colorScale(value).hex();
+        colorBySA4[code] = colourScale(value).hex();
       });
       
       // Update the fill layer with data-driven style
@@ -400,7 +400,7 @@ export default function AustraliaMap({
       setLegendData({
         minValue,
         maxValue,
-        colorScale,
+        colourScale,
         title: legendTitle,
         type: selectedType
       });
@@ -845,11 +845,11 @@ export default function AustraliaMap({
       )}
       
       {/* Map Legend */}
-      {legendData.colorScale && (
+      {legendData.colourScale && (
         <MapLegendContainer 
           minValue={legendData.minValue}
           maxValue={legendData.maxValue}
-          colorScale={legendData.colorScale}
+          colorScale={legendData.colourScale}
           title={legendData.title}
           type={legendData.type}
           date={selectedDate}

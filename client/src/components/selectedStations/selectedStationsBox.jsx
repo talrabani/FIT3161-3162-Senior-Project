@@ -20,7 +20,7 @@ const onRemoveStation = (station) => {
 
 const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
   // Get the selected date from the context
-  const { selectedDate } = useMapContext();
+  const { selectedDate, setDateRange } = useMapContext();
   const [showComparison, setShowComparison] = useState(false);
   
   // Handle Compare button click
@@ -36,6 +36,7 @@ const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
     selectedStations.forEach(station => {
       onRemoveStation(station.name);
     });
+    setDateRange({ startDate: null, endDate: null });
     // Hide comparison if all stations are removed
     setShowComparison(false);
   };
