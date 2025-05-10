@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { P } from './components/ui/typography'
 import AustraliaMap from './components/map/AustraliaMap'
 import ErrorBoundary from './components/ui/ErrorBoundary'
@@ -9,6 +10,9 @@ import Navbar from './components/ui/Navbar'
 import DebugInfo from './components/ui/DebugInfo'
 import SelectedStationsBox from './components/selectedStations/selectedStationsBox'
 import { MapContextProvider } from './context/MapContext'
+import LoginForm from './components/ui/LoginForm/LoginForm'
+import SignupForm from './components/ui/SignupForm/SignupForm'
+import AuthService from './services/auth.service'
 import './App.css'
 
 // Create a client
@@ -20,6 +24,15 @@ const queryClient = new QueryClient({
     },
   },
 })
+
+// Protected Route component
+const ProtectedRoute = ({ children }) => {
+  const currentUser = AuthService.getCurrentUser();
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+  return children;
+};
 
 function WeatherApp() {
   const {
@@ -86,7 +99,6 @@ function WeatherApp() {
         )}
       </div>
 
-
       <div className="mt-2 text-center">
         <button 
           className="btn btn-sm btn-outline-secondary" 
@@ -95,7 +107,6 @@ function WeatherApp() {
           {showDebug ? 'Hide' : 'Show'} Debug Info
         </button>
       
-        
         {showDebug && (
           <DebugInfo 
             selectedLocations={selectedLocations}
@@ -108,10 +119,7 @@ function WeatherApp() {
             isError={isError}
           />
         )}
-        
       </div>
-
-
       
       <footer className="text-center text-muted py-3 border-top">
         <P>
@@ -128,7 +136,15 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
         <MapContextProvider>
-          <WeatherApp />
+          <Routes>
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/signup" element={<SignupForm />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <WeatherApp />
+              </ProtectedRoute>
+            } />
+          </Routes>
         </MapContextProvider>
       </ErrorBoundary>
     </QueryClientProvider>
