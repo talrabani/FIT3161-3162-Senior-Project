@@ -472,8 +472,20 @@ export default function AustraliaMap({
             const feature = e.features[0];
             const props = feature.properties;
             
-            // Set the selected SA4 code which will trigger station fetching
-            setSelectedSA4(props.code);
+            console.log(`SA4 boundary clicked: ${props.name} (${props.code}), current selectedSA4: ${selectedSA4}`);
+            
+            // Just set the code directly - we'll handle the toggling in a separate effect
+            setSelectedSA4((currentSelectedSA4) => {
+              if (currentSelectedSA4 === props.code) {
+                // If it's the same boundary, unselect it
+                console.log(`Unselecting SA4 boundary: ${props.name} (${props.code})`);
+                return null;
+              } else {
+                // Otherwise, select the new boundary
+                console.log(`Selecting SA4 boundary: ${props.name} (${props.code})`);
+                return props.code;
+              }
+            });
           });
           
           // Change cursor on hover
@@ -744,6 +756,19 @@ export default function AustraliaMap({
       }
     };
   }, [selectedMapStation, selectedStationCoords]);
+  
+  // Clean up markers when a boundary is unselected
+  useEffect(() => {
+    // If selectedSA4 becomes null (indicating unselection), clear the markers
+    if (selectedSA4 === null) {
+      console.log('Clearing station markers due to boundary unselect');
+      
+      // Clear any station markers from the map
+      Object.values(stationMarkers.current).forEach(marker => marker.remove());
+      stationMarkers.current = {};
+      setStationsInSA4([]);
+    }
+  }, [selectedSA4]);
   
   // Show loading overlay if any of the loading states are true
   const isLoading = !isMapLoaded || !isBoundariesLoaded || !isDataLoaded;
