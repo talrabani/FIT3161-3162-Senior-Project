@@ -15,6 +15,9 @@ export const MapContextProvider = ({ children }) => {
   const [isRangeMode, setIsRangeMode] = useState(false);
   const [selectedStations, setSelectedStations] = useState([]);
   
+  // Selected station from map or search
+  const [selectedMapStation, setSelectedMapStation] = useState(null);
+  
   // Weather visualization settings - default to rainfall
   const [selectedType, setSelectedType] = useState('rainfall');
   
@@ -31,6 +34,10 @@ export const MapContextProvider = ({ children }) => {
     // Location related
     selectedSA4,
     setSelectedSA4,
+    
+    // Currently selected station on map
+    selectedMapStation,
+    setSelectedMapStation,
     
     // Station related
     selectedStations,
@@ -55,6 +62,11 @@ export const MapContextProvider = ({ children }) => {
       setSelectedStations(prev => 
         prev.filter(s => s.name !== stationName)
       );
+    },
+    
+    // Helper method to clear the selected map station
+    clearSelectedMapStation: () => {
+      setSelectedMapStation(null);
     }
   };
   

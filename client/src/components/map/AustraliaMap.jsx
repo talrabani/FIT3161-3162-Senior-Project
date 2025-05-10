@@ -27,7 +27,10 @@ export default function AustraliaMap({
     selectedDate, 
     selectedSA4, 
     setSelectedSA4, 
-    selectedType 
+    selectedType,
+    selectedMapStation,
+    setSelectedMapStation,
+    clearSelectedMapStation
   } = useMapContext();
   
   // Loading state
@@ -46,9 +49,8 @@ export default function AustraliaMap({
   const stationMarkers = useRef({});
   const sa4DataLoaded = useRef(false);
   
-  // State for the selected station
-  const [selectedStation, setSelectedStation] = useState(null);
-  const [selectedStationCoords, setSelectedStationCoords] = useState(null); // Store pixel coordinates - used to position the card of selected station
+  // State for coordinates which is view-specific
+  const [selectedStationCoords, setSelectedStationCoords] = useState(null);
   
   // State for weather data
   const [weatherData, setWeatherData] = useState([]);
@@ -269,9 +271,9 @@ export default function AustraliaMap({
           return;
         }
         
-        const minRainfall = Math.min(...rainfallValues);
-        const maxRainfall = Math.max(...rainfallValues);
-        
+      const minRainfall = Math.min(...rainfallValues);
+      const maxRainfall = Math.max(...rainfallValues);
+      
         console.log(`Rainfall range: ${minRainfall.toFixed(2)} to ${maxRainfall.toFixed(2)} mm`);
         
         // Create rainfall color scale (blues)
@@ -408,88 +410,88 @@ export default function AustraliaMap({
         const boundariesData = await fetchSA4Boundaries();
         
         console.log('Adding SA4 boundaries to map');
-        map.current.addSource('sa4-boundaries', {
-          type: 'geojson',
-          data: boundariesData
-        });
-        
-        // Add layer for SA4 boundaries
-        map.current.addLayer({
-          id: 'sa4-boundaries-fill',
-          type: 'fill',
-          source: 'sa4-boundaries',
-          paint: {
-            'fill-color': '#088',  // This will be overridden by data-driven style
-            'fill-opacity': 0.1
+          map.current.addSource('sa4-boundaries', {
+            type: 'geojson',
+            data: boundariesData
+          });
+          
+          // Add layer for SA4 boundaries
+          map.current.addLayer({
+            id: 'sa4-boundaries-fill',
+            type: 'fill',
+            source: 'sa4-boundaries',
+            paint: {
+              'fill-color': '#088',  // This will be overridden by data-driven style
+              'fill-opacity': 0.1
           },
           layout: {
             visibility: showSA4Boundaries ? 'visible' : 'none'
-          }
-        });
-        
-        // Add layer for SA4 boundary lines
-        map.current.addLayer({
-          id: 'sa4-boundaries-line',
-          type: 'line',
-          source: 'sa4-boundaries',
-          paint: {
-            'line-color': '#088',
-            'line-width': 1,
-            'line-opacity': 0.5
+            }
+          });
+          
+          // Add layer for SA4 boundary lines
+          map.current.addLayer({
+            id: 'sa4-boundaries-line',
+            type: 'line',
+            source: 'sa4-boundaries',
+            paint: {
+              'line-color': '#088',
+              'line-width': 1,
+              'line-opacity': 0.5
           },
           layout: {
             visibility: showSA4Boundaries ? 'visible' : 'none'
-          }
-        });
-        
-        // Add layer for SA4 labels
-        map.current.addLayer({
-          id: 'sa4-boundaries-label',
-          type: 'symbol',
-          source: 'sa4-boundaries',
-          layout: {
-            'text-field': ['get', 'name'],
-            'text-size': 12,
-            'text-variable-anchor': ['center'],
-            'text-justify': 'auto',
-            'text-allow-overlap': false,
+            }
+          });
+          
+          // Add layer for SA4 labels
+          map.current.addLayer({
+            id: 'sa4-boundaries-label',
+            type: 'symbol',
+            source: 'sa4-boundaries',
+            layout: {
+              'text-field': ['get', 'name'],
+              'text-size': 12,
+              'text-variable-anchor': ['center'],
+              'text-justify': 'auto',
+              'text-allow-overlap': false,
             'text-ignore-placement': false,
             visibility: showSA4Boundaries ? 'visible' : 'none'
-          },
-          paint: {
-            'text-color': '#088',
-            'text-halo-color': '#fff',
-            'text-halo-width': 1
-          }
-        });
-        
-        // Add popups for SA4 regions
-        map.current.on('click', 'sa4-boundaries-fill', (e) => {
-          if (!e.features || e.features.length === 0) return;
+            },
+            paint: {
+              'text-color': '#088',
+              'text-halo-color': '#fff',
+              'text-halo-width': 1
+            }
+          });
           
-          const feature = e.features[0];
-          const props = feature.properties;
+          // Add popups for SA4 regions
+          map.current.on('click', 'sa4-boundaries-fill', (e) => {
+            if (!e.features || e.features.length === 0) return;
+            
+            const feature = e.features[0];
+            const props = feature.properties;
+            
+            // Set the selected SA4 code which will trigger station fetching
+            setSelectedSA4(props.code);
+          });
           
-          // Set the selected SA4 code which will trigger station fetching
-          setSelectedSA4(props.code);
-        });
-        
-        // Change cursor on hover
-        map.current.on('mouseenter', 'sa4-boundaries-fill', () => {
-          map.current.getCanvas().style.cursor = 'pointer';
-        });
-        
-        map.current.on('mouseleave', 'sa4-boundaries-fill', () => {
-          map.current.getCanvas().style.cursor = '';
-        });
-        
-        boundariesSourceAdded.current = true;
+          // Change cursor on hover
+          map.current.on('mouseenter', 'sa4-boundaries-fill', () => {
+            map.current.getCanvas().style.cursor = 'pointer';
+          });
+          
+          map.current.on('mouseleave', 'sa4-boundaries-fill', () => {
+            map.current.getCanvas().style.cursor = '';
+          });
+          
+          boundariesSourceAdded.current = true;
         setIsBoundariesLoaded(true);
-        
+          
         // Apply weather colors if we already have the data
         if (weatherDataLoaded.current && weatherData.length > 0) {
           console.log('Boundaries loaded and weather data available - applying colors');
-          updateMapColors();
+            updateMapColors();
           setIsDataLoaded(true);
         } else {
           console.log('Boundaries loaded but weather data not available - fetching it now');
@@ -538,7 +540,7 @@ export default function AustraliaMap({
     
     addBoundaries();
   }, [isMapLoaded]); // Only run when map is loaded, just once
-  
+
   // Toggle SA4 boundary layer visibility without reloading boundaries
   useEffect(() => {
     if (!map.current || !boundariesSourceAdded.current) return;
@@ -630,7 +632,7 @@ export default function AustraliaMap({
           const pixelCoords = map.current.project(lngLat);
           
           // Store both the station data and its pixel coordinates
-          setSelectedStation(station);
+          setSelectedMapStation(station);
           setSelectedStationCoords(pixelCoords);
         });
         
@@ -663,15 +665,68 @@ export default function AustraliaMap({
     }
   }, [stationsInSA4, showStations]);
   
+  // Watch for changes to selectedMapStation from the context
+  useEffect(() => {
+    if (!map.current || !selectedMapStation) return;
+    
+    // Check if the station has valid location data
+    if (!selectedMapStation.location || !selectedMapStation.location.coordinates) {
+      console.warn(`Station ${selectedMapStation.station_name} has invalid location data`);
+      return;
+    }
+    
+    // Extract coordinates from location property
+    const coordinates = selectedMapStation.location.coordinates;
+    
+    // Find if we already have a marker for this station
+    const existingMarker = stationMarkers.current[selectedMapStation.station_id];
+    
+    if (existingMarker) {
+      // If we already have a marker for this station, just trigger a click on it
+      console.log(`Station ${selectedMapStation.station_name} already has a marker, triggering click event`);
+      
+      // Get the geographic coordinates
+      const lngLat = existingMarker.getLngLat();
+      
+      // Pan the map to the station
+      map.current.flyTo({
+        center: lngLat,
+        zoom: 10,
+        speed: 1.2
+      });
+      
+      // Convert to pixel coordinates
+      const pixelCoords = map.current.project(lngLat);
+      setSelectedStationCoords(pixelCoords);
+    } else {
+      // If we don't have a marker for this station (e.g., selected from search),
+      // pan to its location and create a temporary marker if needed
+      console.log(`Flying to station ${selectedMapStation.station_name} (selected externally)`);
+      
+      // Pan the map to the station
+      map.current.flyTo({
+        center: coordinates,
+        zoom: 10,
+        speed: 1.2
+      });
+      
+      // Set pixel coordinates based on the selected station's geographic location
+      const pixelCoords = map.current.project(coordinates);
+      setSelectedStationCoords(pixelCoords);
+    }
+  }, [selectedMapStation]);
+  
   // Add an effect to update the card position when the map moves
   useEffect(() => {
-    if (!map.current || !selectedStation || !selectedStationCoords) return;
+    if (!map.current || !selectedMapStation || !selectedStationCoords) return;
     
     // Function to update the position of the card based on the station's geographic location
     const updateCardPosition = () => {
+      if (!selectedMapStation || !selectedMapStation.location) return;
+      
       const lngLat = [
-        selectedStation.location.coordinates[0],
-        selectedStation.location.coordinates[1]
+        selectedMapStation.location.coordinates[0],
+        selectedMapStation.location.coordinates[1]
       ];
       const newPixelCoords = map.current.project(lngLat);
       setSelectedStationCoords(newPixelCoords);
@@ -688,7 +743,7 @@ export default function AustraliaMap({
         map.current.off('zoom', updateCardPosition);
       }
     };
-  }, [selectedStation]);
+  }, [selectedMapStation, selectedStationCoords]);
   
   // Show loading overlay if any of the loading states are true
   const isLoading = !isMapLoaded || !isBoundariesLoaded || !isDataLoaded;
@@ -708,7 +763,7 @@ export default function AustraliaMap({
         className="australia-map-container w-100 h-100"
       ></div>
       
-      {selectedStation && selectedStationCoords && (
+      {selectedMapStation && selectedStationCoords && (
         <div style={{ 
           position: 'absolute', 
           left: `${selectedStationCoords.x}px`,
@@ -717,9 +772,9 @@ export default function AustraliaMap({
           zIndex: 10 
         }}>
           <StationSelectCard 
-            station={selectedStation}
+            station={selectedMapStation}
             onClose={() => {
-              setSelectedStation(null);
+              clearSelectedMapStation();
               setSelectedStationCoords(null);
             }}
             onSelect={(station) => {
@@ -736,7 +791,7 @@ export default function AustraliaMap({
               };
               
               onLocationSelect(location);
-              setSelectedStation(null);
+              clearSelectedMapStation();
               setSelectedStationCoords(null);
             }}
           />
