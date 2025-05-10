@@ -15,7 +15,8 @@ import { useMapContext } from '../../context/MapContext';
 import { format } from 'date-fns';
 import { fetchStationWeatherRange } from '../../services/weatherApi';
 import RainfallLineGraph from './rainfallLineGraph';
-import * as d3 from "d3";
+import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG } from '../utils/downloadChart';
+
 /**
  * CompareStationsBox Component
  * Displays the comparison chart interface with date selectors and a D3.js line graph
@@ -23,24 +24,23 @@ import * as d3 from "d3";
  * @param {Array} stationsToCompare - The stations being compared
  */
 const CompareStationsBox = ({ stationsToCompare }) => {
-  const { dateRange, setDateRange } = useMapContext();
-  const { selectedDate } = useMapContext();
-  const [startDate, setStartDate] = useState(dateRange.startDate || selectedDate);
-  const [endDate, setEndDate] = useState(dateRange.endDate || new Date());
+  const { selectedDate, dateRange, setDateRange } = useMapContext();
+  // const [startDate, setStartDate] = useState(dateRange.startDate || selectedDate);
+  // const [endDate, setEndDate] = useState(dateRange.endDate || new Date());
   const [loading, setLoading] = useState(false);
   const [comparisonData, setComparisonData] = useState({});
   const [error, setError] = useState(null);
-
-  // Handle date changes
+  
+  // Handle changes in the date range
   const handleStartDateChange = (newDate) => {
-    setStartDate(newDate);
     setDateRange(prev => ({ ...prev, startDate: newDate }));
-  };
+    console.log('Start Date updated:', newDate);
+    };
 
   const handleEndDateChange = (newDate) => {
-    setEndDate(newDate);
     setDateRange(prev => ({ ...prev, endDate: newDate }));
-  };
+    console.log('End Date updated:', newDate);
+    };
 
   // Generate a consistent color for each station ID
   const getStationColor = (stationId) => {
@@ -77,24 +77,27 @@ const CompareStationsBox = ({ stationsToCompare }) => {
   // Fetch data for comparison when stations or date range changes
   useEffect(() => {
     const fetchComparisonData = async () => {
-      if (!stationsToCompare || stationsToCompare.length < 2 || !startDate || !endDate) {
+      setDateRange({
+        startDate: (!dateRange.startDate)? selectedDate : dateRange.startDate,
+        endDate: (!dateRange.endDate)? new Date(new Date(selectedDate).setDate(selectedDate.getDate()+4)) : dateRange.endDate
+      })
+      if (!stationsToCompare || stationsToCompare.length < 2) {
         return;
       }
-      
       setLoading(true);
       setError(null);
-      
+      // console.log(selectedDate.set);
       try {
         console.log('Fetching comparison data for:');
         console.log('Stations:', stationsToCompare.map(s => s.name).join(', '));
-        console.log('Date range:', format(startDate, 'yyyy-MM-dd'), 'to', format(endDate, 'yyyy-MM-dd'));
+        console.log('Date range:', format(dateRange.startDate, 'yyyy-MM-dd'), 'to', format(dateRange.endDate, 'yyyy-MM-dd'));
         
         // Dictionary to store station data
         const stationData = {};
 
         // Fetch data for each station
         for (const station of stationsToCompare) {
-          const data = await fetchStationWeatherRange(station.id, startDate, endDate);
+          const data = await fetchStationWeatherRange(station.id, dateRange.startDate, dateRange.endDate);
           stationData[station.id] = {
             id: station.id,
             name: station.name,
@@ -114,46 +117,8 @@ const CompareStationsBox = ({ stationsToCompare }) => {
     };
     
     fetchComparisonData();
-  }, [stationsToCompare, startDate, endDate]);
+  }, [stationsToCompare, dateRange.startDate, dateRange.endDate]);
 
-  const svgToXML = (svg) => {
-    var serializer = new XMLSerializer();
-    var xmlString = serializer.serializeToString(svg);
-    return 'data:image/svg+xml;base64,' + btoa(xmlString);
-  }
-  const makeCanvas = (svg) => {
-    const img = new Image;
-    img.setAttribute('src', svgToXML(svg));
-    const canvas = document.createElement('canvas');
-    canvas.setAttribute('width', svg.clientWidth);
-    canvas.setAttribute('height', svg.clientHeight);
-    canvas.getContext('2d').drawImage(img, 0, 0);
-    return canvas;
-  }
-  // Make download button for the user
-  const downloadGraph = (fileExtension) => {
-    if (!d3.select('#chart').node()) return;
-    const svg = d3.select('#chart').node();
-    if (fileExtension != 'svg') {
-      const canvas = makeCanvas(svg);
-      var url = canvas.toDataURL(`image/${fileExtension}`, 1.0);
-    } else {
-      var url = svgToXML(svg);
-    }
-    const a = document.createElement('a');
-    a.setAttribute('download', `download.${fileExtension}`);
-    a.setAttribute('href', url);
-    a.dispatchEvent(new MouseEvent('click'));
-  }
-  const downloadGraphAsPNG = () => {
-    downloadGraph('png');
-  }
-  const downloadGraphAsJPEG = () => {
-    downloadGraph('jpeg');
-  }
-  const downloadGraphAsSVG = () => {
-    downloadGraph('svg');
-  }
   return (
     <Card sx={{ 
       p: 1, 
@@ -176,12 +141,12 @@ const CompareStationsBox = ({ stationsToCompare }) => {
             <Stack direction="row" spacing={2}>
               <DatePicker
                 label="Start Date"
-                value={startDate}
+                value={dateRange.startDate}
                 onChange={handleStartDateChange}
-                renderInput={(params) => <TextField size="small" {...params} />}
                 disableFuture
                 slotProps={{
                   textField: {
+                    variant: 'outlined',
                     size: "small",
                     sx: { width: '150px' }
                   }
@@ -189,13 +154,13 @@ const CompareStationsBox = ({ stationsToCompare }) => {
               />
               <DatePicker
                 label="End Date"
-                value={endDate}
+                value={dateRange.endDate}
                 onChange={handleEndDateChange}
-                renderInput={(params) => <TextField size="small" {...params} />}
                 disableFuture
-                minDate={startDate}
+                minDate={dateRange.startDate}
                 slotProps={{
                   textField: {
+                    variant: 'outlined',
                     size: "small",
                     sx: { width: '150px' }
                   }
@@ -247,15 +212,6 @@ const CompareStationsBox = ({ stationsToCompare }) => {
             </Button>
           </Stack>
         </Stack>
-        {/* Station list summary */}
-        {/* <Box sx={{ mt: 2 }}>
-          <Typography variant="body2" color="text.secondary">
-            Comparing {stationsToCompare?.length || 0} stations
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            {stationsToCompare?.map(station => station.name).join(', ')}
-          </Typography>
-        </Box> */}
       </CardContent>
     </Card>
   );
