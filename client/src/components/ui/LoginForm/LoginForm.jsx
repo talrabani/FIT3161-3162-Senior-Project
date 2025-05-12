@@ -22,7 +22,7 @@ export default function LoginForm () {
         setErrorMessage("")
         setLoading(true)
 
-        AuthService.login( formData.username, formData.password ).then(
+        AuthService.login( formData.email, formData.password ).then(
             () => {
                 navigate("/");
                 window.location.reload();
@@ -49,15 +49,17 @@ export default function LoginForm () {
                 {errorMessage && <div className="login-form__error">{errorMessage}</div>}
                 <form onSubmit={handleSubmit(handleLogin)}>
                     <div className="login-form__inputs">
-                        <input {...register("username", { 
-                            required: "Username is required", 
-                            maxLength: { value: 20, message: "Username cannot be more than 20 characters" },
-                            minLength: { value: 3, message: "Username cannot be less than 3 characters"}
+                        <input {...register("email", { 
+                            required: "Email is required",
+                            pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: "Invalid email address"
+                            }
                         })} 
-                            type="text" 
-                            placeholder="Username"
+                            type="email" 
+                            placeholder="Email Address"
                         />
-                        { errors.username && <span>{errors.username.message}</span>}
+                        { errors.email && <span>{errors.email.message}</span>}
 
                         <input {...register("password", { 
                             required: "Password is required", 

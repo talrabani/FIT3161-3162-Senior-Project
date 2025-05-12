@@ -21,7 +21,7 @@ export default function SignupForm() {
         setErrorMessage("");
         setLoading(true);
 
-        AuthService.signup(formData.username, formData.password).then(
+        AuthService.signup(formData.username, formData.password, formData.email).then(
             () => {
                 navigate("/login");
             },
@@ -57,6 +57,19 @@ export default function SignupForm() {
                             placeholder="Username"
                         />
                         {errors.username && <span>{errors.username.message}</span>}
+
+                        <input 
+                            {...register("email", { 
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: "Invalid email address"
+                                }
+                            })} 
+                            type="email" 
+                            placeholder="Email Address"
+                        />
+                        {errors.email && <span>{errors.email.message}</span>}
 
                         <input 
                             {...register("password", { 
