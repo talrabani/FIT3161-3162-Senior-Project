@@ -195,7 +195,7 @@ const StationCard = ({
     
     // Create appropriate labels based on the timeFrequency
     const rainfallLabel = isYearly ? 'Average Annual Rainfall' : isMonthly ? 'Average Monthly Rainfall' : 'Rainfall';
-    const tempLabel = isYearly ? 'Average Annual Temp' : isMonthly ? 'Average Monthly Temp' : 'Temperature';
+    const tempLabel = isYearly ? 'Average Annual Temperature Range' : isMonthly ? 'Average Monthly Temperature Range' : 'Temperature';
 
     // Whether to show detailed info (only for monthly and yearly views with details available)
     const showDetailedInfo = (isMonthly || isYearly) && weatherDetails !== null;

@@ -280,9 +280,9 @@ export default function AustraliaMap({
         dataField = 'rainfall';
         // Set different title based on timeFrequency
         if (timeFrequency === 'year') {
-          legendTitle = 'Annual average rainfall (mm)';
+          legendTitle = 'Average Annual Rainfall (mm)';
         } else {
-          legendTitle = 'Monthly average rainfall (mm)';
+          legendTitle = 'Average Monthly Rainfall (mm)';
         }
         colourStart = 'rgb(255,255,255)';
         colourMid = 'rgb(0, 157, 255)';
