@@ -14,6 +14,7 @@ import { Button } from '@mui/material';
  * @param {string} props.error - Error message if any
  * @param {number} props.width - Width of the chart (default: 100%)
  * @param {number} props.height - Height of the chart (default: 300)
+ * @param {string} props.frequency - Data frequency (daily, monthly, yearly)
  */
 
 export default function RainfallLineGraph({
@@ -22,7 +23,8 @@ export default function RainfallLineGraph({
   loading = false,
   error = null,
   width = '100%',
-  height = 400
+  height = 400,
+  frequency = 'daily'
 }) {
 
   const chartRef = useRef(null);
@@ -44,8 +46,20 @@ export default function RainfallLineGraph({
       const containerWidth = container.clientWidth;
       const containerHeight = height;
       
-      // Set margins
-      const margin = { top: 40, right: 120, bottom: 40, left: 40 };
+      // Calculate max legend width based on station names
+      const maxLegendWidth = Math.max(
+        ...Object.values(stationData).map(station => station.name.length * 7), 
+        150
+      ); // At least 150px or calculated width
+      
+      // Set margins with adjusted right margin for legend
+      const margin = { 
+        top: 50, 
+        right: maxLegendWidth + 30, // Add padding to legend width
+        bottom: 60, 
+        left: 60 
+      };
+      
       const graphWidth = containerWidth - margin.left - margin.right;
       const graphHeight = containerHeight - margin.top - margin.bottom;
 
@@ -67,14 +81,32 @@ export default function RainfallLineGraph({
       // Process and combine all data points
       Object.values(stationData).forEach(station => {
         if (!station.data || station.data.length === 0) return;
-        const stationPoints = station.data.map(d => ({
-          date: d.date ? (typeof d.date === 'string' ? parseISO(d.date) : d.date) : null,
-          min_temp: d.min_temp !== undefined ? parseFloat(d.min_temp) : null,
-          max_temp: d.max_temp !== undefined ? parseFloat(d.max_temp) : null,
-          rainfall: d.rainfall !== undefined ? parseFloat(d.rainfall) : null,
-          stationId: station.id,
-          stationName: station.name
-        }))
+        
+        // Map data points based on frequency
+        const stationPoints = station.data.map(d => {
+          const dateValue = d.date ? (typeof d.date === 'string' ? parseISO(d.date) : d.date) : null;
+          
+          // If frequency is monthly or yearly, ensure we have proper year/month formatting
+          let formattedDate = dateValue;
+          if (frequency === 'monthly' && d.month && d.year) {
+            // For monthly data, use the first day of the month
+            formattedDate = new Date(parseInt(d.year), parseInt(d.month) - 1, 1);
+          } else if (frequency === 'yearly' && d.year) {
+            // For yearly data, use January 1 of that year
+            formattedDate = new Date(parseInt(d.year), 0, 1);
+          }
+          
+          return {
+            date: formattedDate,
+            min_temp: d.min_temp !== undefined ? parseFloat(d.min_temp) : null,
+            max_temp: d.max_temp !== undefined ? parseFloat(d.max_temp) : null,
+            rainfall: d.rainfall !== undefined ? parseFloat(d.rainfall) : null,
+            stationId: station.id,
+            stationName: station.name,
+            year: d.year,
+            month: d.month
+          };
+        });
         
         // Filter out points with null dates, NaN rainfall values, or rainfall === null
         const rainfallPoints = stationPoints.filter(d => {
@@ -84,7 +116,9 @@ export default function RainfallLineGraph({
                  d.rainfall !== undefined;
         }).map(d => ({
           date: d.date,
-          dataPoint: d.rainfall
+          dataPoint: d.rainfall,
+          month: d.month,
+          year: d.year
       }));
         
 
@@ -95,7 +129,9 @@ export default function RainfallLineGraph({
                  d.max_temp !== undefined;
         }).map(d => ({
           date: d.date,
-          dataPoint: d.max_temp
+          dataPoint: d.max_temp,
+          month: d.month,
+          year: d.year
       }));
 
         const minTempStationPoints = stationPoints.filter(d => {
@@ -105,24 +141,26 @@ export default function RainfallLineGraph({
                  d.min_temp !== undefined;
         }).map(d => ({
             date: d.date,
-            dataPoint: d.min_temp
+            dataPoint: d.min_temp,
+            month: d.month,
+            year: d.year
         }));
 
         switch (selectedType) {
           case "rainfall":
             var dataPoints = rainfallPoints;
-            typeString = "Total rainfall";
+            typeString = "Rainfall";
             units = 'mm';
             break;
           case "max_temp":
             var dataPoints = maxTempStationPoints;
             units = '°C';
-            typeString = "Maximum temperature";
+            typeString = "Maximum Temperature";
             break;
           case "min_temp":
             var dataPoints = minTempStationPoints;
             units = '°C';
-            typeString = "Minimum temperature";
+            typeString = "Minimum Temperature";
             break;
           default:
             console.log("No data type selected");
@@ -145,6 +183,8 @@ export default function RainfallLineGraph({
           .attr('x', graphWidth / 2)
           .attr('y', graphHeight / 2)
           .attr('text-anchor', 'middle')
+          .style('font-size', '14px')
+          .style('font-weight', 'bold')
           .text('No data available for the selected period.');
         return;
       }
@@ -173,29 +213,68 @@ export default function RainfallLineGraph({
         .x(d => x(d.date))
         .y(d => y(d.dataPoint));
       
-      // Add X axis
+      // Add chart title with frequency indication
+      let titleText = `${typeString} Comparison`;
+      if (frequency === 'monthly') {
+        titleText += ' (Monthly)';
+      } else if (frequency === 'yearly') {
+        titleText += ' (Yearly)';
+      }
+      
+      svg.append('text')
+        .attr('x', graphWidth / 2)
+        .attr('y', -20)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '18px')  // Slightly increased font size
+        .style('font-weight', 'bold')
+        .text(titleText);
+      
+      // Configure X-axis ticks and format based on frequency
+      let xAxisTickFormat;
+      let xAxisTicks = 6;
+      
+      if (frequency === 'daily') {
+        xAxisTickFormat = d3.timeFormat('%d %b %Y');
+      } else if (frequency === 'monthly') {
+        xAxisTickFormat = d3.timeFormat('%b %Y');
+        xAxisTicks = Math.min(12, allDataPoints.length);
+      } else if (frequency === 'yearly') {
+        xAxisTickFormat = d3.timeFormat('%Y');
+        xAxisTicks = Math.min(10, allDataPoints.length);
+      }
+      
+      // Add X axis with larger font
       svg.append('g')
         .attr('transform', `translate(0,${graphHeight})`)
-        .call(d3.axisBottom(x).ticks(6).tickFormat(d3.timeFormat('%d %b %Y')))
+        .call(d3.axisBottom(x).ticks(xAxisTicks).tickFormat(xAxisTickFormat))
+        .selectAll('text')
+        .style('font-size', '12px');
       
       // Add X axis label
       svg.append('text')
         .attr('x', graphWidth / 2)
         .attr('y', graphHeight + margin.bottom - 10)
         .attr('text-anchor', 'middle')
-        .style('font-size', '12px')
+        .style('font-size', '14px')
+        .style('font-weight', 'bold')
         .text('Date');
       
-      // Add Y axis
+      // Add Y axis with larger font
       svg.append('g')
         .call(d3.axisLeft(y))
-        .append('text')
+        .selectAll('text')
+        .style('font-size', '12px');
+      
+      // Add Y axis label
+      svg.append('text')
         .attr('fill', '#000')
         .attr('transform', 'rotate(-90)')
-        .attr('y', -25)
+        .attr('y', -40)
         .attr('x', -graphHeight / 2)
         .attr('text-anchor', 'middle')
-        .text(`${typeString} [${units}]`);
+        .style('font-size', '14px')
+        .style('font-weight', 'bold')
+        .text(`${typeString} (${units})`);
 
       // Add grid lines
       svg.append('g')
@@ -222,7 +301,8 @@ export default function RainfallLineGraph({
         .style('border-radius', '4px')
         .style('padding', '10px')
         .style('pointer-events', 'none')
-        .style('box-shadow', '0 2px 5px rgba(0,0,0,0.1)');
+        .style('box-shadow', '0 2px 5px rgba(0,0,0,0.1)')
+        .style('font-size', '13px');
 
       // Draw lines for each station
       stationSeries.forEach(station => {
@@ -248,158 +328,146 @@ export default function RainfallLineGraph({
           .attr('cy', d => y(d.dataPoint))
           .attr('r', 3.5)
           .attr('fill', station.color)
-          .attr('stroke', '#fff')
-          .attr('stroke-width', 1.5)
-          // Add overlay to display data when mouse hovers over data point
-          .on('mouseover', function(event) {
-            const pointer = d3.pointer(event);
-            const xDate = x.invert(pointer[0]);
-
-            // Highlight points
-            svg.selectAll('circle')
-            .attr('r', 3.5)
-            .attr('stroke-width', 1.5);
-
-            const pointsOnDate = station.values.filter(d => 
-                format(d.date, 'yyyy-MM-dd') === format(xDate, 'yyyy-MM-dd')
-                );
-
-            pointsOnDate.forEach(p => {
-              svg.selectAll(`.dot-${station.id}`)
-                .filter(d => format(d.date, 'yyyy-MM-dd') === format(p.date, 'yyyy-MM-dd'))
-                .attr('r', 5)
-                .attr('stroke-width', 2);
-            });
-            
-            // Show tooltip
-            tooltip.style('opacity', 0.9);
-            tooltip.html(`<strong>${format(xDate, 'MMMM d, yyyy')}</strong><br/>`)
-              .style('left', `${event.offsetX + 10}px`)
-              .style('top', `${event.offsetY - 28}px`);
-            
-            // Add each station's rainfall to the tooltip
-            pointsOnDate.forEach(p => {
-              if (p.dataPoint !== null && !isNaN(station.id) && p.dataPoint !== undefined) {
-                tooltip.html(tooltip.html() + `${station.name}: ${p.dataPoint.toFixed(1)} ${units}<br/>`);
-              } else {
-                tooltip.html(tooltip.html() + `${station.name}: No data<br/>`);
-              }
-          });
-        })
-        .on('mouseout', function() {
-          // Reset point sizes
-          svg.selectAll('circle')
-            .attr('r', 3.5)
-            .attr('stroke-width', 1.5);
           
-          // Hide tooltip
-          tooltip.style('opacity', 0);
-        });
+          // Mouse events for dots
+          .on('mouseover', function(event, d) {
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .attr('r', 5);
+  
+            tooltip.transition()
+              .duration(100)
+              .style('opacity', 0.9);
+            
+            // Format date based on frequency
+            let dateDisplay;
+            if (frequency === 'daily') {
+              dateDisplay = format(d.date, 'dd MMM yyyy');
+            } else if (frequency === 'monthly') {
+              dateDisplay = format(d.date, 'MMMM yyyy');
+            } else { // yearly
+              dateDisplay = format(d.date, 'yyyy');
+            }
+  
+            const tooltipHtml = `
+              <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">
+                ${station.name}
+              </div>
+              <div>
+                <span style="font-weight: bold;">Date:</span> ${dateDisplay}
+              </div>
+              <div>
+                <span style="font-weight: bold;">${typeString}:</span> ${d.dataPoint.toFixed(1)} ${units}
+              </div>
+            `;
+  
+            tooltip.html(tooltipHtml)
+              .style('left', (event.pageX + 10) + 'px')
+              .style('top', (event.pageY - 28) + 'px');
+          })
+          
+          .on('mouseout', function() {
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .attr('r', 3.5);
+            
+            tooltip.transition()
+              .duration(500)
+              .style('opacity', 0);
+          });
       });
-
-      // Add a title
-      svg.append('text')
-        .attr('x', (graphWidth / 2))
-        .attr('y', -(margin.top / 2))
-        .attr('text-anchor', 'middle')
-        .style('font-size', '16px')
-        .style('text-decoration', 'bold')
-        .text(`${typeString} in ${Object.keys(stationData).length} stations
-          from ${x.domain()[0].toLocaleDateString('en-gb',
-            {day: 'numeric', month: 'long', year: 'numeric'})}
-          to ${x.domain()[1].toLocaleDateString('en-gb',
-            {day: 'numeric', month: 'long', year: 'numeric'}
-          )}`);
-
       
-      // Add a legend
+      // Add background rectangle for legend to make it more visible
+      const legendBg = svg.append('rect')
+        .attr('x', graphWidth + 5)
+        .attr('y', -20)
+        .attr('width', maxLegendWidth)
+        .attr('height', stationSeries.length * 25 + 30)
+        .attr('fill', 'white')
+        .attr('stroke', '#eee')
+        .attr('stroke-width', 1)
+        .attr('rx', 4)
+        .attr('ry', 4);
+      
+      // Add legend
       const legend = svg.append('g')
         .attr('class', 'legend')
-        .attr('transform', `translate(${graphWidth + 5}, 0)`);
+        .attr('transform', `translate(${graphWidth + 15}, 0)`);
       
-      let curPos = 0;
-
+      // Add legend title
+      legend.append('text')
+        .attr('x', 0)
+        .attr('y', -5)
+        .style('font-size', '14px')
+        .style('font-weight', 'bold')
+        .text('Stations');
+      
+      // Add legend items with improved text wrapping
       stationSeries.forEach((station, i) => {
         const legendItem = legend.append('g')
-          .attr('transform', `translate(0, ${i + curPos})`);
+          .attr('transform', `translate(0, ${i * 25 + 15})`);
         
+        // Color rectangle
         legendItem.append('rect')
           .attr('width', 15)
-          .attr('height', 2)
+          .attr('height', 3)
           .attr('fill', station.color);
         
-        legendItem.append('text')
+        // Station name with proper wrapping
+        const nameText = legendItem.append('text')
           .attr('x', 20)
-          .attr('y', 5)
+          .attr('y', 3)
+          .attr('width', maxLegendWidth - 25) // Set width for text wrapping
           .style('font-size', '12px')
-          .text(station.name)
-          .call(wrap, 100);
-        curPos += legendItem.node().getBBox().height;
+          .text(station.name);
+        
+        // Apply text wrapping if name is too long
+        if (station.name.length > 20) {
+          const words = station.name.split(/\s+/);
+          let tspan = nameText.text(null).append("tspan")
+            .attr("x", 20)
+            .attr("y", 3)
+            .text(words[0]);
+          
+          for (let i = 1; i < words.length; i++) {
+            tspan = nameText.append("tspan")
+              .attr("x", 20)
+              .attr("dy", "1.2em")
+              .text(words[i]);
+          }
+        }
       });
     };
-    
-    renderChart();
 
-    // Add window resize handler for responsiveness
+    renderChart();
+    
+    // Add resize event listener for responsive chart
     const handleResize = () => {
       if (chartRef.current) {
         d3.select(chartRef.current).selectAll('*').remove();
         renderChart();
       }
     };
-
+    
     window.addEventListener('resize', handleResize);
+    
+    // Clean up on unmount
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [stationData, loading, error, height]);
+    
+  }, [stationData, selectedType, loading, error, height, frequency]);
   
-
   return (
     <div 
-      ref={chartRef}
+      ref={chartRef} 
       style={{ 
         width: width, 
-        height: height, 
-        position: 'relative',
-        backgroundColor: '#fff',
-        borderRadius: '8px',
-        border: '1px solid #e0e0e0'
+        height: height,
+        position: 'relative'
       }}
-    >
-      {loading && (
-        <div style={{ 
-          position: 'absolute', 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)'
-        }}>
-          Loading...
-        </div>
-      )}
-      {error && (
-        <div style={{ 
-          position: 'absolute', 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)',
-          color: 'red'
-        }}>
-          {error}
-        </div>
-      )}
-      {!loading && !error && (!stationData || Object.keys(stationData).length === 0) && (
-        <div style={{ 
-          position: 'absolute', 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)',
-          color: '#666',
-          textAlign: 'center'
-        }}>
-          Select at least two stations and a date range to compare weather data
-        </div>
-      )}
-    </div>
+    ></div>
   );
 }

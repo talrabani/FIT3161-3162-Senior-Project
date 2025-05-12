@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Create the context
 const MapContext = createContext();
@@ -7,15 +7,21 @@ const MapContext = createContext();
 export const useMapContext = () => useContext(MapContext);
 
 // Provider component
-export const MapContextProvider = ({ children }) => {
+export const MapContextProvider = ({ children, initialSelectedStations = [] }) => {
   // State from MapSidebar that needs to be shared
   const [selectedDate, setSelectedDate] = useState(new Date(2000, 0, 1)); // Jan 1, 2000
   const [selectedSA4, setSelectedSA4] = useState(null);
   const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
   const [isRangeMode, setIsRangeMode] = useState(false);
-  const [selectedStations, setSelectedStations] = useState([]);
+  const [selectedStations, setSelectedStations] = useState(initialSelectedStations);
   const [timeFrequency, setFrequency] = useState(['month', 'year']);
 
+  // Update selected stations if initialSelectedStations changes
+  useEffect(() => {
+    if (initialSelectedStations && initialSelectedStations.length > 0) {
+      setSelectedStations(initialSelectedStations);
+    }
+  }, [initialSelectedStations]);
   
   // Selected station from map or search
   const [selectedMapStation, setSelectedMapStation] = useState(null);

@@ -10,36 +10,40 @@ The rainfall and temperature data for the current selected date in MapSidebar wi
 
 import React, { useState } from 'react';
 import { Card, CardContent, Typography, Box, Button, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import StationCard from './stationCard';
 import { useMapContext } from '../../context/MapContext';
-import CompareStationsBox from '../compareStations/compareStationsBox';
 
-const onRemoveStation = (station) => {
-  console.log('Removing station:', station);
-};
-
-const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
+const SelectedStationsBox = ({ selectedStations, onRemoveStation, clearAllStations }) => {
   // Get the selected date from the context
   const { selectedDate, setDateRange } = useMapContext();
-  const [showComparison, setShowComparison] = useState(false);
   const [expandAllStats, setExpandAllStats] = useState(false);
   
-  // Handle Compare button click
+  // Setup navigation
+  const navigate = useNavigate();
+  
+  // Handle Compare button click - navigate to comparison page
   const handleCompare = () => {
-    console.log('Compare button clicked');
-    setShowComparison(true);
+    console.log('Navigate to comparison page');
+    // No need to explicitly save to localStorage as the useWeatherData hook handles this
+    navigate('/comparison');
   };
   
   // Remove All button
   const handleRemoveAll = () => {
     console.log('Remove All button clicked');
-    // Could call onRemoveStation for each station
-    selectedStations.forEach(station => {
-      onRemoveStation(station.name);
-    });
+    // Call the clearAllStations function passed from the parent
+    if (clearAllStations) {
+      clearAllStations();
+    } else {
+      // Fallback if clearAllStations not provided - call onRemoveStation for each
+      selectedStations.forEach(station => {
+        onRemoveStation(station.name);
+      });
+    }
+    
+    // Reset date range
     setDateRange({ startDate: null, endDate: null });
-    // Hide comparison if all stations are removed
-    setShowComparison(false);
   };
   
   // Toggle Expand All button
@@ -49,90 +53,84 @@ const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
   };
   
   return (
-    <>
-      <Card sx={{ 
-        p: 1, 
-        bgcolor: '#f9f9f9',
-        borderRadius: '12px'
-      }}>
-        <CardContent>
-          <Box sx={{ 
-            display: 'flex', 
-            justifyContent: 'space-between', 
-            alignItems: 'center',
-            mb: 2
-          }}>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>
-              Selected Stations
-            </Typography>
-            
-            <Stack direction="row" spacing={1}>
-              <Button 
-                variant="contained" 
-                color="primary" 
-                size="small"
-                disabled={selectedStations.length < 2}
-                onClick={handleCompare}
-                sx={{ fontSize: '0.8rem' }}
-              >
-                Generate Graph
-              </Button>
-              
-              <Button 
-                variant={expandAllStats ? "contained" : "outlined"}
-                color="info" 
-                size="small"
-                disabled={selectedStations.length === 0}
-                onClick={handleExpandAll}
-                sx={{ fontSize: '0.8rem' }}
-              >
-                {expandAllStats ? "Collapse" : "Expand"} All
-              </Button>
-              
-              <Button 
-                variant="outlined" 
-                color="error" 
-                size="small"
-                disabled={selectedStations.length === 0}
-                onClick={handleRemoveAll}
-                sx={{ fontSize: '0.8rem' }}
-              >
-                Remove All
-              </Button>
-            </Stack>
-          </Box>
-          
-          <Typography variant="body2" color="text.secondary" mb={2}>
-            {selectedStations.length === 0 
-              ? 'No stations selected. Click on stations on the map to select them.' 
-              : `${selectedStations.length} station(s) selected`}
+    <Card sx={{ 
+      p: 1, 
+      bgcolor: 'var(--card-bg, #ffffff)',
+      borderRadius: '12px',
+      boxShadow: 'var(--card-shadow, 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1))'
+    }}>
+      <CardContent>
+        <Box sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          mb: 2
+        }}>
+          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>
+            Selected Stations
           </Typography>
           
-          <Box sx={{ 
-            display: 'flex', 
-            flexDirection: 'row', 
-            flexWrap: 'wrap', 
-            gap: 2,
-            justifyContent: 'flex-start',
-          }}>
-            {selectedStations.map(station => (
-              <StationCard 
-                key={station.id || station.name} 
-                station={station} 
-                onRemove={onRemoveStation}
-                selectedDate={selectedDate}
-                forceExpanded={expandAllStats}
-              />
-            ))}
-          </Box>
-        </CardContent>
-      </Card>
-      
-      {/* Display comparison box when Compare button is clicked and there are at least 2 stations */}
-      {showComparison && selectedStations.length >= 2 && (
-        <CompareStationsBox stationsToCompare={selectedStations} />
-      )}
-    </>
+          <Stack direction="row" spacing={1}>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              size="small"
+              disabled={selectedStations.length < 2}
+              onClick={handleCompare}
+              sx={{ fontSize: '0.8rem' }}
+            >
+              Generate Graph
+            </Button>
+            
+            <Button 
+              variant={expandAllStats ? "contained" : "outlined"}
+              color="info" 
+              size="small"
+              disabled={selectedStations.length === 0}
+              onClick={handleExpandAll}
+              sx={{ fontSize: '0.8rem' }}
+            >
+              {expandAllStats ? "Collapse" : "Expand"} All
+            </Button>
+            
+            <Button 
+              variant="outlined" 
+              color="error" 
+              size="small"
+              disabled={selectedStations.length === 0}
+              onClick={handleRemoveAll}
+              sx={{ fontSize: '0.8rem' }}
+            >
+              Remove All
+            </Button>
+          </Stack>
+        </Box>
+        
+        <Typography variant="body2" color="text.secondary" mb={2}>
+          {selectedStations.length === 0 
+            ? 'No stations selected. Click on stations on the map to select them.' 
+            : `${selectedStations.length} station(s) selected`}
+        </Typography>
+        
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: 'row', 
+          flexWrap: 'wrap', 
+          gap: 2,
+          justifyContent: 'flex-start',
+        }}>
+          {selectedStations.map(station => (
+            <StationCard 
+              key={station.id || station.name} 
+              station={station} 
+              onRemove={onRemoveStation}
+              selectedDate={selectedDate}
+              forceExpanded={expandAllStats}
+            />
+          ))}
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 

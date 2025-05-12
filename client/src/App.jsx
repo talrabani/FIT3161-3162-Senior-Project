@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { P } from './components/ui/typography'
@@ -9,7 +9,8 @@ import MapSidebar from './components/ui/MapSidebar'
 import Navbar from './components/ui/Navbar'
 import DebugInfo from './components/ui/DebugInfo'
 import SelectedStationsBox from './components/selectedStations/selectedStationsBox'
-import { MapContextProvider } from './context/MapContext'
+import StationComparisonPage from './pages/StationComparisonPage'
+import { MapContextProvider, useMapContext } from './context/MapContext'
 import LoginForm from './components/ui/LoginForm/LoginForm'
 import SignupForm from './components/ui/SignupForm/SignupForm'
 import AuthService from './services/auth.service'
@@ -39,13 +40,74 @@ function WeatherApp() {
     selectedLocations,
     addLocation,
     removeLocation,
-    dateRange,
-    updateDateRange,
-    chartType,
-    toggleChartType,
+    clearLocations,
     isLoading,
     isError,
-  } = useWeatherData()
+  } = useWeatherData();
+
+  // Use MapContext for selected stations
+  const { 
+    selectedStations, 
+    setSelectedStations,
+    addStation,
+    removeStation,
+    dateRange,
+    setDateRange
+  } = useMapContext();
+
+  // Load selected stations from localStorage on first mount
+  useEffect(() => {
+    try {
+      const storedData = localStorage.getItem('selectedStationsData');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        console.log('Loaded stations from localStorage:', parsedData);
+        setSelectedStations(parsedData);
+      }
+    } catch (error) {
+      console.error('Error loading stations from localStorage:', error);
+    }
+  }, [setSelectedStations]);
+
+  // Save selected stations to localStorage whenever they change
+  useEffect(() => {
+    try {
+      localStorage.setItem('selectedStationsData', JSON.stringify(selectedStations));
+      console.log('Saved to localStorage:', selectedStations);
+    } catch (error) {
+      console.error('Error saving to localStorage:', error);
+    }
+  }, [selectedStations]);
+
+  // Sync MapContext with useWeatherData on first load
+  useEffect(() => {
+    if (selectedLocations && selectedLocations.length > 0 && selectedStations.length === 0) {
+      setSelectedStations(selectedLocations);
+    }
+  }, [selectedLocations, selectedStations, setSelectedStations]);
+
+  // Ensure stations added through useWeatherData are also added to MapContext
+  const handleLocationSelect = (location) => {
+    addLocation(location);
+    addStation(location);
+  };
+
+  // When removing a station, update both states
+  const handleRemoveStation = (stationName) => {
+    removeLocation(stationName);
+    removeStation(stationName);
+  };
+
+  // Clear stations from both states
+  const handleClearAllStations = () => {
+    clearLocations();
+    setSelectedStations([]);
+    try {
+      localStorage.removeItem('selectedStationsData');
+    } catch (error) {
+      console.error('Error clearing localStorage:', error);
+    }
+  };
   
   // State for debugging panel visibility
   const [showDebug, setShowDebug] = useState(false);
@@ -65,8 +127,8 @@ function WeatherApp() {
             <div className="card h-100">
               <div className="card-body p-0" style={{ height: '700px' }}>
                 <AustraliaMap 
-                  selectedLocations={selectedLocations} 
-                  onLocationSelect={addLocation}
+                  selectedLocations={selectedStations} 
+                  onLocationSelect={handleLocationSelect}
                   showSA4Boundaries={showSA4Boundaries}
                   setShowSA4Boundaries={setShowSA4Boundaries}
                   showStations={showStations}
@@ -83,8 +145,9 @@ function WeatherApp() {
         <div className="row mt-4">
           <div className="col-12">
             <SelectedStationsBox 
-              selectedStations={selectedLocations}
-              onRemoveStation={removeLocation}
+              selectedStations={selectedStations}
+              onRemoveStation={handleRemoveStation}
+              clearAllStations={handleClearAllStations}
             />
           </div>
         </div>
@@ -109,7 +172,7 @@ function WeatherApp() {
       
         {showDebug && (
           <DebugInfo 
-            selectedLocations={selectedLocations}
+            selectedLocations={selectedStations}
             showSA4Boundaries={showSA4Boundaries}
             setShowSA4Boundaries={setShowSA4Boundaries}
             showStations={showStations}
@@ -142,6 +205,11 @@ function App() {
             <Route path="/" element={
               <ProtectedRoute>
                 <WeatherApp />
+              </ProtectedRoute>
+            } />
+            <Route path="/comparison" element={
+              <ProtectedRoute>
+                <StationComparisonPage />
               </ProtectedRoute>
             } />
           </Routes>
