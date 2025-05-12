@@ -4,7 +4,11 @@ import {
   CardContent, 
   Typography, 
   Box, 
-  Stack 
+  Stack,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -21,13 +25,17 @@ import TypeSelect from '../ui/TypeSelect';
  * @param {Object} props.dateRange - Current date range {startDate, endDate}
  * @param {Function} props.onStartDateChange - Handler for start date changes
  * @param {Function} props.onEndDateChange - Handler for end date changes
+ * @param {String} props.frequency - Currently selected frequency (daily, monthly, yearly)
+ * @param {Function} props.onFrequencyChange - Handler for frequency changes
  */
 const GraphTools = ({ 
   selectedType,
   onTypeChange,
   dateRange,
   onStartDateChange,
-  onEndDateChange
+  onEndDateChange,
+  frequency = 'daily',
+  onFrequencyChange
 }) => {
   return (
     <Card sx={{ 
@@ -54,10 +62,32 @@ const GraphTools = ({
             width={{ xs: '100%', md: 'auto' }}
             alignItems={{ xs: 'stretch', sm: 'center' }}
           >
+            {/* Data type selector */}
             <TypeSelect 
               type={selectedType} 
               setType={onTypeChange} 
             />
+            
+            {/* Frequency selector */}
+            <FormControl
+              size="small"
+              sx={{ minWidth: 120 }}
+            >
+              <InputLabel id="frequency-select-label">Frequency</InputLabel>
+              <Select
+                labelId="frequency-select-label"
+                id="frequency-select"
+                value={frequency}
+                label="Frequency"
+                onChange={(e) => onFrequencyChange(e.target.value)}
+              >
+                <MenuItem value="daily">Daily</MenuItem>
+                <MenuItem value="monthly">Monthly</MenuItem>
+                <MenuItem value="yearly">Yearly</MenuItem>
+              </Select>
+            </FormControl>
+            
+            {/* Date pickers */}
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack 
                 direction={{ xs: 'column', sm: 'row' }} 

@@ -14,6 +14,7 @@ import { Button } from '@mui/material';
  * @param {string} props.error - Error message if any
  * @param {number} props.width - Width of the chart (default: 100%)
  * @param {number} props.height - Height of the chart (default: 300)
+ * @param {string} props.frequency - Data frequency (daily, monthly, yearly)
  */
 
 export default function RainfallLineGraph({
@@ -22,7 +23,8 @@ export default function RainfallLineGraph({
   loading = false,
   error = null,
   width = '100%',
-  height = 400
+  height = 400,
+  frequency = 'daily'
 }) {
 
   const chartRef = useRef(null);
@@ -79,14 +81,32 @@ export default function RainfallLineGraph({
       // Process and combine all data points
       Object.values(stationData).forEach(station => {
         if (!station.data || station.data.length === 0) return;
-        const stationPoints = station.data.map(d => ({
-          date: d.date ? (typeof d.date === 'string' ? parseISO(d.date) : d.date) : null,
-          min_temp: d.min_temp !== undefined ? parseFloat(d.min_temp) : null,
-          max_temp: d.max_temp !== undefined ? parseFloat(d.max_temp) : null,
-          rainfall: d.rainfall !== undefined ? parseFloat(d.rainfall) : null,
-          stationId: station.id,
-          stationName: station.name
-        }))
+        
+        // Map data points based on frequency
+        const stationPoints = station.data.map(d => {
+          const dateValue = d.date ? (typeof d.date === 'string' ? parseISO(d.date) : d.date) : null;
+          
+          // If frequency is monthly or yearly, ensure we have proper year/month formatting
+          let formattedDate = dateValue;
+          if (frequency === 'monthly' && d.month && d.year) {
+            // For monthly data, use the first day of the month
+            formattedDate = new Date(parseInt(d.year), parseInt(d.month) - 1, 1);
+          } else if (frequency === 'yearly' && d.year) {
+            // For yearly data, use January 1 of that year
+            formattedDate = new Date(parseInt(d.year), 0, 1);
+          }
+          
+          return {
+            date: formattedDate,
+            min_temp: d.min_temp !== undefined ? parseFloat(d.min_temp) : null,
+            max_temp: d.max_temp !== undefined ? parseFloat(d.max_temp) : null,
+            rainfall: d.rainfall !== undefined ? parseFloat(d.rainfall) : null,
+            stationId: station.id,
+            stationName: station.name,
+            year: d.year,
+            month: d.month
+          };
+        });
         
         // Filter out points with null dates, NaN rainfall values, or rainfall === null
         const rainfallPoints = stationPoints.filter(d => {
@@ -96,7 +116,9 @@ export default function RainfallLineGraph({
                  d.rainfall !== undefined;
         }).map(d => ({
           date: d.date,
-          dataPoint: d.rainfall
+          dataPoint: d.rainfall,
+          month: d.month,
+          year: d.year
       }));
         
 
@@ -107,7 +129,9 @@ export default function RainfallLineGraph({
                  d.max_temp !== undefined;
         }).map(d => ({
           date: d.date,
-          dataPoint: d.max_temp
+          dataPoint: d.max_temp,
+          month: d.month,
+          year: d.year
       }));
 
         const minTempStationPoints = stationPoints.filter(d => {
@@ -117,7 +141,9 @@ export default function RainfallLineGraph({
                  d.min_temp !== undefined;
         }).map(d => ({
             date: d.date,
-            dataPoint: d.min_temp
+            dataPoint: d.min_temp,
+            month: d.month,
+            year: d.year
         }));
 
         switch (selectedType) {
@@ -187,19 +213,40 @@ export default function RainfallLineGraph({
         .x(d => x(d.date))
         .y(d => y(d.dataPoint));
       
-      // Add chart title
+      // Add chart title with frequency indication
+      let titleText = `${typeString} Comparison`;
+      if (frequency === 'monthly') {
+        titleText += ' (Monthly Averages)';
+      } else if (frequency === 'yearly') {
+        titleText += ' (Yearly Averages)';
+      }
+      
       svg.append('text')
         .attr('x', graphWidth / 2)
         .attr('y', -20)
         .attr('text-anchor', 'middle')
         .style('font-size', '16px')
         .style('font-weight', 'bold')
-        .text(`${typeString} Comparison`);
+        .text(titleText);
+      
+      // Configure X-axis ticks and format based on frequency
+      let xAxisTickFormat;
+      let xAxisTicks = 6;
+      
+      if (frequency === 'daily') {
+        xAxisTickFormat = d3.timeFormat('%d %b %Y');
+      } else if (frequency === 'monthly') {
+        xAxisTickFormat = d3.timeFormat('%b %Y');
+        xAxisTicks = Math.min(12, allDataPoints.length);
+      } else if (frequency === 'yearly') {
+        xAxisTickFormat = d3.timeFormat('%Y');
+        xAxisTicks = Math.min(10, allDataPoints.length);
+      }
       
       // Add X axis with larger font
       svg.append('g')
         .attr('transform', `translate(0,${graphHeight})`)
-        .call(d3.axisBottom(x).ticks(6).tickFormat(d3.timeFormat('%d %b %Y')))
+        .call(d3.axisBottom(x).ticks(xAxisTicks).tickFormat(xAxisTickFormat))
         .selectAll('text')
         .style('font-size', '12px');
       
@@ -292,13 +339,23 @@ export default function RainfallLineGraph({
             tooltip.transition()
               .duration(100)
               .style('opacity', 0.9);
+            
+            // Format date based on frequency
+            let dateDisplay;
+            if (frequency === 'daily') {
+              dateDisplay = format(d.date, 'dd MMM yyyy');
+            } else if (frequency === 'monthly') {
+              dateDisplay = format(d.date, 'MMMM yyyy');
+            } else { // yearly
+              dateDisplay = format(d.date, 'yyyy');
+            }
   
             const tooltipHtml = `
               <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">
                 ${station.name}
               </div>
               <div>
-                <span style="font-weight: bold;">Date:</span> ${format(d.date, 'dd MMM yyyy')}
+                <span style="font-weight: bold;">Date:</span> ${dateDisplay}
               </div>
               <div>
                 <span style="font-weight: bold;">${typeString}:</span> ${d.dataPoint.toFixed(1)} ${units}
@@ -401,7 +458,7 @@ export default function RainfallLineGraph({
       window.removeEventListener('resize', handleResize);
     };
     
-  }, [stationData, selectedType, loading, error, height]);
+  }, [stationData, selectedType, loading, error, height, frequency]);
   
   return (
     <div 

@@ -470,6 +470,55 @@ export const fetchStationWeatherRange = async (stationId, startDate, endDate) =>
   }
 };
 
+/**
+ * Fetches aggregated weather data for a specific station on a given date range
+ * @param {string|number} stationId - The station ID to fetch data for
+ * @param {Date|string} startDate - The start date to get data for (Date object or YYYY-MM-DD string)
+ * @param {Date|string} endDate - The end date to get data for (Date object or YYYY-MM-DD string)
+ * @param {string} frequency - The frequency of aggregation ('monthly' or 'yearly')
+ * @param {string} dataType - The type of data to fetch ('rainfall', 'min_temp', or 'max_temp')
+ * @returns {Promise} Promise with aggregated weather data for the station on the specified date range
+ */
+export const fetchStationWeatherAggregated = async (stationId, startDate, endDate, frequency, dataType) => {
+  try {
+    // Add leading zero to stationId if it's less than 6 digits
+    const formattedStationId = stationId.toString().padStart(6, '0');
+
+    // Format dates as YYYY-MM-DD if they're Date objects
+    const formattedStartDate = startDate instanceof Date 
+      ? startDate.toISOString().split('T')[0] 
+      : startDate;
+    
+    const formattedEndDate = endDate instanceof Date 
+      ? endDate.toISOString().split('T')[0] 
+      : endDate;
+    
+    console.log(`CLIENT SERVICE: Fetching ${frequency} aggregated ${dataType} data for station:`, 
+               formattedStationId, 'on date range:', formattedStartDate, 'to', formattedEndDate);
+    
+    // Use the correct API endpoint URL format that matches the server implementation
+    const url = `${SERVER_API_URL}/rainfall/aggregated/station/${formattedStationId}/frequency/${frequency}/date/${formattedStartDate}/end_date/${formattedEndDate}`;
+    
+    // Make the request with data_type as a query parameter
+    const response = await axios.get(url, {
+      params: {
+        data_type: dataType || 'rainfall'
+      }
+    });
+    
+    // If no data is returned or response is invalid, return empty array
+    if (!response.data || (Array.isArray(response.data) && response.data.length === 0)) {
+      console.log(`No ${frequency} aggregated data found for station ${formattedStationId}`);
+      return [];
+    }
+    
+    // Return the aggregated data
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching ${frequency} aggregated data for station ${stationId}:`, error);
+    return [];
+  }
+};
 
 /**
  * Fetches temperature data for a specific station on a given date

@@ -18,15 +18,24 @@ import RainfallLineGraph from './rainfallLineGraph';
  * @param {String} props.selectedType - Currently selected weather type
  * @param {Boolean} props.loading - Whether data is currently loading
  * @param {String|null} props.error - Error message if there was an error loading data
+ * @param {String} props.frequency - Data frequency (daily, monthly, yearly)
  */
 const GraphDisplay = ({ 
   stationData,
   selectedType,
   loading,
-  error
+  error,
+  frequency = 'daily'
 }) => {
   // Determine if we have data to display
   const hasData = stationData && Object.keys(stationData).length > 0;
+
+  // Determine title suffix based on frequency
+  const frequencyTitle = frequency === 'daily' 
+    ? 'Daily Measurements' 
+    : frequency === 'monthly' 
+      ? 'Monthly Averages' 
+      : 'Yearly Averages';
 
   return (
     <Card sx={{ 
@@ -37,7 +46,7 @@ const GraphDisplay = ({
     }}>
       <CardContent>
         <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold', color: '#333' }}>
-          Data Visualization
+          Data Visualization - {frequencyTitle}
         </Typography>
 
         <Box sx={{ position: 'relative', minHeight: '400px' }}>
@@ -85,6 +94,7 @@ const GraphDisplay = ({
             loading={loading} 
             error={error}
             height={400}
+            frequency={frequency}
           />
         </Box>
       </CardContent>

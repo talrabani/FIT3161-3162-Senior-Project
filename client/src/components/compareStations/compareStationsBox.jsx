@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Fragment } from 'react';
 import { useMapContext } from '../../context/MapContext';
 import { format } from 'date-fns';
-import { fetchStationWeatherRange } from '../../services/weatherApi';
+import { fetchStationWeatherRange, fetchStationWeatherAggregated } from '../../services/weatherApi';
 import { getStationColor } from './utils/colorUtils';
 
 // Import our new components
@@ -25,6 +25,9 @@ const CompareStationsBox = ({ stationsToCompare }) => {
   // Set the graph type, which is separate to one on the map
   const [selectedGraphType, setSelectedType] = useState(selectedType.valueOf());
   
+  // Set the data frequency (daily, monthly, yearly)
+  const [frequency, setFrequency] = useState('daily');
+  
   // Handle changes in the date range - this updates the context
   const handleStartDateChange = (newDate) => {
     setDateRange(prev => ({ ...prev, startDate: newDate }));
@@ -41,14 +44,32 @@ const CompareStationsBox = ({ stationsToCompare }) => {
     setSelectedType(newType);
     console.log('Selected type updated:', newType);
   };
+  
+  // Handle frequency change
+  const handleFrequencyChange = (newFrequency) => {
+    setFrequency(newFrequency);
+    console.log('Frequency updated:', newFrequency);
+  };
 
   // Fetch data for comparison when stations or date range changes
   useEffect(() => {
     const fetchComparisonData = async () => {
-      setDateRange({
-        startDate: (!dateRange.startDate)? selectedDate : dateRange.startDate,
-        endDate: (!dateRange.endDate)? new Date(new Date(selectedDate).setDate(selectedDate.getDate()+4)) : dateRange.endDate
-      });
+      // Ensure we have start and end dates
+      if (!dateRange.startDate) {
+        setDateRange(prev => ({
+          ...prev,
+          startDate: selectedDate
+        }));
+        return;
+      }
+      
+      if (!dateRange.endDate) {
+        setDateRange(prev => ({
+          ...prev,
+          endDate: new Date(new Date(selectedDate).setDate(selectedDate.getDate() + 4))
+        }));
+        return;
+      }
       
       if (!stationsToCompare || stationsToCompare.length < 2) {
         return;
@@ -61,13 +82,33 @@ const CompareStationsBox = ({ stationsToCompare }) => {
         console.log('Fetching comparison data for:');
         console.log('Stations:', stationsToCompare.map(s => s.name).join(', '));
         console.log('Date range:', format(dateRange.startDate, 'yyyy-MM-dd'), 'to', format(dateRange.endDate, 'yyyy-MM-dd'));
+        console.log('Frequency:', frequency);
         
         // Dictionary to store station data
         const stationData = {};
 
         // Fetch data for each station
         for (const station of stationsToCompare) {
-          const data = await fetchStationWeatherRange(station.id, dateRange.startDate, dateRange.endDate);
+          let data;
+          
+          if (frequency === 'daily') {
+            // For daily data, use the existing endpoint
+            data = await fetchStationWeatherRange(
+              station.id, 
+              dateRange.startDate, 
+              dateRange.endDate
+            );
+          } else {
+            // For monthly or yearly, use the new aggregation endpoint
+            data = await fetchStationWeatherAggregated(
+              station.id, 
+              dateRange.startDate, 
+              dateRange.endDate,
+              frequency,
+              selectedGraphType
+            );
+          }
+          
           stationData[station.id] = {
             id: station.id,
             name: station.name,
@@ -87,7 +128,7 @@ const CompareStationsBox = ({ stationsToCompare }) => {
     };
     
     fetchComparisonData();
-  }, [stationsToCompare, dateRange.startDate, dateRange.endDate, selectedGraphType, selectedDate, setDateRange]);
+  }, [stationsToCompare, dateRange.startDate, dateRange.endDate, selectedGraphType, selectedDate, setDateRange, frequency]);
 
   // Determine if we have data to display/download
   const hasData = comparisonData && Object.keys(comparisonData).length > 0;
@@ -101,6 +142,8 @@ const CompareStationsBox = ({ stationsToCompare }) => {
         dateRange={dateRange}
         onStartDateChange={handleStartDateChange}
         onEndDateChange={handleEndDateChange}
+        frequency={frequency}
+        onFrequencyChange={handleFrequencyChange}
       />
       
       {/* Graph Visualization */}
@@ -109,6 +152,7 @@ const CompareStationsBox = ({ stationsToCompare }) => {
         selectedType={selectedGraphType}
         loading={loading}
         error={error}
+        frequency={frequency}
       />
       
       {/* Download Options */}
