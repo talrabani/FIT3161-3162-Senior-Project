@@ -34,7 +34,6 @@ const AccountPage = () => {
   const [user, setUser] = useState(null);
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
-  const [dataUnits, setDataUnits] = useState('metric');
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -53,7 +52,6 @@ const AccountPage = () => {
           setUser(userData);
           setDisplayName(userData.username);
           setEmail(userData.email || '');
-          setDataUnits(userData.units || 'metric');
         } else {
           // Fall back to local storage if API fails
           const currentUser = AuthService.getCurrentUser();
@@ -61,7 +59,6 @@ const AccountPage = () => {
             setUser(currentUser.user);
             setDisplayName(currentUser.user.username || 'User');
             setEmail(currentUser.user.email || '');
-            setDataUnits(currentUser.user.units || 'metric');
           }
         }
       } catch (err) {
@@ -104,7 +101,6 @@ const AccountPage = () => {
       await AuthService.updateUserPreferences({
         units: unit
       });
-      
       setDataUnits(unit);
       setMessage('Measurement units updated successfully!');
       setSnackbarOpen(true);

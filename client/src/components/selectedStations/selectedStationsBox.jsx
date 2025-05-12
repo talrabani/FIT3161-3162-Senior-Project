@@ -8,129 +8,175 @@ The cards will have the station id, state, elevation as the subtitle of the card
 The rainfall and temperature data for the current selected date in MapSidebar will be displayed in the card as text
 */
 
-import React, { useState } from 'react';
-import { Card, CardContent, Typography, Box, Button, Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import StationCard from './stationCard';
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Paper, IconButton, Divider } from '@mui/material';
 import { useMapContext } from '../../context/MapContext';
+import StationCard from './stationCard';
 
-const SelectedStationsBox = ({ selectedStations, onRemoveStation, clearAllStations }) => {
-  // Get the selected date from the context
-  const { selectedDate, setDateRange } = useMapContext();
-  const [expandAllStats, setExpandAllStats] = useState(false);
-  
-  // Setup navigation
-  const navigate = useNavigate();
-  
-  // Handle Compare button click - navigate to comparison page
-  const handleCompare = () => {
-    console.log('Navigate to comparison page');
-    // No need to explicitly save to localStorage as the useWeatherData hook handles this
-    navigate('/comparison');
-  };
-  
-  // Remove All button
-  const handleRemoveAll = () => {
-    console.log('Remove All button clicked');
-    // Call the clearAllStations function passed from the parent
-    if (clearAllStations) {
-      clearAllStations();
-    } else {
-      // Fallback if clearAllStations not provided - call onRemoveStation for each
-      selectedStations.forEach(station => {
-        onRemoveStation(station.name);
-      });
+/**
+ * SelectedStationsBox Component
+ * Displays a box with stations selected by the user on the map
+ * 
+ * @param {Object} props - Component props
+ * @param {Function} props.formatTemperature - Function to format temperature values with units
+ * @param {Function} props.formatRainfall - Function to format rainfall values with units
+ */
+const SelectedStationsBox = ({ formatTemperature, formatRainfall }) => {
+  const [expanded, setExpanded] = useState(false);
+  const { selectedStations, removeStation, selectedDate } = useMapContext();
+
+  // Reset expansion when no stations are selected
+  useEffect(() => {
+    if (selectedStations.length === 0) {
+      setExpanded(false);
     }
-    
-    // Reset date range
-    setDateRange({ startDate: null, endDate: null });
+  }, [selectedStations]);
+
+  // Toggle panel expansion
+  const togglePanel = () => {
+    setExpanded(prev => !prev);
   };
-  
-  // Toggle Expand All button
-  const handleExpandAll = () => {
-    console.log('Expand All button clicked, current state:', expandAllStats);
-    setExpandAllStats(!expandAllStats);
-  };
-  
+
+  // Only render if there are selected stations
+  if (selectedStations.length === 0) {
+    return null;
+  }
+
   return (
-    <Card sx={{ 
-      p: 1, 
-      bgcolor: 'var(--card-bg, #ffffff)',
-      borderRadius: '12px',
-      boxShadow: 'var(--card-shadow, 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1))'
-    }}>
-      <CardContent>
-        <Box sx={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center',
-          mb: 2
-        }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>
-            Selected Stations
-          </Typography>
-          
-          <Stack direction="row" spacing={1}>
-            <Button 
-              variant="contained" 
-              color="primary" 
-              size="small"
-              disabled={selectedStations.length < 2}
-              onClick={handleCompare}
-              sx={{ fontSize: '0.8rem' }}
-            >
-              Generate Graph
-            </Button>
-            
-            <Button 
-              variant={expandAllStats ? "contained" : "outlined"}
-              color="info" 
-              size="small"
-              disabled={selectedStations.length === 0}
-              onClick={handleExpandAll}
-              sx={{ fontSize: '0.8rem' }}
-            >
-              {expandAllStats ? "Collapse" : "Expand"} All
-            </Button>
-            
-            <Button 
-              variant="outlined" 
-              color="error" 
-              size="small"
-              disabled={selectedStations.length === 0}
-              onClick={handleRemoveAll}
-              sx={{ fontSize: '0.8rem' }}
-            >
-              Remove All
-            </Button>
-          </Stack>
-        </Box>
-        
-        <Typography variant="body2" color="text.secondary" mb={2}>
-          {selectedStations.length === 0 
-            ? 'No stations selected. Click on stations on the map to select them.' 
-            : `${selectedStations.length} station(s) selected`}
+    <Paper 
+      elevation={3} 
+      sx={{ 
+        width: expanded ? 'auto' : '50px',
+        height: 'auto',
+        maxHeight: expanded ? 'calc(100vh - 220px)' : '120px', 
+        bgcolor: 'background.paper',
+        display: 'flex',
+        flexDirection: 'row',
+        overflow: 'hidden',
+        position: 'absolute',
+        top: 20,
+        right: 20,
+        zIndex: 500,
+        pointerEvents: 'auto',
+        borderRadius: '20px',
+        transition: 'width 0.2s ease-in-out, max-height 0.2s ease-in-out',
+      }}
+    >
+      {/* Toggle button */}
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '50px',
+        bgcolor: 'primary.main',
+        color: 'white',
+        cursor: 'pointer',
+        borderRadius: '20px 0 0 20px',
+      }}
+      onClick={togglePanel}
+      >
+        <Typography 
+          variant="subtitle2" 
+          sx={{ 
+            transform: 'rotate(-90deg)', 
+            whiteSpace: 'nowrap',
+            marginBottom: '2rem',
+            fontWeight: 'bold',
+            color: 'white',
+            display: expanded ? 'none' : 'block'
+          }}
+        >
+          Selected
         </Typography>
-        
+        <IconButton 
+          size="small"
+          sx={{ 
+            color: 'white',
+            padding: 0,
+            '&:hover': {
+              bgcolor: 'rgba(255,255,255,0.1)',
+            }
+          }}
+        >
+          {/* Replace KeyboardArrow icons with simple text/HTML arrow */}
+          <span style={{ 
+            fontSize: '1.4rem', 
+            fontWeight: 'bold',
+            transform: expanded ? 'rotate(0deg)' : 'rotate(180deg)',
+            display: 'inline-block',
+            transition: 'transform 0.2s ease-in-out'
+          }}>
+            {expanded ? '→' : '←'}
+          </span>
+        </IconButton>
+      </Box>
+      
+      {/* Content area */}
+      {expanded && (
         <Box sx={{ 
-          display: 'flex', 
-          flexDirection: 'row', 
-          flexWrap: 'wrap', 
-          gap: 2,
-          justifyContent: 'flex-start',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+          width: selectedStations.length === 1 ? '245px' : '480px',
+          transition: 'width 0.2s ease-in-out',
         }}>
-          {selectedStations.map(station => (
-            <StationCard 
-              key={station.id || station.name} 
-              station={station} 
-              onRemove={onRemoveStation}
-              selectedDate={selectedDate}
-              forceExpanded={expandAllStats}
-            />
-          ))}
+          {/* Header with station count */}
+          <Box sx={{ 
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            p: 2,
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+          }}>
+            <Typography variant="h6" component="h2">
+              Selected Stations ({selectedStations.length})
+            </Typography>
+            <IconButton 
+              size="small"
+              onClick={() => removeStation(null)} // Clear all selected stations
+              sx={{ 
+                color: 'error.main',
+                p: 0.5,
+              }}
+            >
+              {/* Replace CloseIcon with simple X */}
+              <span style={{ 
+                fontSize: '1.2rem', 
+                fontWeight: 'bold',
+                lineHeight: 1
+              }}>
+                ×
+              </span>
+            </IconButton>
+          </Box>
+          
+          {/* Stations list with scroll */}
+          <Box sx={{ 
+            overflowY: 'auto',
+            p: 1,
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            maxHeight: 'calc(100vh - 290px)',
+          }}>
+            {selectedStations.map((station, index) => (
+              <StationCard 
+                key={station.id || index}
+                station={station}
+                onRemove={removeStation}
+                selectedDate={selectedDate}
+                forceExpanded={selectedStations.length <= 2} // Auto-expand if 1-2 stations selected
+                formatTemperature={formatTemperature}
+                formatRainfall={formatRainfall}
+              />
+            ))}
+          </Box>
         </Box>
-      </CardContent>
-    </Card>
+      )}
+    </Paper>
   );
 };
 

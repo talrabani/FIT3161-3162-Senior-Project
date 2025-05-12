@@ -12,6 +12,7 @@ import SelectedStationsBox from './components/selectedStations/selectedStationsB
 import StationComparisonPage from './pages/StationComparisonPage'
 import AccountPage from './pages/AccountPage'
 import { MapContextProvider, useMapContext } from './context/MapContext'
+import { UnitProvider } from './context/UnitContext'
 import LoginForm from './components/ui/LoginForm/LoginForm'
 import SignupForm from './components/ui/SignupForm/SignupForm'
 import AuthService from './services/auth.service'

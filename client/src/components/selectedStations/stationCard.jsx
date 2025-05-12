@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, Button, Box, CircularProgress, Alert, Di
 import { format } from 'date-fns';
 import { fetchStationDailyWeather, fetchStationMonthlyWeather, fetchStationYearlyWeather } from '../../services/weatherApi';
 import { useMapContext } from '../../context/MapContext';
+import { useUnits } from '../../context/UnitContext';
 import DataTube from './dataTube';
 
 /**
@@ -34,6 +35,9 @@ const StationCard = ({
     
     // Get time frequency from context
     const { timeFrequency } = useMapContext();
+    
+    // Get unit context for unit conversion
+    const { units, convertTemperature, convertRainfall, formatTemperature, formatRainfall } = useUnits();
     
     // Fetch weather data when station or date changes
     useEffect(() => {
@@ -154,9 +158,10 @@ const StationCard = ({
       console.log('Removing station:', station.name);
       onRemove(station.name);
     };
+
     // Calculate fill percentages based on the specified ranges
-    // Rainfall: 0mm = 0%, >=30mm = 100%
-    // Temperature: <=-10°C = 0%, >=40°C = 100%
+    // For imperial: Rainfall: 0in = 0%, >=1.2in = 100% (30mm ≈ 1.2in)
+    // For imperial: Temperature: <=14°F = 0%, >=104°F = 100% (-10°C ≈ 14°F, 40°C ≈ 104°F)
     const calculateRainfallPercentage = (rainfall) => {
       // Handle non-numeric values
       if (rainfall === undefined || rainfall === null || rainfall === 'No data') return 0;
@@ -166,9 +171,16 @@ const StationCard = ({
       
       // Check if it's a valid number after conversion
       if (isNaN(numericRainfall) || numericRainfall <= 0) return 0;
-      if (numericRainfall >= 30) return 100;
       
-      return (numericRainfall / 30) * 100;
+      if (units === 'imperial') {
+        // For imperial (inches)
+        if (numericRainfall >= 1.2) return 100;
+        return (numericRainfall / 1.2) * 100;
+      } else {
+        // For metric (mm)
+        if (numericRainfall >= 30) return 100;
+        return (numericRainfall / 30) * 100;
+      }
     };
     
     const calculateTemperaturePercentage = (temperature) => {
@@ -179,15 +191,68 @@ const StationCard = ({
       const numericTemp = typeof temperature === 'string' ? parseFloat(temperature) : temperature;
       
       // Check if it's a valid number after conversion
-      if (isNaN(numericTemp) || numericTemp <= -10) return 0;
-      if (numericTemp >= 40) return 100;
-      // Scale from -10 to 40 (range of 50 degrees)
-      return ((numericTemp + 10) / 50) * 100;
+      if (isNaN(numericTemp)) return 0;
+      
+      if (units === 'imperial') {
+        // For imperial (°F): Scale from 14°F to 104°F
+        if (numericTemp <= 14) return 0;
+        if (numericTemp >= 104) return 100;
+        return ((numericTemp - 14) / 90) * 100;
+      } else {
+        // For metric (°C): Scale from -10°C to 40°C
+        if (numericTemp <= -10) return 0;
+        if (numericTemp >= 40) return 100;
+        return ((numericTemp + 10) / 50) * 100;
+      }
     };
     
-    const rainfallPercentage = rainfallData ? calculateRainfallPercentage(rainfallData.rainfall) : 0;
-    const minTempPercentage = temperatureData ? calculateTemperaturePercentage(temperatureData.minTemp) : 0;
-    const maxTempPercentage = temperatureData ? calculateTemperaturePercentage(temperatureData.maxTemp) : 0;
+    // Convert rainfall value to appropriate unit
+    const displayRainfall = (value) => {
+      if (value === 'No data' || value === null || value === undefined) return 'No data';
+      
+      const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+      if (isNaN(numericValue)) return 'No data';
+      
+      if (units === 'imperial') {
+        // Convert from mm to inches and format
+        const inches = convertRainfall(numericValue);
+        return `${inches.toFixed(2)} in`;
+      }
+      return `${numericValue.toFixed(1)} mm`;
+    };
+    
+    // Convert temperature value to appropriate unit
+    const displayTemperature = (value) => {
+      if (value === 'No data' || value === null || value === undefined) return 'No data';
+      
+      const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+      if (isNaN(numericValue)) return 'No data';
+      
+      if (units === 'imperial') {
+        // Convert from °C to °F and format
+        const fahrenheit = convertTemperature(numericValue);
+        return `${fahrenheit.toFixed(1)}°F`;
+      }
+      return `${numericValue.toFixed(1)}°C`;
+    };
+    
+    // Process the data for display with appropriate units
+    const processedRainfall = rainfallData && typeof rainfallData.rainfall === 'number' 
+      ? rainfallData.rainfall 
+      : 'No data';
+      
+    const processedMinTemp = temperatureData && typeof temperatureData.minTemp === 'number' 
+      ? temperatureData.minTemp 
+      : 'No data';
+      
+    const processedMaxTemp = temperatureData && typeof temperatureData.maxTemp === 'number' 
+      ? temperatureData.maxTemp 
+      : 'No data';
+    
+    // Calculate fill percentages based on the processed data
+    const rainfallPercentage = calculateRainfallPercentage(processedRainfall);
+    const minTempPercentage = calculateTemperaturePercentage(processedMinTemp);
+    const maxTempPercentage = calculateTemperaturePercentage(processedMaxTemp);
 
     // Determine if we're showing average data based on the timeFrequency
     const isYearly = Array.isArray(timeFrequency) && timeFrequency.length === 1 && timeFrequency[0] === 'year';
@@ -317,26 +382,28 @@ const StationCard = ({
               }}>
                 <DataTube 
                   label={rainfallLabel}
-                  value={rainfallData?.rainfall}
-                  unit="mm"
+                  value={processedRainfall}
+                  unit={units === 'imperial' ? 'in' : 'mm'}
                   fillPercentage={rainfallPercentage}
                   fillColor="rgb(0, 106, 255)"
                   loading={loading}
                   width={70}
+                  formatValue={displayRainfall}
                 />
                 
                 <DataTube 
                   label={tempLabel}
                   value={{
-                    min: temperatureData?.minTemp,
-                    max: temperatureData?.maxTemp
+                    min: processedMinTemp,
+                    max: processedMaxTemp
                   }}
-                  unit="°C"
+                  unit={units === 'imperial' ? '°F' : '°C'}
                   isTemperatureTube={true}
                   minPercentage={minTempPercentage}
                   maxPercentage={maxTempPercentage}
                   loading={loading}
                   width={100}
+                  formatValue={displayTemperature}
                 />
               </Box>
             </Box>
@@ -382,8 +449,8 @@ const StationCard = ({
                       {rainfallLabel}
                     </Typography>
                     <DataTube 
-                      value={rainfallData?.rainfall}
-                      unit="mm"
+                      value={processedRainfall}
+                      unit={units === 'imperial' ? 'in' : 'mm'}
                       fillPercentage={rainfallPercentage}
                       fillColor="rgb(0, 106, 255)"
                       width={55}
@@ -395,9 +462,7 @@ const StationCard = ({
                       mt: 0.5,
                       textAlign: 'center'
                     }}>
-                      {typeof rainfallData?.rainfall === 'number' ? 
-                        rainfallData.rainfall.toFixed(1) + " mm" : 
-                        "No data"}
+                      {displayRainfall(processedRainfall)}
                     </Typography>
                   </Box>
                   
@@ -417,10 +482,10 @@ const StationCard = ({
                     </Typography>
                     <DataTube 
                       value={{
-                        min: temperatureData?.minTemp,
-                        max: temperatureData?.maxTemp
+                        min: processedMinTemp,
+                        max: processedMaxTemp
                       }}
-                      unit="°C"
+                      unit={units === 'imperial' ? '°F' : '°C'}
                       isTemperatureTube={true}
                       minPercentage={minTempPercentage}
                       maxPercentage={maxTempPercentage}
@@ -433,9 +498,7 @@ const StationCard = ({
                       mt: 0.5,
                       textAlign: 'center'
                     }}>
-                      {typeof temperatureData?.minTemp === 'number' && typeof temperatureData?.maxTemp === 'number' ? 
-                        `${temperatureData.minTemp.toFixed(1)}° - ${temperatureData.maxTemp.toFixed(1)}°` : 
-                        "No data"}
+                      {displayTemperature(processedMinTemp)} - {displayTemperature(processedMaxTemp)}
                     </Typography>
                   </Box>
                   
@@ -459,7 +522,7 @@ const StationCard = ({
                       </Typography>
                       <DataTube 
                         value={weatherDetails.totalRainfall}
-                        unit="mm"
+                        unit={units === 'imperial' ? 'in' : 'mm'}
                         fillPercentage={Math.min((weatherDetails.totalRainfall / 1000) * 100, 100)}
                         fillColor="rgb(0, 106, 255)"
                         width={55}
@@ -471,7 +534,7 @@ const StationCard = ({
                         mt: 0.5,
                         textAlign: 'center'
                       }}>
-                        {weatherDetails.totalRainfall.toFixed(1)} mm
+                        {displayRainfall(weatherDetails.totalRainfall)}
                       </Typography>
                     </Box>
                   )}
@@ -494,7 +557,7 @@ const StationCard = ({
                       </Typography>
                       <DataTube 
                         value={weatherDetails.highestRainfallDay.value}
-                        unit="mm"
+                        unit={units === 'imperial' ? 'in' : 'mm'}
                         fillPercentage={Math.min((weatherDetails.highestRainfallDay.value / 30) * 100, 100)}
                         fillColor="rgb(0, 106, 255)"
                         width={55}
@@ -506,7 +569,7 @@ const StationCard = ({
                         mt: 0.5,
                         textAlign: 'center'
                       }}>
-                        {weatherDetails.highestRainfallDay.value.toFixed(1)} mm
+                        {displayRainfall(weatherDetails.highestRainfallDay.value)}
                       </Typography>
                       <Typography variant="body2" sx={{ 
                         fontSize: '0.7rem',
@@ -539,7 +602,7 @@ const StationCard = ({
                       </Typography>
                       <DataTube 
                         value={weatherDetails.highestTemp.value}
-                        unit="°C"
+                        unit={units === 'imperial' ? '°F' : '°C'}
                         isThermometerTube={true}
                         width={55}
                         height={70}
@@ -550,7 +613,7 @@ const StationCard = ({
                         mt: 0.5,
                         textAlign: 'center'
                       }}>
-                        {weatherDetails.highestTemp.value.toFixed(1)}°C
+                        {displayTemperature(weatherDetails.highestTemp.value)}
                       </Typography>
                       <Typography variant="body2" sx={{ 
                         fontSize: '0.7rem',
@@ -581,7 +644,7 @@ const StationCard = ({
                       </Typography>
                       <DataTube 
                         value={weatherDetails.lowestTemp.value}
-                        unit="°C"
+                        unit={units === 'imperial' ? '°F' : '°C'}
                         isThermometerTube={true}
                         width={55}
                         height={70}
@@ -592,7 +655,7 @@ const StationCard = ({
                         mt: 0.5,
                         textAlign: 'center'
                       }}>
-                        {weatherDetails.lowestTemp.value.toFixed(1)}°C
+                        {displayTemperature(weatherDetails.lowestTemp.value)}
                       </Typography>
                       <Typography variant="body2" sx={{ 
                         fontSize: '0.7rem',
@@ -682,7 +745,7 @@ const StationCard = ({
                             }}>
                               <Box component="span" sx={{ fontWeight: 'bold', color: '#444', display: 'inline-block', width: '140px' }}>
                                 Rainfall Intensity:
-                              </Box> {formatNumber(weatherDetails.precipitationStats.rainfallIntensity)} mm
+                              </Box> {formatNumber(weatherDetails.precipitationStats.rainfallIntensity)} {units === 'imperial' ? 'in/day' : 'mm/day'}
                             </Typography>
                             
                             <Typography variant="body2" sx={{ 
@@ -709,7 +772,7 @@ const StationCard = ({
                             }}>
                               <Box component="span" sx={{ fontWeight: 'bold', color: '#444', display: 'inline-block', width: '140px' }}>
                                 Rainfall Variability:
-                              </Box> {formatNumber(weatherDetails.precipitationStats.rainfallVariability)} mm
+                              </Box> {formatNumber(weatherDetails.precipitationStats.rainfallVariability)} {units === 'imperial' ? 'in' : 'mm'}
                             </Typography>
                           </Box>
                         </Box>
@@ -736,7 +799,7 @@ const StationCard = ({
                             }}>
                               <Box component="span" sx={{ fontWeight: 'bold', color: '#444', display: 'inline-block', width: '140px' }}>
                                 Avg Daily Range:
-                              </Box> {formatNumber(weatherDetails.temperatureStats.avgDailyTempRange)}°C
+                              </Box> {formatNumber(weatherDetails.temperatureStats.avgDailyTempRange)} {units === 'imperial' ? '°F' : '°C'}
                             </Typography>
                             
                             <Typography variant="body2" sx={{ 
@@ -745,7 +808,7 @@ const StationCard = ({
                             }}>
                               <Box component="span" sx={{ fontWeight: 'bold', color: '#444', display: 'inline-block', width: '140px' }}>
                                 Temp Variability:
-                              </Box> {formatNumber(weatherDetails.temperatureStats.tempVariability)}°C
+                              </Box> {formatNumber(weatherDetails.temperatureStats.tempVariability)} {units === 'imperial' ? '°F' : '°C'}
                             </Typography>
                             
                             <Typography variant="body2" sx={{ 
