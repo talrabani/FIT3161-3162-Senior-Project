@@ -64,12 +64,6 @@ const StationCard = ({
             let period = '';
             const year = selectedDate.getFullYear();
             
-            // Check for older dates with potentially missing data
-            const earliestReliableYear = 2005; // Adjust based on your data availability
-            if (year < earliestReliableYear) {
-              console.warn(`Selected year ${year} may have limited or no data for some stations`);
-            }
-            
             if (isYearly) {
                 // Yearly frequency - display annual average
                 period = `year ${year}`;
@@ -118,12 +112,7 @@ const StationCard = ({
                     maxTemp: 'No data'
                 });
                 setWeatherDetails(null);
-                
-                if (year < earliestReliableYear) {
-                  setError(`No data available for ${period}. Historical data before ${earliestReliableYear} may be limited.`);
-                } else {
-                  setError(`No weather data available for ${period}`);
-                }
+                setError(`No weather data available for ${period}`);
                 return;
             }
 
@@ -148,14 +137,7 @@ const StationCard = ({
           
           // Set a more helpful error message based on the type of error
           if (error.response && error.response.status === 500) {
-            const year = selectedDate.getFullYear();
-            const earliestReliableYear = 2005; // Adjust based on your data availability
-            
-            if (year < earliestReliableYear) {
-              setError(`Server error: Historical data before ${earliestReliableYear} may be limited or unavailable for this station.`);
-            } else {
-              setError('Server error: Data may not be available for this time period');
-            }
+            setError('Server error: Data may not be available for this time period');
           } else {
             setError('Failed to load weather data. Please try again later.');
           }

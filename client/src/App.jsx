@@ -10,6 +10,7 @@ import Navbar from './components/ui/Navbar'
 import DebugInfo from './components/ui/DebugInfo'
 import SelectedStationsBox from './components/selectedStations/selectedStationsBox'
 import StationComparisonPage from './pages/StationComparisonPage'
+import AccountPage from './pages/AccountPage'
 import { MapContextProvider, useMapContext } from './context/MapContext'
 import LoginForm from './components/ui/LoginForm/LoginForm'
 import SignupForm from './components/ui/SignupForm/SignupForm'
@@ -210,6 +211,11 @@ function App() {
             <Route path="/comparison" element={
               <ProtectedRoute>
                 <StationComparisonPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/account" element={
+              <ProtectedRoute>
+                <AccountPage />
               </ProtectedRoute>
             } />
           </Routes>

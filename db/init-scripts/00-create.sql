@@ -3,18 +3,14 @@
 -- Create the PostGIS extension if it doesn't exist
 CREATE EXTENSION IF NOT EXISTS postgis;
 
--- TOWN table
-CREATE TABLE IF NOT EXISTS TOWN (
-    name VARCHAR(100) NOT NULL,
-    state VARCHAR(50) NOT NULL,
-    PRIMARY KEY (name, state)
-);
-
 -- USER table
+DROP TABLE IF EXISTS "USER";
 CREATE TABLE IF NOT EXISTS "USER" (
     user_id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL  -- Stores encrypted password
+    email VARCHAR(100) NOT NULL UNIQUE,
+    units VARCHAR(50) NOT NULL DEFAULT 'metric' -- 'metric' or 'imperial'
 );
 
 -- USER_TOWN_BOOKMARK table
