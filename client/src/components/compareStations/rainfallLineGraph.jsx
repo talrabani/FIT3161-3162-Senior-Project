@@ -44,8 +44,20 @@ export default function RainfallLineGraph({
       const containerWidth = container.clientWidth;
       const containerHeight = height;
       
-      // Set margins
-      const margin = { top: 50, right: 120, bottom: 60, left: 60 };
+      // Calculate max legend width based on station names
+      const maxLegendWidth = Math.max(
+        ...Object.values(stationData).map(station => station.name.length * 7), 
+        150
+      ); // At least 150px or calculated width
+      
+      // Set margins with adjusted right margin for legend
+      const margin = { 
+        top: 50, 
+        right: maxLegendWidth + 30, // Add padding to legend width
+        bottom: 60, 
+        left: 60 
+      };
+      
       const graphWidth = containerWidth - margin.left - margin.right;
       const graphHeight = containerHeight - margin.top - margin.bottom;
 
@@ -310,34 +322,65 @@ export default function RainfallLineGraph({
           });
       });
       
+      // Add background rectangle for legend to make it more visible
+      const legendBg = svg.append('rect')
+        .attr('x', graphWidth + 5)
+        .attr('y', -20)
+        .attr('width', maxLegendWidth)
+        .attr('height', stationSeries.length * 25 + 30)
+        .attr('fill', 'white')
+        .attr('stroke', '#eee')
+        .attr('stroke-width', 1)
+        .attr('rx', 4)
+        .attr('ry', 4);
+      
       // Add legend
       const legend = svg.append('g')
         .attr('class', 'legend')
-        .attr('transform', `translate(${graphWidth + 10}, 0)`);
+        .attr('transform', `translate(${graphWidth + 15}, 0)`);
       
       // Add legend title
       legend.append('text')
         .attr('x', 0)
-        .attr('y', -10)
+        .attr('y', -5)
         .style('font-size', '14px')
         .style('font-weight', 'bold')
         .text('Stations');
       
-      // Add legend items
+      // Add legend items with improved text wrapping
       stationSeries.forEach((station, i) => {
         const legendItem = legend.append('g')
-          .attr('transform', `translate(0, ${i * 25 + 10})`);
+          .attr('transform', `translate(0, ${i * 25 + 15})`);
         
+        // Color rectangle
         legendItem.append('rect')
           .attr('width', 15)
           .attr('height', 3)
           .attr('fill', station.color);
         
-        legendItem.append('text')
+        // Station name with proper wrapping
+        const nameText = legendItem.append('text')
           .attr('x', 20)
           .attr('y', 3)
+          .attr('width', maxLegendWidth - 25) // Set width for text wrapping
           .style('font-size', '12px')
           .text(station.name);
+        
+        // Apply text wrapping if name is too long
+        if (station.name.length > 20) {
+          const words = station.name.split(/\s+/);
+          let tspan = nameText.text(null).append("tspan")
+            .attr("x", 20)
+            .attr("y", 3)
+            .text(words[0]);
+          
+          for (let i = 1; i < words.length; i++) {
+            tspan = nameText.append("tspan")
+              .attr("x", 20)
+              .attr("dy", "1.2em")
+              .text(words[i]);
+          }
+        }
       });
     };
 
