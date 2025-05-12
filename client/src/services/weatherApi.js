@@ -453,13 +453,13 @@ export const fetchStationWeatherRange = async (stationId, startDate, endDate) =>
 
     // Format dates as YYYY-MM-DD if they're Date objects
     const formattedStartDate = startDate instanceof Date 
-      ? startDate.toISOString().split('T')[0] 
+      ? startDate.toLocaleDateString().split('/').reverse().join('-') 
       : startDate;
     
     const formattedEndDate = endDate instanceof Date 
-      ? endDate.toISOString().split('T')[0] 
+      ? endDate.toLocaleDateString().split('/').reverse().join('-')
       : endDate;
-    
+
     console.log('CLIENT SERVICE: Fetching weather data for station:', formattedStationId, 'on date range:', formattedStartDate, 'to', formattedEndDate);
     const url = `${SERVER_API_URL}/rainfall/station/${formattedStationId}/date/${formattedStartDate}/end_date/${formattedEndDate}`;
     const response = await axios.get(url);
@@ -486,11 +486,11 @@ export const fetchStationWeatherAggregated = async (stationId, startDate, endDat
 
     // Format dates as YYYY-MM-DD if they're Date objects
     const formattedStartDate = startDate instanceof Date 
-      ? startDate.toISOString().split('T')[0] 
+      ? startDate.toLocaleDateString().split('/').reverse().join('-')
       : startDate;
     
     const formattedEndDate = endDate instanceof Date 
-      ? endDate.toISOString().split('T')[0] 
+      ? endDate.toLocaleDateString().split('/').reverse().join('-') 
       : endDate;
     
     // For temperature range, we want both min and max temperatures
