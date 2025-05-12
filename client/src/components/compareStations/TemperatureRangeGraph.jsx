@@ -74,7 +74,7 @@ export default function TemperatureRangeGraph({
       // Prepare data for the chart
       let allDataPoints = [];
       const stationSeries = [];
-      const units = '°C';
+      const units = 'Celcius';
 
       // Process and combine all data points
       Object.values(stationData).forEach(station => {

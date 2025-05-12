@@ -154,12 +154,12 @@ export default function RainfallLineGraph({
             break;
           case "max_temp":
             var dataPoints = maxTempStationPoints;
-            units = '°C';
+            units = 'Celcius';
             typeString = "Maximum Temperature";
             break;
           case "min_temp":
             var dataPoints = minTempStationPoints;
-            units = '°C';
+            units = 'Celcius';
             typeString = "Minimum Temperature";
             break;
           default:
