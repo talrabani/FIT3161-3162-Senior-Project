@@ -41,6 +41,10 @@ echo "PostgreSQL is ready and accepting connections!"
 # Go to the init-scripts directory
 cd /docker-entrypoint-initdb.d
 
+# Run 00-create.sql
+echo "Running 00-create.sql..."
+psql -U postgres -h localhost -p 5432 -d weather_db -f 00-create.sql
+
 # Import SA4 boundary data first
 echo "Importing SA4 boundary data..."
 node 02-import-sa4-data.js
