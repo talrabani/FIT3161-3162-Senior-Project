@@ -124,7 +124,7 @@ export default function MapSidebar() {
             onChange={handleDateChange}
             displayStaticWrapperAs="desktop"
             maxDate={maxYearlyDate}
-            minDate={new Date(1990, 0, 1)} // Start from 1990
+            minDate={new Date(1850, 0, 1)} // Start from 1850
             // Set the default view to show recent years/months first
             defaultCalendarMonth={new Date(2023, 0, 1)}
           />

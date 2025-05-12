@@ -13,16 +13,6 @@ CREATE TABLE IF NOT EXISTS "USER" (
     units VARCHAR(50) NOT NULL DEFAULT 'metric' -- 'metric' or 'imperial'
 );
 
--- USER_TOWN_BOOKMARK table
-CREATE TABLE IF NOT EXISTS USER_TOWN_BOOKMARK (
-    user_id INTEGER NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    state VARCHAR(50) NOT NULL,
-    PRIMARY KEY (user_id, name, state),
-    FOREIGN KEY (user_id) REFERENCES "USER"(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (name, state) REFERENCES TOWN(name, state) ON DELETE CASCADE
-);
-
 -- GRAPH table
 CREATE TABLE IF NOT EXISTS GRAPH (
     user_id INTEGER NOT NULL,
