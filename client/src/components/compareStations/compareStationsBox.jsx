@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Fragment } from 'react';
 import { useMapContext } from '../../context/MapContext';
-import { format } from 'date-fns';
+import { format, endOfMonth, endOfYear } from 'date-fns';
 import { fetchStationWeatherRange, fetchStationWeatherAggregated } from '../../services/weatherApi';
 import { getStationColor } from './utils/colorUtils';
 
@@ -79,9 +79,19 @@ const CompareStationsBox = ({ stationsToCompare }) => {
       setError(null);
       
       try {
+        // Adjust end date to be inclusive of the entire period for monthly/yearly frequencies
+        let adjustedEndDate = dateRange.endDate;
+        if (frequency === 'monthly') {
+          // Make end date the last day of the selected month
+          adjustedEndDate = endOfMonth(dateRange.endDate);
+        } else if (frequency === 'yearly') {
+          // Make end date December 31st of the selected year
+          adjustedEndDate = endOfYear(dateRange.endDate);
+        }
+        
         console.log('Fetching comparison data for:');
         console.log('Stations:', stationsToCompare.map(s => s.name).join(', '));
-        console.log('Date range:', format(dateRange.startDate, 'yyyy-MM-dd'), 'to', format(dateRange.endDate, 'yyyy-MM-dd'));
+        console.log('Date range:', format(dateRange.startDate, 'yyyy-MM-dd'), 'to', format(adjustedEndDate, 'yyyy-MM-dd'));
         console.log('Frequency:', frequency);
         
         // Dictionary to store station data
@@ -99,11 +109,11 @@ const CompareStationsBox = ({ stationsToCompare }) => {
               dateRange.endDate
             );
           } else {
-            // For monthly or yearly, use the new aggregation endpoint
+            // For monthly or yearly, use the new aggregation endpoint with adjusted end date
             data = await fetchStationWeatherAggregated(
               station.id, 
               dateRange.startDate, 
-              dateRange.endDate,
+              adjustedEndDate,
               frequency,
               selectedGraphType
             );

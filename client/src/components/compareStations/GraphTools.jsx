@@ -37,6 +37,59 @@ const GraphTools = ({
   frequency = 'daily',
   onFrequencyChange
 }) => {
+  // Helper function to render the appropriate date picker based on frequency
+  const renderDatePicker = (isStartDate) => {
+    const value = isStartDate ? dateRange.startDate : dateRange.endDate;
+    const onChange = isStartDate ? onStartDateChange : onEndDateChange;
+    const label = isStartDate 
+      ? (frequency === 'monthly' ? 'Start Month' : frequency === 'yearly' ? 'Start Year' : 'Start Date')
+      : (frequency === 'monthly' ? 'End Month' : frequency === 'yearly' ? 'End Year' : 'End Date');
+    
+    // Common props for all picker types
+    const commonProps = {
+      label: label,
+      value: value,
+      onChange: onChange,
+      disableFuture: true,
+      slotProps: {
+        textField: {
+          variant: 'outlined',
+          size: "small",
+          sx: { width: { xs: '100%', sm: '150px' } }
+        }
+      }
+    };
+    
+    // If it's an end date picker, add minDate constraint
+    if (!isStartDate) {
+      commonProps.minDate = dateRange.startDate;
+    }
+    
+    // Render different pickers based on frequency
+    if (frequency === 'monthly') {
+      return (
+        <DatePicker
+          {...commonProps}
+          views={['year', 'month']}
+          openTo="month"
+          format="MMM yyyy"
+        />
+      );
+    } else if (frequency === 'yearly') {
+      return (
+        <DatePicker
+          {...commonProps}
+          views={['year']}
+          openTo="year"
+          format="yyyy"
+        />
+      );
+    } else {
+      // Daily frequency
+      return <DatePicker {...commonProps} />;
+    }
+  };
+
   return (
     <Card sx={{ 
       mb: 3,
@@ -94,33 +147,8 @@ const GraphTools = ({
                 spacing={1}
                 width={{ xs: '100%', sm: 'auto' }}
               >
-                <DatePicker
-                  label="Start Date"
-                  value={dateRange.startDate}
-                  onChange={onStartDateChange}
-                  disableFuture
-                  slotProps={{
-                    textField: {
-                      variant: 'outlined',
-                      size: "small",
-                      sx: { width: { xs: '100%', sm: '150px' } }
-                    }
-                  }}
-                />
-                <DatePicker
-                  label="End Date"
-                  value={dateRange.endDate}
-                  onChange={onEndDateChange}
-                  disableFuture
-                  minDate={dateRange.startDate}
-                  slotProps={{
-                    textField: {
-                      variant: 'outlined',
-                      size: "small", 
-                      sx: { width: { xs: '100%', sm: '150px' } }
-                    }
-                  }}
-                />
+                {renderDatePicker(true)}
+                {renderDatePicker(false)}
               </Stack>
             </LocalizationProvider>
           </Stack>

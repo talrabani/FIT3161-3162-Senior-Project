@@ -30,13 +30,6 @@ const GraphDisplay = ({
   // Determine if we have data to display
   const hasData = stationData && Object.keys(stationData).length > 0;
 
-  // Determine title suffix based on frequency
-  const frequencyTitle = frequency === 'daily' 
-    ? 'Daily Measurements' 
-    : frequency === 'monthly' 
-      ? 'Monthly Averages' 
-      : 'Yearly Averages';
-
   return (
     <Card sx={{ 
       mb: 3,
@@ -45,10 +38,6 @@ const GraphDisplay = ({
       boxShadow: 'var(--card-shadow, 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1))',
     }}>
       <CardContent>
-        <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold', color: '#333' }}>
-          Data Visualization - {frequencyTitle}
-        </Typography>
-
         <Box sx={{ position: 'relative', minHeight: '400px' }}>
           {loading && (
             <Box sx={{ 
