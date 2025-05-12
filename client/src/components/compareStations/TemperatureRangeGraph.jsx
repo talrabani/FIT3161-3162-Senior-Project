@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as d3 from "d3";
 import { format, parseISO } from 'date-fns';
 import { Card, CardContent, Box, CircularProgress, Alert, Typography } from '@mui/material';
+import { useMapContext } from '../../context/MapContext';
 
 /**
  * TemperatureRangeGraph Component
@@ -23,6 +24,7 @@ export default function TemperatureRangeGraph({
   height = 400,
   frequency = 'daily'
 }) {
+  const { dateRange } = useMapContext();
   const chartRef = useRef(null);
 
   // Create/update chart when data changes or container resizes
@@ -184,14 +186,20 @@ export default function TemperatureRangeGraph({
       } else if (frequency === 'yearly') {
         titleSuffix = ' (Yearly)';
       }
-      
+      let dateFormat;
+      switch (frequency) {
+        case 'daily': { dateFormat = {day: 'numeric', month: 'short', year: 'numeric'}; break; }
+        case 'monthly': { dateFormat = {month: 'short', year: 'numeric'}; break; }
+        case 'yearly': { dateFormat = {year: 'numeric'}; break; }
+        default: { console.log('Invalid frequency type') }
+      } 
       svg.append('text')
         .attr('x', graphWidth / 2)
         .attr('y', -20)
         .attr('text-anchor', 'middle')
         .style('font-size', '18px')
         .style('font-weight', 'bold')
-        .text(`Temperature Range${titleSuffix}`);
+        .text(`Temperature Range from ${dateRange.startDate.toLocaleString('en-GB',dateFormat)} to ${dateRange.endDate.toLocaleString('en-GB',dateFormat)}${titleSuffix}`);
       
       // Configure X-axis ticks and format based on frequency
       let xAxisTickFormat;
@@ -293,6 +301,7 @@ export default function TemperatureRangeGraph({
         .style('font-weight', 'bold')
         .text('Stations');
       
+      var lineNumber = 0;
       // Draw data for each station
       stationSeries.forEach((station, stationIndex) => {
         // Create area for temperature range
@@ -370,8 +379,8 @@ export default function TemperatureRangeGraph({
             `;
               
             tooltip.html(tooltipHtml)
-              .style('left', (event.pageX + 10) + 'px')
-              .style('top', (event.pageY - 28) + 'px');
+              .style('left', `${event.offsetX}px`)
+              .style('top', `${event.offsetY}px`);
           })
           .on('mouseout', function() {
             d3.select(this)
@@ -427,8 +436,8 @@ export default function TemperatureRangeGraph({
             `;
               
             tooltip.html(tooltipHtml)
-              .style('left', (event.pageX + 10) + 'px')
-              .style('top', (event.pageY - 28) + 'px');
+              .style('left', `${event.offsetX}px`)
+              .style('top', `${event.offsetY}px`);
           })
           .on('mouseout', function() {
             d3.select(this)
@@ -442,7 +451,7 @@ export default function TemperatureRangeGraph({
           });
           
         // Add legend item for this station
-        const legendItemY = stationIndex * 50 + 15;
+        const legendItemY = stationIndex * 50 + lineNumber*50 + 15;
         const legendItem = legend.append('g')
           .attr('transform', `translate(0, ${legendItemY})`);
           
@@ -452,31 +461,38 @@ export default function TemperatureRangeGraph({
           .attr('y', 0)
           .attr('width', maxLegendWidth - 25)
           .style('font-size', '12px')
-          .style('font-weight', 'bold')
           .text(station.name);
           
         // Apply text wrapping if name is too long
-        if (station.name.length > 20) {
-          const words = station.name.split(/\s+/);
-          let tspan = nameText.text(null).append("tspan")
-            .attr("x", 0)
-            .attr("y", 0)
-            .text(words[0]);
-          
-          for (let i = 1; i < words.length; i++) {
-            tspan = nameText.append("tspan")
-              .attr("x", 0)
-              .attr("dy", "1.2em")
-              .text(words[i]);
-          }
+        const words = station.name.split(/\s+/).reverse();
+        let tspan = nameText.text(null).append("tspan")
+          .attr("x", 0)
+          .attr("y", 0)
+          .text(words[0]);
+        var word, line = [];
+        while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > 150) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = nameText.append("tspan")
+                              .attr("x", 20)
+                              .attr("y", 3)
+                              .attr("dy", ++lineNumber * 1.2 + "em")
+                              .text(word);
+              legendBg.attr("height", stationSeries.length * 50 + (lineNumber+1) * 25)
+            }
         }
           
         // Min temp line example
         legendItem.append('line')
           .attr('x1', 0)
           .attr('x2', 20)
-          .attr('y1', 15)
-          .attr('y2', 15)
+          .attr('y1', 15*(lineNumber+1))
+          .attr('y2', 15*(lineNumber+1))
+          // .attr('transform', `translate(0, ${lineNumber*50})`)
           .attr('stroke', station.color)
           .attr('stroke-width', 2)
           .attr('stroke-dasharray', '5,5')
@@ -484,7 +500,7 @@ export default function TemperatureRangeGraph({
         
         legendItem.append('text')
           .attr('x', 25)
-          .attr('y', 19)
+          .attr('y', 15*lineNumber+19)
           .style('font-size', '10px')
           .text('Min Temp');
           
@@ -492,14 +508,14 @@ export default function TemperatureRangeGraph({
         legendItem.append('line')
           .attr('x1', 0)
           .attr('x2', 20)
-          .attr('y1', 30)
-          .attr('y2', 30)
+          .attr('y1', 15*(lineNumber+2))
+          .attr('y2', 15*(lineNumber+2))
           .attr('stroke', station.color)
           .attr('stroke-width', 2);
           
         legendItem.append('text')
           .attr('x', 25)
-          .attr('y', 34)
+          .attr('y', 15*(lineNumber)+34)
           .style('font-size', '10px')
           .text('Max Temp');
       });

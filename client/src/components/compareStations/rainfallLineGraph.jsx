@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import wrap from "../utils/textWrap";
 import { format, parseISO } from 'date-fns';
 import { Button } from '@mui/material';
-
+import { useMapContext } from '../../context/MapContext';
 /**
  * RainfallLineGraph Component
  * Renders a D3.js line chart comparing rainfall data across multiple stations
@@ -26,7 +26,7 @@ export default function RainfallLineGraph({
   height = 400,
   frequency = 'daily'
 }) {
-
+  const { dateRange } = useMapContext();
   const chartRef = useRef(null);
 
   // Create/update chart when data changes or container resizes
@@ -34,7 +34,7 @@ export default function RainfallLineGraph({
     if (loading || error || !stationData || Object.keys(stationData).length === 0) {
       return;
     }
-
+    console.log(selectedType);
     // Clear previous chart
     if (chartRef.current) {
       d3.select(chartRef.current).selectAll('*').remove();
@@ -213,8 +213,16 @@ export default function RainfallLineGraph({
         .x(d => x(d.date))
         .y(d => y(d.dataPoint));
       
+      let dateFormat;
+      switch (frequency) {
+        case 'daily': { dateFormat = {timeZone: 'Australia/Melbourne', day: 'numeric', month: 'short', year: 'numeric'}; break; }
+        case 'monthly': { dateFormat = {month: 'short', year: 'numeric'}; break; }
+        case 'yearly': { dateFormat = {year: 'numeric'}; break; }
+        default: { console.log('Invalid frequency type') }
+      } 
+
       // Add chart title with frequency indication
-      let titleText = `${typeString} Comparison`;
+      let titleText = `${typeString} from ${dateRange.startDate.toLocaleString('en-GB',dateFormat)} to ${dateRange.endDate.toLocaleString('en-GB',dateFormat)}`;
       if (frequency === 'monthly') {
         titleText += ' (Monthly)';
       } else if (frequency === 'yearly') {
@@ -338,7 +346,7 @@ export default function RainfallLineGraph({
   
             tooltip.transition()
               .duration(100)
-              .style('opacity', 0.9);
+              .style('opacity', 0.8);
             
             // Format date based on frequency
             let dateDisplay;
@@ -349,7 +357,7 @@ export default function RainfallLineGraph({
             } else { // yearly
               dateDisplay = format(d.date, 'yyyy');
             }
-  
+
             const tooltipHtml = `
               <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">
                 ${station.name}
@@ -363,8 +371,8 @@ export default function RainfallLineGraph({
             `;
   
             tooltip.html(tooltipHtml)
-              .style('left', (event.pageX + 10) + 'px')
-              .style('top', (event.pageY - 28) + 'px');
+              .style('left', `${event.offsetX}px`)
+              .style('top', `${event.offsetY}px`);
           })
           
           .on('mouseout', function() {
@@ -404,10 +412,11 @@ export default function RainfallLineGraph({
         .style('font-weight', 'bold')
         .text('Stations');
       
+      var lineNumber = 0;
       // Add legend items with improved text wrapping
       stationSeries.forEach((station, i) => {
         const legendItem = legend.append('g')
-          .attr('transform', `translate(0, ${i * 25 + 15})`);
+          .attr('transform', `translate(0, ${(lineNumber+i) * 25 + 15})`);
         
         // Color rectangle
         legendItem.append('rect')
@@ -424,19 +433,26 @@ export default function RainfallLineGraph({
           .text(station.name);
         
         // Apply text wrapping if name is too long
-        if (station.name.length > 20) {
-          const words = station.name.split(/\s+/);
-          let tspan = nameText.text(null).append("tspan")
-            .attr("x", 20)
-            .attr("y", 3)
-            .text(words[0]);
-          
-          for (let i = 1; i < words.length; i++) {
-            tspan = nameText.append("tspan")
-              .attr("x", 20)
-              .attr("dy", "1.2em")
-              .text(words[i]);
-          }
+        const words = station.name.split(/\s+/).reverse();
+        let tspan = nameText.text(null).append("tspan")
+          .attr("x", 20)
+          .attr("y", 3)
+          .text(words[0]);
+        var word, line = [];
+        while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > 150) {
+              line.pop();
+              tspan.text(line.join(" "));
+              line = [word];
+              tspan = nameText.append("tspan")
+                              .attr("x", 20)
+                              .attr("y", 3)
+                              .attr("dy", ++lineNumber * 1.2 + "em")
+                              .text(word);
+              legendBg.attr("height", stationSeries.length * 25 + (lineNumber+i) * 25 -10)
+            }
         }
       });
     };
