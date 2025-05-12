@@ -11,7 +11,6 @@ export default function FrequenceyRadioGroup( { frequency, setFrequency } ) {
         value={frequency}
         onChange={(event) => setFrequency(event.target.value)}
       >
-        <FormControlLabel value="daily" control={<Radio />} label="Daily" />
         <FormControlLabel value="monthly" control={<Radio />} label="Monthly" />
         <FormControlLabel value="yearly" control={<Radio />} label="Yearly" />
       </RadioGroup>

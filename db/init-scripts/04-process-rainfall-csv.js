@@ -68,23 +68,23 @@ function findFilePath(possiblePaths) {
 // Try multiple possible locations for:
 // rainfall CSV directory
 const possibleRainfallPaths = [
-    '/db/data/extracted/rainfall_reduced',  // Based on docker-compose volume mapping
-    path.join(__dirname, '..', 'data', 'extracted', 'rainfall_reduced'),  // Relative to script
-    '/data/extracted/rainfall_reduced'  // Direct absolute path
+    '/db/data/station_data/rainfall_data',  // Based on docker-compose volume mapping
+    path.join(__dirname, '..', 'data', 'station_data', 'rainfall_data'),  // Relative to script
+    '/data/station_data/rainfall_data'  // Direct absolute path
 ];
 
 // max temp CSV directory
 const possibleMaxTempPaths = [
-    '/db/data/extracted/max_temp_reduced',  // Based on docker-compose volume mapping
-    path.join(__dirname, '..', 'data', 'extracted', 'max_temp_reduced'),  // Relative to script
-    '/data/extracted/max_temp_reduced'  // Direct absolute path
+    '/db/data/station_data/max_temp_data',  // Based on docker-compose volume mapping
+    path.join(__dirname, '..', 'data', 'station_data', 'max_temp_data'),  // Relative to script
+    '/data/station_data/max_temp_data'  // Direct absolute path
 ];
 
 // min temp CSV directory
 const possibleMinTempPaths = [
-    '/db/data/extracted/min_temp_reduced',  // Based on docker-compose volume mapping
-    path.join(__dirname, '..', 'data', 'extracted', 'min_temp_reduced'),  // Relative to script
-    '/data/extracted/min_temp_reduced'  // Direct absolute path
+    '/db/data/station_data/min_temp_data',  // Based on docker-compose volume mapping
+    path.join(__dirname, '..', 'data', 'station_data', 'min_temp_data'),  // Relative to script
+    '/data/station_data/min_temp_data'  // Direct absolute path
 ];
 
 // Assign paths to each data

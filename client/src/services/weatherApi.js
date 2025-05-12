@@ -285,6 +285,47 @@ export const fetchAverageWeatherBySA4 = async (month, year) => {
     return [];
   }
 };
+/**
+ * Fetches average weather data for all SA4 areas for a given year
+ * @param {string} year - The year to get weather data for (YYYY)
+ * @returns {Promise} Promise with array of SA4 areas and their yearly average weather data
+ */
+export const fetchYearlyWeatherBySA4 = async (year) => {
+  try {
+    console.log('CLIENT SERVICE: Fetching average weather data for year:', year);
+    const url = `${SERVER_API_URL}/rainfall/sa4/year/${year}`;
+    const response = await axios.get(url);
+    
+    // Check if response is empty or invalid
+    if (!response.data || (Array.isArray(response.data) && response.data.length === 0)) {
+      console.log('No weather data found for this year');
+      return [];
+    }
+    
+    // Process the data to ensure all values are properly parsed
+    const processedData = Array.isArray(response.data) 
+      ? response.data.map(item => ({
+          ...item,
+          rainfall: item.rainfall !== undefined && item.rainfall !== null 
+            ? parseFloat(item.rainfall) 
+            : null,
+          min_temp: item.min_temp !== undefined && item.min_temp !== null 
+            ? parseFloat(item.min_temp) 
+            : null,
+          max_temp: item.max_temp !== undefined && item.max_temp !== null 
+            ? parseFloat(item.max_temp) 
+            : null
+        }))
+      : [];
+      
+    return processedData;
+  } catch (error) {
+    console.error('Error fetching yearly average weather data for SA4:', error);
+    return [];
+  }
+};
+
+
 
 /**
  * Searches for weather stations based on a search term

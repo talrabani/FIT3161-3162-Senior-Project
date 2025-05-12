@@ -76,5 +76,27 @@ router.get('/sa4/month/:month/year/:year', async (req, res) => {
   }
 });
 
+/**
+ * API endpoint to get the average rainfall for all SA4 areas on a given year.
+ * This is done by averaging the monthy averages by year
+ * GET /api/rainfall/sa4/year/:year
+ */
+router.get('/sa4/year/:year', async (req, res) => {
+  const { year } = req.params;
+
+  try {
+    const result = await pool.query(`
+      SELECT sa4_code, year, avg(rainfall) as rainfall, avg(max_temp) as max_temp, avg(min_temp) as min_temp FROM SA4_RAINFALL_MONTHLY 
+      WHERE year = $1
+      GROUP BY sa4_code, year
+    `, [year]);
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching yearly rainfall data:', error);
+    res.status(500).json({ error: 'Failed to fetch yearly rainfall data' });
+  }
+});
+
 module.exports = router;
 

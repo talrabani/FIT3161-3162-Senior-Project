@@ -1,14 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { fetchSA4Boundaries, fetchStationsBySA4, fetchAverageWeatherBySA4, fetchAverageWeatherByRect } from '../../services/weatherApi';
+import { fetchSA4Boundaries, fetchStationsBySA4, fetchAverageWeatherBySA4, fetchAverageWeatherByRect, fetchYearlyWeatherBySA4 } from '../../services/weatherApi';
 import StationSelectCard from './MapStationSelectCard';
 import { useMapContext } from '../../context/MapContext';
 import chroma from 'chroma-js';  // Import chroma.js for color scaling
 import LoadingMap from './LoadingMap';  // Import the loading component
 import MapLegendContainer from './MapLegend'; // Import the new MapLegend component
 import './AustraliaMap.css';  // Import custom CSS
-import { SelectBoundingBox } from '../selectedStations/selectBoundingBox';
+// import { SelectBoundingBox } from '../selectedStations/selectBoundingBox';
 
 // Mapbox API token
 mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3BpcGp3dTYyN2wifQ.nntDVPhkBzS5Zm5XuFybXg';
@@ -25,6 +25,7 @@ export default function AustraliaMap({
   // Access shared data from context
   const { 
     selectedDate, 
+    timeFrequency,
     selectedSA4, 
     setSelectedSA4, 
     selectedType,
@@ -122,19 +123,35 @@ export default function AustraliaMap({
         const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
         const year = selectedDate.getFullYear().toString();
         
-        console.log(`Pre-fetching initial weather data: ${month}/${year}`);
-        
-        fetchAverageWeatherBySA4(month, year)
-          .then(data => {
-            if (data && data.length > 0) {
-              console.log(`Received ${data.length} initial weather records`);
-              setWeatherData(data);
-              weatherDataLoaded.current = true;
-            }
-          })
-          .catch(error => {
-            console.error('Error pre-fetching initial weather data:', error);
-          });
+        if (timeFrequency === 'year') {
+          console.log(`Pre-fetching initial yearly weather data: ${year}`);
+          
+          fetchYearlyWeatherBySA4(year)
+            .then(data => {
+              if (data && data.length > 0) {
+                console.log(`Received ${data.length} initial yearly weather records`);
+                setWeatherData(data);
+                weatherDataLoaded.current = true;
+              }
+            })
+            .catch(error => {
+              console.error('Error pre-fetching initial yearly weather data:', error);
+            });
+        } else {
+          console.log(`Pre-fetching initial monthly weather data: ${month}/${year}`);
+          
+          fetchAverageWeatherBySA4(month, year)
+            .then(data => {
+              if (data && data.length > 0) {
+                console.log(`Received ${data.length} initial monthly weather records`);
+                setWeatherData(data);
+                weatherDataLoaded.current = true;
+              }
+            })
+            .catch(error => {
+              console.error('Error pre-fetching initial monthly weather data:', error);
+            });
+        }
       }
     });
     
@@ -160,20 +177,29 @@ export default function AustraliaMap({
     
     const fetchWeatherData = async () => {
       try {
-        // Extract month and year from selected date
+        // Extract data from selected date
         const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); // +1 because getMonth() returns 0-11
         const year = selectedDate.getFullYear().toString();
         
-        console.log(`Fetching weather data for month: ${month}, year: ${year}, type: ${selectedType}`);
-        const data = await fetchAverageWeatherBySA4(month, year);
+        let data;
+        
+        if (timeFrequency === 'year') {
+          // Fetch yearly data when timeFrequency is 'year'
+          console.log(`Fetching yearly weather data for year: ${year}, type: ${selectedType}`);
+          data = await fetchYearlyWeatherBySA4(year);
+        } else {
+          // Fetch monthly data for all other frequencies
+          console.log(`Fetching monthly weather data for month: ${month}, year: ${year}, type: ${selectedType}`);
+          data = await fetchAverageWeatherBySA4(month, year);
+        }
         
         if (!data || data.length === 0) {
-          console.warn(`No weather data returned for month: ${month}, year: ${year}`);
+          console.warn(`No weather data returned for ${timeFrequency === 'year' ? 'year: ' + year : 'month: ' + month + ', year: ' + year}`);
           setWeatherData([]);
           return;
         }
         
-        console.log(`Received ${data.length} SA4 weather records for ${month}/${year}`);
+        console.log(`Received ${data.length} SA4 weather records for ${timeFrequency === 'year' ? year : month + '/' + year}`);
         
         // Check if we have the necessary data fields
         const firstRecord = data[0];
@@ -184,37 +210,6 @@ export default function AustraliaMap({
           console.warn(`${selectedType} data is not available in the API response`);
         }
         console.warn(`${selectedType} data is not available in the API response`);
-        // Validate temperature data availability if that's the selected type
-        // switch (selectedType) {
-        //   case 'max_temp': {
-        //     if (firstRecord && 
-        //         (firstRecord.max_temp !== undefined || 
-        //         firstRecord.avg_max_temp !== undefined))
-        //         { console.warn('max temp data is not available in the API response') }
-        //     break;
-        //   }
-        //   case 'min_temp': {
-        //     if (firstRecord && 
-        //         (firstRecord.min_temp !== undefined || 
-        //         firstRecord.avg_min_temp !== undefined))
-        //         { console.warn('min temp data is not available in the API response') }
-        //     break;
-        //     default:
-        //       console.warn('Invalid type selected')
-        //     }
-        //     // Validate data availability for the selected type
-        //     if (selectedType === 'min_temp' || selectedType === 'max_temp') {
-        //       const hasRequestedTempData = firstRecord && firstRecord[selectedType] !== undefined;
-              
-        //       if (!hasRequestedTempData) {
-        //         console.warn(`${selectedType} data is not available in the API response`);
-        //       }
-        //     } else if (selectedType === 'rainfall') {
-        //       const hasRainfallData = firstRecord && firstRecord.rainfall !== undefined;
-              
-        //       if (!hasRainfallData) {
-        //         console.warn('Rainfall data is not available in the API response');
-        //       }
         
         setWeatherData(data);
         weatherDataLoaded.current = true;
@@ -234,7 +229,7 @@ export default function AustraliaMap({
     };
     
     fetchWeatherData();
-  }, [selectedDate, selectedType, weatherDataLoaded.current]);
+  }, [selectedDate, selectedType, timeFrequency, weatherDataLoaded.current]);
   
   // Function to update map colors based on selected weather data type
   const updateMapColors = () => {
@@ -283,48 +278,22 @@ export default function AustraliaMap({
       console.log(`Using data field: ${dataField} for type: ${selectedType}`);
       if (selectedType === 'rainfall') {
         dataField = 'rainfall';
-        legendTitle = 'Rainfall (mm)';
+        // Set different title based on timeFrequency
+        if (timeFrequency === 'year') {
+          legendTitle = 'Annual Rainfall (mm)';
+        } else {
+          legendTitle = 'Monthly Rainfall (mm)';
+        }
         colourStart = 'rgb(255,255,255)';
-        colourMid = 'rgb(0, 157, 255)'
+        colourMid = 'rgb(0, 157, 255)';
         colourEnd = 'rgb(128, 0, 255)';
-        // // Extract temperature values for the color scale
-        // const tempValues = data
-        //   .map(item => parseFloat(item[dataField]) || 0)
-        //   .filter(val => !isNaN(val) && val !== 0);
-          
-        // if (tempValues.length === 0) {
-        //   console.warn(`No valid ${selectedType} values found in data`);
-        //   return;
-        // }
-        
-        
-        // console.log(`${selectedType} range: ${minTemp.toFixed(2)} to ${maxTemp.toFixed(2)} °C`);
-        
-        // Create a temperature color scale that spans from -20°C (dark blue) to 50°C (dark red)
-        // This creates a consistent color mapping regardless of the actual data range
-        // const absoluteTempScale = chroma.scale([
-        //   '#0d0887', // Very dark blue (-20°C)
-        //   '#4e67ce', // Blue (0°C)
-        //   '#72d5e8', // Light blue (10°C)
-        //   '#fee090', // Light yellow (20°C)
-        //   '#fd9747', // Orange (30°C)
-        //   '#e03a39', // Red (40°C)
-        //   '#7a0403'  // Dark red (50°C)
-        // ]).domain([-20, 0, 10, 20, 30, 40, 50]);
-        
-        // Scale the actual data values to colors
-      //   colorScale = (value) => {
-      //     // Clamp value between -20 and 50 for the color scale
-      //     const clampedValue = Math.max(-20, Math.min(50, value));
-      //     return absoluteTempScale(clampedValue);
-      //   };
-      // } else {
-      //   console.warn(`Unknown weather type: ${selectedType}`);
-        // return;
-        
       } else { // temperature
-        // const firstRecord = weatherData[0];
-        legendTitle = 'Temperature (°C)';
+        // Set different title based on timeFrequency
+        if (timeFrequency === 'year') {
+          legendTitle = 'Annual Temperature (°C)';
+        } else {
+          legendTitle = 'Monthly Temperature (°C)';
+        }
         colourStart = 'rgb(0, 162, 255)';
         colourMid = 'rgb(255,255,0)';
         colourEnd = 'rgb(255, 0, 0)';
@@ -538,31 +507,59 @@ export default function AustraliaMap({
             const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
             const year = selectedDate.getFullYear().toString();
             
-            console.log(`Fetching weather data after boundaries loaded: ${month}/${year}`);
-            
-            fetchAverageWeatherBySA4(month, year)
-              .then(data => {
-                if (data && data.length > 0) {
-                  console.log(`Received ${data.length} weather records after boundaries loaded`);
-                  
-                  // Update state
-                  setWeatherData(data);
-                  weatherDataLoaded.current = true;
-                  
-                  // Update colors directly with the data we just received
-                  // Instead of waiting for state update
-                  updateMapColorsWithData(data);
-                  
-                  setIsDataLoaded(true);
-                } else {
-                  console.warn('No weather data received after boundaries loaded');
-                  setIsDataLoaded(true); // Mark as loaded even if no data
-                }
-              })
-              .catch(error => {
-                console.error('Error fetching weather data after boundaries loaded:', error);
-                setIsDataLoaded(true); // Mark as loaded even on error
-              });
+            if (timeFrequency === 'year') {
+              console.log(`Fetching yearly weather data after boundaries loaded: ${year}`);
+              
+              fetchYearlyWeatherBySA4(year)
+                .then(data => {
+                  if (data && data.length > 0) {
+                    console.log(`Received ${data.length} yearly weather records after boundaries loaded`);
+                    
+                    // Update state
+                    setWeatherData(data);
+                    weatherDataLoaded.current = true;
+                    
+                    // Update colors directly with the data we just received
+                    // Instead of waiting for state update
+                    updateMapColorsWithData(data);
+                    
+                    setIsDataLoaded(true);
+                  } else {
+                    console.warn('No yearly weather data received after boundaries loaded');
+                    setIsDataLoaded(true); // Mark as loaded even if no data
+                  }
+                })
+                .catch(error => {
+                  console.error('Error fetching yearly weather data after boundaries loaded:', error);
+                  setIsDataLoaded(true); // Mark as loaded even on error
+                });
+            } else {
+              console.log(`Fetching monthly weather data after boundaries loaded: ${month}/${year}`);
+              
+              fetchAverageWeatherBySA4(month, year)
+                .then(data => {
+                  if (data && data.length > 0) {
+                    console.log(`Received ${data.length} monthly weather records after boundaries loaded`);
+                    
+                    // Update state
+                    setWeatherData(data);
+                    weatherDataLoaded.current = true;
+                    
+                    // Update colors directly with the data we just received
+                    // Instead of waiting for state update
+                    updateMapColorsWithData(data);
+                    
+                    setIsDataLoaded(true);
+                  } else {
+                    console.warn('No monthly weather data received after boundaries loaded');
+                    setIsDataLoaded(true); // Mark as loaded even if no data
+                  }
+                })
+                .catch(error => {
+                  console.error('Error fetching monthly weather data after boundaries loaded:', error);
+                  setIsDataLoaded(true); // Mark as loaded even on error
+                });
+            }
           } else {
             console.log('No date selected, cannot fetch weather data');
             setIsDataLoaded(true);
@@ -935,6 +932,7 @@ export default function AustraliaMap({
           title={legendData.title}
           type={legendData.type}
           date={selectedDate}
+          timeFrequency={timeFrequency}
           position="bottom-left"
         />
       )}

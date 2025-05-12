@@ -14,9 +14,8 @@ export const MapContextProvider = ({ children }) => {
   const [dateRange, setDateRange] = useState({ startDate: null, endDate: null });
   const [isRangeMode, setIsRangeMode] = useState(false);
   const [selectedStations, setSelectedStations] = useState([]);
-  const [timeFrequency, setFrequency] = useState(['day', 'month', 'year']);
-  // const [startRect, setStartRect] = useState(false);
-  // const [currentMousePos, setMousePos] = useState(null);
+  const [timeFrequency, setFrequency] = useState(['month', 'year']);
+
   
   // Selected station from map or search
   const [selectedMapStation, setSelectedMapStation] = useState(null);

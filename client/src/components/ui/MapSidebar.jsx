@@ -28,18 +28,13 @@ export default function MapSidebar() {
   const handleFrequencyChange = (value) => {
     var newDate;
     switch (value) {
-      case 'daily': {
-        setFrequency(['year', 'month', 'day']);
-        newDate = selectedDate;
-        break;
-      }
       case 'monthly': {
         setFrequency(['year','month']);
-        newDate = new Date(selectedDate.getYear(), selectedDate.getMonth(), 1)
+        newDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
         break;}
       case 'yearly': {
         setFrequency(['year']);
-        newDate = new Date(selectedDate.getYear(), 0, 1)
+        newDate = new Date(selectedDate.getFullYear(), 0, 1)
         break;}
       }
     handleDateChange(newDate);
@@ -82,6 +77,14 @@ export default function MapSidebar() {
     console.log('Selected type updated:', newType);
   }
 
+  // Set initial frequency based on the form data
+  useEffect(() => {
+    handleFrequencyChange(formData.frequency);
+  }, []);
+
+  // Max date available for yearly view
+  const maxYearlyDate = new Date(2024, 11, 31);
+
   return (
     <Box sx={{ 
       display: 'flex', 
@@ -113,9 +116,15 @@ export default function MapSidebar() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <StaticDatePicker
             views={timeFrequency}
+            openTo={formData.frequency === 'yearly' ? 'year' : 'month'}
             orientation="landscape"
             value={selectedDate}
             onChange={handleDateChange}
+            displayStaticWrapperAs="desktop"
+            maxDate={maxYearlyDate}
+            minDate={new Date(1990, 0, 1)} // Start from 1990
+            // Set the default view to show recent years/months first
+            defaultCalendarMonth={new Date(2023, 0, 1)}
           />
         </LocalizationProvider>
       </Box>

@@ -12,6 +12,7 @@ import './MapLegend.css';
  * @param {string} props.title - Title for the legend
  * @param {string} props.type - Type of data (rainfall, min_temp, max_temp)
  * @param {Date} props.date - Selected date for display
+ * @param {Array} props.timeFrequency - Time frequency (['year'] or ['year', 'month'])
  */
 const MapLegend = ({ 
   minValue, 
@@ -19,12 +20,30 @@ const MapLegend = ({
   colorScale, 
   title, 
   type, 
-  date
+  date,
+  timeFrequency
 }) => {
-  // Format the selected date for display
+  // Check if timeFrequency is yearly (only year in array) or monthly (year and month in array)
+  const isYearly = Array.isArray(timeFrequency) && timeFrequency.length === 1 && timeFrequency[0] === 'year';
+  
+  // Format the selected date for display based on timeFrequency
   const formattedDate = date ? 
-    `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}` : 
+    isYearly ? 
+      `${date.getFullYear()}` : 
+      `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}` : 
     'Selected Date';
+  
+  // Update title based on timeFrequency and data type
+  let displayTitle = isYearly ? 
+    title.replace('Monthly', 'Annual') : 
+    title;
+    
+  // For temperature data, enhance the title to specify min or max
+  if (type === 'min_temp') {
+    displayTitle = isYearly ? 'Annual Minimum Temperature (°C)' : 'Monthly Minimum Temperature (°C)';
+  } else if (type === 'max_temp') {
+    displayTitle = isYearly ? 'Annual Maximum Temperature (°C)' : 'Monthly Maximum Temperature (°C)';
+  }
   
   // For temperature data
   if (type === 'min_temp' || type === 'max_temp') {
@@ -34,7 +53,7 @@ const MapLegend = ({
     
     return (
       <div className="map-legend">
-        <h4 className="legend-title">{title}</h4>
+        <h4 className="legend-title">{displayTitle}</h4>
         <p className="legend-subtitle">{formattedDate}</p>
         <div className="legend-gradient-container">
           <div 
@@ -62,7 +81,7 @@ const MapLegend = ({
     const gradientColors = stops.map(temp => colorScale(temp).hex()).join(', ');
     return (
       <div className="map-legend">
-        <h4 className="legend-title">{title}</h4>
+        <h4 className="legend-title">{displayTitle}</h4>
         <p className="legend-subtitle">{formattedDate}</p>
         <div className="legend-gradient-container">
           <div 
@@ -102,6 +121,7 @@ const MapLegendContainer = ({
   title, 
   type, 
   date,
+  timeFrequency,
   position = 'bottom-left'
 }) => {
   if (!colorScale || minValue === undefined || maxValue === undefined) {
@@ -120,6 +140,7 @@ const MapLegendContainer = ({
         title={title}
         type={type}
         date={date}
+        timeFrequency={timeFrequency}
       />
     </div>
   );
