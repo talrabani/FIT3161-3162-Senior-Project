@@ -105,6 +105,11 @@ export default function MapSidebar() {
         type={selectedType} 
         setType={handleTypeChange} 
       />
+
+      <FrequencyRadioGroup 
+        frequency={formData.frequency} 
+        setFrequency={(newFrequency) => handleFrequencyChange(newFrequency)}
+      />
       
       {/* Calendar input */}
       <Box sx={{ 
@@ -133,11 +138,6 @@ export default function MapSidebar() {
           Note: Data may be unavailable for some stations/time periods
         </Typography>
       </Box>
-      
-      <FrequencyRadioGroup 
-        frequency={formData.frequency} 
-        setFrequency={(newFrequency) => handleFrequencyChange(newFrequency)}
-      />
     </Box>
   )
 }

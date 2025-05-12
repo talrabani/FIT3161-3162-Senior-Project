@@ -1,0 +1,10 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#f0f4f8" />
+  <rect x="50" y="50" width="500" height="200" rx="10" fill="#e1e8ed" stroke="#bdc4c9" stroke-width="2" />
+  <text x="300" y="150" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#495057">
+    Tutorial Image Placeholder
+  </text>
+  <text x="300" y="180" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#6c757d">
+    Actual screenshot will be displayed here
+  </text>
+</svg> 
