@@ -1,251 +1,242 @@
 import React from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, Typography, Tooltip, CircularProgress } from '@mui/material';
 
 /**
  * DataTube Component
- * A reusable component for displaying rainfall or temperature data as vertical tubes
+ * Displays a tube-like visualization for weather data
  * 
- * @param {Object} props - Component props
- * @param {string} props.label - The label to display above the tube
- * @param {number|string} props.value - The value to display below the tube
- * @param {string} props.unit - The unit of measurement (e.g., 'mm', '°C')
- * @param {number} props.fillPercentage - The percentage the tube should be filled (0-100)
- * @param {string} props.fillColor - The color to use for the fill
- * @param {boolean} props.loading - Whether the data is loading
- * @param {boolean} props.isTemperatureTube - Whether this is a temperature tube (uses range instead of fill)
- * @param {boolean} props.isThermometerTube - Whether this is a thermometer tube (displays single temp value on -20 to 50°C scale)
- * @param {number} props.minPercentage - For temperature tube, the percentage for min temp
- * @param {number} props.maxPercentage - For temperature tube, the percentage for max temp
- * @param {number} props.width - Width of the column (default: 70px)
- * @param {number} props.height - Height of the tube (default: 90px)
+ * @param {string|Object} value - The value to display (number or {min, max} for temperature)
+ * @param {string} unit - The unit of measurement (e.g., 'mm', '°C')
+ * @param {string} label - Optional label for the tube
+ * @param {number} fillPercentage - Percentage to fill the tube (0-100)
+ * @param {number} minPercentage - For temp tube, min temp fill percentage
+ * @param {number} maxPercentage - For temp tube, max temp fill percentage
+ * @param {string} fillColor - Color for the fill
+ * @param {boolean} isTemperatureTube - Whether this is a temperature display with min/max
+ * @param {boolean} isThermometerTube - Whether this is a simple thermometer display
+ * @param {boolean} loading - Whether data is currently loading
+ * @param {number} width - Width of the tube container in px
+ * @param {function} formatValue - Function to format the value with appropriate units
  */
-const DataTube = ({ 
-  label,
+const DataTube = ({
   value,
-  unit = 'mm',
+  unit = '',
+  label = '',
   fillPercentage = 0,
-  fillColor = 'rgb(0, 106, 255)',
-  loading = false,
-  isTemperatureTube = false,
-  isThermometerTube = false,
   minPercentage = 0,
   maxPercentage = 0,
+  fillColor = '#006aff',
+  isTemperatureTube = false,
+  isThermometerTube = false,
+  loading = false,
   width = 70,
-  height = 90
+  formatValue = null
 }) => {
-  // Calculate actual temperature values for display and positioning
-  const getTemperatureValues = () => {
-    if (!isTemperatureTube || typeof value !== 'object') {
-      return { min: null, max: null };
-    }
-    
-    const min = typeof value.min === 'number' ? value.min : 
-               (typeof value.min === 'string' ? parseFloat(value.min) : null);
-    
-    const max = typeof value.max === 'number' ? value.max : 
-               (typeof value.max === 'string' ? parseFloat(value.max) : null);
-    
-    return { min, max };
-  };
+  // Height of the tube in pixels
+  const tubeHeight = 180;
+  const tubeWidth = Math.min(width * 0.6, 40);
   
-  // Get temp values for internal calculations
-  const { min: minTemp, max: maxTemp } = getTemperatureValues();
-  
-  // Get single temperature value for thermometer display
-  const getSingleTemperatureValue = () => {
-    if (!isThermometerTube) return null;
-    
-    // For thermometer tube, value should be a number or a string that can be parsed to a number
-    if (typeof value === 'number') return value;
-    if (typeof value === 'string') return parseFloat(value);
-    
-    return null;
-  };
-  
-  const singleTempValue = getSingleTemperatureValue();
-  
-  // Calculate temperature positions (0% is bottom, 100% is top)
-  // Map from -20°C to 50°C (range of 70 degrees)
-  const calculateTempPosition = (temp) => {
-    if (temp === null || temp === undefined || isNaN(temp)) return 0;
-    
-    // If temperature is below -20°C, cap at 0%
-    if (temp <= -20) return 0;
-    // If temperature is above 50°C, cap at 100%
-    if (temp >= 50) return 100;
-    // Otherwise, scale from -20 to 50 (range of 70 degrees)
-    return ((temp + 20) / 70) * 100;
-  };
-  
-  // Calculate thermometer position (height) based on temperature
-  const thermometerHeight = singleTempValue !== null ? calculateTempPosition(singleTempValue) : 0;
-  
-  // Calculate correct positions
-  const minTempPosition = calculateTempPosition(minTemp);
-  const maxTempPosition = calculateTempPosition(maxTemp);
-  
-  // Get color based on temperature value
-  const getColorForTemperature = (temp) => {
-    // Temperature scale from -20°C to 40°C
-    if (temp <= -20) return 'rgb(135, 206, 250)';  // Light sky blue
-    if (temp <= -5) return 'rgb(135, 206, 250)';   // Light sky blue
-    if (temp <= 5) return 'rgb(144, 238, 144)';    // Light green
-    if (temp <= 10) return 'rgb(144, 238, 144)';   // Light green
-    if (temp <= 20) return 'rgb(255, 255, 0)';     // Yellow
-    if (temp <= 30) return 'rgb(255, 165, 0)';     // Orange
-    return 'rgb(178, 34, 34)';                     // Dark red (> 30°C)
-  };
-  
-  // Calculate gradient colors specific to this temperature range
-  const getDynamicTemperatureGradient = () => {
-    if (minTemp === null || maxTemp === null) return 'transparent';
-    
-    // Get the colors for the min and max temperatures
-    const minColor = getColorForTemperature(minTemp);
-    const maxColor = getColorForTemperature(maxTemp);
-    
-    // If the min and max are in the same color range, we need a slight variation
-    // to make the gradient visible
-    if (minColor === maxColor) {
-      // For single-color ranges, create a subtle variation
-      return `linear-gradient(to top, 
-        ${minColor} 0%,
-        ${minColor} 100%)`;
-    }
-    
-    // If there's a significant range spanning multiple color regions
-    // Create a gradient with just the colors needed for this specific range
-    if (Math.abs(maxTemp - minTemp) > 10) {
-      // For wider ranges, add intermediate color stops if needed
-      const midTemp = (minTemp + maxTemp) / 2;
-      const midColor = getColorForTemperature(midTemp);
-      
-      return `linear-gradient(to top, 
-        ${minColor} 0%,
-        ${midColor} 50%,
-        ${maxColor} 100%)`;
-    }
-    
-    // For smaller ranges between two color regions
-    return `linear-gradient(to top, 
-      ${minColor} 0%,
-      ${maxColor} 100%)`;
-  };
-  
-  // Format display value
+  // Process the value for display
   const displayValue = () => {
-    if (loading) return '-';
+    if (loading) return <CircularProgress size={16} />;
+    
+    // If a custom format function is provided, use it
+    if (formatValue) {
+      if (isTemperatureTube && typeof value === 'object') {
+        const minVal = formatValue(value.min);
+        const maxVal = formatValue(value.max);
+        
+        // If either value is 'No data', return 'No data'
+        if (minVal === 'No data' || maxVal === 'No data') {
+          return 'No data';
+        }
+        
+        // Extract just the numbers without the units for display in the tube
+        // This assumes formatValue returns strings like "23.5°C" or "74.3°F"
+        const minDisplay = minVal.replace(/[^0-9.-]/g, '');
+        const maxDisplay = maxVal.replace(/[^0-9.-]/g, '');
+        
+        return `${minDisplay} - ${maxDisplay}`;
+      } else {
+        const formattedVal = formatValue(value);
+        
+        // If the value is 'No data', return as is
+        if (formattedVal === 'No data') return formattedVal;
+        
+        // Otherwise, extract just the number without the unit for display in the tube
+        return formattedVal.replace(/[^0-9.-]/g, '');
+      }
+    }
+    
+    // Default handling if no formatValue function is provided
+    if (isTemperatureTube && typeof value === 'object') {
+      if (value.min === 'No data' || value.max === 'No data') return 'No data';
+      
+      const minVal = typeof value.min === 'number' ? value.min.toFixed(1) : value.min;
+      const maxVal = typeof value.max === 'number' ? value.max.toFixed(1) : value.max;
+      
+      return `${minVal} - ${maxVal}`;
+    }
+    
     if (value === 'No data' || value === null || value === undefined) return 'No data';
     
-    // For thermometer tube, handle single temperature value
-    if (isThermometerTube && singleTempValue !== null && !isNaN(singleTempValue)) {
-      return `${parseFloat(singleTempValue).toFixed(1)}${unit}`;
-    }
-    
-    // For temperature tube, we need to handle min/max values
-    if (isTemperatureTube && typeof value === 'object') {
-      const min = value.min;
-      const max = value.max;
-      
-      // Check if either value is NaN, null, undefined, or "No data"
-      if (!min && !max) {
-        return 'No data';
-      }
-      
-      if (min !== null && max !== null && !isNaN(min) && !isNaN(max)) {
-        return `${parseFloat(min).toFixed(1)}${unit} to ${parseFloat(max).toFixed(1)}${unit}`;
-      } else if (min !== null && !isNaN(min)) {
-        return `${parseFloat(min).toFixed(1)}${unit}`;
-      } else if (max !== null && !isNaN(max)) {
-        return `${parseFloat(max).toFixed(1)}${unit}`;
-      }
-      
-      return 'No data';
-    }
-    
-    // For rainfall tube
-    if (typeof value === 'number' && !isNaN(value)) {
-      return `${parseFloat(value).toFixed(1)}${unit}`;
-    }
-    
-    return 'No data';
+    return typeof value === 'number' ? value.toFixed(1) : value;
   };
-
-  // Check if the value is valid for display
-  const hasValidValue = displayValue() !== 'No data';
-
-  return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: `${width}px` }}>
-      {label && (
-        <Typography variant="body2" color="text.secondary" align="center" sx={{ 
-          mb: 1.5,
-          fontSize: '0.85rem',
-          height: '2.5em', // Fixed height for label area that can fit two lines
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          lineHeight: 1.2
+  
+  // Get the full display value with units for tooltip
+  const getTooltipValue = () => {
+    if (loading) return 'Loading...';
+    
+    if (formatValue) {
+      if (isTemperatureTube && typeof value === 'object') {
+        const minVal = formatValue(value.min);
+        const maxVal = formatValue(value.max);
+        return minVal === 'No data' || maxVal === 'No data' ? 'No data' : `${minVal} - ${maxVal}`;
+      } else {
+        return formatValue(value);
+      }
+    }
+    
+    if (isTemperatureTube && typeof value === 'object') {
+      if (value.min === 'No data' || value.max === 'No data') return 'No data';
+      
+      const minVal = typeof value.min === 'number' ? value.min.toFixed(1) : value.min;
+      const maxVal = typeof value.max === 'number' ? value.max.toFixed(1) : value.max;
+      
+      return `${minVal}${unit} - ${maxVal}${unit}`;
+    }
+    
+    if (value === 'No data' || value === null || value === undefined) return 'No data';
+    
+    return typeof value === 'number' ? `${value.toFixed(1)}${unit}` : value;
+  };
+  
+  // If this is a thermometer tube (simple thermometer display)
+  if (isThermometerTube) {
+    return (
+      <Tooltip title={getTooltipValue()} arrow placement="top">
+        <Box sx={{ 
+          width: width, 
+          display: 'flex', 
+          flexDirection: 'column',
+          alignItems: 'center'
         }}>
-          {label}
-        </Typography>
-      )}
-      <Box sx={{ 
-        position: 'relative', 
-        width: '35px', 
-        height: `${height}px`, 
-        border: '1px solid #ddd', 
-        borderRadius: 1,
-        bgcolor: '#fff',
-        overflow: 'hidden'
-      }}>
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-            <CircularProgress size={16} />
+          <Box sx={{ 
+            width: tubeWidth / 2, 
+            height: tubeHeight * 0.6,
+            borderRadius: `${tubeWidth / 4}px ${tubeWidth / 4}px 0 0`,
+            border: '2px solid #ccc',
+            borderBottom: 'none',
+            position: 'relative',
+            overflow: 'hidden',
+            backgroundColor: '#f5f5f5'
+          }}>
+            <Box sx={{
+              position: 'absolute',
+              bottom: 0,
+              width: '100%',
+              height: `${fillPercentage}%`,
+              backgroundColor: value < 0 ? '#6baff9' : '#ff7761',
+              transition: 'height 0.5s ease-out',
+            }} />
           </Box>
-        ) : isThermometerTube ? (
-          // Thermometer visualization - simple tube with red color
           <Box sx={{ 
-            position: 'absolute', 
-            bottom: 0, 
-            width: '100%', 
-            height: `${thermometerHeight}%`, 
-            bgcolor: '#d30000', // Thermometer red color
-            transition: 'height 0.5s ease-in-out'
-          }} />
-        ) : isTemperatureTube ? (
-          // Temperature range visualization with dynamic gradient
-          <Box sx={{ 
-            position: 'absolute', 
-            bottom: `${minTempPosition}%`, 
-            width: '100%', 
-            height: `${Math.max(0, maxTempPosition - minTempPosition)}%`, 
-            background: getDynamicTemperatureGradient(),
-            display: (minTemp !== null || maxTemp !== null) ? 'block' : 'none',
-            transition: 'all 0.5s ease-in-out'
-          }} />
-        ) : (
-          // Rainfall visualization
-          <Box sx={{ 
-            position: 'absolute', 
-            bottom: 0, 
-            width: '100%', 
-            height: `${fillPercentage}%`, 
-            bgcolor: fillColor,
-            transition: 'height 0.5s ease-in-out'
-          }} />
-        )}
-      </Box>
-      {/* Always render the Typography component to maintain consistent height, but show empty content for 'No data' */}
-      <Typography variant="caption" color="text.secondary" align="center" sx={{ 
-        mt: 0.5, 
-        fontSize: '0.75rem',
-        height: '1.25em', // Set a fixed height for consistent spacing
-        display: label ? 'block' : 'none', // Only show if there's a label above
-        visibility: hasValidValue ? 'visible' : 'hidden' // Hide text but maintain space
+            width: tubeWidth,
+            height: tubeWidth,
+            borderRadius: '50%',
+            border: '2px solid #ccc',
+            backgroundColor: '#f5f5f5',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
+            marginTop: '-1px',
+            position: 'relative'
+          }}>
+            <Box sx={{
+              position: 'absolute',
+              bottom: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: value < 0 ? '#6baff9' : '#ff7761',
+              clipPath: `polygon(0 ${100 - fillPercentage}%, 100% ${100 - fillPercentage}%, 100% 100%, 0% 100%)`,
+              transition: 'height 0.5s ease-out',
+            }} />
+          </Box>
+          <Typography variant="caption" sx={{ mt: 1, fontSize: '0.7rem', textAlign: 'center' }}>
+            {displayValue()}
+          </Typography>
+        </Box>
+      </Tooltip>
+    );
+  }
+  
+  // Regular data tube or temperature tube
+  return (
+    <Tooltip title={getTooltipValue()} arrow placement="top">
+      <Box sx={{ 
+        width: width, 
+        display: 'flex', 
+        flexDirection: 'column',
+        alignItems: 'center'
       }}>
-        {displayValue()}
-      </Typography>
-    </Box>
+        {label && (
+          <Typography variant="caption" sx={{ mb: 1, fontSize: '0.7rem', textAlign: 'center', height: '24px' }}>
+            {label}
+          </Typography>
+        )}
+        <Box sx={{ 
+          width: tubeWidth, 
+          height: tubeHeight,
+          borderRadius: tubeWidth / 2,
+          border: '2px solid #ccc',
+          position: 'relative',
+          overflow: 'hidden',
+          backgroundColor: '#f5f5f5'
+        }}>
+          {isTemperatureTube ? (
+            <>
+              {/* Min-Max temperature visualization */}
+              <Box sx={{
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                height: `${minPercentage}%`,
+                backgroundColor: fillColor,
+                transition: 'height 0.5s ease-out',
+              }} />
+              <Box sx={{
+                position: 'absolute',
+                bottom: `${minPercentage}%`,
+                width: '100%',
+                height: `${maxPercentage - minPercentage}%`,
+                background: `repeating-linear-gradient(
+                  -45deg,
+                  ${fillColor},
+                  ${fillColor} 5px,
+                  rgba(255,255,255,0.7) 5px,
+                  rgba(255,255,255,0.7) 10px
+                )`,
+                transition: 'height 0.5s ease-out, bottom 0.5s ease-out',
+              }} />
+            </>
+          ) : (
+            // Rainfall visualization
+            <Box sx={{
+              position: 'absolute',
+              bottom: 0,
+              width: '100%',
+              height: `${fillPercentage}%`,
+              backgroundColor: fillColor,
+              transition: 'height 0.5s ease-out',
+            }} />
+          )}
+        </Box>
+        <Typography variant="caption" sx={{ mt: 1, fontSize: '0.7rem', textAlign: 'center' }}>
+          {displayValue()}
+        </Typography>
+      </Box>
+    </Tooltip>
   );
 };
 

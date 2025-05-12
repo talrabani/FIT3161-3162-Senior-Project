@@ -10,7 +10,9 @@ import Navbar from './components/ui/Navbar'
 import DebugInfo from './components/ui/DebugInfo'
 import SelectedStationsBox from './components/selectedStations/selectedStationsBox'
 import StationComparisonPage from './pages/StationComparisonPage'
+import AccountPage from './pages/AccountPage'
 import { MapContextProvider, useMapContext } from './context/MapContext'
+import { UnitProvider } from './context/UnitContext'
 import LoginForm from './components/ui/LoginForm/LoginForm'
 import SignupForm from './components/ui/SignupForm/SignupForm'
 import AuthService from './services/auth.service'
@@ -198,22 +200,29 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
-        <MapContextProvider>
-          <Routes>
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/signup" element={<SignupForm />} />
-            <Route path="/" element={
-              <ProtectedRoute>
-                <WeatherApp />
-              </ProtectedRoute>
-            } />
-            <Route path="/comparison" element={
-              <ProtectedRoute>
-                <StationComparisonPage />
-              </ProtectedRoute>
-            } />
-          </Routes>
-        </MapContextProvider>
+        <UnitProvider>
+          <MapContextProvider>
+            <Routes>
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/signup" element={<SignupForm />} />
+              <Route path="/" element={
+                <ProtectedRoute>
+                  <WeatherApp />
+                </ProtectedRoute>
+              } />
+              <Route path="/comparison" element={
+                <ProtectedRoute>
+                  <StationComparisonPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/account" element={
+                <ProtectedRoute>
+                  <AccountPage />
+                </ProtectedRoute>
+              } />
+            </Routes>
+          </MapContextProvider>
+        </UnitProvider>
       </ErrorBoundary>
     </QueryClientProvider>
   )
