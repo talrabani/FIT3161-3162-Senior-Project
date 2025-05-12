@@ -1,4 +1,4 @@
-import { Box, TextField, Button, Typography } from '@mui/material'
+import { Box, TextField, Button, Typography, Tooltip } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { DatePicker, StaticDatePicker } from '@mui/x-date-pickers'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
@@ -112,7 +112,9 @@ export default function MapSidebar() {
         borderRadius: '4px',
         padding: '10px'
       }}>
-        <Box sx={{ fontSize: '20px', fontWeight: 'bold', mb: 2 }}>Calendar input</Box>
+        <Box sx={{ fontSize: '20px', fontWeight: 'bold', mb: 2 }}>
+          Calendar input
+        </Box>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <StaticDatePicker
             views={timeFrequency}
@@ -127,6 +129,9 @@ export default function MapSidebar() {
             defaultCalendarMonth={new Date(2023, 0, 1)}
           />
         </LocalizationProvider>
+        <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+          Note: Data may be unavailable for some stations/time periods
+        </Typography>
       </Box>
       
       <FrequencyRadioGroup 

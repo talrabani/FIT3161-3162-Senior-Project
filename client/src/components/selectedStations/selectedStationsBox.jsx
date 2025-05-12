@@ -22,6 +22,7 @@ const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
   // Get the selected date from the context
   const { selectedDate, setDateRange } = useMapContext();
   const [showComparison, setShowComparison] = useState(false);
+  const [expandAllStats, setExpandAllStats] = useState(false);
   
   // Handle Compare button click
   const handleCompare = () => {
@@ -39,6 +40,12 @@ const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
     setDateRange({ startDate: null, endDate: null });
     // Hide comparison if all stations are removed
     setShowComparison(false);
+  };
+  
+  // Toggle Expand All button
+  const handleExpandAll = () => {
+    console.log('Expand All button clicked, current state:', expandAllStats);
+    setExpandAllStats(!expandAllStats);
   };
   
   return (
@@ -68,7 +75,18 @@ const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
                 onClick={handleCompare}
                 sx={{ fontSize: '0.8rem' }}
               >
-                Compare
+                Generate Graph
+              </Button>
+              
+              <Button 
+                variant={expandAllStats ? "contained" : "outlined"}
+                color="info" 
+                size="small"
+                disabled={selectedStations.length === 0}
+                onClick={handleExpandAll}
+                sx={{ fontSize: '0.8rem' }}
+              >
+                {expandAllStats ? "Collapse" : "Expand"} All
               </Button>
               
               <Button 
@@ -103,6 +121,7 @@ const SelectedStationsBox = ({ selectedStations, onRemoveStation }) => {
                 station={station} 
                 onRemove={onRemoveStation}
                 selectedDate={selectedDate}
+                forceExpanded={expandAllStats}
               />
             ))}
           </Box>

@@ -120,12 +120,12 @@ export const fetchSA4Summary = async () => {
 };
 
 /**
- * Fetches weather data for a specific station on a given date
+ * Fetches daily weather data for a specific station on a given date
  * @param {string|number} stationId - The station ID to fetch data for
  * @param {Date|string} date - The date to get data for (Date object or YYYY-MM-DD string)
  * @returns {Promise} Promise with weather data for the station on the specified date
  */
-export const fetchStationWeather = async (stationId, date) => {
+export const fetchStationDailyWeather = async (stationId, date) => {
   try {
     // Add leading zero to stationId if it's less than 6 digits
     const formattedStationId = stationId.toString().padStart(6, '0');
@@ -135,41 +135,307 @@ export const fetchStationWeather = async (stationId, date) => {
       ? date.toISOString().split('T')[0] 
       : date;
     
-    console.log('CLIENT SERVICE: Fetching weather data for station:', formattedStationId, 'on date:', formattedDate);
+    console.log('CLIENT SERVICE: Fetching daily weather data for station:', formattedStationId, 'on date:', formattedDate);
     const url = `${SERVER_API_URL}/rainfall/station/${formattedStationId}/date/${formattedDate}`;
-    const response = await axios.get(url);
-    console.log('CLIENT SERVICE: Response:', response.data);
     
-    // Check if response is empty or invalid
-    if (!response.data || (Array.isArray(response.data) && response.data.length === 0)) {
-      console.log('No data found for this station and date');
-      return [null, [null, null]]; // Return nulls with the expected array structure
-    }
-    
-    // Check if response.data is an array and extract the first item if it exists
-    const data = Array.isArray(response.data) && response.data.length > 0 
-      ? response.data[0] 
-      : response.data;
-    
-    // Extract rainfall and temperature values and convert to float if they exist
-    const rainfallData = data && data.rainfall !== undefined && data.rainfall !== null
-      ? parseFloat(data.rainfall) 
-      : null;
-    
-    const minTemp = data && data.min_temp !== undefined && data.min_temp !== null
-      ? parseFloat(data.min_temp)
-      : null;
+    try {
+      const response = await axios.get(url);
+      console.log('CLIENT SERVICE: Response:', response.data);
       
-    const maxTemp = data && data.max_temp !== undefined && data.max_temp !== null
-      ? parseFloat(data.max_temp)
-      : null;
-    
-    // Return rainfall data and temperature data as an array [rainfall, [minTemp, maxTemp]]
-    return [rainfallData, [minTemp, maxTemp]];
+      // Check if response is empty or invalid
+      if (!response.data || (Array.isArray(response.data) && response.data.length === 0)) {
+        console.log(`No daily data found for station ${formattedStationId} on date ${formattedDate}`);
+        return [null, [null, null]]; // Return nulls with the expected array structure
+      }
+      
+      // Check if response.data is an array and extract the first item if it exists
+      const data = Array.isArray(response.data) && response.data.length > 0 
+        ? response.data[0] 
+        : response.data;
+      
+      // Extract rainfall and temperature values and convert to float if they exist
+      const rainfallData = data && data.rainfall !== undefined && data.rainfall !== null
+        ? parseFloat(data.rainfall) 
+        : null;
+      
+      const minTemp = data && data.min_temp !== undefined && data.min_temp !== null
+        ? parseFloat(data.min_temp)
+        : null;
+        
+      const maxTemp = data && data.max_temp !== undefined && data.max_temp !== null
+        ? parseFloat(data.max_temp)
+        : null;
+      
+      console.log(`Daily data for station ${formattedStationId} on date ${formattedDate}:`, { rainfallData, minTemp, maxTemp });
+      
+      // Return rainfall data and temperature data as an array [rainfall, [minTemp, maxTemp]]
+      return [rainfallData, [minTemp, maxTemp]];
+    } catch (axiosError) {
+      // Handle Axios errors specifically
+      if (axiosError.response) {
+        // The request was made and the server responded with a status code outside of 2xx
+        console.error(`Server returned ${axiosError.response.status} for daily data request:`, axiosError.response.data);
+        
+        if (axiosError.response.status === 500) {
+          console.error(`Server error (500) when fetching daily data for station ${formattedStationId} on date ${formattedDate}. This might indicate missing data or a server-side issue.`);
+        }
+      } else if (axiosError.request) {
+        // The request was made but no response was received
+        console.error('No response received from server:', axiosError.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up the request:', axiosError.message);
+      }
+      
+      // Rethrow to be caught by the outer catch
+      throw axiosError;
+    }
   } catch (error) {
-    console.error(`Error fetching weather data for station ${stationId}:`, error);
+    console.error(`Error fetching daily weather data for station ${stationId}:`, error);
     // Return nulls with the expected structure instead of just null
     return [null, [null, null]];
+  }
+};
+
+/**
+ * Fetches monthly weather data for a specific station in a given month and year
+ * @param {string|number} stationId - The station ID to fetch data for
+ * @param {number} month - The month to get data for (1-12)
+ * @param {number} year - The year to get data for (e.g., 2023)
+ * @returns {Promise} Promise with monthly weather data for the station
+ */
+export const fetchStationMonthlyWeather = async (stationId, month, year) => {
+  try {
+    // Add leading zero to stationId if it's less than 6 digits
+    const formattedStationId = stationId.toString().padStart(6, '0');
+    
+    // Format month as a string with leading zero if needed
+    const formattedMonth = month.toString().padStart(2, '0');
+    
+    console.log('CLIENT SERVICE: Fetching monthly weather data for station:', formattedStationId, 'for month:', formattedMonth, 'year:', year);
+    const url = `${SERVER_API_URL}/rainfall/station/${formattedStationId}/month/${formattedMonth}/year/${year}`;
+    
+    try {
+      const response = await axios.get(url);
+      
+      // Check if response is empty or invalid
+      if (!response.data) {
+        console.log(`No monthly data found for station ${formattedStationId} in month ${formattedMonth}, year ${year}`);
+        return [null, [null, null], null]; // Return nulls with the expected array structure
+      }
+      
+      const data = response.data;
+      
+      // Extract basic weather data
+      const rainfallData = data.rainfall !== undefined && data.rainfall !== null
+        ? parseFloat(data.rainfall) 
+        : null;
+      
+      const minTemp = data.min_temp !== undefined && data.min_temp !== null
+        ? parseFloat(data.min_temp)
+        : null;
+        
+      const maxTemp = data.max_temp !== undefined && data.max_temp !== null
+        ? parseFloat(data.max_temp)
+        : null;
+      
+      // Extract additional data
+      const totalRainfall = data.total_rainfall !== undefined && data.total_rainfall !== null
+        ? parseFloat(data.total_rainfall)
+        : null;
+      
+      // Process precipitation statistics
+      const precipStats = data.precipitation_stats ? {
+        rainyDays: data.precipitation_stats.rainy_days,
+        maxConsecutiveRainyDays: data.precipitation_stats.max_consecutive_rainy_days,
+        maxConsecutiveDryDays: data.precipitation_stats.max_consecutive_dry_days,
+        rainfallIntensity: data.precipitation_stats.rainfall_intensity !== null 
+          ? parseFloat(data.precipitation_stats.rainfall_intensity) 
+          : null,
+        rainfallVariability: data.precipitation_stats.rainfall_variability !== null 
+          ? parseFloat(data.precipitation_stats.rainfall_variability) 
+          : null
+      } : null;
+      
+      // Process temperature statistics
+      const tempStats = data.temperature_stats ? {
+        avgDailyTempRange: data.temperature_stats.avg_daily_temp_range !== null 
+          ? parseFloat(data.temperature_stats.avg_daily_temp_range) 
+          : null,
+        tempVariability: data.temperature_stats.temp_variability !== null 
+          ? parseFloat(data.temperature_stats.temp_variability) 
+          : null,
+        daysAbove30C: data.temperature_stats.days_above_30c,
+        daysBelow0C: data.temperature_stats.days_below_0c
+      } : null;
+      
+      // Format the additional details
+      const weatherDetails = {
+        totalRainfall,
+        highestTemp: data.highest_temp ? {
+          date: new Date(data.highest_temp.date),
+          value: parseFloat(data.highest_temp.value)
+        } : null,
+        lowestTemp: data.lowest_temp ? {
+          date: new Date(data.lowest_temp.date),
+          value: parseFloat(data.lowest_temp.value)
+        } : null,
+        highestRainfallDay: data.highest_rainfall_day ? {
+          date: new Date(data.highest_rainfall_day.date),
+          value: parseFloat(data.highest_rainfall_day.value)
+        } : null,
+        precipitationStats: precipStats,
+        temperatureStats: tempStats
+      };
+      
+      console.log(`Monthly data for station ${formattedStationId} in month ${formattedMonth}, year ${year}:`, 
+        { rainfallData, minTemp, maxTemp, details: weatherDetails });
+      
+      // Return rainfall data, temperature data, and additional details
+      return [rainfallData, [minTemp, maxTemp], weatherDetails];
+    } catch (axiosError) {
+      // Handle Axios errors specifically
+      if (axiosError.response) {
+        // The request was made and the server responded with a status code outside of 2xx
+        console.error(`Server returned ${axiosError.response.status} for monthly data request:`, axiosError.response.data);
+        
+        if (axiosError.response.status === 500) {
+          console.error(`Server error (500) when fetching monthly data for station ${formattedStationId} in month ${formattedMonth}, year ${year}. This might indicate missing data or a server-side issue.`);
+        }
+      } else if (axiosError.request) {
+        // The request was made but no response was received
+        console.error('No response received from server:', axiosError.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up the request:', axiosError.message);
+      }
+      
+      // Rethrow to be caught by the outer catch
+      throw axiosError;
+    }
+  } catch (error) {
+    console.error(`Error fetching monthly weather data for station ${stationId} for month ${month}, year ${year}:`, error);
+    // Return nulls with the expected structure instead of just null
+    return [null, [null, null], null];
+  }
+};
+
+/**
+ * Fetches yearly weather data for a specific station in a given year
+ * @param {string|number} stationId - The station ID to fetch data for
+ * @param {number} year - The year to get data for (e.g., 2023)
+ * @returns {Promise} Promise with yearly weather data for the station
+ */
+export const fetchStationYearlyWeather = async (stationId, year) => {
+  try {
+    // Add leading zero to stationId if it's less than 6 digits
+    const formattedStationId = stationId.toString().padStart(6, '0');
+    
+    console.log('CLIENT SERVICE: Fetching yearly weather data for station:', formattedStationId, 'for year:', year);
+    const url = `${SERVER_API_URL}/rainfall/station/${formattedStationId}/year/${year}`;
+    
+    try {
+      const response = await axios.get(url);
+      
+      // Check if response is empty or invalid
+      if (!response.data) {
+        console.log(`No yearly data found for station ${formattedStationId} in year ${year}`);
+        return [null, [null, null], null]; // Return nulls with the expected array structure
+      }
+      
+      const data = response.data;
+      
+      // Extract basic weather data
+      const rainfallData = data.rainfall !== undefined && data.rainfall !== null
+        ? parseFloat(data.rainfall) 
+        : null;
+      
+      const minTemp = data.min_temp !== undefined && data.min_temp !== null
+        ? parseFloat(data.min_temp)
+        : null;
+        
+      const maxTemp = data.max_temp !== undefined && data.max_temp !== null
+        ? parseFloat(data.max_temp)
+        : null;
+      
+      // Extract additional data
+      const totalRainfall = data.total_rainfall !== undefined && data.total_rainfall !== null
+        ? parseFloat(data.total_rainfall)
+        : null;
+      
+      // Process precipitation statistics
+      const precipStats = data.precipitation_stats ? {
+        rainyDays: data.precipitation_stats.rainy_days,
+        maxConsecutiveRainyDays: data.precipitation_stats.max_consecutive_rainy_days,
+        maxConsecutiveDryDays: data.precipitation_stats.max_consecutive_dry_days,
+        rainfallIntensity: data.precipitation_stats.rainfall_intensity !== null 
+          ? parseFloat(data.precipitation_stats.rainfall_intensity) 
+          : null,
+        rainfallVariability: data.precipitation_stats.rainfall_variability !== null 
+          ? parseFloat(data.precipitation_stats.rainfall_variability) 
+          : null
+      } : null;
+      
+      // Process temperature statistics
+      const tempStats = data.temperature_stats ? {
+        avgDailyTempRange: data.temperature_stats.avg_daily_temp_range !== null 
+          ? parseFloat(data.temperature_stats.avg_daily_temp_range) 
+          : null,
+        tempVariability: data.temperature_stats.temp_variability !== null 
+          ? parseFloat(data.temperature_stats.temp_variability) 
+          : null,
+        daysAbove30C: data.temperature_stats.days_above_30c,
+        daysBelow0C: data.temperature_stats.days_below_0c
+      } : null;
+      
+      // Format the additional details
+      const weatherDetails = {
+        totalRainfall,
+        highestTemp: data.highest_temp ? {
+          date: new Date(data.highest_temp.date),
+          value: parseFloat(data.highest_temp.value)
+        } : null,
+        lowestTemp: data.lowest_temp ? {
+          date: new Date(data.lowest_temp.date),
+          value: parseFloat(data.lowest_temp.value)
+        } : null,
+        highestRainfallDay: data.highest_rainfall_day ? {
+          date: new Date(data.highest_rainfall_day.date),
+          value: parseFloat(data.highest_rainfall_day.value)
+        } : null,
+        precipitationStats: precipStats,
+        temperatureStats: tempStats
+      };
+      
+      console.log(`Yearly data for station ${formattedStationId} in year ${year}:`, 
+        { rainfallData, minTemp, maxTemp, details: weatherDetails });
+      
+      // Return rainfall data, temperature data, and additional details
+      return [rainfallData, [minTemp, maxTemp], weatherDetails];
+    } catch (axiosError) {
+      // Handle Axios errors specifically
+      if (axiosError.response) {
+        // The request was made and the server responded with a status code outside of 2xx
+        console.error(`Server returned ${axiosError.response.status} for yearly data request:`, axiosError.response.data);
+        
+        if (axiosError.response.status === 500) {
+          console.error(`Server error (500) when fetching yearly data for station ${formattedStationId} in year ${year}. This might indicate missing data or a server-side issue.`);
+        }
+      } else if (axiosError.request) {
+        // The request was made but no response was received
+        console.error('No response received from server:', axiosError.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up the request:', axiosError.message);
+      }
+      
+      // Rethrow to be caught by the outer catch
+      throw axiosError;
+    }
+  } catch (error) {
+    console.error(`Error fetching yearly weather data for station ${stationId} for year ${year}:`, error);
+    // Return nulls with the expected structure instead of just null
+    return [null, [null, null], null];
   }
 };
 

@@ -1,10 +1,11 @@
 // This is the component for the station select card when the user clicks on a station on the map
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, Button, Box, CircularProgress } from '@mui/material';
+import { Card, CardContent, Typography, Button, Box, CircularProgress, Alert } from '@mui/material';
 import { format } from 'date-fns';
-import { fetchStationWeather } from '../../services/weatherApi';
+import { fetchStationDailyWeather, fetchStationMonthlyWeather, fetchStationYearlyWeather } from '../../services/weatherApi';
 import { useMapContext } from '../../context/MapContext';
+import DataTube from '../selectedStations/dataTube';
 
 /**
  * Station Select Card Component
@@ -24,7 +25,8 @@ const StationSelectCard = ({
     selectedDate, 
     selectedMapStation, 
     clearSelectedMapStation,
-    addStation
+    addStation,
+    timeFrequency
   } = useMapContext();
   
   // Use station from props or context
@@ -51,6 +53,7 @@ const StationSelectCard = ({
         });
         setRainfallData({ rainfall: 'No data' });
         setTemperatureData({ minTemp: 'No data', maxTemp: 'No data' });
+        setError('Missing required station or date information');
         return;
       }
       
@@ -58,10 +61,39 @@ const StationSelectCard = ({
       setError(null);
       
       try {
-          // Call weather api to get rainfall and temperature data
-          const weatherData = await fetchStationWeather(station.station_id, selectedDate);
+          let weatherData;
           
-          // Handle case where fetchStationWeather returns null or undefined
+          // Determine which weather API to call based on the timeFrequency
+          const isYearly = Array.isArray(timeFrequency) && timeFrequency.length === 1 && timeFrequency[0] === 'year';
+          const isMonthly = Array.isArray(timeFrequency) && timeFrequency.includes('month');
+          
+          let period = '';
+          const year = selectedDate.getFullYear();
+          
+          // Check for older dates with potentially missing data
+          if (year < 2005) {
+            console.warn(`Selected year ${year} may have limited or no data for some stations`);
+          }
+          
+          if (isYearly) {
+              // Yearly frequency - display annual average
+              period = `year ${year}`;
+              console.log(`Fetching yearly weather data for ${station.station_id} in ${year}`);
+              weatherData = await fetchStationYearlyWeather(station.station_id, year);
+          } else if (isMonthly) {
+              // Monthly frequency - display monthly average
+              const month = selectedDate.getMonth() + 1; // JavaScript months are 0-indexed
+              period = `${format(selectedDate, 'MMMM yyyy')}`;
+              console.log(`Fetching monthly weather data for ${station.station_id} in ${month}/${year}`);
+              weatherData = await fetchStationMonthlyWeather(station.station_id, month, year);
+          } else {
+              // Daily frequency (fallback)
+              period = format(selectedDate, 'MMMM d, yyyy');
+              console.log(`Fetching daily weather data for ${station.station_id} on ${selectedDate.toISOString().split('T')[0]}`);
+              weatherData = await fetchStationDailyWeather(station.station_id, selectedDate);
+          }
+          
+          // Handle case where weather API returns null or undefined
           if (!weatherData) {
               console.error('Weather data returned null or undefined');
               setRainfallData({ rainfall: 'No data' });
@@ -69,12 +101,25 @@ const StationSelectCard = ({
                   minTemp: 'No data',
                   maxTemp: 'No data'
               });
+              setError(`No weather data available for ${period}`);
               return;
           }
           
           const [rainfall, [minTemp, maxTemp]] = weatherData;
           console.log('rainfall', rainfall);
           console.log(`min/max temperature: ${minTemp} / ${maxTemp}`);
+
+          // If all values are null, show an error message
+          if (rainfall === null && minTemp === null && maxTemp === null) {
+              setRainfallData({ rainfall: 'No data' });
+              setTemperatureData({
+                  minTemp: 'No data',
+                  maxTemp: 'No data'
+              });
+              
+              setError(`No weather data available for ${period}`);
+              return;
+          }
 
           // Set rainfall data - API returns a float value
           // Handle the case where rainfall might be null or undefined
@@ -86,17 +131,27 @@ const StationSelectCard = ({
             minTemp: typeof minTemp === 'number' ? minTemp : 'No data',
             maxTemp: typeof maxTemp === 'number' ? maxTemp : 'No data'
           });
+          
+          // Clear any error since we have valid data
+          setError(null);
       } catch (error) {
         console.error('Error fetching weather data:', error);
         setRainfallData({ rainfall: 'No data' });
         setTemperatureData({ minTemp: 'No data', maxTemp: 'No data' });
+        
+        // Set a more helpful error message based on the type of error
+        if (error.response && error.response.status === 500) {
+          setError('Server error: Data may not be available for this time period');
+        } else {
+          setError('Failed to load weather data. Please try again later.');
+        }
       } finally {
         setLoading(false);
       }
     };
     
     fetchData();
-  }, [station?.station_id, selectedDate]);
+  }, [station?.station_id, selectedDate, timeFrequency]);
 
   const handleSelect = () => {
     // Add the station to the context's selected stations
@@ -153,6 +208,14 @@ const StationSelectCard = ({
   const rainfallPercentage = rainfallData ? calculateRainfallPercentage(rainfallData.rainfall || 0) : 0;
   const minTempPercentage = temperatureData ? calculateTemperaturePercentage(temperatureData.minTemp || 0) : 0;
   const maxTempPercentage = temperatureData ? calculateTemperaturePercentage(temperatureData.maxTemp || 0) : 0;
+
+  // Determine if we're showing average data based on the timeFrequency
+  const isYearly = Array.isArray(timeFrequency) && timeFrequency.length === 1 && timeFrequency[0] === 'year';
+  const isMonthly = Array.isArray(timeFrequency) && timeFrequency.includes('month');
+  
+  // Create appropriate labels based on the timeFrequency
+  const rainfallLabel = isYearly ? 'Avg Annual Rainfall' : isMonthly ? 'Avg Monthly Rainfall' : 'Rainfall';
+  const tempLabel = isYearly ? 'Avg Annual Temp' : isMonthly ? 'Avg Monthly Temp' : 'Temperature';
 
   return (
     <div style={{ position: 'relative' }}>
@@ -211,6 +274,12 @@ const StationSelectCard = ({
             <span style={{ fontWeight: 'bold' }}>Years:</span> {station?.station_start_year || 'N/A'} — {station?.station_end_year || 'Present'}
           </Typography>
           
+          {error && (
+            <Alert severity="warning" sx={{ mb: 2, fontSize: '0.75rem', py: 0.5 }}>
+              {error}
+            </Alert>
+          )}
+          
           <Box sx={{ 
             display: 'flex', 
             justifyContent: 'center', 
@@ -225,93 +294,40 @@ const StationSelectCard = ({
               justifyContent: 'space-around',
               alignItems: 'flex-end'
             }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '70px' }}>
-                <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 0.5, fontSize: '0.85rem' }}>
-                  Rainfall
-                </Typography>
-                <Box sx={{ 
-                  position: 'relative', 
-                  width: '35px', 
-                  height: '90px', 
-                  border: '1px solid #ddd', 
-                  borderRadius: 1,
-                  bgcolor: '#fff'
-                }}>
-                  {loading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                      <CircularProgress size={16} />
-                    </Box>
-                  ) : (
-                    <Box sx={{ 
-                      position: 'absolute', 
-                      bottom: 0, 
-                      width: '100%', 
-                      height: `${rainfallPercentage}%`, 
-                      bgcolor: 'rgb(0, 106, 255)', // Light blue for rainfall
-                      transition: 'height 0.5s ease-in-out'
-                    }} />
-                  )}
-                </Box>
-                <Typography variant="caption" color="text.secondary" align="center" sx={{ mt: 0.5, fontSize: '0.75rem' }}>
-                  {loading 
-                    ? '-' 
-                    : (!rainfallData || rainfallData.rainfall === 'No data' || rainfallData.rainfall === null || rainfallData.rainfall === undefined) 
-                        ? 'No data' 
-                        : `${parseFloat(rainfallData.rainfall).toFixed(1)}mm`
-                  }
-                </Typography>
-              </Box>
+              <DataTube 
+                label={rainfallLabel}
+                value={rainfallData?.rainfall}
+                unit="mm"
+                fillPercentage={rainfallPercentage}
+                fillColor="rgb(0, 106, 255)"
+                loading={loading}
+                width={70}
+              />
               
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100px' }}>
-                <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 0.5, fontSize: '0.85rem' }}>
-                  Temperature
-                </Typography>
-                <Box sx={{ 
-                  position: 'relative', 
-                  width: '35px', 
-                  height: '90px', 
-                  border: '1px solid #ddd', 
-                  borderRadius: 1,
-                  bgcolor: '#fff'
-                }}>
-                  {loading ? (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                      <CircularProgress size={16} />
-                    </Box>
-                  ) : (
-                    <>
-                    <Box sx={{ // Min temperature line
-                      position: 'absolute', 
-                      bottom: `${minTempPercentage}%`, 
-                      width: '100%', 
-                      height: `${minTempPercentage > 0? '4px': '0px'}`, 
-                      bgcolor: 'rgb(125, 194, 255)' // Different light blue shade for min temp
-                    }} />
-                    <Box sx={{ // Max temperature line
-                      position: 'absolute', 
-                      bottom: `${maxTempPercentage}%`,
-                      width: '100%', 
-                      height: `${maxTempPercentage > 0? '4px': '0px'}`, 
-                      bgcolor: 'rgb(255, 196, 4)', // Light yellow for max temp
-                    }} />
-                    </>
-                  )}
-                </Box>
-                <Typography variant="caption" color="text.secondary" align="center" sx={{ mt: 0.5, fontSize: '0.75rem' }}>
-                  {loading 
-                    ? '-' 
-                    : (!temperatureData || temperatureData.minTemp === 'No data' || temperatureData.minTemp === null || temperatureData.minTemp === undefined ||
-                        temperatureData.maxTemp === 'No data' || temperatureData.maxTemp === null || temperatureData.maxTemp === undefined) 
-                        ? 'No data' 
-                        : `${parseFloat(temperatureData.minTemp).toFixed(1)}°C to ${parseFloat(temperatureData.maxTemp).toFixed(1)}°C`
-                  }
-                </Typography>
-              </Box>
+              <DataTube 
+                label={tempLabel}
+                value={{
+                  min: temperatureData?.minTemp,
+                  max: temperatureData?.maxTemp
+                }}
+                unit="°C"
+                isTemperatureTube={true}
+                minPercentage={minTempPercentage}
+                maxPercentage={maxTempPercentage}
+                loading={loading}
+                width={100}
+              />
             </Box>
           </Box>
           
           <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1, fontSize: '0.75rem' }}>
-            {selectedDate ? format(selectedDate, 'MMMM d, yyyy') : 'No date selected'}
+            {selectedDate ? 
+              (isYearly ? 
+                format(selectedDate, 'yyyy') : 
+                isMonthly ? 
+                  format(selectedDate, 'MMMM yyyy') : 
+                  format(selectedDate, 'MMMM d, yyyy')
+              ) : 'No date selected'}
           </Typography>
           
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
