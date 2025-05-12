@@ -149,18 +149,18 @@ export default function RainfallLineGraph({
         switch (selectedType) {
           case "rainfall":
             var dataPoints = rainfallPoints;
-            typeString = "Total rainfall";
+            typeString = "Rainfall";
             units = 'mm';
             break;
           case "max_temp":
             var dataPoints = maxTempStationPoints;
             units = '°C';
-            typeString = "Maximum temperature";
+            typeString = "Maximum Temperature";
             break;
           case "min_temp":
             var dataPoints = minTempStationPoints;
             units = '°C';
-            typeString = "Minimum temperature";
+            typeString = "Minimum Temperature";
             break;
           default:
             console.log("No data type selected");
@@ -216,16 +216,16 @@ export default function RainfallLineGraph({
       // Add chart title with frequency indication
       let titleText = `${typeString} Comparison`;
       if (frequency === 'monthly') {
-        titleText += ' (Monthly Averages)';
+        titleText += ' (Monthly)';
       } else if (frequency === 'yearly') {
-        titleText += ' (Yearly Averages)';
+        titleText += ' (Yearly)';
       }
       
       svg.append('text')
         .attr('x', graphWidth / 2)
         .attr('y', -20)
         .attr('text-anchor', 'middle')
-        .style('font-size', '16px')
+        .style('font-size', '18px')  // Slightly increased font size
         .style('font-weight', 'bold')
         .text(titleText);
       
@@ -274,7 +274,7 @@ export default function RainfallLineGraph({
         .attr('text-anchor', 'middle')
         .style('font-size', '14px')
         .style('font-weight', 'bold')
-        .text(`${typeString} [${units}]`);
+        .text(`${typeString} (${units})`);
 
       // Add grid lines
       svg.append('g')

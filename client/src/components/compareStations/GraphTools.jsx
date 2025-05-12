@@ -13,15 +13,13 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import TypeSelect from '../ui/TypeSelect';
 
 /**
  * GraphTools Component
  * Contains controls for adjusting graph settings: weather type and date range
  * 
  * @param {Object} props - Component props
- * @param {String} props.selectedType - Currently selected weather type
- * @param {Function} props.onTypeChange - Handler for type changes
+ * @param {Node} props.customTypeSelector - Custom selector for weather type
  * @param {Object} props.dateRange - Current date range {startDate, endDate}
  * @param {Function} props.onStartDateChange - Handler for start date changes
  * @param {Function} props.onEndDateChange - Handler for end date changes
@@ -29,8 +27,7 @@ import TypeSelect from '../ui/TypeSelect';
  * @param {Function} props.onFrequencyChange - Handler for frequency changes
  */
 const GraphTools = ({ 
-  selectedType,
-  onTypeChange,
+  customTypeSelector,
   dateRange,
   onStartDateChange,
   onEndDateChange,
@@ -115,11 +112,8 @@ const GraphTools = ({
             width={{ xs: '100%', md: 'auto' }}
             alignItems={{ xs: 'stretch', sm: 'center' }}
           >
-            {/* Data type selector */}
-            <TypeSelect 
-              type={selectedType} 
-              setType={onTypeChange} 
-            />
+            {/* Custom weather type selector */}
+            {customTypeSelector}
             
             {/* Frequency selector */}
             <FormControl

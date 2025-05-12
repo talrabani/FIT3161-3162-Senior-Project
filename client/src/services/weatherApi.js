@@ -476,7 +476,7 @@ export const fetchStationWeatherRange = async (stationId, startDate, endDate) =>
  * @param {Date|string} startDate - The start date to get data for (Date object or YYYY-MM-DD string)
  * @param {Date|string} endDate - The end date to get data for (Date object or YYYY-MM-DD string)
  * @param {string} frequency - The frequency of aggregation ('monthly' or 'yearly')
- * @param {string} dataType - The type of data to fetch ('rainfall', 'min_temp', or 'max_temp')
+ * @param {string} dataType - The type of data to fetch ('rainfall', 'min_temp', 'max_temp', or 'both_temps')
  * @returns {Promise} Promise with aggregated weather data for the station on the specified date range
  */
 export const fetchStationWeatherAggregated = async (stationId, startDate, endDate, frequency, dataType) => {
@@ -493,18 +493,23 @@ export const fetchStationWeatherAggregated = async (stationId, startDate, endDat
       ? endDate.toISOString().split('T')[0] 
       : endDate;
     
+    // For temperature range, we want both min and max temperatures
+    // But the API endpoint only accepts one data type, so we don't pass data_type for 'both_temps'
+    const actualDataType = dataType === 'both_temps' ? null : dataType;
+    
     console.log(`CLIENT SERVICE: Fetching ${frequency} aggregated ${dataType} data for station:`, 
                formattedStationId, 'on date range:', formattedStartDate, 'to', formattedEndDate);
     
     // Use the correct API endpoint URL format that matches the server implementation
     const url = `${SERVER_API_URL}/rainfall/aggregated/station/${formattedStationId}/frequency/${frequency}/date/${formattedStartDate}/end_date/${formattedEndDate}`;
     
-    // Make the request with data_type as a query parameter
-    const response = await axios.get(url, {
-      params: {
-        data_type: dataType || 'rainfall'
-      }
-    });
+    // Make the request with data_type as a query parameter (only if it's not 'both_temps')
+    const params = {};
+    if (actualDataType) {
+      params.data_type = actualDataType;
+    }
+    
+    const response = await axios.get(url, { params });
     
     // If no data is returned or response is invalid, return empty array
     if (!response.data || (Array.isArray(response.data) && response.data.length === 0)) {
