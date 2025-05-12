@@ -213,9 +213,9 @@ const StationSelectCard = ({
   const isYearly = Array.isArray(timeFrequency) && timeFrequency.length === 1 && timeFrequency[0] === 'year';
   const isMonthly = Array.isArray(timeFrequency) && timeFrequency.includes('month');
   
-  // Create appropriate labels based on the timeFrequency
-  const rainfallLabel = isYearly ? 'Avg Annual Rainfall' : isMonthly ? 'Avg Monthly Rainfall' : 'Rainfall';
-  const tempLabel = isYearly ? 'Avg Annual Temp' : isMonthly ? 'Avg Monthly Temp' : 'Temperature';
+  // Create appropriate labels based on the timeFrequency - using "Average" for annual data
+  const rainfallLabel = isYearly ? 'Average Annual Rainfall' : isMonthly ? 'Average Monthly Rainfall' : 'Rainfall';
+  const tempLabel = isYearly ? 'Average Annual Temp' : isMonthly ? 'Average Monthly Temp' : 'Temperature';
 
   return (
     <div style={{ position: 'relative' }}>
@@ -283,7 +283,7 @@ const StationSelectCard = ({
           <Box sx={{ 
             display: 'flex', 
             justifyContent: 'center', 
-            alignItems: 'flex-end',
+            alignItems: 'center',
             mt: 1,
             mb: 1.5
           }}>
@@ -292,7 +292,8 @@ const StationSelectCard = ({
               display: 'flex', 
               flexDirection: 'row', 
               justifyContent: 'space-around',
-              alignItems: 'flex-end'
+              alignItems: 'flex-start',
+              minHeight: '150px' // Increase minimum height to accommodate the extra spacing
             }}>
               <DataTube 
                 label={rainfallLabel}
@@ -301,7 +302,8 @@ const StationSelectCard = ({
                 fillPercentage={rainfallPercentage}
                 fillColor="rgb(0, 106, 255)"
                 loading={loading}
-                width={70}
+                width={80}
+                height={90}
               />
               
               <DataTube 
@@ -315,7 +317,8 @@ const StationSelectCard = ({
                 minPercentage={minTempPercentage}
                 maxPercentage={maxTempPercentage}
                 loading={loading}
-                width={100}
+                width={80} // Make both tubes the same width
+                height={90}
               />
             </Box>
           </Box>

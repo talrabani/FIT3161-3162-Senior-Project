@@ -171,10 +171,21 @@ const DataTube = ({
     return 'No data';
   };
 
+  // Check if the value is valid for display
+  const hasValidValue = displayValue() !== 'No data';
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: `${width}px` }}>
       {label && (
-        <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 0.5, fontSize: '0.85rem' }}>
+        <Typography variant="body2" color="text.secondary" align="center" sx={{ 
+          mb: 1.5,
+          fontSize: '0.85rem',
+          height: '2.5em', // Fixed height for label area that can fit two lines
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          lineHeight: 1.2
+        }}>
           {label}
         </Typography>
       )}
@@ -224,15 +235,16 @@ const DataTube = ({
           }} />
         )}
       </Box>
-      {displayValue() !== 'No data' && (
-        <Typography variant="caption" color="text.secondary" align="center" sx={{ 
-          mt: 0.5, 
-          fontSize: '0.75rem',
-          display: label ? 'block' : 'none' // Only show the value below if there's a label above
-        }}>
-          {displayValue()}
-        </Typography>
-      )}
+      {/* Always render the Typography component to maintain consistent height, but show empty content for 'No data' */}
+      <Typography variant="caption" color="text.secondary" align="center" sx={{ 
+        mt: 0.5, 
+        fontSize: '0.75rem',
+        height: '1.25em', // Set a fixed height for consistent spacing
+        display: label ? 'block' : 'none', // Only show if there's a label above
+        visibility: hasValidValue ? 'visible' : 'hidden' // Hide text but maintain space
+      }}>
+        {displayValue()}
+      </Typography>
     </Box>
   );
 };
