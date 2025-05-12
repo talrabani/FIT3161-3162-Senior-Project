@@ -209,7 +209,11 @@ const CompareStationsBox = ({ stationsToCompare }) => {
       )}
       
       {/* Download Options */}
-      <SaveGraphOptions hasData={hasData} />
+      <SaveGraphOptions
+        hasData={hasData}
+        comparisonData={comparisonData}
+        graphType={selectedGraphType}
+        frequency={frequency}/>
     </Fragment>
   );
 };

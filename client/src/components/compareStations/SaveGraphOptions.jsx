@@ -6,7 +6,7 @@ import {
   Stack,
   Button
 } from '@mui/material';
-import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG } from '../utils/downloadChart';
+import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAsCSV } from '../utils/downloadChart';
 
 /**
  * SaveGraphOptions Component
@@ -15,7 +15,7 @@ import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG } from '../
  * @param {Object} props - Component props
  * @param {Boolean} props.hasData - Whether there is data to download
  */
-const SaveGraphOptions = ({ hasData = false }) => {
+const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequency }) => {
   return (
     <Card sx={{ 
       mb: 3,
@@ -37,6 +37,22 @@ const SaveGraphOptions = ({ hasData = false }) => {
           spacing={2} 
           justifyContent="center"
         >
+          <Button
+            variant="contained" 
+            color="primary"
+            size="small"
+            disabled={(!hasData || graphType === 'temp_range')}
+            sx={{ 
+              fontSize: '0.8rem',
+              backgroundColor: '#3949ab',
+              '&:hover': {
+                backgroundColor: '#1a237e'
+              }
+            }}
+            onClick={() => downloadAsCSV(comparisonData,graphType,frequency)}
+          >
+            Download as CSV
+          </Button>
           <Button
             variant="contained" 
             color="primary"
