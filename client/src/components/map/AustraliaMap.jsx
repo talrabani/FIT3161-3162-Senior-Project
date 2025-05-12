@@ -280,9 +280,9 @@ export default function AustraliaMap({
         dataField = 'rainfall';
         // Set different title based on timeFrequency
         if (timeFrequency === 'year') {
-          legendTitle = 'Annual Rainfall (mm)';
+          legendTitle = 'Annual average rainfall (mm)';
         } else {
-          legendTitle = 'Monthly Rainfall (mm)';
+          legendTitle = 'Monthly average rainfall (mm)';
         }
         colourStart = 'rgb(255,255,255)';
         colourMid = 'rgb(0, 157, 255)';
@@ -290,9 +290,9 @@ export default function AustraliaMap({
       } else { // temperature
         // Set different title based on timeFrequency
         if (timeFrequency === 'year') {
-          legendTitle = 'Annual Temperature (°C)';
+          legendTitle = 'Annual average temperature (°C)';
         } else {
-          legendTitle = 'Monthly Temperature (°C)';
+          legendTitle = 'Monthly average temperature (°C)';
         }
         colourStart = 'rgb(0, 162, 255)';
         colourMid = 'rgb(255,255,0)';

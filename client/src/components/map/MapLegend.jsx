@@ -40,9 +40,9 @@ const MapLegend = ({
     
   // For temperature data, enhance the title to specify min or max
   if (type === 'min_temp') {
-    displayTitle = isYearly ? 'Annual Minimum Temperature (°C)' : 'Monthly Minimum Temperature (°C)';
+    displayTitle = isYearly ? 'Annual average minimum temperature (°C)' : 'Monthly average minimum temperature (°C)';
   } else if (type === 'max_temp') {
-    displayTitle = isYearly ? 'Annual Maximum Temperature (°C)' : 'Monthly Maximum Temperature (°C)';
+    displayTitle = isYearly ? 'Annual average maximum temperature (°C)' : 'Monthly average maximum temperature (°C)';
   }
   
   // For temperature data
