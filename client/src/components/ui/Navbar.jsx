@@ -19,10 +19,10 @@ const Navbar = () => {
   return (
     <AppBar 
       position="static" 
-      elevation={2} 
+      elevation={3}
       sx={{ 
-        backgroundColor: 'rgba(198, 166, 6, 0.9)',
-        borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+        background: 'linear-gradient(90deg, #1a237e 0%, #3949ab 100%)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
         marginBottom: '0.5rem'
       }}
     >
@@ -52,8 +52,10 @@ const Navbar = () => {
             sx={{
               color: 'white',
               '&:hover': {
-                backgroundColor: 'rgba(255, 255, 255, 0.1)'
-              }
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                transition: 'all 0.2s ease'
+              },
+              transition: 'all 0.2s ease'
             }}
           >
             Logout
