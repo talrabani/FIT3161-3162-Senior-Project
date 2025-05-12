@@ -45,7 +45,7 @@ export default function RainfallLineGraph({
       const containerHeight = height;
       
       // Set margins
-      const margin = { top: 40, right: 120, bottom: 40, left: 40 };
+      const margin = { top: 50, right: 120, bottom: 60, left: 60 };
       const graphWidth = containerWidth - margin.left - margin.right;
       const graphHeight = containerHeight - margin.top - margin.bottom;
 
@@ -145,6 +145,8 @@ export default function RainfallLineGraph({
           .attr('x', graphWidth / 2)
           .attr('y', graphHeight / 2)
           .attr('text-anchor', 'middle')
+          .style('font-size', '14px')
+          .style('font-weight', 'bold')
           .text('No data available for the selected period.');
         return;
       }
@@ -173,28 +175,46 @@ export default function RainfallLineGraph({
         .x(d => x(d.date))
         .y(d => y(d.dataPoint));
       
-      // Add X axis
+      // Add chart title
+      svg.append('text')
+        .attr('x', graphWidth / 2)
+        .attr('y', -20)
+        .attr('text-anchor', 'middle')
+        .style('font-size', '16px')
+        .style('font-weight', 'bold')
+        .text(`${typeString} Comparison`);
+      
+      // Add X axis with larger font
       svg.append('g')
         .attr('transform', `translate(0,${graphHeight})`)
         .call(d3.axisBottom(x).ticks(6).tickFormat(d3.timeFormat('%d %b %Y')))
+        .selectAll('text')
+        .style('font-size', '12px');
       
       // Add X axis label
       svg.append('text')
         .attr('x', graphWidth / 2)
         .attr('y', graphHeight + margin.bottom - 10)
         .attr('text-anchor', 'middle')
-        .style('font-size', '12px')
+        .style('font-size', '14px')
+        .style('font-weight', 'bold')
         .text('Date');
       
-      // Add Y axis
+      // Add Y axis with larger font
       svg.append('g')
         .call(d3.axisLeft(y))
-        .append('text')
+        .selectAll('text')
+        .style('font-size', '12px');
+      
+      // Add Y axis label
+      svg.append('text')
         .attr('fill', '#000')
         .attr('transform', 'rotate(-90)')
-        .attr('y', -25)
+        .attr('y', -40)
         .attr('x', -graphHeight / 2)
         .attr('text-anchor', 'middle')
+        .style('font-size', '14px')
+        .style('font-weight', 'bold')
         .text(`${typeString} [${units}]`);
 
       // Add grid lines
@@ -222,7 +242,8 @@ export default function RainfallLineGraph({
         .style('border-radius', '4px')
         .style('padding', '10px')
         .style('pointer-events', 'none')
-        .style('box-shadow', '0 2px 5px rgba(0,0,0,0.1)');
+        .style('box-shadow', '0 2px 5px rgba(0,0,0,0.1)')
+        .style('font-size', '13px');
 
       // Draw lines for each station
       stationSeries.forEach(station => {
@@ -248,158 +269,105 @@ export default function RainfallLineGraph({
           .attr('cy', d => y(d.dataPoint))
           .attr('r', 3.5)
           .attr('fill', station.color)
-          .attr('stroke', '#fff')
-          .attr('stroke-width', 1.5)
-          // Add overlay to display data when mouse hovers over data point
-          .on('mouseover', function(event) {
-            const pointer = d3.pointer(event);
-            const xDate = x.invert(pointer[0]);
-
-            // Highlight points
-            svg.selectAll('circle')
-            .attr('r', 3.5)
-            .attr('stroke-width', 1.5);
-
-            const pointsOnDate = station.values.filter(d => 
-                format(d.date, 'yyyy-MM-dd') === format(xDate, 'yyyy-MM-dd')
-                );
-
-            pointsOnDate.forEach(p => {
-              svg.selectAll(`.dot-${station.id}`)
-                .filter(d => format(d.date, 'yyyy-MM-dd') === format(p.date, 'yyyy-MM-dd'))
-                .attr('r', 5)
-                .attr('stroke-width', 2);
-            });
-            
-            // Show tooltip
-            tooltip.style('opacity', 0.9);
-            tooltip.html(`<strong>${format(xDate, 'MMMM d, yyyy')}</strong><br/>`)
-              .style('left', `${event.offsetX + 10}px`)
-              .style('top', `${event.offsetY - 28}px`);
-            
-            // Add each station's rainfall to the tooltip
-            pointsOnDate.forEach(p => {
-              if (p.dataPoint !== null && !isNaN(station.id) && p.dataPoint !== undefined) {
-                tooltip.html(tooltip.html() + `${station.name}: ${p.dataPoint.toFixed(1)} ${units}<br/>`);
-              } else {
-                tooltip.html(tooltip.html() + `${station.name}: No data<br/>`);
-              }
-          });
-        })
-        .on('mouseout', function() {
-          // Reset point sizes
-          svg.selectAll('circle')
-            .attr('r', 3.5)
-            .attr('stroke-width', 1.5);
           
-          // Hide tooltip
-          tooltip.style('opacity', 0);
-        });
+          // Mouse events for dots
+          .on('mouseover', function(event, d) {
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .attr('r', 5);
+  
+            tooltip.transition()
+              .duration(100)
+              .style('opacity', 0.9);
+  
+            const tooltipHtml = `
+              <div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">
+                ${station.name}
+              </div>
+              <div>
+                <span style="font-weight: bold;">Date:</span> ${format(d.date, 'dd MMM yyyy')}
+              </div>
+              <div>
+                <span style="font-weight: bold;">${typeString}:</span> ${d.dataPoint.toFixed(1)} ${units}
+              </div>
+            `;
+  
+            tooltip.html(tooltipHtml)
+              .style('left', (event.pageX + 10) + 'px')
+              .style('top', (event.pageY - 28) + 'px');
+          })
+          
+          .on('mouseout', function() {
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .attr('r', 3.5);
+            
+            tooltip.transition()
+              .duration(500)
+              .style('opacity', 0);
+          });
       });
-
-      // Add a title
-      svg.append('text')
-        .attr('x', (graphWidth / 2))
-        .attr('y', -(margin.top / 2))
-        .attr('text-anchor', 'middle')
-        .style('font-size', '16px')
-        .style('text-decoration', 'bold')
-        .text(`${typeString} in ${Object.keys(stationData).length} stations
-          from ${x.domain()[0].toLocaleDateString('en-gb',
-            {day: 'numeric', month: 'long', year: 'numeric'})}
-          to ${x.domain()[1].toLocaleDateString('en-gb',
-            {day: 'numeric', month: 'long', year: 'numeric'}
-          )}`);
-
       
-      // Add a legend
+      // Add legend
       const legend = svg.append('g')
         .attr('class', 'legend')
-        .attr('transform', `translate(${graphWidth + 5}, 0)`);
+        .attr('transform', `translate(${graphWidth + 10}, 0)`);
       
-      let curPos = 0;
-
+      // Add legend title
+      legend.append('text')
+        .attr('x', 0)
+        .attr('y', -10)
+        .style('font-size', '14px')
+        .style('font-weight', 'bold')
+        .text('Stations');
+      
+      // Add legend items
       stationSeries.forEach((station, i) => {
         const legendItem = legend.append('g')
-          .attr('transform', `translate(0, ${i + curPos})`);
+          .attr('transform', `translate(0, ${i * 25 + 10})`);
         
         legendItem.append('rect')
           .attr('width', 15)
-          .attr('height', 2)
+          .attr('height', 3)
           .attr('fill', station.color);
         
         legendItem.append('text')
           .attr('x', 20)
-          .attr('y', 5)
+          .attr('y', 3)
           .style('font-size', '12px')
-          .text(station.name)
-          .call(wrap, 100);
-        curPos += legendItem.node().getBBox().height;
+          .text(station.name);
       });
     };
-    
-    renderChart();
 
-    // Add window resize handler for responsiveness
+    renderChart();
+    
+    // Add resize event listener for responsive chart
     const handleResize = () => {
       if (chartRef.current) {
         d3.select(chartRef.current).selectAll('*').remove();
         renderChart();
       }
     };
-
+    
     window.addEventListener('resize', handleResize);
+    
+    // Clean up on unmount
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [stationData, loading, error, height]);
+    
+  }, [stationData, selectedType, loading, error, height]);
   
-
   return (
     <div 
-      ref={chartRef}
+      ref={chartRef} 
       style={{ 
         width: width, 
-        height: height, 
-        position: 'relative',
-        backgroundColor: '#fff',
-        borderRadius: '8px',
-        border: '1px solid #e0e0e0'
+        height: height,
+        position: 'relative'
       }}
-    >
-      {loading && (
-        <div style={{ 
-          position: 'absolute', 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)'
-        }}>
-          Loading...
-        </div>
-      )}
-      {error && (
-        <div style={{ 
-          position: 'absolute', 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)',
-          color: 'red'
-        }}>
-          {error}
-        </div>
-      )}
-      {!loading && !error && (!stationData || Object.keys(stationData).length === 0) && (
-        <div style={{ 
-          position: 'absolute', 
-          top: '50%', 
-          left: '50%', 
-          transform: 'translate(-50%, -50%)',
-          color: '#666',
-          textAlign: 'center'
-        }}>
-          Select at least two stations and a date range to compare weather data
-        </div>
-      )}
-    </div>
+    ></div>
   );
 }
