@@ -13,6 +13,7 @@ import { Box, CircularProgress, Typography } from '@mui/material';
  * @param {string} props.fillColor - The color to use for the fill
  * @param {boolean} props.loading - Whether the data is loading
  * @param {boolean} props.isTemperatureTube - Whether this is a temperature tube (uses range instead of fill)
+ * @param {boolean} props.isThermometerTube - Whether this is a thermometer tube (displays single temp value on -20 to 50°C scale)
  * @param {number} props.minPercentage - For temperature tube, the percentage for min temp
  * @param {number} props.maxPercentage - For temperature tube, the percentage for max temp
  * @param {number} props.width - Width of the column (default: 70px)
@@ -26,6 +27,7 @@ const DataTube = ({
   fillColor = 'rgb(0, 106, 255)',
   loading = false,
   isTemperatureTube = false,
+  isThermometerTube = false,
   minPercentage = 0,
   maxPercentage = 0,
   width = 70,
@@ -49,18 +51,34 @@ const DataTube = ({
   // Get temp values for internal calculations
   const { min: minTemp, max: maxTemp } = getTemperatureValues();
   
+  // Get single temperature value for thermometer display
+  const getSingleTemperatureValue = () => {
+    if (!isThermometerTube) return null;
+    
+    // For thermometer tube, value should be a number or a string that can be parsed to a number
+    if (typeof value === 'number') return value;
+    if (typeof value === 'string') return parseFloat(value);
+    
+    return null;
+  };
+  
+  const singleTempValue = getSingleTemperatureValue();
+  
   // Calculate temperature positions (0% is bottom, 100% is top)
-  // Map from -20°C to 40°C (range of 60 degrees)
+  // Map from -20°C to 50°C (range of 70 degrees)
   const calculateTempPosition = (temp) => {
     if (temp === null || temp === undefined || isNaN(temp)) return 0;
     
     // If temperature is below -20°C, cap at 0%
     if (temp <= -20) return 0;
-    // If temperature is above 40°C, cap at 100%
-    if (temp >= 40) return 100;
-    // Otherwise, scale from -20 to 40 (range of 60 degrees)
-    return ((temp + 20) / 60) * 100;
+    // If temperature is above 50°C, cap at 100%
+    if (temp >= 50) return 100;
+    // Otherwise, scale from -20 to 50 (range of 70 degrees)
+    return ((temp + 20) / 70) * 100;
   };
+  
+  // Calculate thermometer position (height) based on temperature
+  const thermometerHeight = singleTempValue !== null ? calculateTempPosition(singleTempValue) : 0;
   
   // Calculate correct positions
   const minTempPosition = calculateTempPosition(minTemp);
@@ -119,6 +137,11 @@ const DataTube = ({
     if (loading) return '-';
     if (value === 'No data' || value === null || value === undefined) return 'No data';
     
+    // For thermometer tube, handle single temperature value
+    if (isThermometerTube && singleTempValue !== null && !isNaN(singleTempValue)) {
+      return `${parseFloat(singleTempValue).toFixed(1)}${unit}`;
+    }
+    
     // For temperature tube, we need to handle min/max values
     if (isTemperatureTube && typeof value === 'object') {
       const min = value.min;
@@ -168,6 +191,16 @@ const DataTube = ({
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <CircularProgress size={16} />
           </Box>
+        ) : isThermometerTube ? (
+          // Thermometer visualization - simple tube with red color
+          <Box sx={{ 
+            position: 'absolute', 
+            bottom: 0, 
+            width: '100%', 
+            height: `${thermometerHeight}%`, 
+            bgcolor: '#d30000', // Thermometer red color
+            transition: 'height 0.5s ease-in-out'
+          }} />
         ) : isTemperatureTube ? (
           // Temperature range visualization with dynamic gradient
           <Box sx={{ 

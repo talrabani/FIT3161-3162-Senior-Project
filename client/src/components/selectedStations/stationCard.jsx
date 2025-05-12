@@ -556,14 +556,9 @@ const StationCard = ({
                         Highest Temp
                       </Typography>
                       <DataTube 
-                        value={{
-                          min: null,
-                          max: weatherDetails.highestTemp.value
-                        }}
+                        value={weatherDetails.highestTemp.value}
                         unit="°C"
-                        isTemperatureTube={true}
-                        minPercentage={0}
-                        maxPercentage={calculateTemperaturePercentage(weatherDetails.highestTemp.value)}
+                        isThermometerTube={true}
                         width={55}
                         height={70}
                       />
@@ -603,14 +598,9 @@ const StationCard = ({
                         Lowest Temp
                       </Typography>
                       <DataTube 
-                        value={{
-                          min: weatherDetails.lowestTemp.value,
-                          max: null
-                        }}
+                        value={weatherDetails.lowestTemp.value}
                         unit="°C"
-                        isTemperatureTube={true}
-                        minPercentage={calculateTemperaturePercentage(weatherDetails.lowestTemp.value)}
-                        maxPercentage={0}
+                        isThermometerTube={true}
                         width={55}
                         height={70}
                       />
