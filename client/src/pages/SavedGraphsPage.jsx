@@ -13,18 +13,20 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Alert
+  Alert,
+  Stack,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Navbar from '../components/ui/Navbar';
 import AuthService from '../services/auth.service';
+import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG } from '../components/utils/downloadChart';
 
 const SavedGraphsPage = () => {
   const [savedGraphs, setSavedGraphs] = useState([]);
   const [selectedGraph, setSelectedGraph] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [error, setError] = useState(null);
-
+  
   // Load saved graphs from localStorage
   useEffect(() => {
     try {
@@ -158,17 +160,77 @@ const SavedGraphsPage = () => {
           </DialogTitle>
           <DialogContent>
             {selectedGraph && (
-              <Box 
-                sx={{ 
-                  width: '100%', 
-                  height: '400px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  bgcolor: 'background.paper'
-                }}
-                dangerouslySetInnerHTML={{ __html: selectedGraph.svg }}
-              />
+               <Stack 
+                  direction='column' 
+                  spacing={2} 
+                  justifyContent="center"
+                >
+                  <Box 
+                    sx={{ 
+                      width: '100%', 
+                      height: '400px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      bgcolor: 'background.paper'
+                    }}
+                    dangerouslySetInnerHTML={{ __html: selectedGraph.svg }}
+                  />
+                  <Stack 
+                    direction='row' 
+                    spacing={2} 
+                    justifyContent="center"
+                  >
+                    <Button
+                      variant="contained" 
+                      color="primary"
+                      size="small"
+                      // disabled={!hasData}
+                      sx={{ 
+                        fontSize: '0.8rem',
+                        backgroundColor: '#3949ab',
+                        '&:hover': {
+                          backgroundColor: '#1a237e'
+                        }
+                      }}
+                      onClick={downloadGraphAsSVG}
+                    >
+                      Download as SVG
+                    </Button>
+                    <Button
+                      variant="contained" 
+                      color="primary"
+                      size="small"
+                      // disabled={!hasData}
+                      sx={{ 
+                        fontSize: '0.8rem',
+                        backgroundColor: '#3949ab',
+                        '&:hover': {
+                          backgroundColor: '#1a237e'
+                        }
+                      }}
+                      onClick={downloadGraphAsPNG}
+                    >
+                      Download as PNG
+                    </Button>
+                    <Button
+                      variant="contained" 
+                      color="primary"
+                      size="small"
+                      // disabled={!hasData}
+                      sx={{ 
+                        fontSize: '0.8rem',
+                        backgroundColor: '#3949ab',
+                        '&:hover': {
+                          backgroundColor: '#1a237e'
+                        }
+                      }}
+                      onClick={downloadGraphAsJPEG}
+                    >
+                      Download as JPEG
+                    </Button>
+                </Stack>
+                </Stack>
             )}
           </DialogContent>
           <DialogActions>
