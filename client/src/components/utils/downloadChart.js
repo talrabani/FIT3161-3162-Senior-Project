@@ -16,6 +16,7 @@ const dateFormatter = (date, frequency) => {
         default: console.log("Invalid frequency type");
     }
 }
+
 const downloadAsCSV = (data, dataType, frequency) => {
     let csvArr = [['Date']];
     Object.values(data).forEach(station => csvArr[0].push(station['name']));
@@ -35,6 +36,83 @@ const downloadAsCSV = (data, dataType, frequency) => {
     // window.open(url);
     const a = document.createElement('a');
     a.setAttribute('download', `graph_data_${dataType}.csv`);
+    a.setAttribute('href', url);
+    a.dispatchEvent(new MouseEvent('click'));
+}
+
+/**
+ * Downloads temperature range data (min and max) as a CSV file
+ * @param {Object} data Station data object containing temperature data
+ * @param {string} frequency Data frequency (daily, monthly, yearly)
+ */
+const downloadTemperatureRangeAsCSV = (data, frequency) => {
+    // Create header row with station names for both min and max temperatures
+    let csvArr = [['Date']];
+    Object.values(data).forEach(station => {
+        csvArr[0].push(`${station['name']} (Min °C)`);
+        csvArr[0].push(`${station['name']} (Max °C)`);
+    });
+    
+    // Create a map to organize data by date
+    const dateMap = new Map();
+    
+    // Collect all unique dates across all stations
+    Object.values(data).forEach(station => {
+        Object.keys(station['data']).forEach(dataPoint => {
+            const date = dateFormatter(station['data'][dataPoint]['date'], frequency);
+            if (!dateMap.has(date)) {
+                dateMap.set(date, {});
+            }
+        });
+    });
+    
+    // Sort dates chronologically
+    const sortedDates = Array.from(dateMap.keys()).sort((a, b) => {
+        // Convert dates to comparable format based on frequency
+        if (frequency === 'yearly') {
+            return parseInt(a) - parseInt(b);
+        } else if (frequency === 'monthly') {
+            const [monthA, yearA] = a.split('-');
+            const [monthB, yearB] = b.split('-');
+            return (yearA - yearB) || (monthA - monthB);
+        } else {
+            // Daily format: DD-MM-YYYY
+            const [dayA, monthA, yearA] = a.split('-');
+            const [dayB, monthB, yearB] = b.split('-');
+            return (yearA - yearB) || (monthA - monthB) || (dayA - dayB);
+        }
+    });
+    
+    // For each date, add a row with min and max temps for each station
+    sortedDates.forEach(date => {
+        const row = [date];
+        
+        Object.values(data).forEach(station => {
+            let minTemp = null;
+            let maxTemp = null;
+            
+            // Find the matching data point for this date and station
+            Object.keys(station['data']).forEach(dataPoint => {
+                const dataDate = dateFormatter(station['data'][dataPoint]['date'], frequency);
+                if (dataDate === date) {
+                    minTemp = station['data'][dataPoint]['min_temp'];
+                    maxTemp = station['data'][dataPoint]['max_temp'];
+                }
+            });
+            
+            // Add min and max temps to the row
+            row.push(minTemp !== null ? minTemp : 'N/A');
+            row.push(maxTemp !== null ? maxTemp : 'N/A');
+        });
+        
+        csvArr.push(row);
+    });
+    
+    // Generate and download the CSV
+    const csvContent = "data:text/csv;charset=utf-8," + csvArr.map(e => e.join(",")).join("\n");
+    const url = encodeURI(csvContent);
+    const a = document.createElement('a');
+    a.setAttribute('download', `temperature_range_data.csv`);
     a.setAttribute('href', url);
     a.dispatchEvent(new MouseEvent('click'));
 }
@@ -82,4 +160,4 @@ const downloadGraphAsSVG = () => {
     downloadGraph('svg');
     }
 
-export  { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAsCSV };
+export  { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAsCSV, downloadTemperatureRangeAsCSV };

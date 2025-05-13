@@ -6,7 +6,7 @@ import {
   Stack,
   Button
 } from '@mui/material';
-import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAsCSV } from '../utils/downloadChart';
+import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAsCSV, downloadTemperatureRangeAsCSV } from '../utils/downloadChart';
 
 /**
  * SaveGraphOptions Component
@@ -14,8 +14,20 @@ import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAs
  * 
  * @param {Object} props - Component props
  * @param {Boolean} props.hasData - Whether there is data to download
+ * @param {Object} props.comparisonData - The data to be downloaded
+ * @param {String} props.graphType - The type of graph (rainfall, max_temp, min_temp, temp_range)
+ * @param {String} props.frequency - The data frequency (daily, monthly, yearly)
  */
 const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequency }) => {
+  // Handle CSV download based on graph type
+  const handleCsvDownload = () => {
+    if (graphType === 'temp_range') {
+      downloadTemperatureRangeAsCSV(comparisonData, frequency);
+    } else {
+      downloadAsCSV(comparisonData, graphType, frequency);
+    }
+  };
+
   return (
     <Card sx={{ 
       mb: 3,
@@ -41,7 +53,7 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
             variant="contained" 
             color="primary"
             size="small"
-            disabled={(!hasData || graphType === 'temp_range')}
+            disabled={!hasData}
             sx={{ 
               fontSize: '0.8rem',
               backgroundColor: '#3949ab',
@@ -49,7 +61,7 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
                 backgroundColor: '#1a237e'
               }
             }}
-            onClick={() => downloadAsCSV(comparisonData,graphType,frequency)}
+            onClick={handleCsvDownload}
           >
             Download as CSV
           </Button>
