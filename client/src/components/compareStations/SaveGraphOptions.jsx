@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as d3 from "d3";
 import { 
   Card, 
   CardContent, 
   Typography, 
   Stack,
-  Button
+  Button,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAsCSV, downloadTemperatureRangeAsCSV } from '../utils/downloadChart';
 import AuthService from '../../services/auth.service';
@@ -21,6 +23,12 @@ import AuthService from '../../services/auth.service';
  * @param {String} props.frequency - The data frequency (daily, monthly, yearly)
  */
 const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequency }) => {
+  const [notification, setNotification] = useState({
+    open: false,
+    message: "",
+    severity: "success"
+  });
+
   // Handle CSV download based on graph type
   const handleCsvDownload = () => {
     if (graphType === 'temp_range') {
@@ -30,18 +38,37 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
     }
   };
 
+  // Close notification
+  const handleCloseNotification = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNotification({ ...notification, open: false });
+  };
+
   // Handle saving graph to localStorage
   const handleSaveGraph = () => {
     if (!hasData) return;
 
     const currentUser = AuthService.getCurrentUser();
     if (!currentUser || !currentUser.user) {
-      console.error('No user logged in');
+      setNotification({
+        open: true,
+        message: "Please log in to save graphs",
+        severity: "error"
+      });
       return;
     }
 
     const svg = d3.select('#chart').node();
-    if (!svg) return;
+    if (!svg) {
+      setNotification({
+        open: true,
+        message: "Error saving graph: Chart not found",
+        severity: "error"
+      });
+      return;
+    }
 
     // Get the SVG content
     const svgContent = svg.outerHTML;
@@ -65,6 +92,13 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
     
     // Save back to localStorage
     localStorage.setItem('savedGraphs', JSON.stringify(savedGraphs));
+
+    // Show success notification
+    setNotification({
+      open: true,
+      message: "Graph saved successfully!",
+      severity: "success"
+    });
   };
 
   return (
@@ -170,6 +204,23 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
           </Button>
         </Stack>
       </CardContent>
+
+      {/* Notification Snackbar */}
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={4000}
+        onClose={handleCloseNotification}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseNotification} 
+          severity={notification.severity} 
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 };

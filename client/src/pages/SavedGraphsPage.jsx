@@ -25,6 +25,7 @@ const SavedGraphsPage = () => {
   const [savedGraphs, setSavedGraphs] = useState([]);
   const [selectedGraph, setSelectedGraph] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [error, setError] = useState(null);
   
   // Load saved graphs from localStorage
@@ -74,6 +75,33 @@ const SavedGraphsPage = () => {
     }
   };
 
+  // Handle removing all graphs
+  const handleRemoveAllGraphs = () => {
+    try {
+      const currentUser = AuthService.getCurrentUser();
+      if (!currentUser || !currentUser.user) {
+        setError('Please log in to delete graphs');
+        return;
+      }
+
+      // Get all graphs
+      const allGraphs = JSON.parse(localStorage.getItem('savedGraphs') || '[]');
+      
+      // Remove all graphs for the current user
+      const updatedGraphs = allGraphs.filter(graph => graph.userId !== currentUser.user.id);
+      
+      // Save back to localStorage
+      localStorage.setItem('savedGraphs', JSON.stringify(updatedGraphs));
+      
+      // Update state - should be empty now
+      setSavedGraphs([]);
+      setConfirmDialogOpen(false);
+    } catch (err) {
+      setError('Error removing all graphs');
+      console.error('Error removing all graphs:', err);
+    }
+  };
+
   // Handle graph preview
   const handlePreviewGraph = (graph) => {
     setSelectedGraph(graph);
@@ -89,9 +117,21 @@ const SavedGraphsPage = () => {
     <>
       <Navbar />
       <Container maxWidth="xl" sx={{ py: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Saved Graphs
-        </Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+          <Typography variant="h4" component="h1">
+            Saved Graphs
+          </Typography>
+          {savedGraphs.length > 0 && (
+            <Button 
+              variant="contained" 
+              color="error" 
+              onClick={() => setConfirmDialogOpen(true)}
+              startIcon={<DeleteIcon />}
+            >
+              Remove All
+            </Button>
+          )}
+        </Box>
 
         {error && (
           <Alert severity="error" sx={{ mb: 3 }}>
@@ -236,6 +276,25 @@ const SavedGraphsPage = () => {
           </DialogContent>
           <DialogActions>
             <Button onClick={() => setDialogOpen(false)}>Close</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Confirmation Dialog for Remove All */}
+        <Dialog
+          open={confirmDialogOpen}
+          onClose={() => setConfirmDialogOpen(false)}
+        >
+          <DialogTitle>Confirm Removal</DialogTitle>
+          <DialogContent>
+            <Typography>
+              Are you sure you want to remove all saved graphs? This action cannot be undone.
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setConfirmDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleRemoveAllGraphs} color="error" variant="contained">
+              Remove All
+            </Button>
           </DialogActions>
         </Dialog>
       </Container>
