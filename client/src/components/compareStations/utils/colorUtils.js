@@ -2,6 +2,10 @@
  * Utility functions for color management in the station comparison tools
  */
 
+// Track assigned colors to each station
+const stationColorMap = new Map();
+let colorIndex = 0;
+
 /**
  * Generate a consistent color for each station ID
  * @param {String|Number} stationId - The station ID
@@ -14,17 +18,7 @@ export const getStationColor = (stationId) => {
     '#ff7f0e', // orange
     '#2ca02c', // green
     '#d62728', // red
-    '#9467bd', // purple
-    '#8c564b', // brown
-    '#e377c2', // pink
-    '#7f7f7f', // gray
-    '#bcbd22', // olive
-    '#17becf', // teal
-    '#aec7e8', // light blue
-    '#ffbb78', // light orange
-    '#98df8a', // light green
-    '#ff9896', // light red
-    '#c5b0d5'  // light purple
+    '#9467bd'  // purple
   ];
   
   // Handle missing stationId
@@ -32,15 +26,19 @@ export const getStationColor = (stationId) => {
     return colorPalette[0];
   }
   
-  // Use the station ID to pick a consistent color from the palette
-  const hash = stationId.toString().split('').reduce((acc, char) => {
-    return acc + char.charCodeAt(0);
-  }, 0);
+  // If this station already has an assigned color, return it
+  if (stationColorMap.has(stationId)) {
+    return stationColorMap.get(stationId);
+  }
   
-  // Use modulo to get an index within the palette range
-  const colorIndex = hash % colorPalette.length;
+  // Assign the next available color
+  const color = colorPalette[colorIndex % colorPalette.length];
+  colorIndex++;
   
-  return colorPalette[colorIndex];
+  // Store the color assignment
+  stationColorMap.set(stationId, color);
+  
+  return color;
 };
 
 /**
@@ -53,16 +51,6 @@ export const getColorPalette = () => {
     '#ff7f0e', // orange
     '#2ca02c', // green
     '#d62728', // red
-    '#9467bd', // purple
-    '#8c564b', // brown
-    '#e377c2', // pink
-    '#7f7f7f', // gray
-    '#bcbd22', // olive
-    '#17becf', // teal
-    '#aec7e8', // light blue
-    '#ffbb78', // light orange
-    '#98df8a', // light green
-    '#ff9896', // light red
-    '#c5b0d5'  // light purple
+    '#9467bd'  // purple
   ];
 }; 
