@@ -7,6 +7,7 @@ import {
   Button
 } from '@mui/material';
 import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAsCSV, downloadTemperatureRangeAsCSV } from '../utils/downloadChart';
+import AuthService from '../../services/auth.service';
 
 /**
  * SaveGraphOptions Component
@@ -28,6 +29,43 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
     }
   };
 
+  // Handle saving graph to localStorage
+  const handleSaveGraph = () => {
+    if (!hasData) return;
+
+    const currentUser = AuthService.getCurrentUser();
+    if (!currentUser || !currentUser.user) {
+      console.error('No user logged in');
+      return;
+    }
+
+    const svg = document.querySelector('#chart');
+    if (!svg) return;
+
+    // Get the SVG content
+    const svgContent = svg.outerHTML;
+    
+    // Create a new saved graph object
+    const savedGraph = {
+      id: Date.now(), // Use timestamp as unique ID
+      userId: currentUser.user.id, // Use the correct user ID structure
+      svg: svgContent,
+      type: graphType,
+      frequency: frequency,
+      date: new Date().toISOString(),
+      stations: Object.keys(comparisonData).map(key => comparisonData[key].name)
+    };
+
+    // Get existing saved graphs from localStorage
+    const savedGraphs = JSON.parse(localStorage.getItem('savedGraphs') || '[]');
+    
+    // Add new graph to the array
+    savedGraphs.push(savedGraph);
+    
+    // Save back to localStorage
+    localStorage.setItem('savedGraphs', JSON.stringify(savedGraphs));
+  };
+
   return (
     <Card sx={{ 
       mb: 3,
@@ -41,7 +79,7 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
         </Typography>
         
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Download the graph in your preferred format
+          Download the graph in your preferred format or save it for later viewing
         </Typography>
         
         <Stack 
@@ -81,7 +119,6 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
           >
             Download as SVG
           </Button>
-          
           <Button
             variant="contained" 
             color="primary"
@@ -98,7 +135,6 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
           >
             Download as PNG
           </Button>
-          
           <Button
             variant="contained" 
             color="primary"
@@ -114,6 +150,22 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
             onClick={downloadGraphAsJPEG}
           >
             Download as JPEG
+          </Button>
+          <Button
+            variant="contained" 
+            color="success"
+            size="small"
+            disabled={!hasData}
+            sx={{ 
+              fontSize: '0.8rem',
+              backgroundColor: '#2e7d32',
+              '&:hover': {
+                backgroundColor: '#1b5e20'
+              }
+            }}
+            onClick={handleSaveGraph}
+          >
+            Save Graph
           </Button>
         </Stack>
       </CardContent>
