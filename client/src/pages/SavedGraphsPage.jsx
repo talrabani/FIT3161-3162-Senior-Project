@@ -193,8 +193,15 @@ const SavedGraphsPage = () => {
         <Dialog
           open={dialogOpen}
           onClose={() => setDialogOpen(false)}
-          maxWidth="md"
+          maxWidth={false}
           fullWidth
+          PaperProps={{
+            sx: {
+              maxHeight: '90vh',
+              width: '95%',
+              maxWidth: '1500px'
+            }
+          }}
         >
           <DialogTitle>
             {selectedGraph && `${selectedGraph.type.charAt(0).toUpperCase() + selectedGraph.type.slice(1)} Graph Preview`}
@@ -209,11 +216,17 @@ const SavedGraphsPage = () => {
                   <Box 
                     sx={{ 
                       width: '100%', 
-                      height: '400px',
+                      height: '600px',
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
-                      bgcolor: 'background.paper'
+                      bgcolor: 'background.paper',
+                      '& svg': {
+                        width: 'auto',
+                        height: 'auto',
+                        maxWidth: '100%',
+                        maxHeight: '100%'
+                      }
                     }}
                     dangerouslySetInnerHTML={{ __html: selectedGraph.svg }}
                   />
