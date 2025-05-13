@@ -1,4 +1,5 @@
 import React from 'react';
+import * as d3 from "d3";
 import { 
   Card, 
   CardContent, 
@@ -39,7 +40,7 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
       return;
     }
 
-    const svg = document.querySelector('#chart');
+    const svg = d3.select('#chart').node();
     if (!svg) return;
 
     // Get the SVG content
