@@ -486,11 +486,11 @@ export const fetchStationWeatherAggregated = async (stationId, startDate, endDat
 
     // Format dates as YYYY-MM-DD if they're Date objects
     const formattedStartDate = startDate instanceof Date 
-      ? startDate.toLocaleDateString().split('/').reverse().join('-')
+      ? startDate.toISOString().split('T')[0]
       : startDate;
     
     const formattedEndDate = endDate instanceof Date 
-      ? endDate.toLocaleDateString().split('/').reverse().join('-') 
+      ? endDate.toISOString().split('T')[0]
       : endDate;
     
     // For temperature range, we want both min and max temperatures

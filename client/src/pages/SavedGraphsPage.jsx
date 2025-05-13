@@ -119,6 +119,7 @@ const SavedGraphsPage = () => {
                     </Typography>
                     <Typography variant="body2" color="text.secondary" gutterBottom>
                       Frequency: {graph.frequency}
+                      
                     </Typography>
                     <Typography variant="body2" color="text.secondary" gutterBottom>
                       Saved: {formatDate(graph.date)}
