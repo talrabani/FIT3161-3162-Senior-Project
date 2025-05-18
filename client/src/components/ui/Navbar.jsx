@@ -119,6 +119,23 @@ const Navbar = () => {
                   <Box component="span" sx={{ mr: 0.5, fontSize: '1.2rem' }}>📊</Box>
                   Graph
                 </Button>
+                <Button 
+                  component={RouterLink} 
+                  to="/saved-graphs"
+                  sx={{
+                    color: 'white',
+                    fontWeight: isActive('/saved-graphs') ? 700 : 400,
+                    borderBottom: isActive('/saved-graphs') ? '2px solid white' : 'none',
+                    borderRadius: 0,
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    mx: 1
+                  }}
+                >
+                  <Box component="span" sx={{ mr: 0.5, fontSize: '1.2rem' }}>💾</Box>
+                  Saved Graphs
+                </Button>
               </Box>
             </Box>
             

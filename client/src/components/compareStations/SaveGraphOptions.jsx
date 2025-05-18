@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import * as d3 from "d3";
 import { 
   Card, 
   CardContent, 
   Typography, 
   Stack,
-  Button
+  Button,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAsCSV, downloadTemperatureRangeAsCSV } from '../utils/downloadChart';
+import AuthService from '../../services/auth.service';
 
 /**
  * SaveGraphOptions Component
@@ -19,6 +23,12 @@ import { downloadGraphAsPNG, downloadGraphAsJPEG, downloadGraphAsSVG, downloadAs
  * @param {String} props.frequency - The data frequency (daily, monthly, yearly)
  */
 const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequency }) => {
+  const [notification, setNotification] = useState({
+    open: false,
+    message: "",
+    severity: "success"
+  });
+
   // Handle CSV download based on graph type
   const handleCsvDownload = () => {
     if (graphType === 'temp_range') {
@@ -26,6 +36,69 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
     } else {
       downloadAsCSV(comparisonData, graphType, frequency);
     }
+  };
+
+  // Close notification
+  const handleCloseNotification = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNotification({ ...notification, open: false });
+  };
+
+  // Handle saving graph to localStorage
+  const handleSaveGraph = () => {
+    if (!hasData) return;
+
+    const currentUser = AuthService.getCurrentUser();
+    if (!currentUser || !currentUser.user) {
+      setNotification({
+        open: true,
+        message: "Please log in to save graphs",
+        severity: "error"
+      });
+      return;
+    }
+
+    const svg = d3.select('#chart').node();
+    if (!svg) {
+      setNotification({
+        open: true,
+        message: "Error saving graph: Chart not found",
+        severity: "error"
+      });
+      return;
+    }
+
+    // Get the SVG content
+    const svgContent = svg.outerHTML;
+    
+    // Create a new saved graph object
+    const savedGraph = {
+      id: Date.now(), // Use timestamp as unique ID
+      userId: currentUser.user.id, // Use the correct user ID structure
+      svg: svgContent,
+      type: graphType,
+      frequency: frequency,
+      date: new Date().toISOString(),
+      stations: Object.keys(comparisonData).map(key => comparisonData[key].name)
+    };
+
+    // Get existing saved graphs from localStorage
+    const savedGraphs = JSON.parse(localStorage.getItem('savedGraphs') || '[]');
+    
+    // Add new graph to the array
+    savedGraphs.push(savedGraph);
+    
+    // Save back to localStorage
+    localStorage.setItem('savedGraphs', JSON.stringify(savedGraphs));
+
+    // Show success notification
+    setNotification({
+      open: true,
+      message: "Graph saved successfully!",
+      severity: "success"
+    });
   };
 
   return (
@@ -41,7 +114,7 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
         </Typography>
         
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          Download the graph in your preferred format
+          Download the graph in your preferred format or save it for later viewing
         </Typography>
         
         <Stack 
@@ -81,7 +154,6 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
           >
             Download as SVG
           </Button>
-          
           <Button
             variant="contained" 
             color="primary"
@@ -98,7 +170,6 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
           >
             Download as PNG
           </Button>
-          
           <Button
             variant="contained" 
             color="primary"
@@ -115,8 +186,41 @@ const SaveGraphOptions = ({ hasData = false, comparisonData, graphType, frequenc
           >
             Download as JPEG
           </Button>
+          <Button
+            variant="contained" 
+            color="success"
+            size="small"
+            disabled={!hasData}
+            sx={{ 
+              fontSize: '0.8rem',
+              backgroundColor: '#2e7d32',
+              '&:hover': {
+                backgroundColor: '#1b5e20'
+              }
+            }}
+            onClick={handleSaveGraph}
+          >
+            Save Graph
+          </Button>
         </Stack>
       </CardContent>
+
+      {/* Notification Snackbar */}
+      <Snackbar
+        open={notification.open}
+        autoHideDuration={4000}
+        onClose={handleCloseNotification}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseNotification} 
+          severity={notification.severity} 
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {notification.message}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 };

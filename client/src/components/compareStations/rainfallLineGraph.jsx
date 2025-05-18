@@ -215,7 +215,7 @@ export default function RainfallLineGraph({
       
       let dateFormat;
       switch (frequency) {
-        case 'daily': { dateFormat = {timeZone: 'Australia/Melbourne', day: 'numeric', month: 'short', year: 'numeric'}; break; }
+        case 'daily': { dateFormat = { day: 'numeric', month: 'short', year: 'numeric'}; break; }
         case 'monthly': { dateFormat = {month: 'short', year: 'numeric'}; break; }
         case 'yearly': { dateFormat = {year: 'numeric'}; break; }
         default: { console.log('Invalid frequency type') }
@@ -245,10 +245,10 @@ export default function RainfallLineGraph({
         xAxisTickFormat = d3.timeFormat('%d %b %Y');
       } else if (frequency === 'monthly') {
         xAxisTickFormat = d3.timeFormat('%b %Y');
-        xAxisTicks = Math.min(12, allDataPoints.length);
+        // xAxisTicks = Math.min(12, allDataPoints.length);
       } else if (frequency === 'yearly') {
         xAxisTickFormat = d3.timeFormat('%Y');
-        xAxisTicks = Math.min(10, allDataPoints.length);
+        // xAxisTicks = Math.min(10, allDataPoints.length);
       }
       
       // Add X axis with larger font

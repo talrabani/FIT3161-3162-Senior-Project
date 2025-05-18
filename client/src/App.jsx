@@ -11,6 +11,7 @@ import DebugInfo from './components/ui/DebugInfo'
 import SelectedStationsBox from './components/selectedStations/selectedStationsBox'
 import StationComparisonPage from './pages/StationComparisonPage'
 import AccountPage from './pages/AccountPage'
+import SavedGraphsPage from './pages/SavedGraphsPage'
 import { MapContextProvider, useMapContext } from './context/MapContext'
 import LoginForm from './components/ui/LoginForm/LoginForm'
 import SignupForm from './components/ui/SignupForm/SignupForm'
@@ -216,6 +217,11 @@ function App() {
             <Route path="/account" element={
               <ProtectedRoute>
                 <AccountPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/saved-graphs" element={
+              <ProtectedRoute>
+                <SavedGraphsPage />
               </ProtectedRoute>
             } />
           </Routes>

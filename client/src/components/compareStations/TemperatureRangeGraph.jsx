@@ -209,10 +209,10 @@ export default function TemperatureRangeGraph({
         xAxisTickFormat = d3.timeFormat('%d %b %Y');
       } else if (frequency === 'monthly') {
         xAxisTickFormat = d3.timeFormat('%b %Y');
-        xAxisTicks = Math.min(12, allDataPoints.length);
+        // xAxisTicks = Math.min(12, allDataPoints.length);
       } else if (frequency === 'yearly') {
         xAxisTickFormat = d3.timeFormat('%Y');
-        xAxisTicks = Math.min(10, allDataPoints.length);
+        // xAxisTicks = Math.min(10, allDataPoints.length);
       }
       
       // Add X axis with larger font
