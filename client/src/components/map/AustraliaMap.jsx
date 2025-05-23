@@ -11,7 +11,7 @@ import './AustraliaMap.css';  // Import custom CSS
 // import { SelectBoundingBox } from '../selectedStations/selectBoundingBox';
 
 // Mapbox API token
-mapboxgl.accessToken = 'pk.eyJ1IjoidGFscmFiYW5pIiwiYSI6ImNtODJmdHZ0MzB0ZTkya3BpcGp3dTYyN2wifQ.nntDVPhkBzS5Zm5XuFybXg';
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
 
 /**
  * Australia Map Component with selectable location markers using Mapbox
