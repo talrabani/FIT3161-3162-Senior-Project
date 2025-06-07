@@ -25,6 +25,10 @@ Returns monthly rainfall data for a specific station on a given month, year
 Returns yearly data for a specific station on a given year
 ### /api/rainfall/station/:station_id/date/:start_date/end_date/:end_date
 Returns daily data for a specific station for a range of dates
+### /api/rainfall/aggregated/station/:station_id/frequency/:frequency/date/:start_date/end_date/:end_date
+Returns average (monthly or yearly) rainfall data for a specific station for a range of dates.
+### /api/rainfall/sa4/month/:month/year/:year
+Returns the average rainfall for all SA4 areas on a given month, year
 ### /api/rainfall/sa4/year/:year
 Returns the average for all SA4 areas on a given year by averaging the monthly averages by year
 
